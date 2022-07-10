@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Maheta</string>
+    <string name="title_activity_main">Maheta</string>
+    <string name="package_name">com.fupenzi.maheta</string>
+    <string name="custom_url_scheme">com.fupenzi.maheta</string>
+</resources>
