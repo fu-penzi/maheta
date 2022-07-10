@@ -1,0 +1,49 @@
+// For more information: https://material.angular.io/guide/theming
+// Create custom theme: https://material.io/design/color/
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+@use 'theme/light-theme';
+@use 'theme/dark-theme';
+
+@include mat.core;
+
+@mixin theme-colors($theme) {
+  $-color-config: mat.get-color-config($theme);
+
+  // TODO get bg and text colors
+  //$-background: map.get($-color-config, background);
+  //$-foreground: map.get($-color-config, foreground);
+  $-primary: map.get($-color-config, primary);
+  $-accent: map.get($-color-config, accent);
+  $-warn: map.get($-color-config, warn);
+
+  //$background-color: mat.get-color-from-palette($_background, background);
+  //$foreground-color: mat.get-color-from-palette($_foreground, text);
+
+  //--background-color: #{$background-color};
+  //--foreground-color: #{$foreground-color};
+
+  //  primary
+  --primary-dark: #{mat.get-color-from-palette($-primary, lighter)};
+  --primary: #{mat.get-color-from-palette($-primary)};
+  --primary-light: #{mat.get-color-from-palette($-primary, darker)};
+
+  //  accent
+  --accent-dark: #{mat.get-color-from-palette($-accent, lighter)};
+  --accent: #{mat.get-color-from-palette($-accent)};
+  --accent-light: #{mat.get-color-from-palette($-accent, darker)};
+
+  //  warn
+  --warn: #{mat.get-color-from-palette($-warn)};
+}
+
+.light-theme {
+  @include mat.all-component-themes(light-theme.$light-theme);
+  @include theme-colors(light-theme.$light-theme);
+}
+
+.dark-theme {
+  @include mat.all-component-themes(dark-theme.$dark-theme);
+  @include theme-colors(dark-theme.$dark-theme);
+}

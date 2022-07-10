@@ -1,0 +1,14 @@
+@use '~src/variables' as *;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.mat-typography {
+  height: 100%;
+  background: $gradient-background;
+  padding: spacing(15);
+
+  // background-color: var(--app-primary-color);
+}

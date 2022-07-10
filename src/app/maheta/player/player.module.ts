@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { PlayerComponent } from './player.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [PlayerComponent],
@@ -14,6 +15,7 @@ import { PlayerComponent } from './player.component';
       },
     ]),
     CommonModule,
+    MatButtonModule,
   ],
 })
 export class PlayerModule {}

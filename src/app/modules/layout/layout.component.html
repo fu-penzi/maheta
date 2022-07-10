@@ -1,2 +1,4 @@
-<p>layout works!</p>
-<router-outlet></router-outlet>
+<div [className]="'mat-typography ' + theme">
+  <button (click)="switchTheme()">Switch theme</button>
+  <router-outlet></router-outlet>
+</div>

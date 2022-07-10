@@ -1,0 +1,19 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+$primary: var(--primary);
+$primary-light: var(--primary-light);
+$primary-dark: var(--primary-dark);
+
+$accent: var(--accent);
+$accent-light: var(--accent-light);
+$accent-dark: var(--accent-dark);
+
+$warn: var(--warn);
+
+$gradient-background: linear-gradient(rgb(27 27 27 / 51%), #1b1b1b);
+
+@function spacing($i) {
+  $spacer: 1rem;
+  @return 0.25 * $i * $spacer;
+}
