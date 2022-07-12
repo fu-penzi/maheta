@@ -3,6 +3,11 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
+    "paths": {
+      "@app/*": ["./src/app/*"],
+      "@maheta/*": ["./src/app/maheta/*"],
+      "@environment/*": ["./src/environments/*"]
+    },
     "types": []
   },
   "files": [

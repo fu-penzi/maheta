@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 
-const themes = {
-  light: 'light-theme',
-  dark: 'dark-theme',
-};
+import { ThemeService } from '@app/modules/layout/services/theme.service';
 
 @Component({
   selector: 'maheta-layout',
@@ -11,13 +8,13 @@ const themes = {
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent {
-  isDark: boolean = true;
-  theme: string = themes.dark;
+  constructor(private themeService: ThemeService) {}
 
-  constructor() {}
+  public switchTheme(): void {
+    this.themeService.switchTheme();
+  }
 
-  switchTheme() {
-    this.isDark = !this.isDark;
-    this.theme = this.isDark ? themes.dark : themes.light;
+  public get theme(): string {
+    return this.themeService.theme;
   }
 }
