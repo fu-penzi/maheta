@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SongsComponent } from './maheta/songs/songs.component';
 
 @NgModule({
-  declarations: [AppComponent, SongsComponent],
+  declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, LayoutModule, BrowserAnimationsModule],
   providers: [],
   bootstrap: [AppComponent],
