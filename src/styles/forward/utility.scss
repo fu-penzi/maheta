@@ -9,18 +9,12 @@ $-spacer: 1rem;
 
 $-sizing-map: (
   xxs: $-spacer,
-  // 16px
   xs: 1.5 * $-spacer,
-  // 24px
   sm: 2 * $-spacer,
-  // 32px
-  md: 3 * $-spacer,
-  // 48px
-  lg: 4 * $-spacer,
-  // 64px
-  xl: 4.5 * $-spacer,
-  // 72px
-  xxl: 5 * $-spacer // 80px,,,,,,,,,,,,,,,,
+  md: 2.5 * $-spacer,
+  lg: 3 * $-spacer,
+  xl: 3.5 * $-spacer,
+  xxl: 4 * $-spacer,
 );
 @function size($size) {
   @if map-has-key($-sizing-map, $size) {
@@ -38,9 +32,12 @@ $-size-smaller-map: (
   xl: lg,
   xxl: xl,
 );
-@function get-size-smaller($size) {
+@function get-size-smaller($size, $c) {
   @if map-has-key($-size-smaller-map, $size) {
-    @return map-get($-size-smaller-map, $size);
+    @if $c == 1 {
+      @return map-get($-size-smaller-map, $size);
+    }
+    @return get-size-smaller(map-get($-size-smaller-map, $size), $c - 1);
   } @else {
     @error 'Size "#{$size}" not found';
   }

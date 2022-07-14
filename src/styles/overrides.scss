@@ -1,8 +1,15 @@
 /*
 * Slider
 */
-.mat-slider.mat-slider-horizontal .mat-slider-track-wrapper {
-  transform: scaleY(1.7);
+
+.mat-slider.mat-slider-horizontal {
+  display: block;
+  padding: 0;
+  margin: 0 -5px;
+
+  .mat-slider-track-wrapper {
+    transform: scaleY(1.7);
+  }
 }
 
 /*

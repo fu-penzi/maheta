@@ -1,6 +1,10 @@
 @use 'sass:map';
 @use '../../node_modules/@angular/material/index' as mat;
 
+/*
+* Colors
+*/
+
 $text: #f3f3f3;
 $text-secondary: #ccc;
 
@@ -15,3 +19,12 @@ $accent-dark: var(--accent-dark);
 $warn: var(--warn);
 
 $gradient-background: linear-gradient(rgb(27 27 27 / 51%), #1b1b1b);
+
+/*
+* Breakpoints
+*/
+$tablet: 600px;
+$desktop: 960px;
+
+//$lg: 1280px;
+//$xl: 1920px;

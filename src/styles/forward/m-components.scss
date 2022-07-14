@@ -10,11 +10,13 @@
     height: size($size);
     line-height: size($size);
 
+    $-resize: 2;
+
     .mat-icon {
-      width: size(get-size-smaller($size));
-      height: size(get-size-smaller($size));
-      font-size: size(get-size-smaller($size));
-      line-height: size(get-size-smaller($size));
+      width: size(get-size-smaller($size, $-resize));
+      height: size(get-size-smaller($size, $-resize));
+      font-size: size(get-size-smaller($size, $-resize));
+      line-height: size(get-size-smaller($size, $-resize));
     }
   }
 }
@@ -25,11 +27,13 @@
     height: size($size);
     line-height: size($size);
 
+    $-resize: 2;
+
     .mat-icon {
-      width: size(get-size-smaller(get-size-smaller($size)));
-      height: size(get-size-smaller(get-size-smaller($size)));
-      font-size: size(get-size-smaller(get-size-smaller($size)));
-      line-height: size(get-size-smaller(get-size-smaller($size)));
+      width: size(get-size-smaller($size, $-resize));
+      height: size(get-size-smaller($size, $-resize));
+      font-size: size(get-size-smaller($size, $-resize));
+      line-height: size(get-size-smaller($size, $-resize));
     }
   }
 }
