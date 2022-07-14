@@ -34,10 +34,10 @@
     line-height: 1.5rem;
   }
 
+  /* TODO make active button color persist */
   &__tab:hover,
   &__tab:hover &__tab-name {
     color: $accent;
-    cursor: pointer;
   }
 
   &__tab:active,
