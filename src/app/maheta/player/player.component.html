@@ -4,14 +4,13 @@
   alt="track-thumb"
 />
 
-<div class="track-title">
-  <strong>Lost Sanctuary</strong>
-  <span>Adrian von Ziegler</span>
+<div class="track-info">
+  <strong class="track-info__title">{{this.track.title}}</strong>
+  <span class="track-info__author">{{this.track.author}}</span>
 </div>
 
 <div class="controls">
   <mat-slider
-    class="slider"
     color="accent"
     [max]="100"
     [min]="0"
@@ -22,17 +21,17 @@
   >
   </mat-slider>
 
-  <div class="track-time">
+  <div class="controls__track-time">
     <span>1:25</span>
     <span>2:53</span>
   </div>
 
-  <div class="buttons">
+  <div class="controls__buttons">
     <button mat-icon-button aria-label="Example icon button with a bookmark icon">
       <mat-icon>shuffle</mat-icon>
     </button>
 
-    <div class="control-buttons">
+    <div class="controls__center-buttons">
       <button mat-icon-button aria-label="Example icon button with a bookmark icon">
         <mat-icon>skip_previous</mat-icon>
       </button>

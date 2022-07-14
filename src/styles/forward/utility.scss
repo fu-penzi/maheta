@@ -8,13 +8,15 @@ $-spacer: 1rem;
 }
 
 $-sizing-map: (
-  xxs: $-spacer,
-  xs: 1.5 * $-spacer,
-  sm: 2 * $-spacer,
-  md: 2.5 * $-spacer,
+  xxxs: 0.5 $-spacer,
+  xxs: 0.75 $-spacer,
+  xs: $-spacer,
+  sm: 1.5 * $-spacer,
+  md: 2 * $-spacer,
   lg: 3 * $-spacer,
-  xl: 3.5 * $-spacer,
-  xxl: 4 * $-spacer,
+  xl: 4 * $-spacer,
+  xxl: 6 * $-spacer,
+  xxxl: 8 * $-spacer,
 );
 @function size($size) {
   @if map-has-key($-sizing-map, $size) {
@@ -25,12 +27,14 @@ $-sizing-map: (
 }
 
 $-size-smaller-map: (
+  xxs: xxxs,
   xs: xxs,
   sm: xs,
   md: sm,
   lg: md,
   xl: lg,
   xxl: xl,
+  xxxl: xxl,
 );
 @function get-size-smaller($size, $c) {
   @if map-has-key($-size-smaller-map, $size) {

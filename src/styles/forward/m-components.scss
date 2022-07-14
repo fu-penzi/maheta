@@ -10,7 +10,7 @@
     height: size($size);
     line-height: size($size);
 
-    $-resize: 2;
+    $-resize: 1;
 
     .mat-icon {
       width: size(get-size-smaller($size, $-resize));
@@ -27,7 +27,7 @@
     height: size($size);
     line-height: size($size);
 
-    $-resize: 2;
+    $-resize: 1;
 
     .mat-icon {
       width: size(get-size-smaller($size, $-resize));
