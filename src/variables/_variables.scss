@@ -1,5 +1,7 @@
 @use 'sass:map';
-@use '@angular/material' as mat;
+@use '../../node_modules/@angular/material/index' as mat;
+$text: #f3f3f3;
+$text-secondary: #CCC;
 
 $primary: var(--primary);
 $primary-light: var(--primary-light);
