@@ -25,14 +25,14 @@
   //--foreground-color: #{$foreground-color};
 
   //  primary
-  --primary-dark: #{mat.get-color-from-palette($-primary, lighter)};
+  --primary-dark: #{mat.get-color-from-palette($-primary, darker)};
   --primary: #{mat.get-color-from-palette($-primary)};
-  --primary-light: #{mat.get-color-from-palette($-primary, darker)};
+  --primary-light: #{mat.get-color-from-palette($-primary, lighter)};
 
   //  accent
-  --accent-dark: #{mat.get-color-from-palette($-accent, lighter)};
+  --accent-dark: #{mat.get-color-from-palette($-accent, darker)};
   --accent: #{mat.get-color-from-palette($-accent)};
-  --accent-light: #{mat.get-color-from-palette($-accent, darker)};
+  --accent-light: #{mat.get-color-from-palette($-accent, lighter)};
 
   //  warn
   --warn: #{mat.get-color-from-palette($-warn)};
