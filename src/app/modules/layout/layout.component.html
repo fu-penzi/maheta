@@ -8,17 +8,10 @@
   </div>
 
   <mat-toolbar class="bottom-navigation" color="primary">
-    <button  mat-icon-button aria-label="Example icon button with a bookmark icon">
-      <mat-icon class="icon">library_music</mat-icon>
-    </button>
-
-    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
-      <mat-icon class="icon">album</mat-icon>
-    </button>
-
-    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
-      <mat-icon class="icon">playlist_play</mat-icon>
-    </button>
+    <a *ngFor="let tab of bottomNavTabs" class="nav-tab" aria-label="Example icon button with a bookmark icon">
+      <mat-icon class="icon">{{ tab.icon }}</mat-icon>
+      <span class="tab-name">{{ tab.name }}</span>
+    </a>
   </mat-toolbar>
   <!--  <button (click)="switchTheme()">Switch theme</button>-->
 </div>
