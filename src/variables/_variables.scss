@@ -1,21 +1,4 @@
-@use 'sass:map';
-@use '../../node_modules/@angular/material/index' as mat;
-$text: #f3f3f3;
-$text-secondary: #CCC;
-
-$primary: var(--primary);
-$primary-light: var(--primary-light);
-$primary-dark: var(--primary-dark);
-
-$accent: var(--accent);
-$accent-light: var(--accent-light);
-$accent-dark: var(--accent-dark);
-
-$warn: var(--warn);
-
-$gradient-background: linear-gradient(rgb(27 27 27 / 51%), #1b1b1b);
-
-@function spacing($i) {
-  $spacer: 1rem;
-  @return 0.25 * $i * $spacer;
-}
+@forward '~src/styles/forward/utility';
+@forward '~src/styles/forward/m-components';
+@forward '~src/styles/forward/utility';
+@forward '~src/styles/forward/variables';

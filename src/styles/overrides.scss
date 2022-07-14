@@ -1,0 +1,15 @@
+/*
+* Slider
+*/
+.mat-slider.mat-slider-horizontal .mat-slider-track-wrapper {
+  transform: scaleY(1.7);
+}
+
+/*
+* Float action button
+*/
+.mat-fab {
+  .mat-button-wrapper {
+    padding: 0 !important;
+  }
+}

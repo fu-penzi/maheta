@@ -3,8 +3,8 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 
-@use 'theme/light-theme';
-@use 'theme/dark-theme';
+@use 'styles/theme/light-theme';
+@use 'styles/theme/dark-theme';
 
 @include mat.core;
 
