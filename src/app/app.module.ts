@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './modules/layout/layout.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SongsComponent } from './maheta/songs/songs.component';
 
 @NgModule({
   declarations: [AppComponent],
