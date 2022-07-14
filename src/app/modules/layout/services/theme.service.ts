@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
-enum ThemeClassEnum {
+export enum ThemeClassEnum {
   light = 'light-theme',
   dark = 'dark-theme',
 }
 
 @Injectable()
 export class ThemeService {
-  private _theme: ThemeClassEnum = ThemeClassEnum.dark;
+  private _theme: ThemeClassEnum = ThemeClassEnum.light;
   constructor() {}
 
   public get theme(): ThemeClassEnum {

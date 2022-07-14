@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ThemeService } from '@app/modules/layout/services/theme.service';
+import { ThemeClassEnum, ThemeService } from '@app/modules/layout/services/theme.service';
 
 @Component({
   selector: 'maheta-layout',
@@ -14,7 +14,7 @@ export class LayoutComponent {
     this.themeService.switchTheme();
   }
 
-  public get theme(): string {
+  public get theme(): ThemeClassEnum {
     return this.themeService.theme;
   }
 }

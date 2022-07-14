@@ -1,3 +1,61 @@
+@use 'variables' as *;
+
 :host {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-top: spacing(10);
+  gap: spacing(10);
+}
+
+.track-thumb {
   display: block;
+  width: 500px;
+  max-width: 100%;
+  margin: 0 auto;
+  object-fit: cover;
+}
+
+.track-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  strong {
+    font-size: 1.75rem;
+    font-weight: 500;
+  }
+
+  span {
+    color: $text-secondary;
+    font-size: 1.25rem;
+  }
+}
+
+.controls {
+  mat-slider {
+    display: block;
+    padding: 0;
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: spacing(3);
+  }
+}
+
+//noinspection Stylelint
+::ng-deep {
+  .mat-slider.mat-slider-horizontal .mat-slider-track-wrapper {
+    transform: scaleY(1.7);
+
+    //scale: 1 1.7;
+  }
+
+  //.mat-slider-thumb-container .mat-slider-thumb {
+  //transform: scale(1);
+  //}
 }

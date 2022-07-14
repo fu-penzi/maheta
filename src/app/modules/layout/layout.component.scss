@@ -1,8 +1,30 @@
-@use '~src/variables' as *;
+@use 'variables' as *;
 
 :host {
+  position: relative;
   display: block;
-  height: 100%;
+  overflow: hidden;
+  min-height: 100vh;
   background: $gradient-background;
-  padding: spacing(15);
+
+  // TODO parametrize font color
+  color: $text;
+}
+
+.page-content {
+  padding: 0 spacing(8);
+}
+
+.bottom-navigation {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: spacing(10);
+
+  .navigation-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

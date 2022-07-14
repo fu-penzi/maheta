@@ -1,1 +1,50 @@
-<button mat-raised-button color="primary">Primary</button>
+<img
+  class="track-thumb"
+  src="https://images.unsplash.com/photo-1529788295308-1eace6f67388?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
+  alt="aa"
+/>
+
+<div class="track-title">
+  <strong>Lost Sanctuary</strong>
+  <span>Adrian von Ziegler</span>
+</div>
+
+<div class="controls">
+  <mat-slider
+    class="slider"
+    color="accent"
+    [max]="100"
+    [min]="0"
+    [step]="1"
+    [tickInterval]="getSliderTickInterval()"
+    [(ngModel)]="value"
+    aria-labelledby="example-name-label"
+  >
+  </mat-slider>
+
+  <div class="buttons">
+    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <mat-icon class="icon">shuffle</mat-icon>
+    </button>
+
+    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <mat-icon>skip_previous</mat-icon>
+    </button>
+
+    <button mat-fab color="accent" aria-label="Example icon button with a bookmark icon">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+
+    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <mat-icon>skip_next</mat-icon>
+    </button>
+
+    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <mat-icon>repeat</mat-icon>
+    </button>
+
+    <!--  <button mat-icon-button aria-label="Example icon button with a bookmark icon">-->
+    <!--    <mat-icon>repeat_one</mat-icon>-->
+    <!--  </button>-->
+  </div>
+</div>

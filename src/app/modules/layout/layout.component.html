@@ -1,4 +1,24 @@
 <div [className]="'mat-typography ' + theme">
-  <button (click)="switchTheme()">Switch theme</button>
-  <router-outlet></router-outlet>
+  <mat-toolbar color="primary">
+    <span>Player</span>
+  </mat-toolbar>
+
+  <div class="page-content">
+    <router-outlet></router-outlet>
+  </div>
+
+  <mat-toolbar class="bottom-navigation" color="primary">
+    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <mat-icon class="icon">library_music</mat-icon>
+    </button>
+
+    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <mat-icon class="icon">album</mat-icon>
+    </button>
+
+    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <mat-icon class="icon">playlist_play</mat-icon>
+    </button>
+  </mat-toolbar>
+  <!--  <button (click)="switchTheme()">Switch theme</button>-->
 </div>

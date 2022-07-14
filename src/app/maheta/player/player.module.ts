@@ -4,6 +4,9 @@ import { RouterModule } from '@angular/router';
 
 import { PlayerComponent } from './player.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSliderModule } from '@angular/material/slider';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [PlayerComponent],
@@ -16,6 +19,9 @@ import { MatButtonModule } from '@angular/material/button';
     ]),
     CommonModule,
     MatButtonModule,
+    MatSliderModule,
+    FormsModule,
+    MatIconModule,
   ],
 })
 export class PlayerModule {}
