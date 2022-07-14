@@ -15,33 +15,33 @@
   padding: 0 spacing(8);
 }
 
-.bottom-navigation {
+.bottom-nav {
   position: absolute;
   bottom: 0;
   height: 64px;
   justify-content: space-around;
 
-  .nav-tab {
+  &__tab {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    .tab-name {
-      color: $text-secondary;
-      font-size: 0.9rem;
-      font-weight: 400;
-      line-height: 1.5rem;
-    }
   }
 
-  .nav-tab:hover,
-  .nav-tab:hover .tab-name {
+  &__tab-name {
+    color: $text-secondary;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+  }
+
+  &__tab:hover,
+  &__tab:hover &__tab-name {
     color: $accent;
     cursor: pointer;
   }
 
-  .nav-tab:active,
-  .nav-tab:active .tab-name {
+  &__tab:active,
+  &__tab:active &__tab-name {
     color: $accent-dark;
   }
 }

@@ -7,10 +7,10 @@
     <router-outlet></router-outlet>
   </div>
 
-  <mat-toolbar class="bottom-navigation" color="primary">
-    <a *ngFor="let tab of bottomNavTabs" class="nav-tab" aria-label="Example icon button with a bookmark icon">
-      <mat-icon class="icon">{{ tab.icon }}</mat-icon>
-      <span class="tab-name">{{ tab.name }}</span>
+  <mat-toolbar class="bottom-nav" color="primary">
+    <a *ngFor="let tab of bottomNavTabs" class="bottom-nav__tab" aria-label="Example icon button with a bookmark icon">
+      <mat-icon>{{ tab.icon }}</mat-icon>
+      <span class="bottom-nav__tab-name">{{ tab.name }}</span>
     </a>
   </mat-toolbar>
   <!--  <button (click)="switchTheme()">Switch theme</button>-->
