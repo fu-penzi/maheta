@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './modules/layout/layout.component';
+
 import { UrlEnum } from '@app/model/url.enum';
 
 const routes: Routes = [

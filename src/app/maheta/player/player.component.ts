@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-interface Track {
-  title: string;
-  author: string;
-}
+import { Track } from '@app/model/track.interface';
 
 @Component({
   selector: 'maheta-player',
@@ -14,6 +11,8 @@ export class PlayerComponent implements OnInit {
   public track: Track = {
     title: 'Lost Sanctuary',
     author: 'Adrian von Ziegler',
+    thumbUrl: 'assets/3.webp',
+    duration: 3.25,
   };
   // public controlButtons;
   // public adjacentButtons;

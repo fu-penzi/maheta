@@ -5,14 +5,14 @@
   display: block;
   overflow: hidden;
   min-height: 100vh;
-  background: $gradient-background;
 
-  // TODO parametrize font color
+  // TODO background: $gradient-background;
+  background-color: $background;
   color: $text;
 }
 
 .page-content {
-  padding: 0 spacing(8);
+  //padding: 0 spacing(8);
 }
 
 .bottom-nav {
