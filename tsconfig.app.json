@@ -8,13 +8,8 @@
       "@maheta/*": ["./src/app/maheta/*"],
       "@environment/*": ["./src/environments/*"]
     },
-    "types": []
+    "types": ["node"]
   },
-  "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
-  ],
-  "include": [
-    "src/**/*.d.ts"
-  ]
+  "files": ["src/main.ts", "src/polyfills.ts"],
+  "include": ["src/**/*.d.ts"]
 }

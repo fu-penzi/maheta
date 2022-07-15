@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 
 import { Track } from '@app/model/track.interface';
+
+let jsmediatags = require('jsmediatags');
 
 @Component({
   selector: 'maheta-player',
@@ -21,10 +24,17 @@ export class PlayerComponent implements OnInit {
   public autoTicks: boolean = false;
   public tickInterval: number = 1;
   public value: number = 1;
+
+  public files: any;
+  public path: any;
   constructor() {}
 
   ngOnInit(): void {
     this.setupButtons();
+    this.loadTracksData();
+    Filesystem.readdir({
+      path: 'file:///storage/emulated/0',
+    }).then((res) => (this.path = res.files));
   }
 
   getSliderTickInterval(): number | 'auto' {
@@ -33,6 +43,25 @@ export class PlayerComponent implements OnInit {
     }
 
     return 0;
+  }
+
+  public play(): void {
+    jsmediatags.read('http://localhost:5500/1.%20206.mp3', {
+      onSuccess: function (tag: any) {
+        console.log(tag);
+      },
+      onError: function (error: any) {
+        console.log(':(', error.type, error.info);
+      },
+    });
+    new Audio('http://localhost:5500/1.%20206.mp3').play();
+  }
+
+  private loadTracksData() {
+    // Filesystem.readdir({
+    //   path: 'file:///',
+    //   // directory: Directory.ExternalStorage,
+    // }).then((res) => (this.files = res.files));
   }
 
   private setupButtons() {

@@ -3,6 +3,9 @@
 <div class="track-info">
   <strong class="track-info__title">{{ this.track.title }}</strong>
   <span class="track-info__author">{{ this.track.author }}</span>
+
+  <span>{{ files }}</span>
+  <span>{{ path }}</span>
 </div>
 
 <div class="controls">
@@ -24,25 +27,42 @@
   </div>
 
   <div class="controls__buttons">
-    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+    <button
+      mat-icon-button
+      aria-label="Example icon button with a bookmark icon"
+    >
       <mat-icon>shuffle</mat-icon>
     </button>
 
     <div class="controls__center-buttons">
-      <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <button
+        mat-icon-button
+        aria-label="Example icon button with a bookmark icon"
+      >
         <mat-icon>skip_previous</mat-icon>
       </button>
 
-      <button mat-fab color="accent" aria-label="Example icon button with a bookmark icon">
+      <button
+        (click)="play()"
+        mat-fab
+        color="accent"
+        aria-label="Example icon button with a bookmark icon"
+      >
         <mat-icon>play_arrow</mat-icon>
       </button>
 
-      <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <button
+        mat-icon-button
+        aria-label="Example icon button with a bookmark icon"
+      >
         <mat-icon>skip_next</mat-icon>
       </button>
     </div>
 
-    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+    <button
+      mat-icon-button
+      aria-label="Example icon button with a bookmark icon"
+    >
       <mat-icon>repeat</mat-icon>
     </button>
 
