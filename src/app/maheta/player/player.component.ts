@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Directory, Filesystem } from '@capacitor/filesystem';
+import { Directory, Filesystem, ReadFileResult } from '@capacitor/filesystem';
 
 import { Track } from '@app/model/track.interface';
 import { FileLoadingService } from '@app/services/file-loading.service';
-
+import { Capacitor } from '@capacitor/core';
+import { Howl, Howler } from 'howler';
 // let jsmediatags = require('jsmediatags');
 
 @Component({
@@ -33,6 +34,13 @@ export class PlayerComponent implements OnInit {
   ngOnInit(): void {
     this.setupButtons();
     this.fileLoading.loadMusic();
+    Filesystem.getUri({
+      path: 'Music/206.mp3',
+      directory: Directory.ExternalStorage,
+    }).then((res) => {
+      console.error(Capacitor.convertFileSrc(res.uri));
+      this._trackUri = Capacitor.convertFileSrc(res.uri);
+    });
   }
 
   getSliderTickInterval(): number | 'auto' {
@@ -43,7 +51,12 @@ export class PlayerComponent implements OnInit {
     return 0;
   }
 
+  private _trackUri: string;
   public play(): void {
+    const sound = new Howl({
+      src: [this._trackUri],
+    });
+    sound.play();
     // jsmediatags.read('http://192.168.0.105:5501/1.%20206.mp3', {
     //   onSuccess: function (tag: any) {
     //     console.log(tag);
