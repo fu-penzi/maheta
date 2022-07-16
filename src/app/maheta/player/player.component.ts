@@ -57,12 +57,12 @@ export class PlayerComponent implements OnInit {
       src: [this._trackUri],
     });
     sound.play();
-    // jsmediatags.read('http://192.168.0.105:5501/1.%20206.mp3', {
+    // jsmediatags.read(this._trackUri, {
     //   onSuccess: function (tag: any) {
-    //     console.log(tag);
+    //     console.error(tag);
     //   },
     //   onError: function (error: any) {
-    //     console.log(':(', error.type, error.info);
+    //     console.error(':(', error.type, error.info);
     //   },
     // });
     // console.log(`http://192.168.0.105:5501/1.%20206.mp3`);
