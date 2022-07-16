@@ -1,4 +1,6 @@
 # Maheta
+Figma project: https://www.figma.com/file/0Pzn4AXPqLykVoBipj7dID/Maheta?node-id=2%3A4
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.5.
 
