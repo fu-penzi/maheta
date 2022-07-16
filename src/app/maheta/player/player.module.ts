@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { FileLoadingService } from '@app/services/file-loading.service';
 
 @NgModule({
   declarations: [PlayerComponent],
@@ -23,5 +24,6 @@ import { MatIconModule } from '@angular/material/icon';
     FormsModule,
     MatIconModule,
   ],
+  providers: [FileLoadingService],
 })
 export class PlayerModule {}

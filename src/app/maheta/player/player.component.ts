@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 
 import { Track } from '@app/model/track.interface';
+import { FileLoadingService } from '@app/services/file-loading.service';
 
 let jsmediatags = require('jsmediatags');
 
@@ -27,14 +28,11 @@ export class PlayerComponent implements OnInit {
 
   public files: any;
   public path: any;
-  constructor() {}
+  constructor(private fileLoading: FileLoadingService) {}
 
   ngOnInit(): void {
     this.setupButtons();
-    this.loadTracksData();
-    Filesystem.readdir({
-      path: 'file:///storage/emulated/0',
-    }).then((res) => (this.path = res.files));
+    this.fileLoading.loadMusic();
   }
 
   getSliderTickInterval(): number | 'auto' {
@@ -46,22 +44,18 @@ export class PlayerComponent implements OnInit {
   }
 
   public play(): void {
-    jsmediatags.read('http://localhost:5500/1.%20206.mp3', {
-      onSuccess: function (tag: any) {
-        console.log(tag);
-      },
-      onError: function (error: any) {
-        console.log(':(', error.type, error.info);
-      },
-    });
-    new Audio('http://localhost:5500/1.%20206.mp3').play();
-  }
-
-  private loadTracksData() {
-    // Filesystem.readdir({
-    //   path: 'file:///',
-    //   // directory: Directory.ExternalStorage,
-    // }).then((res) => (this.files = res.files));
+    // jsmediatags.read('http://192.168.0.105:5501/1.%20206.mp3', {
+    //   onSuccess: function (tag: any) {
+    //     console.log(tag);
+    //   },
+    //   onError: function (error: any) {
+    //     console.log(':(', error.type, error.info);
+    //   },
+    // });
+    // console.log(`http://192.168.0.105:5501/1.%20206.mp3`);
+    // new Audio(
+    //   'https://www.chosic.com/wp-content/uploads/2021/07/Raindrops-on-window-sill.mp3'
+    // ).play();
   }
 
   private setupButtons() {
