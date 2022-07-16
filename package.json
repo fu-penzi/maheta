@@ -2,12 +2,6 @@
   "name": "maheta",
   "version": "0.0.0",
   "main": "app.js",
-  "browser": {
-    "fs": false,
-    "react-native-fs": false,
-    "path": false,
-    "os": false
-  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -36,7 +30,8 @@
     "@capacitor/cli": "^3.6.0",
     "@capacitor/core": "latest",
     "@capacitor/filesystem": "^1.1.0",
-    "jsmediatags": "^3.9.7",
+    "@types/node": "^14.14.31",
+    "rxdb": "^12.7.8",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -51,7 +46,6 @@
     "@angular/cli": "~14.0.5",
     "@angular/compiler-cli": "^14.0.0",
     "@types/jasmine": "~4.0.0",
-    "@types/node": "^18.0.4",
     "@typescript-eslint/eslint-plugin": "5.29.0",
     "@typescript-eslint/parser": "5.29.0",
     "electron": "^19.0.8",

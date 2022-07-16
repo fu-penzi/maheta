@@ -4,7 +4,7 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Track } from '@app/model/track.interface';
 import { FileLoadingService } from '@app/services/file-loading.service';
 
-let jsmediatags = require('jsmediatags');
+// let jsmediatags = require('jsmediatags');
 
 @Component({
   selector: 'maheta-player',
