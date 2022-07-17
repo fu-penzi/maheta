@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Directory, Filesystem, ReadFileResult } from '@capacitor/filesystem';
+import { Directory, Filesystem, GetUriResult, ReadFileResult } from '@capacitor/filesystem';
 
 import { Track } from '@app/model/track.interface';
 import { FileLoadingService } from '@app/services/file-loading.service';
 import { Capacitor } from '@capacitor/core';
 import { Howl, Howler } from 'howler';
-// let jsmediatags = require('jsmediatags');
+import * as musicMetadata from 'music-metadata-browser';
+import { IAudioMetadata } from 'music-metadata-browser';
 
 @Component({
   selector: 'maheta-player',
@@ -37,13 +38,12 @@ export class PlayerComponent implements OnInit {
     Filesystem.getUri({
       path: 'Music/206.mp3',
       directory: Directory.ExternalStorage,
-    }).then((res) => {
-      console.error(Capacitor.convertFileSrc(res.uri));
+    }).then((res: GetUriResult) => {
       this._trackUri = Capacitor.convertFileSrc(res.uri);
     });
   }
 
-  getSliderTickInterval(): number | 'auto' {
+  public getSliderTickInterval(): number | 'auto' {
     if (this.showTicks) {
       return this.autoTicks ? 'auto' : this.tickInterval;
     }
@@ -51,24 +51,23 @@ export class PlayerComponent implements OnInit {
     return 0;
   }
 
+  private readTrackMetadata(path: string): Promise<IAudioMetadata> {
+    return Filesystem.readFile({ path: path })
+      .then((res: ReadFileResult) => fetch(`data:audio/mpeg;base64, ${res.data}`))
+      .then((res: Response) => res.blob())
+      .then((res: Blob) => musicMetadata.parseBlob(res));
+    // .catch((error) => console.error(error));
+  }
+
   private _trackUri: string;
   public play(): void {
-    const sound = new Howl({
-      src: [this._trackUri],
-    });
-    sound.play();
-    // jsmediatags.read(this._trackUri, {
-    //   onSuccess: function (tag: any) {
-    //     console.error(tag);
-    //   },
-    //   onError: function (error: any) {
-    //     console.error(':(', error.type, error.info);
-    //   },
+    // const sound = new Howl({
+    //   src: [this._trackUri],
     // });
-    // console.log(`http://192.168.0.105:5501/1.%20206.mp3`);
-    // new Audio(
-    //   'https://www.chosic.com/wp-content/uploads/2021/07/Raindrops-on-window-sill.mp3'
-    // ).play();
+    // sound.play();
+    this.readTrackMetadata(`file:///sdcard/Music/206.mp3`).then((res: IAudioMetadata) => {
+      console.error(res.common.title);
+    });
   }
 
   private setupButtons() {
