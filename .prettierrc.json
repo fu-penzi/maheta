@@ -4,5 +4,26 @@
   "useTabs": false,
   "tabWidth": 2,
   "semi": true,
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "overrides": [
+    {
+      "files": "*.component.html",
+      "options": {
+        "parser": "angular",
+        "printWidth": 120
+      }
+    },
+    {
+      "files": "*.json",
+      "options": {
+        "parser": "json"
+      }
+    },
+    {
+      "files": "*.scss",
+      "options": {
+        "parser": "scss"
+      }
+    }
+  ]
 }

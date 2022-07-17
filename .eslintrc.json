@@ -1,6 +1,7 @@
 {
   "root": true,
   "ignorePatterns": ["projects/**/*"],
+  "plugins": ["simple-import-sort"],
   "overrides": [
     {
       "files": ["*.ts"],
@@ -10,7 +11,9 @@
       },
       "extends": [
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/strict"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -27,6 +30,84 @@
             "type": "element",
             "prefix": "maheta",
             "style": "kebab-case"
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+          "error",
+          {
+            "allowExpressions": true
+          }
+        ],
+        "@typescript-eslint/no-inferrable-types": ["off"],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": ["variableLike", "memberLike", "property", "method"],
+            "format": ["camelCase", "UPPER_CASE"]
+          },
+          {
+            "selector": ["classProperty"],
+            "modifiers": ["private"],
+            "format": ["camelCase", "UPPER_CASE"],
+            "leadingUnderscore": "require"
+          },
+          {
+            "selector": ["typeLike"],
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": ["enum"],
+            "format": ["PascalCase"],
+            "suffix": ["Enum"]
+          }
+        ],
+        "@typescript-eslint/member-ordering": [
+          "warn",
+          {
+            "default": {
+              "memberTypes": [
+                "public-decorated-field",
+                "protected-decorated-field",
+                "private-decorated-field",
+                "public-field",
+                "protected-field",
+                "private-field",
+                "constructor",
+                "public-get",
+                "protected-get",
+                "private-get",
+                "public-set",
+                "protected-set",
+                "private-set",
+                "public-method",
+                "protected-method",
+                "private-method"
+              ],
+              "order": "as-written"
+            }
+          }
+        ],
+        "eqeqeq": ["error", "smart"],
+        "linebreak-style": ["error", "unix"],
+        "prefer-const": "error",
+        "no-new-wrappers": "error",
+        "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              ["^@angular"],
+              ["^@environment"],
+              ["^@capacitor"],
+              ["^@src*"],
+              ["^@maheta*"],
+              ["^../", "./", "^.", "^"]
+            ]
+          }
+        ],
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["./*", "../*"]
           }
         ],
         "no-console": "warn"
