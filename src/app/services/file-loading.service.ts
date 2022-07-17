@@ -22,8 +22,6 @@ enum FileTypeEnum {
 export class FileLoadingService {
   private _trackDirPath: string = '';
   private _trackPaths: string[];
-  constructor() {}
-
   public loadMusic(): void {
     if (Capacitor.getPlatform() === 'android') {
       Filesystem.getUri({
