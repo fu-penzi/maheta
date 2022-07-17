@@ -1,4 +1,4 @@
-export enum UrlEnum {
+export const enum UrlEnum {
   PLAYER = 'player',
   SONGS = 'songs',
   ALBUMS = 'albums',

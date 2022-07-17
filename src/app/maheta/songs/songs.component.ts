@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { Track } from '@app/model/track.interface';
-
-import { images } from '../../../mock/images ';
+import { Track } from '@src/app/model/track.interface';
+import { images } from '@src/mock/images ';
 
 @Component({
   selector: 'maheta-songs',
   templateUrl: './songs.component.html',
   styleUrls: ['./songs.component.scss'],
 })
-export class SongsComponent implements OnInit {
+export class SongsComponent {
+  public images = images;
   public tracks: Track[] = [
     {
       title: 'Lost Sanctuary',
@@ -82,8 +82,5 @@ export class SongsComponent implements OnInit {
       duration: 3.25,
     },
   ];
-  public images = images;
   constructor() {}
-
-  ngOnInit(): void {}
 }

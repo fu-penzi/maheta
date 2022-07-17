@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FileLoadingService } from './file-loading.service';
+import { FileLoadingService } from '@src/app/services/file-loading.service';
 
 describe('FileLoaderService', () => {
   let service: FileLoadingService;

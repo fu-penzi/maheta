@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+
+import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem, GetUriResult, ReadFileResult } from '@capacitor/filesystem';
 
-import { Track } from '@app/model/track.interface';
-import { FileLoadingService } from '@app/services/file-loading.service';
-import { Capacitor } from '@capacitor/core';
-import { Howl, Howler } from 'howler';
+import { Track } from '@src/app/model/track.interface';
+import { FileLoadingService } from '@src/app/services/file-loading.service';
+
+// import { Howl, Howler } from 'howler';
 import * as musicMetadata from 'music-metadata-browser';
 import { IAudioMetadata } from 'music-metadata-browser';
 
@@ -20,16 +22,18 @@ export class PlayerComponent implements OnInit {
     thumbUrl: 'assets/3.webp',
     duration: 3.25,
   };
+
   // public controlButtons;
   // public adjacentButtons;
 
   public showTicks: boolean = false;
   public autoTicks: boolean = false;
   public tickInterval: number = 1;
-  public value: number = 1;
+  public value = 1;
 
   public files: any;
   public path: any;
+
   constructor(private fileLoading: FileLoadingService) {}
 
   ngOnInit(): void {

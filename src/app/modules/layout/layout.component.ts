@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ThemeClassEnum, ThemeService } from '@app/modules/layout/services/theme.service';
 import { environment } from '@environment/environment';
-import { UrlEnum } from '@app/model/url.enum';
+
+import { UrlEnum } from '@src/app/model/url.enum';
+import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
 
 interface BottomNavTab {
   icon: string;
@@ -20,16 +21,16 @@ export class LayoutComponent implements OnInit {
 
   constructor(private themeService: ThemeService) {}
 
-  ngOnInit(): void {
+  public get theme(): ThemeClassEnum {
+    return this.themeService.theme;
+  }
+
+  public ngOnInit(): void {
     this.setupBottomNav();
   }
 
   public switchTheme(): void {
     this.themeService.switchTheme();
-  }
-
-  public get theme(): ThemeClassEnum {
-    return this.themeService.theme;
   }
 
   private setupBottomNav(): void {

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+
+import { Capacitor } from '@capacitor/core';
 import {
   Directory,
   Filesystem,
@@ -8,10 +10,8 @@ import {
   StatResult,
 } from '@capacitor/filesystem';
 
-import { createRxDatabase } from 'rxdb';
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
-
-import { Capacitor } from '@capacitor/core';
+import { createRxDatabase } from 'rxdb';
 
 const restrictedDirs: string[] = ['Android'];
 enum FileTypeEnum {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.
@@ -41,8 +42,8 @@
  *  (window as any).__Zone_enable_cross_context_check = true;
  *
  */
-import * as process from 'process';
 import * as _buffer from 'buffer';
+import * as process from 'process';
 
 (window as any).global = window;
 (window as any).process = process;
