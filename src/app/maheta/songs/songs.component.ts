@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Track } from '@src/app/model/track.interface';
+import { Track } from '@src/app/model/track.types';
 import { MusicControlService } from '@src/app/services/music-control.service';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
 import { images } from '@src/mock/images';
@@ -15,10 +15,14 @@ export class SongsComponent {
 
   constructor(
     private readonly musicLibraryService: MusicLibraryService,
-    public musicControlService: MusicControlService
+    private readonly musicControlService: MusicControlService
   ) {}
 
   public get tracks(): Track[] {
     return this.musicLibraryService.tracks;
+  }
+
+  public play(track: Track): void {
+    this.musicControlService.playTrack(track);
   }
 }

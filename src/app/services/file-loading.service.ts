@@ -3,7 +3,6 @@ import { Capacitor } from '@capacitor/core';
 import {
   Directory,
   Filesystem,
-  GetUriResult,
   ReaddirResult,
   ReadFileResult,
   StatResult,
@@ -12,12 +11,10 @@ import {
 import { MusicFileExtensionEnum } from '@src/app/model/music-file-extension.enum';
 import { PlatformEnum } from '@src/app/model/platform.enum';
 import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories.enum';
-import { Track } from '@src/app/model/track.interface';
+import { Track, TrackDefaultsEnum } from '@src/app/model/track.types';
 
-import { getRxStorageDexie } from 'rxdb/plugins/dexie';
 import * as musicMetadata from 'music-metadata-browser';
 import { IAudioMetadata } from 'music-metadata-browser';
-import { createRxDatabase } from 'rxdb';
 
 enum FileTypeEnum {
   FILE = 'file',
@@ -43,7 +40,8 @@ export class FileLoadingService {
           // );
           return {
             uri: Capacitor.convertFileSrc(trackPath),
-            title: trackPath.split('/').pop(),
+            title: trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
+            author: TrackDefaultsEnum.AUTHOR,
             // ...(metadata && { metadata: metadata }),
           };
         })
@@ -137,7 +135,7 @@ export class FileLoadingService {
       path: this._searchDirPath,
       directory: Directory.ExternalStorage,
     })
-      .then((uriResult) => this.readDirRecursive(`/storage/3833-3334`))
+      .then((uriResult) => this.readDirRecursive(uriResult.uri))
       .then((res) => [res].flat(Infinity).filter((t: unknown) => typeof t == 'string' && !!t))
       .then((res) => res as string[])
       .catch((err) => {

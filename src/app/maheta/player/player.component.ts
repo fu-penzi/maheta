@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem, GetUriResult } from '@capacitor/filesystem';
 
-import { Track } from '@src/app/model/track.interface';
+import { Track } from '@src/app/model/track.types';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
 
 @Component({
@@ -13,6 +12,7 @@ import { MusicLibraryService } from '@src/app/services/music-library.service';
 })
 export class PlayerComponent implements OnInit {
   public track: Track = {
+    uri: '',
     title: 'Lost Sanctuary',
     author: 'Adrian von Ziegler',
     thumbUrl: 'assets/3.webp',

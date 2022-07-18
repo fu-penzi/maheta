@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Track } from '@src/app/model/track.interface';
+import { Track } from '@src/app/model/track.types';
 
 @Injectable({
   providedIn: 'root',

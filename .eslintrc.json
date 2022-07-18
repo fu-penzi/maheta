@@ -92,6 +92,7 @@
           "always",
           { "exceptAfterSingleLine": true }
         ],
+        "@typescript-eslint/no-duplicate-enum-values": ["off"],
         "eqeqeq": ["error", "smart"],
         "linebreak-style": ["error", "unix"],
         "prefer-const": "error",
