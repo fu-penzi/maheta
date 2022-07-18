@@ -62,7 +62,7 @@
           }
         ],
         "@typescript-eslint/member-ordering": [
-          "warn",
+          "error",
           {
             "default": {
               "memberTypes": [
@@ -87,6 +87,11 @@
             }
           }
         ],
+        "@typescript-eslint/lines-between-class-members": [
+          "error",
+          "always",
+          { "exceptAfterSingleLine": true }
+        ],
         "eqeqeq": ["error", "smart"],
         "linebreak-style": ["error", "unix"],
         "prefer-const": "error",
@@ -95,9 +100,7 @@
           "error",
           {
             "groups": [
-              ["^@angular"],
-              ["^@environment"],
-              ["^@capacitor"],
+              ["^@angular", "^@capacitor", "^@environment"],
               ["^@src*"],
               ["^@maheta*"],
               ["^../", "./", "^.", "^"]
