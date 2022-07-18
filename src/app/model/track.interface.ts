@@ -1,6 +1,10 @@
+import { IAudioMetadata } from 'music-metadata-browser';
+
 export interface Track {
-  title: string;
-  author: string;
+  uri?: string;
+  metadata?: IAudioMetadata;
+  title?: string;
+  author?: string;
   thumbUrl?: string;
-  duration: number;
+  duration?: number;
 }

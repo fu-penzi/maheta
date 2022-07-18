@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Capacitor } from '@capacitor/core';
-import { Directory, Filesystem, GetUriResult, ReadFileResult } from '@capacitor/filesystem';
+import { Directory, Filesystem, GetUriResult } from '@capacitor/filesystem';
 
 import { Track } from '@src/app/model/track.interface';
-import { FileLoadingService } from '@src/app/services/file-loading.service';
-
-// import { Howl, Howler } from 'howler';
-import * as musicMetadata from 'music-metadata-browser';
-import { IAudioMetadata } from 'music-metadata-browser';
+import { MusicLibraryService } from '@src/app/services/music-library.service';
 
 @Component({
   selector: 'maheta-player',
@@ -23,22 +19,16 @@ export class PlayerComponent implements OnInit {
     duration: 3.25,
   };
 
-  // public controlButtons;
-  // public adjacentButtons;
-
   public showTicks: boolean = false;
   public autoTicks: boolean = false;
   public tickInterval: number = 1;
   public value = 1;
+  private _trackUri: string;
 
-  public files: any;
-  public path: any;
-
-  constructor(private fileLoading: FileLoadingService) {}
+  constructor(private readonly musicLibraryService: MusicLibraryService) {}
 
   ngOnInit(): void {
     this.setupButtons();
-    this.fileLoading.loadMusic();
     Filesystem.getUri({
       path: 'Music/206.mp3',
       directory: Directory.ExternalStorage,
@@ -55,23 +45,11 @@ export class PlayerComponent implements OnInit {
     return 0;
   }
 
-  private readTrackMetadata(path: string): Promise<IAudioMetadata> {
-    return Filesystem.readFile({ path: path })
-      .then((res: ReadFileResult) => fetch(`data:audio/mpeg;base64, ${res.data}`))
-      .then((res: Response) => res.blob())
-      .then((res: Blob) => musicMetadata.parseBlob(res));
-    // .catch((error) => console.error(error));
-  }
-
-  private _trackUri: string;
   public play(): void {
     // const sound = new Howl({
     //   src: [this._trackUri],
     // });
     // sound.play();
-    this.readTrackMetadata(`file:///sdcard/Music/206.mp3`).then((res: IAudioMetadata) => {
-      console.error(res.common.title);
-    });
   }
 
   private setupButtons() {

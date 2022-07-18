@@ -1,9 +1,9 @@
 <ul>
-  <li mat-ripple *ngFor="let track of tracks; index as i">
+  <li mat-ripple *ngFor="let track of tracks; index as i" (click)="musicControlService.playTrack(track)">
     <img class="track-thumb" src="{{ track.thumbUrl || images[i % images.length] }}" alt="{{ track.thumbUrl }}" />
     <div class="track-info">
-      <span class="track-info__title">{{ track.title }}</span>
-      <span class="track-info__author">{{ track.author }}</span>
+      <span class="track-info__title">{{ track?.title }}</span>
+      <span class="track-info__author">{{ track.metadata?.common?.artist }}</span>
     </div>
   </li>
 </ul>

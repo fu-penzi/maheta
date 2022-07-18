@@ -6,8 +6,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { RouterModule } from '@angular/router';
 
-import { FileLoadingService } from '@src/app/services/file-loading.service';
-
 import { PlayerComponent } from '@maheta/player/player.component';
 
 @NgModule({
@@ -25,6 +23,5 @@ import { PlayerComponent } from '@maheta/player/player.component';
     FormsModule,
     MatIconModule,
   ],
-  providers: [FileLoadingService],
 })
 export class PlayerModule {}
