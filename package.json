@@ -38,7 +38,6 @@
     "@capacitor/status-bar": "1.0.8",
     "@types/node": "^14.14.31",
     "cordova-plugin-music-controls2": "^3.0.6",
-    "howler": "^2.2.3",
     "music-metadata-browser": "^2.5.7",
     "process": "^0.11.10",
     "rxdb": "^12.7.8",
