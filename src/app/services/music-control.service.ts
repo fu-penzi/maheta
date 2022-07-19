@@ -6,13 +6,14 @@ import { Track } from '@src/app/model/track.types';
   providedIn: 'root',
 })
 export class MusicControlService {
-  private _currentTrackData: Track;
+  public currentTrack: Track;
+
   private _currentTrackAudio: HTMLAudioElement = new Audio();
 
   public playTrack(track: Track): void {
     this._currentTrackAudio.pause();
     this._currentTrackAudio = new Audio(track.src);
     this._currentTrackAudio.play();
-    this._currentTrackData = track;
+    this.currentTrack = track;
   }
 }

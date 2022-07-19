@@ -43,6 +43,7 @@ export class FileLoadingService {
             src: Capacitor.convertFileSrc(trackPath),
             title: trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
             author: TrackDefaultsEnum.AUTHOR,
+            thumbUrl: 'assets/note.jpg',
             // ...(metadata && { metadata: metadata }),
           };
         })

@@ -1,8 +1,8 @@
-<img *ngIf="false" class="track-thumb" src="{{ this.track.thumbUrl }}" alt="track-thumb" />
+<img class="track-thumb" src="{{ this.track?.thumbUrl }}" alt="track-thumb" />
 
 <div class="track-info">
-  <strong class="track-info__title">{{ this.track.title }}</strong>
-  <span class="track-info__author">{{ this.track.author }}</span>
+  <strong class="track-info__title">{{ this.track?.title }}</strong>
+  <span class="track-info__author">{{ this.track?.author }}</span>
 </div>
 
 <div class="controls">
@@ -16,50 +16,31 @@
     aria-labelledby="example-name-label"
   >
   </mat-slider>
-
-  <!--  TODO remove static track time-->
   <div class="controls__track-time">
     <span>1:25</span>
     <span>2:53</span>
   </div>
 
   <div class="controls__buttons">
-    <button
-      mat-icon-button
-      aria-label="Example icon button with a bookmark icon"
-    >
+    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
       <mat-icon>shuffle</mat-icon>
     </button>
 
     <div class="controls__center-buttons">
-      <button
-        mat-icon-button
-        aria-label="Example icon button with a bookmark icon"
-      >
+      <button mat-icon-button aria-label="Example icon button with a bookmark icon">
         <mat-icon>skip_previous</mat-icon>
       </button>
 
-      <button
-        (click)="play()"
-        mat-fab
-        color="accent"
-        aria-label="Example icon button with a bookmark icon"
-      >
+      <button (click)="play()" mat-fab color="accent" aria-label="Example icon button with a bookmark icon">
         <mat-icon>play_arrow</mat-icon>
       </button>
 
-      <button
-        mat-icon-button
-        aria-label="Example icon button with a bookmark icon"
-      >
+      <button mat-icon-button aria-label="Example icon button with a bookmark icon">
         <mat-icon>skip_next</mat-icon>
       </button>
     </div>
 
-    <button
-      mat-icon-button
-      aria-label="Example icon button with a bookmark icon"
-    >
+    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
       <mat-icon>repeat</mat-icon>
     </button>
 
