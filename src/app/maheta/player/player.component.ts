@@ -13,6 +13,7 @@ import { MusicLibraryService } from '@src/app/services/music-library.service';
 export class PlayerComponent implements OnInit {
   public track: Track = {
     uri: '',
+    src: '',
     title: 'Lost Sanctuary',
     author: 'Adrian von Ziegler',
     thumbUrl: 'assets/3.webp',

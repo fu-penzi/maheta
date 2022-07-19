@@ -1,7 +1,8 @@
 export interface Track {
+  uri: string;
+  src: string;
   title: string;
   author: string;
-  uri: string;
   thumbUrl?: string;
   duration?: number;
 }

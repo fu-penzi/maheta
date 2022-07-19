@@ -11,7 +11,7 @@ export class MusicControlService {
 
   public playTrack(track: Track): void {
     this._currentTrackAudio.pause();
-    this._currentTrackAudio = new Audio(track.uri);
+    this._currentTrackAudio = new Audio(track.src);
     this._currentTrackAudio.play();
     this._currentTrackData = track;
   }

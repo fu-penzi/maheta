@@ -39,7 +39,8 @@ export class FileLoadingService {
           //   console.error(`Failed to get ${trackPath} metadata: ${err}`)
           // );
           return {
-            uri: Capacitor.convertFileSrc(trackPath),
+            uri: trackPath,
+            src: Capacitor.convertFileSrc(trackPath),
             title: trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
             author: TrackDefaultsEnum.AUTHOR,
             // ...(metadata && { metadata: metadata }),
