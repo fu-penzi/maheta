@@ -70,7 +70,6 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "prettier": "^2.7.1",
     "stylelint": "^14.9.1",
-    "stylelint-config-idiomatic-order": "^8.1.0",
     "stylelint-config-prettier-scss": "0.0.1",
     "stylelint-config-standard-scss": "^4.0.0",
     "stylelint-order": "^5.0.0",
