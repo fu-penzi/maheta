@@ -8,7 +8,12 @@
   </div>
 
   <mat-toolbar class="bottom-nav" color="primary">
-    <a *ngFor="let tab of bottomNavTabs" routerLink="{{ tab.link }}" class="bottom-nav__tab" aria-label="Example icon button with a bookmark icon">
+    <a
+      *ngFor="let tab of bottomNavTabs"
+      routerLink="{{ tab.link }}"
+      class="bottom-nav__tab"
+      aria-label="Example icon button with a bookmark icon"
+    >
       <mat-icon>{{ tab.icon }}</mat-icon>
       <span class="bottom-nav__tab-name">{{ tab.name }}</span>
     </a>

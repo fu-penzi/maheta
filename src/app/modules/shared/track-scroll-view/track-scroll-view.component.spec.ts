@@ -8,9 +8,8 @@ describe('TrackScrollViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TrackScrollViewComponent ]
-    })
-    .compileComponents();
+      declarations: [TrackScrollViewComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TrackScrollViewComponent);
     component = fixture.componentInstance;
