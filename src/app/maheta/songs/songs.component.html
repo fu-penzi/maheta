@@ -1,9 +1,1 @@
-<ul>
-  <li mat-ripple *ngFor="let track of tracks; index as i" (click)="play(track)">
-    <img class="track-thumb" src="{{ track.thumbUrl || images[i % images.length] }}" alt="{{ track.thumbUrl }}" />
-    <div class="track-info">
-      <span class="track-info__title">{{ track.title }}</span>
-      <span class="track-info__author">{{ track.author }}</span>
-    </div>
-  </li>
-</ul>
+<maheta-track-scroll-view [tracks]="tracks"></maheta-track-scroll-view>

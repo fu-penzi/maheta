@@ -1,0 +1,28 @@
+<cdk-virtual-scroll-viewport itemSize="50" class="virtual-view" [class.scrollbar-override]='!isMobile'>
+  <ul>
+    <li
+      *ngFor="let track of tracks; index as i"
+      class="track"
+      mat-ripple
+      (click)="play(track)"
+    >
+      <img
+        class="track-thumb"
+        src="{{ track.thumbUrl || images[i % images.length] }}"
+        alt="{{ track.thumbUrl }}"
+      />
+
+      <div class="track-info">
+        <span class="track-info__title">{{ track.title }}</span>
+        <span class="track-info__author">{{ track.author }}</span>
+      </div>
+
+      <div class="track-menu">
+        <span class="track-menu__duration">2:32</span>
+        <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+    </li>
+  </ul>
+</cdk-virtual-scroll-viewport>

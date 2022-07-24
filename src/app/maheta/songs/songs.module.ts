@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatRippleModule } from '@angular/material/core';
 import { RouterModule } from '@angular/router';
+
+import { SharedModule } from '@src/app/modules/shared/shared.module';
 
 import { SongsComponent } from '@maheta/songs/songs.component';
 
@@ -15,7 +16,7 @@ import { SongsComponent } from '@maheta/songs/songs.component';
       },
     ]),
     CommonModule,
-    MatRippleModule,
+    SharedModule,
   ],
 })
 export class SongsModule {}
