@@ -5,7 +5,7 @@
   <span class="track-info__author">{{ this.track?.author }}</span>
 </div>
 
-<div class="controls">
+<div class="track-controls">
   <mat-slider
     color="accent"
     [max]="100"
@@ -16,31 +16,52 @@
     aria-labelledby="example-name-label"
   >
   </mat-slider>
-  <div class="controls__track-time">
+  <div class="track-controls__track-time">
     <span>1:25</span>
     <span>2:53</span>
   </div>
 
-  <div class="controls__buttons">
+  <div class="track-controls__buttons">
     <button mat-icon-button aria-label="Example icon button with a bookmark icon">
       <mat-icon>shuffle</mat-icon>
     </button>
 
-    <div class="controls__center-buttons">
-      <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+    <div class="track-controls__center-buttons">
+      <button
+        (click)="prev()"
+        mat-icon-button
+        aria-label="Example icon button with a bookmark icon"
+      >
         <mat-icon>skip_previous</mat-icon>
       </button>
 
+      <ng-container *ngIf="!isPlaying()">
+        <button
+          (click)="play()"
+          mat-fab
+          color="accent"
+          aria-label="Example icon button with a bookmark icon"
+        >
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="isPlaying()">
+        <button
+          (click)="pause()"
+          mat-fab
+          color="accent"
+          aria-label="Example icon button with a bookmark icon"
+        >
+          <mat-icon>pause</mat-icon>
+        </button>
+      </ng-container>
+
       <button
-        (click)="play()"
-        mat-fab
-        color="accent"
+        (click)="next()"
+        mat-icon-button
         aria-label="Example icon button with a bookmark icon"
       >
-        <mat-icon>play_arrow</mat-icon>
-      </button>
-
-      <button mat-icon-button aria-label="Example icon button with a bookmark icon">
         <mat-icon>skip_next</mat-icon>
       </button>
     </div>

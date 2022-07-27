@@ -4,7 +4,7 @@
   [class.scrollbar-override]="!isMobile"
 >
   <ul>
-    <li *ngFor="let track of tracks; index as i" class="track" mat-ripple (click)="play(track)">
+    <li *ngFor="let track of tracks; index as i" class="track" (click)="play(i)" mat-ripple>
       <img
         class="track-thumb"
         src="{{ track.thumbUrl || images[i % images.length] }}"

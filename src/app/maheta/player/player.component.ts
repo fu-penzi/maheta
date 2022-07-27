@@ -3,7 +3,7 @@ import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem, GetUriResult } from '@capacitor/filesystem';
 
 import { Track } from '@src/app/model/track.types';
-import { MusicControlService } from '@src/app/services/music-control.service';
+import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
 
 @Component({
@@ -46,10 +46,23 @@ export class PlayerComponent implements OnInit {
   }
 
   public play(): void {
-    // const sound = new Howl({
-    //   src: [this._trackUri],
-    // });
-    // sound.play();
+    this.musicControlService.play();
+  }
+
+  public pause(): void {
+    this.musicControlService.pause();
+  }
+
+  public next(): void {
+    this.musicControlService.next();
+  }
+
+  public prev(): void {
+    this.musicControlService.prev();
+  }
+
+  public isPlaying(): boolean {
+    return this.musicControlService.isPlaying;
   }
 
   private setupButtons(): void {

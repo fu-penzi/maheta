@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -15,7 +14,6 @@ import { SongsComponent } from '@maheta/songs/songs.component';
         component: SongsComponent,
       },
     ]),
-    CommonModule,
     SharedModule,
   ],
 })

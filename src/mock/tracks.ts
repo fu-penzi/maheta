@@ -12,6 +12,7 @@ export const tracksMock: Track[] = [
     uri: '',
     src: '',
     title: 'Curtains Up',
+    thumbUrl: 'assets/note.jpg',
     author: 'Eminem',
     duration: 3.25,
   },

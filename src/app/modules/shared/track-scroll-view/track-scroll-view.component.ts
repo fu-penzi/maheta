@@ -3,7 +3,7 @@ import { Capacitor } from '@capacitor/core';
 
 import { PlatformEnum } from '@src/app/model/platform.enum';
 import { Track } from '@src/app/model/track.types';
-import { MusicControlService } from '@src/app/services/music-control.service';
+import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { images } from '@src/mock/images';
 
 @Component({
@@ -20,12 +20,13 @@ export class TrackScrollViewComponent implements OnInit {
   constructor(private readonly musicControlService: MusicControlService) {}
 
   public ngOnInit(): void {
+    this.musicControlService.nextQueue = this.tracks;
     this.isMobile = [PlatformEnum.ANDROID, PlatformEnum.IOS].includes(
       Capacitor.getPlatform() as PlatformEnum
     );
   }
 
-  public play(track: Track): void {
-    this.musicControlService.playTrack(track);
+  public play(trackIndex: number): void {
+    this.musicControlService.play(trackIndex);
   }
 }
