@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { environment } from '@environment/environment';
 
 import { UrlEnum } from '@src/app/model/url.enum';
@@ -18,6 +17,7 @@ interface BottomNavTab {
 })
 export class LayoutComponent implements OnInit {
   public bottomNavTabs: BottomNavTab[];
+  public activeTabName: string;
 
   constructor(private themeService: ThemeService) {}
 
@@ -31,6 +31,14 @@ export class LayoutComponent implements OnInit {
 
   public switchTheme(): void {
     this.themeService.switchTheme();
+  }
+
+  public selectTab(tab: BottomNavTab): void {
+    this.activeTabName = tab.name;
+  }
+
+  public isTabActive(tab: BottomNavTab): boolean {
+    return this.activeTabName === tab.name;
   }
 
   private setupBottomNav(): void {
@@ -56,5 +64,6 @@ export class LayoutComponent implements OnInit {
         link: UrlEnum.PLAYLISTS,
       },
     ];
+    this.activeTabName = environment.locales.MAHETA.BOTTOM_NAVIGATION.songs;
   }
 }

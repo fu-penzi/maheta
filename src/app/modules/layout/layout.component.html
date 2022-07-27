@@ -10,8 +10,10 @@
   <mat-toolbar class="bottom-nav" color="primary">
     <a
       *ngFor="let tab of bottomNavTabs"
+      (click)="selectTab(tab)"
       routerLink="{{ tab.link }}"
       class="bottom-nav__tab"
+      [class.active]="isTabActive(tab)"
       aria-label="Example icon button with a bookmark icon"
     >
       <mat-icon>{{ tab.icon }}</mat-icon>
