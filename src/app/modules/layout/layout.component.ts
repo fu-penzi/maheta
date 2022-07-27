@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
 import { environment } from '@environment/environment';
 
+import { PlatformEnum } from '@src/app/model/platform.enum';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
 
@@ -16,16 +18,28 @@ interface BottomNavTab {
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
+  @HostBinding('class.web') isWeb: boolean = false;
+  @HostBinding('class.mobile') isMobile: boolean = false;
+
   public bottomNavTabs: BottomNavTab[];
   public activeTabName: string;
 
   constructor(private themeService: ThemeService) {}
 
-  public get theme(): ThemeClassEnum {
+  public get themeClass(): ThemeClassEnum {
     return this.themeService.theme;
   }
 
   public ngOnInit(): void {
+    //TODO fix this
+    if (
+      [PlatformEnum.ANDROID, PlatformEnum.IOS].includes(Capacitor.getPlatform() as PlatformEnum)
+    ) {
+      this.isMobile = true;
+    } else {
+      this.isWeb = true;
+    }
+
     this.setupBottomNav();
   }
 

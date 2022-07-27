@@ -1,6 +1,6 @@
-@use 'variables' as *;
+@use 'variables.scss' as *;
 
-:host {
+:host   {
   position: relative;
   display: block;
   overflow: hidden;
@@ -11,7 +11,7 @@
   color: $text;
 }
 
-.page-content {
+.page-content  {
   //padding: 0 spacing(8);
 }
 
@@ -38,9 +38,14 @@
   &__tab.active &__tab-name {
     color: $accent;
   }
+}
 
-  &__tab:hover,
-  &__tab:hover &__tab-name {
-    color: $accent-light;
+:host(.web) {
+  .bottom-nav {
+    &__tab:hover,
+    &__tab:hover .bottom-nav__tab-name {
+      color: $accent;
+      filter: brightness($brightness-medium);
+    }
   }
 }

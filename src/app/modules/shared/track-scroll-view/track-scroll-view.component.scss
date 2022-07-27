@@ -6,21 +6,6 @@
   font-size: 1rem;
 }
 
-.scrollbar-override {
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
-  }
-}
-
 .virtual-view {
   height: 85vh;
   overflow-x: hidden;
@@ -63,6 +48,14 @@
   &__author {
     color: $text-secondary;
   }
+
+  &.active {
+    color: $accent;
+  }
+
+  &.active &__author {
+    color: $accent-dark;
+  }
 }
 
 .track-menu {
@@ -73,5 +66,22 @@
   &__duration {
     padding: 0 spacing(3);
     color: $text-secondary;
+  }
+}
+
+:host(.web) {
+  .virtual-view {
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: darkgrey;
+      outline: 1px solid slategrey;
+    }
   }
 }
