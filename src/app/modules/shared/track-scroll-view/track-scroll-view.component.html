@@ -1,10 +1,15 @@
 <cdk-virtual-scroll-viewport
-  itemSize="50"
+  itemSize="64"
   class="virtual-view"
   [class.scrollbar-override]="!isMobile"
 >
   <ul>
-    <li *ngFor="let track of tracks; index as i" class="track" (click)="playPosition(i)" mat-ripple>
+    <li
+      *cdkVirtualFor="let track of tracks; index as i; trackBy: trackByIndex"
+      class="track"
+      (click)="playPosition(i)"
+      mat-ripple
+    >
       <img
         class="track-thumb"
         src="{{ track.thumbUrl || images[i % images.length] }}"

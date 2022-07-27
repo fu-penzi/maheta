@@ -2,29 +2,29 @@ import { Injectable } from '@angular/core';
 
 import { Track } from '@src/app/model/track.types';
 import { QueueService } from '@src/app/services/queue.service';
-
-interface TrackInfo {
-  track: Track;
-  audio: HTMLAudioElement;
-}
+import { tracksMock } from '@src/mock/tracks';
 
 @Injectable()
 export class MusicControlService {
   private _playing: boolean = false;
   private _nextQueue: Track[] | null = null;
+  private _currentTrackAudio: HTMLAudioElement = new Audio();
 
-  constructor(private queueService: QueueService<TrackInfo>) {}
+  constructor(private queueService: QueueService<Track>) {}
 
   public get isPlaying(): boolean {
     return this._playing;
   }
 
   public get currentTrack(): Track {
-    return this.queueService.currentItem.track;
+    // if (this.queueService.currentItem?.track) {
+    return this.queueService.currentItem;
+    // }
+    return tracksMock[0];
   }
 
   private get currentTrackAudio(): HTMLAudioElement {
-    return this.queueService.currentItem.audio;
+    return this._currentTrackAudio;
   }
 
   public set nextQueue(tracks: Track[]) {
@@ -35,12 +35,13 @@ export class MusicControlService {
 
   public playPosition(position: number): void {
     if (this._nextQueue) {
+      console.log('tekst dolny');
       this.setQueue(this._nextQueue);
       this._nextQueue = null;
     }
 
-    this.resetAudio(this.currentTrackAudio);
     this.setQueuePosition(position);
+    this.updateCurrentTrackAudio();
 
     this.play();
   }
@@ -56,8 +57,8 @@ export class MusicControlService {
   }
 
   public next(): void {
-    this.resetAudio(this.currentTrackAudio);
     this.queueService.moveBy(1);
+    this.updateCurrentTrackAudio();
 
     if (this._playing) {
       this.play();
@@ -65,8 +66,8 @@ export class MusicControlService {
   }
 
   public prev(): void {
-    this.resetAudio(this.currentTrackAudio);
     this.queueService.moveBy(-1);
+    this.updateCurrentTrackAudio();
 
     if (this._playing) {
       this.play();
@@ -75,16 +76,7 @@ export class MusicControlService {
 
   private setQueue(tracks: Track[]): void {
     this.queueService.clear();
-    const trackInfos: TrackInfo[] = tracks.map((track: Track) => {
-      const audio: HTMLAudioElement = new Audio(track.src);
-      audio.load();
-      return {
-        audio: audio,
-        track: track,
-      };
-    });
-
-    this.queueService.add(trackInfos);
+    this.queueService.add(tracks);
   }
 
   private setQueuePosition(position: number): void {
@@ -93,8 +85,8 @@ export class MusicControlService {
     this.currentTrackAudio.play();
   }
 
-  private resetAudio(audio: HTMLAudioElement): void {
-    audio.pause();
-    audio.currentTime = 0;
+  private updateCurrentTrackAudio(): void {
+    this._currentTrackAudio.pause();
+    this._currentTrackAudio = new Audio(this.currentTrack.src);
   }
 }

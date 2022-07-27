@@ -29,4 +29,8 @@ export class TrackScrollViewComponent implements OnInit {
   public playPosition(position: number): void {
     this.musicControlService.playPosition(position);
   }
+
+  public trackByIndex(index: number): number {
+    return index;
+  }
 }

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Capacitor } from '@capacitor/core';
-import { Directory, Filesystem, GetUriResult } from '@capacitor/filesystem';
 
 import { Track } from '@src/app/model/track.types';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
@@ -16,7 +14,6 @@ export class PlayerComponent implements OnInit {
   public autoTicks: boolean = false;
   public tickInterval: number = 1;
   public value = 1;
-  private _trackUri: string;
 
   constructor(
     private readonly musicLibraryService: MusicLibraryService,
@@ -29,12 +26,6 @@ export class PlayerComponent implements OnInit {
 
   ngOnInit(): void {
     this.setupButtons();
-    Filesystem.getUri({
-      path: 'Music/206.mp3',
-      directory: Directory.ExternalStorage,
-    }).then((res: GetUriResult) => {
-      this._trackUri = Capacitor.convertFileSrc(res.uri);
-    });
   }
 
   public getSliderTickInterval(): number | 'auto' {

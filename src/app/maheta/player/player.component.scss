@@ -5,7 +5,7 @@
   margin: spacing(5) spacing(8) 0;
 
   & > * {
-    padding-bottom: spacing(15);
+    padding-bottom: spacing(12);
   }
 }
 
@@ -47,7 +47,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: -10px;
-    margin-bottom: spacing(1);
+    margin-bottom: spacing(8);
     color: $text-secondary;
   }
 
