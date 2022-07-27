@@ -26,7 +26,7 @@ export class TrackScrollViewComponent implements OnInit {
     );
   }
 
-  public play(trackIndex: number): void {
-    this.musicControlService.play(trackIndex);
+  public playPosition(position: number): void {
+    this.musicControlService.playPosition(position);
   }
 }

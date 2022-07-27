@@ -94,6 +94,7 @@
         ],
         "@typescript-eslint/no-duplicate-enum-values": ["off"],
         "@typescript-eslint/no-extraneous-class": ["off"],
+        "@typescript-eslint/no-unnecessary-condition": ["off"],
         "eqeqeq": ["error", "smart"],
         "linebreak-style": ["error", "unix"],
         "prefer-const": "error",
