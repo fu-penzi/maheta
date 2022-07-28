@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { LayoutComponent } from './layout.component';
-import { RouterModule } from '@angular/router';
-import { ThemeService } from './services/theme.service';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterModule } from '@angular/router';
+
+import { LayoutComponent } from '@src/app/modules/layout/layout.component';
+import { ThemeService } from '@src/app/modules/layout/services/theme.service';
 
 @NgModule({
   declarations: [LayoutComponent],
