@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Track } from '@src/app/model/track.types';
+import { Track } from '@src/app/db/domain/track.schema';
 import { tracksMock } from '@src/mock/tracks';
 
 @Injectable({

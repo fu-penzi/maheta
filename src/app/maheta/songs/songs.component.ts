@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { Track } from '@src/app/model/track.types';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
+import { Track } from '@src/app/db/domain/track.schema';
 
 @Component({
   selector: 'maheta-songs',

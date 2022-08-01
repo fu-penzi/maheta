@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { Track } from '@src/app/model/track.types';
 import { QueueService } from '@src/app/services/queue.service';
 import { tracksMock } from '@src/mock/tracks';
+import { Track } from '@src/app/db/domain/track.schema';
 
 @Injectable()
 export class MusicControlService {
