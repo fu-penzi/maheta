@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Track } from '@src/app/db/domain/track.schema';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
-import { Track } from '@src/app/db/domain/track.schema';
 
 @Component({
   selector: 'maheta-player',

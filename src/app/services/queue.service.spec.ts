@@ -1,9 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
-import { QueueService } from './queue.service';
+import { Track } from '@src/app/db/domain/track.schema';
+import { QueueService } from '@src/app/services/queue.service';
 
 describe('QueueService', () => {
-  let service: QueueService;
+  let service: QueueService<Track[]>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
