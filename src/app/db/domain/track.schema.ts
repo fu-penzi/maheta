@@ -5,6 +5,7 @@ export interface Track {
   src: string;
   title: string;
   author: string;
+  album?: string;
   thumbUrl?: string;
   duration?: number;
 }
@@ -12,6 +13,7 @@ export interface Track {
 export enum TrackDefaultsEnum {
   TITLE = 'Unknown',
   AUTHOR = 'Unknown',
+  ALBUM = 'Unknown',
 }
 
 export const trackSchema: RxJsonSchema<Track> = {
@@ -34,6 +36,9 @@ export const trackSchema: RxJsonSchema<Track> = {
       type: 'string',
     },
     thumbUrl: {
+      type: 'string',
+    },
+    album: {
       type: 'string',
     },
     duration: {

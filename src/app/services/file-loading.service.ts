@@ -1,20 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
-import {
-  Directory,
-  Filesystem,
-  ReaddirResult,
-  ReadFileResult,
-  StatResult,
-} from '@capacitor/filesystem';
+import { Directory, Filesystem, ReaddirResult, StatResult } from '@capacitor/filesystem';
 
+import { Track, TrackDefaultsEnum } from '@src/app/db/domain/track.schema';
 import { MusicFileExtensionEnum } from '@src/app/model/music-file-extension.enum';
 import { PlatformEnum } from '@src/app/model/platform.enum';
 import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories.enum';
 
 import * as musicMetadata from 'music-metadata-browser';
-import { IAudioMetadata } from 'music-metadata-browser';
-import { Track, TrackDefaultsEnum } from '@src/app/db/domain/track.schema';
 
 enum FileTypeEnum {
   FILE = 'file',
@@ -35,16 +28,18 @@ export class FileLoadingService {
       this._trackPaths = await this.readMusicPaths();
       this._tracks = await Promise.all(
         this._trackPaths.map(async (trackPath) => {
-          // const metadata = await this.readTrackMetadata(trackPath).catch((err) =>
-          //   console.error(`Failed to get ${trackPath} metadata: ${err}`)
-          // );
+          const capacitorPath: string = Capacitor.convertFileSrc(trackPath);
+          const metadata = await musicMetadata
+            .fetchFromUrl(capacitorPath)
+            .catch((err) => console.error(`Failed to get ${trackPath} metadata: ${err}`));
+
           return {
             uri: trackPath,
-            src: Capacitor.convertFileSrc(trackPath),
-            title: trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
-            author: TrackDefaultsEnum.AUTHOR,
+            src: capacitorPath,
+            title: metadata?.common.title ?? trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
+            author: metadata?.common.artist ?? TrackDefaultsEnum.AUTHOR,
+            album: metadata?.common.album ?? TrackDefaultsEnum.ALBUM,
             thumbUrl: 'assets/note.jpg',
-            // ...(metadata && { metadata: metadata }),
           };
         })
       );
@@ -53,16 +48,6 @@ export class FileLoadingService {
 
     //TODO add db and handling for other platforms
     // this.testInitDatabase().catch((err) => console.error(`Failed on database init ${err}`));
-  }
-
-  // private readMusicMetadata(): void {}
-
-  private readTrackMetadata(path: string): Promise<IAudioMetadata> {
-    return Filesystem.readFile({ path: path })
-      .then((res: ReadFileResult) => fetch(`data:audio/mpeg;base64, ${res.data}`))
-      .then((res: Response) => res.blob())
-      .then((res: Blob) => musicMetadata.parseBlob(res));
-    // .catch((error) => console.error(error));
   }
 
   private readMusicPaths(): Promise<string[]> {

@@ -5,7 +5,7 @@
   margin: spacing(5) spacing(8) 0;
 
   & > * {
-    padding-bottom: spacing(12);
+    padding-bottom: spacing(10);
   }
 }
 
@@ -27,8 +27,9 @@
   overflow: hidden;
 
   &__title {
-    margin-bottom: spacing(4);
-    font-size: 1.75rem;
+    margin-bottom: spacing(1);
+    line-height: 2.3rem;
+    font-size: 1.5rem;
     font-weight: 500;
   }
 

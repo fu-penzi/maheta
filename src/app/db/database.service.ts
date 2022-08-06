@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { Track, trackSchema } from '@src/app/db/domain/track.schema';
+import { DatabaseCollectionEnum } from '@src/app/model/database-collection.enum';
 import { FileLoadingService } from '@src/app/services/file-loading.service';
 
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
 import { createRxDatabase, RxCollection, RxDatabase } from 'rxdb';
-import { logger } from '@src/devUtils';
-import { DatabaseCollectionEnum } from '@src/app/model/database-collection.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +21,6 @@ export class DatabaseService {
       name: 'trackdb',
       storage: getRxStorageDexie(),
     });
-
     this._trackCollection = await this._trackDB
       .addCollections({
         [DatabaseCollectionEnum.TRACKS]: {
@@ -48,7 +46,7 @@ export class DatabaseService {
 
     await this.isTrackCollectionEmpty();
 
-    await this._trackCollection.bulkUpsert(tracks);
+    await this._trackCollection.bulkInsert(tracks);
 
     await this.isTrackCollectionEmpty();
   }

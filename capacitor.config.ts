@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 // insert your ip here
-const hostIp = '192.168.0.105';
+const hostIp = '192.168.0.108';
 
 const config: CapacitorConfig = {
   appId: 'com.fupenzi.maheta',
