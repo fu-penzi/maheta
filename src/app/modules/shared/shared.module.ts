@@ -6,9 +6,10 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
+import { DurationPipe } from '@src/app/pipes/duration.pipe';
 
 @NgModule({
-  declarations: [TrackScrollViewComponent],
+  declarations: [TrackScrollViewComponent, DurationPipe],
   imports: [CommonModule, MatRippleModule, MatIconModule, MatButtonModule, ScrollingModule],
   exports: [CommonModule, TrackScrollViewComponent],
 })

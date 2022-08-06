@@ -14,6 +14,7 @@ export enum TrackDefaultsEnum {
   TITLE = 'Unknown',
   AUTHOR = 'Unknown',
   ALBUM = 'Unknown',
+  THUMBURL = 'assets/note.jpg',
 }
 
 export const trackSchema: RxJsonSchema<Track> = {

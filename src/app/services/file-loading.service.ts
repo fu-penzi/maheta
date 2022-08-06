@@ -39,7 +39,12 @@ export class FileLoadingService {
             title: metadata?.common.title ?? trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
             author: metadata?.common.artist ?? TrackDefaultsEnum.AUTHOR,
             album: metadata?.common.album ?? TrackDefaultsEnum.ALBUM,
-            thumbUrl: 'assets/note.jpg',
+            thumbUrl: metadata?.common.picture
+              ? `data:${
+                  metadata?.common.picture[0].format
+                };base64,${metadata?.common.picture[0].data.toString('base64')}`
+              : TrackDefaultsEnum.THUMBURL,
+            duration: metadata?.format.duration,
           };
         })
       );
