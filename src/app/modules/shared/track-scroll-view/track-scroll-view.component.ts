@@ -1,10 +1,10 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 
+import { Track } from '@src/app/db/domain/track.schema';
 import { PlatformEnum } from '@src/app/model/platform.enum';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { images } from '@src/mock/images';
-import { Track } from '@src/app/db/domain/track.schema';
 
 @Component({
   selector: 'maheta-track-scroll-view',

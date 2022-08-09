@@ -46,3 +46,11 @@ $-size-smaller-map: (
     @error 'Size "#{$size}" not found';
   }
 }
+
+@mixin text-ellipsis() {
+  & > * {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

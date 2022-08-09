@@ -5,9 +5,9 @@ export interface Track {
   src: string;
   title: string;
   author: string;
-  album?: string;
-  thumbUrl?: string;
-  duration?: number;
+  album: string;
+  thumbUrl: string;
+  duration: number;
 }
 
 export enum TrackDefaultsEnum {
@@ -52,6 +52,6 @@ export const trackSchema: RxJsonSchema<Track> = {
       // multipleOf: 1,
     },
   },
-  required: ['uri', 'src', 'title', 'author', 'duration'],
+  required: ['uri', 'src', 'title', 'author', 'duration', 'album', 'thumbUrl'],
   // indexes: ['duration'],
 };

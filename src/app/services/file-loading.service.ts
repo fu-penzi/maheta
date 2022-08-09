@@ -44,7 +44,7 @@ export class FileLoadingService {
                   metadata?.common.picture[0].format
                 };base64,${metadata?.common.picture[0].data.toString('base64')}`
               : TrackDefaultsEnum.THUMBURL,
-            duration: metadata?.format.duration,
+            duration: metadata?.format.duration ?? 0,
           };
         })
       );

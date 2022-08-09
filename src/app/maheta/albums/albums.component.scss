@@ -1,0 +1,57 @@
+@use 'variables' as *;
+@use '@angular/material' as mat;
+
+:host {
+  display: block;
+  font-size: 1rem;
+}
+
+.album-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.album {
+  margin: spacing(2);
+  border-radius: spacing(1);
+  overflow: hidden;
+  background-color: $primary;
+
+  &__thumb {
+    object-fit: cover;
+    width: 100%;
+    min-height: size(xxxl);
+  }
+
+  @include mat.elevation(4);
+}
+
+.album-info {
+  padding: spacing(1) spacing(2);
+
+  @include text-ellipsis;
+
+  &__title {
+    margin-bottom: spacing(1);
+  }
+
+  &__secondary {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    color: $text-secondary;
+    max-width: 70%;
+    font-size: 0.8rem;
+
+    @include text-ellipsis;
+  }
+
+  .album-menu {
+    align-self: flex-end;
+    margin-right: -7px;
+  }
+}

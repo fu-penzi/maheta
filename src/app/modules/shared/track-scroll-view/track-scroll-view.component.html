@@ -6,11 +6,7 @@
       (click)="playPosition(i)"
       mat-ripple
     >
-      <img
-        class="track-thumb"
-        src="{{ track.thumbUrl || images[i % images.length] }}"
-        alt="{{ track.thumbUrl }}"
-      />
+      <img class="track-thumb" src="{{ track.thumbUrl }}" alt="{{ track.thumbUrl }}" />
 
       <div class="track-info" [class.active]="isCurrentTrack(track)">
         <span class="track-info__title">{{ track.title }}</span>

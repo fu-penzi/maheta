@@ -19,6 +19,10 @@ const routes: Routes = [
         path: UrlEnum.SONGS,
         loadChildren: () => import('./maheta/songs/songs.module').then((m) => m.SongsModule),
       },
+      {
+        path: UrlEnum.ALBUMS,
+        loadChildren: () => import('./maheta/albums/albums.module').then((m) => m.AlbumsModule),
+      },
     ],
     canActivate: [LayoutChildrenGuard],
   },
