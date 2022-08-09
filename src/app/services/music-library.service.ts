@@ -35,4 +35,8 @@ export class MusicLibraryService {
       tracks: tracksByAlbum[albumTitle],
     }));
   }
+
+  public getAlbum(title: string): Album | undefined {
+    return this._albums.find((album) => album.title === title);
+  }
 }

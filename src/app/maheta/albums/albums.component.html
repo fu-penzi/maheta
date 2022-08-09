@@ -1,22 +1,27 @@
-<ul class="album-list">
-  <li *ngFor="let album of albums" class="album">
-    <img class="album__thumb" src="{{ album.thumbUrl }}" alt="{{ album.thumbUrl }}" />
+<!--TODO refactor scroll viewport-->
+<cdk-virtual-scroll-viewport itemSize="32" class="virtual-view">
+  <ul class="album-list">
+    <li *cdkVirtualFor="let album of albums" class="album">
+      <a routerLink="{{ album.title }}">
+        <img class="album__thumb" src="{{ album.thumbUrl }}" alt="{{ album.thumbUrl }}" />
 
-    <div class="album-info">
-      <p class="album-info__title">{{ album.title }}</p>
+        <div class="album-info">
+          <p class="album-info__title">{{ album.title }}</p>
 
-      <div class="album-info__secondary">
-        <div class="album-info__text">
-          <span>{{ album.author }}</span>
-          <span>{{ 2010 }}</span>
+          <div class="album-info__secondary">
+            <div class="album-info__text">
+              <span>{{ album.author }}</span>
+              <span>{{ 2010 }}</span>
+            </div>
+
+            <div class="album-menu">
+              <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </div>
+          </div>
         </div>
-
-        <div class="album-menu">
-          <button mat-icon-button aria-label="Example icon button with a bookmark icon">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-        </div>
-      </div>
-    </div>
-  </li>
-</ul>
+      </a>
+    </li>
+  </ul>
+</cdk-virtual-scroll-viewport>

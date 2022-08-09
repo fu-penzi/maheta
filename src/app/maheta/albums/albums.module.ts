@@ -1,24 +1,32 @@
-import { CommonModule } from '@angular/common';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgModule } from '@angular/core';
-
-import { AlbumsComponent } from '@maheta/albums/albums.component';
-import { RouterModule } from '@angular/router';
-import { SharedModule } from '@src/app/modules/shared/shared.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
+
+import { SharedModule } from '@src/app/modules/shared/shared.module';
+
+import { AlbumsComponent } from '@maheta/albums/albums.component';
+import { AlbumTracksComponent } from '@maheta/albums/components/album-tracks/album-tracks.component';
+import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 
 @NgModule({
-  declarations: [AlbumsComponent],
+  declarations: [AlbumsComponent, AlbumTracksComponent],
   imports: [
     RouterModule.forChild([
       {
         path: '',
         component: AlbumsComponent,
       },
+      {
+        path: ':' + UrlParamsEnum.albumTitle,
+        component: AlbumTracksComponent,
+      },
     ]),
     SharedModule,
     MatButtonModule,
     MatIconModule,
+    ScrollingModule,
   ],
 })
 export class AlbumsModule {}

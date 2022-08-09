@@ -1,6 +1,14 @@
 <div [ngClass]="['mat-typography', themeClass]">
+  <!--  TODO top navigation-->
   <mat-toolbar color="primary">
-    <span>Player</span>
+    <a
+      class="bottom-nav__tab"
+      (click)="back()"
+      aria-label="Example icon button with a bookmark icon"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </a>
+    <span style="margin-left: 10px">Player</span>
   </mat-toolbar>
 
   <div class="page-content">

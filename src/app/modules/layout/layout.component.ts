@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { environment } from '@environment/environment';
@@ -24,7 +25,7 @@ export class LayoutComponent implements OnInit {
   public bottomNavTabs: BottomNavTab[];
   public activeTabName: string;
 
-  constructor(private themeService: ThemeService) {}
+  constructor(private themeService: ThemeService, private location: Location) {}
 
   public get themeClass(): ThemeClassEnum {
     return this.themeService.theme;
@@ -41,6 +42,10 @@ export class LayoutComponent implements OnInit {
     }
 
     this.setupBottomNav();
+  }
+
+  public back(): void {
+    this.location.back();
   }
 
   public switchTheme(): void {
