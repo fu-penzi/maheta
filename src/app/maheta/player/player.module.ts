@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { PlayerComponent } from '@maheta/player/player.component';
 
 @NgModule({
+  //TODO add guard when nothing is playing
   declarations: [PlayerComponent],
   imports: [
     RouterModule.forChild([

@@ -62,11 +62,6 @@ export class LayoutComponent implements OnInit {
   private setupBottomNav(): void {
     this.bottomNavTabs = [
       {
-        icon: 'play_arrow',
-        name: environment.locales.MAHETA.BOTTOM_NAVIGATION.player,
-        url: UrlEnum.PLAYER,
-      },
-      {
         icon: 'library_music',
         name: environment.locales.MAHETA.BOTTOM_NAVIGATION.songs,
         url: UrlEnum.SONGS,
