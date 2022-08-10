@@ -1,4 +1,4 @@
-<a *ngIf="currentTrack" class="player-bar" [routerLink]="playerRouterLink">
+<a *ngIf="currentTrack && !isTabPlayer" class="player-bar" [routerLink]="playerRouterLink">
   <div class="track">
     <img class="track-thumb" src="{{ currentTrack.thumbUrl }}" alt="{{ currentTrack.thumbUrl }}" />
 

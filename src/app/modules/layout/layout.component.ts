@@ -10,7 +10,7 @@ import { NavigationService } from '@src/app/services/navigation.service';
 interface BottomNavTab {
   icon: string;
   name: string;
-  link: string;
+  url: UrlEnum;
 }
 
 @Component({
@@ -23,7 +23,6 @@ export class LayoutComponent implements OnInit {
   @HostBinding('class.mobile') isMobile: boolean = false;
 
   public bottomNavTabs: BottomNavTab[];
-  public activeTabName: string;
 
   constructor(private themeService: ThemeService, private navigation: NavigationService) {}
 
@@ -53,11 +52,11 @@ export class LayoutComponent implements OnInit {
   }
 
   public selectTab(tab: BottomNavTab): void {
-    this.activeTabName = tab.name;
+    this.navigation.bottomNavTabUrl = tab.url;
   }
 
   public isTabActive(tab: BottomNavTab): boolean {
-    return this.activeTabName === tab.name;
+    return this.navigation.bottomNavTabUrl === tab.url;
   }
 
   private setupBottomNav(): void {
@@ -65,24 +64,23 @@ export class LayoutComponent implements OnInit {
       {
         icon: 'play_arrow',
         name: environment.locales.MAHETA.BOTTOM_NAVIGATION.player,
-        link: UrlEnum.PLAYER,
+        url: UrlEnum.PLAYER,
       },
       {
         icon: 'library_music',
         name: environment.locales.MAHETA.BOTTOM_NAVIGATION.songs,
-        link: UrlEnum.SONGS,
+        url: UrlEnum.SONGS,
       },
       {
         icon: 'album',
         name: environment.locales.MAHETA.BOTTOM_NAVIGATION.albums,
-        link: UrlEnum.ALBUMS,
+        url: UrlEnum.ALBUMS,
       },
       {
         icon: 'playlist_play',
         name: environment.locales.MAHETA.BOTTOM_NAVIGATION.playlists,
-        link: UrlEnum.PLAYLISTS,
+        url: UrlEnum.PLAYLISTS,
       },
     ];
-    this.activeTabName = environment.locales.MAHETA.BOTTOM_NAVIGATION.albums;
   }
 }

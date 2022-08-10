@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Track } from '@src/app/db/domain/track.schema';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
+import { NavigationService } from '@src/app/services/navigation.service';
 
 @Component({
   selector: 'maheta-player-bar',
@@ -10,10 +11,17 @@ import { MusicControlService } from '@src/app/services/music-control/music-contr
   styleUrls: ['./player-bar.component.scss'],
 })
 export class PlayerBarComponent {
-  constructor(private musicControlService: MusicControlService) {}
+  constructor(
+    private musicControlService: MusicControlService,
+    private navigation: NavigationService
+  ) {}
 
   public get currentTrack(): Track {
     return this.musicControlService.currentTrack;
+  }
+
+  public get isTabPlayer(): boolean {
+    return this.navigation.bottomNavTabUrl === UrlEnum.PLAYER;
   }
 
   public get playerRouterLink(): string {

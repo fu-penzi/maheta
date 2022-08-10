@@ -21,7 +21,7 @@
       <a
         *ngFor="let tab of bottomNavTabs"
         (click)="selectTab(tab)"
-        routerLink="{{ tab.link }}"
+        routerLink="{{ tab.url }}"
         class="bottom-nav__tab"
         [class.active]="isTabActive(tab)"
         aria-label="Example icon button with a bookmark icon"

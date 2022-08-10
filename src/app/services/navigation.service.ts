@@ -9,11 +9,19 @@ import { UrlEnum } from '@src/app/model/url.enum';
 })
 export class NavigationService {
   //TODO remove history, back to parent route ".."
+  public bottomNavTabUrl: UrlEnum = UrlEnum.ALBUMS;
+
   private _history: string[] = [];
   constructor(private router: Router, private zone: NgZone) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this._history.push(event.urlAfterRedirects);
+
+        Object.values(UrlEnum).forEach((url: UrlEnum) => {
+          if (this._history[this._history.length - 1].includes(url)) {
+            this.bottomNavTabUrl = url;
+          }
+        });
       }
     });
 
@@ -30,6 +38,7 @@ export class NavigationService {
     if (prev === current) {
       this._history.pop();
     }
+
     if (this._history.length > 0) {
       this.router.navigateByUrl(this._history[this._history.length - 1]);
     } else {
