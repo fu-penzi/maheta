@@ -23,10 +23,17 @@
   overflow: hidden;
   background-color: $primary;
 
+  a {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   &__thumb {
+    flex: 1;
     object-fit: cover;
     width: 100%;
-    min-height: size(xxxl);
   }
 
   @include mat.elevation(4);
