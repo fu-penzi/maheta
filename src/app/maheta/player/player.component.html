@@ -8,17 +8,18 @@
 <div class="track-controls">
   <mat-slider
     color="accent"
-    [max]="100"
-    [min]="0"
-    [step]="1"
-    [tickInterval]="getSliderTickInterval()"
-    [(ngModel)]="value"
+    [max]="sliderSettings.max"
+    [min]="sliderSettings.min"
+    [step]="sliderSettings.step"
+    [value]="sliderSettings.value"
+    (valueChange)="sliderValueChanges($event)"
+    (input)="setSliderHold(true)"
     aria-labelledby="example-name-label"
   >
   </mat-slider>
   <div class="track-controls__track-time">
-    <span>1:25</span>
-    <span>2:53</span>
+    <span>{{ this.currentTrackTime | mahetaDuration }}</span>
+    <span>{{ this.track?.duration | mahetaDuration }}</span>
   </div>
 
   <div class="track-controls__buttons">

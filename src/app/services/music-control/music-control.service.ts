@@ -4,13 +4,17 @@ import { Track } from '@src/app/db/domain/track.schema';
 import { QueueService } from '@src/app/services/queue.service';
 import { tracksMock } from '@src/mock/tracks';
 
+import { interval, map, Observable } from 'rxjs';
+
 @Injectable()
 export class MusicControlService {
   private _playing: boolean = false;
   private _nextQueue: Track[] | null = null;
-  private _currentTrackAudio: HTMLAudioElement = new Audio();
+  private _currentTrackAudio: HTMLAudioElement;
 
-  constructor(private queueService: QueueService<Track>) {}
+  constructor(private queueService: QueueService<Track>) {
+    this.setupCurrentTrackAudio();
+  }
 
   public get isPlaying(): boolean {
     return this._playing;
@@ -23,8 +27,8 @@ export class MusicControlService {
     return tracksMock[0];
   }
 
-  private get currentTrackAudio(): HTMLAudioElement {
-    return this._currentTrackAudio;
+  public get currentTrackTime(): Observable<number> {
+    return interval(50).pipe(map(() => this._currentTrackAudio.currentTime));
   }
 
   public set nextQueue(tracks: Track[]) {
@@ -46,12 +50,12 @@ export class MusicControlService {
   }
 
   public play(): void {
-    this.currentTrackAudio.play();
+    this._currentTrackAudio.play();
     this._playing = true;
   }
 
   public pause(): void {
-    this.currentTrackAudio.pause();
+    this._currentTrackAudio.pause();
     this._playing = false;
   }
 
@@ -73,19 +77,34 @@ export class MusicControlService {
     }
   }
 
+  public seekTo(time: number): void {
+    if (typeof this._currentTrackAudio.fastSeek === 'function') {
+      this._currentTrackAudio.fastSeek(time);
+    } else {
+      this._currentTrackAudio.currentTime = time;
+    }
+  }
+
   private setQueue(tracks: Track[]): void {
     this.queueService.clear();
     this.queueService.add(tracks);
   }
 
   private setQueuePosition(position: number): void {
-    this.currentTrackAudio.pause();
+    this._currentTrackAudio.pause();
     this.queueService.moveTo(position);
-    this.currentTrackAudio.play();
+    this._currentTrackAudio.play();
   }
 
   private updateCurrentTrackAudio(): void {
     this._currentTrackAudio.pause();
-    this._currentTrackAudio = new Audio(this.currentTrack.src);
+    this._currentTrackAudio.src = this.currentTrack.src;
+  }
+
+  private setupCurrentTrackAudio(): void {
+    this._currentTrackAudio = new Audio();
+    this._currentTrackAudio.addEventListener('ended', () => {
+      this.next();
+    });
   }
 }
