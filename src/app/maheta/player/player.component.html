@@ -12,8 +12,8 @@
     [min]="sliderSettings.min"
     [step]="sliderSettings.step"
     [value]="sliderSettings.value"
-    (valueChange)="sliderValueChanges($event)"
-    (input)="setSliderHold(true)"
+    (valueChange)="sliderRelease($event)"
+    (input)="sliderHold($event)"
     aria-labelledby="example-name-label"
   >
   </mat-slider>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSliderChange } from '@angular/material/slider';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
@@ -19,7 +20,7 @@ interface SliderSettings {
 export class PlayerComponent implements OnInit {
   public sliderSettings: SliderSettings;
   public currentTrackTime: number;
-  public sliderHold: boolean = false;
+  private _isSliderHeld: boolean = false;
 
   constructor(
     private readonly musicLibraryService: MusicLibraryService,
@@ -54,17 +55,22 @@ export class PlayerComponent implements OnInit {
     return this.musicControlService.isPlaying;
   }
 
-  public setSliderHold(sliderHold: boolean): void {
-    this.sliderHold = sliderHold;
+  public sliderHold(sliderChange: MatSliderChange): void {
+    if (!sliderChange?.value) {
+      return;
+    }
+    const time: number = (sliderChange.value * this.track?.duration) / this.sliderSettings.max;
+    this._isSliderHeld = true;
+    this.currentTrackTime = time;
   }
 
-  public sliderValueChanges(value: number | null): void {
+  public sliderRelease(value: number | null): void {
     if (!value) {
       return;
     }
-
-    this.musicControlService.seekTo((value * this.track?.duration) / this.sliderSettings.max);
-    this.setSliderHold(false);
+    const time: number = (value * this.track?.duration) / this.sliderSettings.max;
+    this.musicControlService.seekTo(time);
+    this._isSliderHeld = false;
   }
 
   private setupSlider(): void {
@@ -76,8 +82,8 @@ export class PlayerComponent implements OnInit {
     };
 
     this.musicControlService.currentTrackTime.subscribe((currentTrackTime: number) => {
-      this.currentTrackTime = currentTrackTime;
-      if (!this.sliderHold) {
+      if (!this._isSliderHeld) {
+        this.currentTrackTime = currentTrackTime;
         this.sliderSettings.value =
           (currentTrackTime / this.track?.duration) * this.sliderSettings.max;
       }
