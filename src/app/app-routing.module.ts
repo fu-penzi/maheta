@@ -6,7 +6,7 @@ import { UrlEnum } from '@src/app/model/url.enum';
 import { LayoutComponent } from '@src/app/modules/layout/layout.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: UrlEnum.SONGS, pathMatch: 'full' },
+  { path: '', redirectTo: UrlEnum.ALBUMS, pathMatch: 'full' },
   {
     path: '',
     component: LayoutComponent,
@@ -26,7 +26,7 @@ const routes: Routes = [
     ],
     canActivate: [LayoutChildrenGuard],
   },
-  { path: '**', redirectTo: UrlEnum.SONGS, pathMatch: 'full' },
+  { path: '**', redirectTo: UrlEnum.ALBUMS, pathMatch: 'full' },
 ];
 
 @NgModule({

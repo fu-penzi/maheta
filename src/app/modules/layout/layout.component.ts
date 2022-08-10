@@ -83,6 +83,6 @@ export class LayoutComponent implements OnInit {
         link: UrlEnum.PLAYLISTS,
       },
     ];
-    this.activeTabName = environment.locales.MAHETA.BOTTOM_NAVIGATION.songs;
+    this.activeTabName = environment.locales.MAHETA.BOTTOM_NAVIGATION.albums;
   }
 }
