@@ -1,13 +1,18 @@
-<a *ngIf="currentTrack && !isTabPlayer" class="player-bar" [routerLink]="playerRouterLink">
-  <div class="track">
-    <img class="track-thumb" src="{{ currentTrack.thumbUrl }}" alt="{{ currentTrack.thumbUrl }}" />
+<div *ngIf="currentTrack && !isTabPlayer">
+  <a class="player-bar" [routerLink]="playerRouterLink">
+    <div class="track">
+      <img
+        class="track-thumb"
+        src="{{ currentTrack.thumbUrl }}"
+        alt="{{ currentTrack.thumbUrl }}"
+      />
 
-    <div class="track-info">
-      <span class="track-info__title">{{ currentTrack.title }}</span>
-      <span class="track-info__author">{{ currentTrack.author }}</span>
+      <div class="track-info">
+        <span class="track-info__title">{{ currentTrack.title }}</span>
+        <span class="track-info__author">{{ currentTrack.author }}</span>
+      </div>
     </div>
-  </div>
-
+  </a>
   <div class="controls">
     <button (click)="prev()" mat-icon-button aria-label="Example icon button with a bookmark icon">
       <mat-icon>skip_previous</mat-icon>
@@ -39,4 +44,4 @@
       <mat-icon>skip_next</mat-icon>
     </button>
   </div>
-</a>
+</div>
