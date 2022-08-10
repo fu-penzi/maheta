@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { environment } from '@environment/environment';
@@ -6,6 +5,7 @@ import { environment } from '@environment/environment';
 import { PlatformEnum } from '@src/app/model/platform.enum';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
+import { NavigationService } from '@src/app/services/navigation.service';
 
 interface BottomNavTab {
   icon: string;
@@ -25,7 +25,7 @@ export class LayoutComponent implements OnInit {
   public bottomNavTabs: BottomNavTab[];
   public activeTabName: string;
 
-  constructor(private themeService: ThemeService, private location: Location) {}
+  constructor(private themeService: ThemeService, private navigation: NavigationService) {}
 
   public get themeClass(): ThemeClassEnum {
     return this.themeService.theme;
@@ -45,7 +45,7 @@ export class LayoutComponent implements OnInit {
   }
 
   public back(): void {
-    this.location.back();
+    this.navigation.back();
   }
 
   public switchTheme(): void {
