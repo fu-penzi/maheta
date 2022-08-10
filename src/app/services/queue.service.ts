@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 
+import { Subject } from 'rxjs';
+
 @Injectable()
 export class QueueService<T> {
+  public currentItem$: Subject<T> = new Subject<T>();
+
   private _cursor: number;
   private _queue: T[] = [];
 
@@ -15,6 +19,7 @@ export class QueueService<T> {
 
   public moveBy(gap: number): void {
     this._cursor = (this._cursor + gap) % this._queue.length;
+    this.currentItem$.next(this.currentItem);
   }
 
   public moveTo(index: number): void {
@@ -24,6 +29,7 @@ export class QueueService<T> {
     }
 
     this._cursor = index;
+    this.currentItem$.next(this.currentItem);
   }
 
   public add(items: T[]): void {

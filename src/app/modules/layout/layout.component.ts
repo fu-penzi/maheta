@@ -71,11 +71,11 @@ export class LayoutComponent implements OnInit {
         name: environment.locales.MAHETA.BOTTOM_NAVIGATION.albums,
         url: UrlEnum.ALBUMS,
       },
-      {
-        icon: 'playlist_play',
-        name: environment.locales.MAHETA.BOTTOM_NAVIGATION.playlists,
-        url: UrlEnum.PLAYLISTS,
-      },
+      // {
+      //   icon: 'playlist_play',
+      //   name: environment.locales.MAHETA.BOTTOM_NAVIGATION.playlists,
+      //   url: UrlEnum.PLAYLISTS,
+      // },
     ];
   }
 }

@@ -4,6 +4,7 @@ import { Track } from '@src/app/db/domain/track.schema';
 import { QueueService } from '@src/app/services/queue.service';
 import { tracksMock } from '@src/mock/tracks';
 
+import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
 import { interval, map, Observable } from 'rxjs';
 
 @Injectable()
@@ -12,8 +13,9 @@ export class MusicControlService {
   private _nextQueue: Track[] | null = null;
   private _currentTrackAudio: HTMLAudioElement;
 
-  constructor(private queueService: QueueService<Track>) {
+  constructor(private queueService: QueueService<Track>, private musicControls: MusicControls) {
     this.setupCurrentTrackAudio();
+    this.currentTrackValueChanges();
   }
 
   public get isPlaying(): boolean {
@@ -44,7 +46,6 @@ export class MusicControlService {
     }
 
     this.setQueuePosition(position);
-    this.updateCurrentTrackAudio();
 
     this.play();
   }
@@ -61,7 +62,6 @@ export class MusicControlService {
 
   public next(): void {
     this.queueService.moveBy(1);
-    this.updateCurrentTrackAudio();
 
     if (this._playing) {
       this.play();
@@ -70,7 +70,6 @@ export class MusicControlService {
 
   public prev(): void {
     this.queueService.moveBy(-1);
-    this.updateCurrentTrackAudio();
 
     if (this._playing) {
       this.play();
@@ -99,6 +98,67 @@ export class MusicControlService {
   private updateCurrentTrackAudio(): void {
     this._currentTrackAudio.pause();
     this._currentTrackAudio.src = this.currentTrack.src;
+  }
+
+  private setupNativeMusicControls(currentTrack: Track): void {
+    this.musicControls.destroy();
+    this.musicControls.create({
+      track: currentTrack.title,
+      artist: currentTrack.author,
+      isPlaying: this.isPlaying,
+      dismissable: true,
+      hasSkipForward: true,
+      hasSkipBackward: true,
+
+      ticker: 'Now playing "Time is Running Out"',
+      playIcon: 'media_play',
+      pauseIcon: 'media_pause',
+      prevIcon: 'media_prev',
+      nextIcon: 'media_next',
+      closeIcon: 'media_close',
+      notificationIcon: 'notification',
+    });
+
+    this.musicControls.subscribe().subscribe((action) => {
+      const message = JSON.parse(action).message;
+      switch (message) {
+        case 'music-controls-next':
+          this.next();
+          break;
+        case 'music-controls-previous':
+          this.prev();
+          break;
+        case 'music-controls-pause':
+          this.pause();
+          break;
+        case 'music-controls-play':
+          this.play();
+          break;
+        case 'music-controls-destroy':
+          break;
+
+        case 'music-controls-media-button':
+          this.play();
+          break;
+        case 'music-controls-headset-unplugged':
+          this.pause();
+          break;
+        case 'music-controls-headset-plugged':
+          break;
+        default:
+          break;
+      }
+      this.musicControls.updateIsPlaying(this.isPlaying);
+    });
+
+    this.musicControls.listen();
+  }
+
+  private currentTrackValueChanges(): void {
+    this.queueService.currentItem$.subscribe((currentTrack: Track) => {
+      this.updateCurrentTrackAudio();
+      this.setupNativeMusicControls(currentTrack);
+    });
   }
 
   private setupCurrentTrackAudio(): void {
