@@ -11,6 +11,6 @@ import { DurationPipe } from '@src/app/pipes/duration.pipe';
 @NgModule({
   declarations: [TrackScrollViewComponent, DurationPipe],
   imports: [CommonModule, MatRippleModule, MatIconModule, MatButtonModule, ScrollingModule],
-  exports: [CommonModule, TrackScrollViewComponent],
+  exports: [CommonModule, TrackScrollViewComponent, DurationPipe],
 })
 export class SharedModule {}

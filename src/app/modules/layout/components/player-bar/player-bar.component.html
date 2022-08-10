@@ -1,0 +1,42 @@
+<a *ngIf="currentTrack" class="player-bar" [routerLink]="playerRouterLink">
+  <div class="track">
+    <img class="track-thumb" src="{{ currentTrack.thumbUrl }}" alt="{{ currentTrack.thumbUrl }}" />
+
+    <div class="track-info">
+      <span class="track-info__title">{{ currentTrack.title }}</span>
+      <span class="track-info__author">{{ currentTrack.author }}</span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button (click)="prev()" mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <mat-icon>skip_previous</mat-icon>
+    </button>
+
+    <ng-container *ngIf="!isPlaying()">
+      <button
+        (click)="play()"
+        mat-fab
+        color="accent"
+        aria-label="Example icon button with a bookmark icon"
+      >
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+    </ng-container>
+
+    <ng-container *ngIf="isPlaying()">
+      <button
+        (click)="pause()"
+        mat-fab
+        color="accent"
+        aria-label="Example icon button with a bookmark icon"
+      >
+        <mat-icon>pause</mat-icon>
+      </button>
+    </ng-container>
+
+    <button (click)="next()" mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <mat-icon>skip_next</mat-icon>
+    </button>
+  </div>
+</a>

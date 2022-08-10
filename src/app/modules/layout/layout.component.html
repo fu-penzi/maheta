@@ -15,17 +15,20 @@
     <router-outlet></router-outlet>
   </div>
 
-  <mat-toolbar class="bottom-nav" color="primary">
-    <a
-      *ngFor="let tab of bottomNavTabs"
-      (click)="selectTab(tab)"
-      routerLink="{{ tab.link }}"
-      class="bottom-nav__tab"
-      [class.active]="isTabActive(tab)"
-      aria-label="Example icon button with a bookmark icon"
-    >
-      <mat-icon>{{ tab.icon }}</mat-icon>
-      <span class="bottom-nav__tab-name">{{ tab.name }}</span>
-    </a>
-  </mat-toolbar>
+  <div class="bottom-wrapper">
+    <maheta-player-bar></maheta-player-bar>
+    <mat-toolbar class="bottom-nav" color="primary">
+      <a
+        *ngFor="let tab of bottomNavTabs"
+        (click)="selectTab(tab)"
+        routerLink="{{ tab.link }}"
+        class="bottom-nav__tab"
+        [class.active]="isTabActive(tab)"
+        aria-label="Example icon button with a bookmark icon"
+      >
+        <mat-icon>{{ tab.icon }}</mat-icon>
+        <span class="bottom-nav__tab-name">{{ tab.name }}</span>
+      </a>
+    </mat-toolbar>
+  </div>
 </div>

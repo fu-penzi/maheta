@@ -1,0 +1,61 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+  max-height: 80px;
+  font-size: 1rem;
+  background-color: $primary;
+}
+
+.player-bar {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: spacing(4) spacing(3);
+}
+
+.track {
+  flex: 1 1 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.track-thumb {
+  object-fit: cover;
+  width: size(lg);
+  height: size(lg);
+  min-width: size(lg);
+  min-height: size(lg);
+}
+
+.track-info {
+  display: flex;
+  flex-direction: column;
+  padding-left: spacing(4);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @include text-ellipsis;
+
+  &__title {
+    margin-bottom: spacing(1);
+  }
+
+  &__author {
+    color: $text-secondary;
+  }
+}
+
+.controls {
+  flex: 0 0 128px;
+
+  & :nth-child(2) {
+    margin: 0 spacing(2);
+  }
+
+  @include m-fab(lg);
+  @include m-icon-button(md);
+}

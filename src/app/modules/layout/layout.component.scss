@@ -1,6 +1,6 @@
 @use 'variables.scss' as *;
 
-:host   {
+:host {
   position: relative;
   display: block;
   overflow: hidden;
@@ -11,13 +11,22 @@
   color: $text;
 }
 
-.page-content  {
+mat-toolbar {
+  max-height: 56px;
+}
+
+.page-content {
   //padding: 0 spacing(8);
 }
 
-.bottom-nav {
+.bottom-wrapper {
+  max-height: 136px;
+  width: 100%;
   position: fixed;
   bottom: 0;
+}
+
+.bottom-nav {
   height: 64px;
   justify-content: space-around;
 

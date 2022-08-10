@@ -35,7 +35,6 @@ export class MusicControlService {
 
   public playPosition(position: number): void {
     if (this._nextQueue) {
-      console.log('tekst dolny');
       this.setQueue(this._nextQueue);
       this._nextQueue = null;
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
@@ -9,7 +9,7 @@ import { MusicLibraryService } from '@src/app/services/music-library.service';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss'],
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent {
   public showTicks: boolean = false;
   public autoTicks: boolean = false;
   public tickInterval: number = 1;
@@ -22,10 +22,6 @@ export class PlayerComponent implements OnInit {
 
   public get track(): Track {
     return this.musicControlService.currentTrack;
-  }
-
-  ngOnInit(): void {
-    this.setupButtons();
   }
 
   public getSliderTickInterval(): number | 'auto' {
@@ -54,32 +50,5 @@ export class PlayerComponent implements OnInit {
 
   public isPlaying(): boolean {
     return this.musicControlService.isPlaying;
-  }
-
-  private setupButtons(): void {
-    // this.controlButtons = {
-    //   skipPrevious: {
-    //     icon: 'skip_previous',
-    //     ariaLabel: 'Example icon button with a bookmark icon',
-    //   },
-    //   playArrow: {
-    //     icon: 'play_arrow',
-    //     ariaLabel: 'Example icon button with a bookmark icon',
-    //   },
-    //   skipNext: {
-    //     icon: 'skip_next',
-    //     ariaLabel: 'Example icon button with a bookmark icon',
-    //   },
-    // };
-    // this.adjacentButtons = {
-    //   shuffle: {
-    //     icon: 'shuffle',
-    //     ariaLabel: 'Example icon button with a bookmark icon',
-    //   },
-    //   repeat: {
-    //     icon: 'repeat',
-    //     ariaLabel: 'Example icon button with a bookmark icon',
-    //   },
-    // };
   }
 }
