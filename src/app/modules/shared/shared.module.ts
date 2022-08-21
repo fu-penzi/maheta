@@ -5,12 +5,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 
+import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-scroll-view/playlist-scroll-view.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
 
 @NgModule({
-  declarations: [TrackScrollViewComponent, DurationPipe],
+  declarations: [TrackScrollViewComponent, PlaylistScrollViewComponent, DurationPipe],
   imports: [CommonModule, MatRippleModule, MatIconModule, MatButtonModule, ScrollingModule],
-  exports: [CommonModule, TrackScrollViewComponent, DurationPipe],
+  exports: [CommonModule, TrackScrollViewComponent, PlaylistScrollViewComponent, DurationPipe],
 })
 export class SharedModule {}

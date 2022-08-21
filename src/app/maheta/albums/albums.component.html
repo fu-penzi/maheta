@@ -1,5 +1,5 @@
 <!--TODO refactor scroll viewport-->
-<cdk-virtual-scroll-viewport itemSize="32" class="virtual-view">
+<cdk-virtual-scroll-viewport itemSize="32">
   <ul class="album-list">
     <li *cdkVirtualFor="let album of albums" class="album">
       <a routerLink="{{ album.title }}">

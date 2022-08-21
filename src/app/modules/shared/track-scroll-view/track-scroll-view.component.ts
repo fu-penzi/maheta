@@ -4,7 +4,6 @@ import { Capacitor } from '@capacitor/core';
 import { Track } from '@src/app/db/domain/track.schema';
 import { PlatformEnum } from '@src/app/model/platform.enum';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
-import { images } from '@src/mock/images';
 
 @Component({
   selector: 'maheta-track-scroll-view',
@@ -16,8 +15,6 @@ export class TrackScrollViewComponent implements OnInit {
   @HostBinding('class.mobile') isMobile: boolean = false;
 
   @Input() public tracks: Track[];
-
-  public images: string[] = images;
 
   constructor(private readonly musicControlService: MusicControlService) {}
 

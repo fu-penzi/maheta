@@ -1,20 +1,20 @@
-<cdk-virtual-scroll-viewport itemSize="64" class="virtual-view">
+<cdk-virtual-scroll-viewport itemSize="64">
   <ul>
     <li
       *cdkVirtualFor="let track of tracks; index as i; trackBy: trackByIndex"
-      class="track"
+      class="scroll-element"
       (click)="playPosition(i)"
       mat-ripple
     >
-      <img class="track-thumb" src="{{ track.thumbUrl }}" alt="{{ track.thumbUrl }}" />
+      <img class="thumb" src="{{ track.thumbUrl }}" alt="{{ track.thumbUrl }}" />
 
-      <div class="track-info" [class.active]="isCurrentTrack(track)">
-        <span class="track-info__title">{{ track.title }}</span>
-        <span class="track-info__author">{{ track.author }}</span>
+      <div class="info" [class.active]="isCurrentTrack(track)">
+        <span class="info__title">{{ track.title }}</span>
+        <span class="info__author">{{ track.author }}</span>
       </div>
 
-      <div class="track-menu">
-        <span class="track-menu__duration">{{ track.duration | mahetaDuration }}</span>
+      <div class="menu">
+        <span class="menu__duration">{{ track.duration | mahetaDuration }}</span>
         <button mat-icon-button aria-label="Example icon button with a bookmark icon">
           <mat-icon>more_vert</mat-icon>
         </button>
