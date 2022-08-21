@@ -8,10 +8,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-scroll-view/playlist-scroll-view.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [TrackScrollViewComponent, PlaylistScrollViewComponent, DurationPipe],
-  imports: [CommonModule, MatRippleModule, MatIconModule, MatButtonModule, ScrollingModule],
+  imports: [
+    CommonModule,
+    MatRippleModule,
+    MatIconModule,
+    MatButtonModule,
+    ScrollingModule,
+    RouterModule,
+  ],
   exports: [CommonModule, TrackScrollViewComponent, PlaylistScrollViewComponent, DurationPipe],
 })
 export class SharedModule {}

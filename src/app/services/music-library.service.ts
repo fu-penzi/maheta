@@ -40,6 +40,10 @@ export class MusicLibraryService {
   }
 
   public getAlbum(title: string): Album | undefined {
-    return this._albums.find((album) => album.title === title);
+    return this._albums.find((album: Album) => album.title === title);
+  }
+
+  public getPlaylist(id: string): Playlist | undefined {
+    return this.playlists.find((playlist: Playlist) => playlist.id === id);
   }
 }

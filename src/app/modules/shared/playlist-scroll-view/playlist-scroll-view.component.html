@@ -3,6 +3,7 @@
     <li
       *cdkVirtualFor="let playlist of playlists; index as i; trackBy: playlistByIndex"
       class="scroll-element"
+      [routerLink]="playlist.id"
       mat-ripple
     >
       <img class="thumb" src="{{ playlist.thumbUrl }}" alt="{{ playlist.thumbUrl }}" />
