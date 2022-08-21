@@ -43,14 +43,6 @@ export class LayoutComponent implements OnInit {
     this.setupBottomNav();
   }
 
-  public back(): void {
-    this.navigation.back();
-  }
-
-  public switchTheme(): void {
-    this.themeService.switchTheme();
-  }
-
   public selectTab(tab: BottomNavTab): void {
     this.navigation.bottomNavTabUrl = tab.url;
   }

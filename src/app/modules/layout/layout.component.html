@@ -1,15 +1,5 @@
 <div [ngClass]="['mat-typography', themeClass]">
-  <!--  TODO top navigation-->
-  <mat-toolbar color="primary">
-    <a
-      class="bottom-nav__tab"
-      (click)="back()"
-      aria-label="Example icon button with a bookmark icon"
-    >
-      <mat-icon>arrow_back</mat-icon>
-    </a>
-    <span style="margin-left: 10px">Player</span>
-  </mat-toolbar>
+  <maheta-app-bar></maheta-app-bar>
 
   <div class="page-content">
     <router-outlet></router-outlet>

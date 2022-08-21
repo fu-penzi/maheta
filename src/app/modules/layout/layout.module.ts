@@ -8,9 +8,10 @@ import { PlayerBarComponent } from '@src/app/modules/layout/components/player-ba
 import { LayoutComponent } from '@src/app/modules/layout/layout.component';
 import { ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { SharedModule } from '@src/app/modules/shared/shared.module';
+import { AppBarComponent } from '@src/app/modules/layout/components/app-bar/app-bar.component';
 
 @NgModule({
-  declarations: [LayoutComponent, PlayerBarComponent],
+  declarations: [LayoutComponent, PlayerBarComponent, AppBarComponent],
   imports: [SharedModule, RouterModule, MatToolbarModule, MatButtonModule, MatIconModule],
   providers: [ThemeService],
 })

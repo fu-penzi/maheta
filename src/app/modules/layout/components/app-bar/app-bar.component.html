@@ -1,0 +1,17 @@
+<mat-toolbar color="primary" class="app-bar">
+  <button mat-icon-button (click)="back()" aria-label="Example icon button">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>Player</span>
+
+  <div class="menu">
+    <button
+      *ngIf="isCurrentTabPlaylists()"
+      mat-icon-button
+      (click)="addPlaylist()"
+      aria-label="Example icon button"
+    >
+      <mat-icon>playlist_add</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
