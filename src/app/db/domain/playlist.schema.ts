@@ -1,7 +1,7 @@
 import { RxJsonSchema } from 'rxdb';
 
 export interface Playlist {
-  id: number;
+  id: string;
   name: string;
   tracks?: string[];
   thumbUrl: string;
@@ -19,7 +19,7 @@ export const playlistSchema: RxJsonSchema<Playlist> = {
   type: 'object',
   properties: {
     id: {
-      type: 'number',
+      type: 'string',
       maxLength: 10000,
     },
     name: {

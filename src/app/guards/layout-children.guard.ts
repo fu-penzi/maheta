@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { CanActivate, UrlTree } from '@angular/router';
 
 import { DatabaseService } from '@src/app/db/database.service';
+import { Playlist } from '@src/app/db/domain/playlist.schema';
+import { Track } from '@src/app/db/domain/track.schema';
 import { FileLoadingService } from '@src/app/services/file-loading.service';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
 
 import { Observable } from 'rxjs';
-import { Playlist } from '@src/app/db/domain/playlist.schema';
-import { Track } from '@src/app/db/domain/track.schema';
 
 @Injectable({
   providedIn: 'root',

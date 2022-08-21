@@ -48,10 +48,10 @@ export class DatabaseService {
 
   public async createPlaylist(): Promise<void> {
     const playlist: Playlist = {
-      id: Math.random(),
+      id: `${Math.random()}`,
       name: PlaylistDefaultsEnum.NAME,
       thumbUrl: PlaylistDefaultsEnum.THUMBURL,
-      tracks: [],
+      tracks: [''],
     };
     await this._playlistCollection.upsert(playlist);
   }

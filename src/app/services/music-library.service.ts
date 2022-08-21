@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { Album, AlbumDefaultsEnum } from '@src/app/db/domain/album';
+import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { Track } from '@src/app/db/domain/track.schema';
 import { tracksMock } from '@src/mock/tracks';
 
 import { groupBy, sortBy } from 'lodash';
-import { Playlist } from '@src/app/db/domain/playlist.schema';
 
 @Injectable({
   providedIn: 'root',
