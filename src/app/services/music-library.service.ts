@@ -5,11 +5,14 @@ import { Track } from '@src/app/db/domain/track.schema';
 import { tracksMock } from '@src/mock/tracks';
 
 import { groupBy, sortBy } from 'lodash';
+import { Playlist } from '@src/app/db/domain/playlist.schema';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MusicLibraryService {
+  public playlists: Playlist[];
+
   private _tracks: Track[];
   private _albums: Album[];
 

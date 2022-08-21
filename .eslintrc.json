@@ -73,12 +73,6 @@
                 "protected-field",
                 "private-field",
                 "constructor",
-                "public-get",
-                "protected-get",
-                "private-get",
-                "public-set",
-                "protected-set",
-                "private-set",
                 "public-method",
                 "protected-method",
                 "private-method"

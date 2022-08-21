@@ -6,6 +6,7 @@ import { FileLoadingService } from '@src/app/services/file-loading.service';
 
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
 import { createRxDatabase, RxCollection, RxDatabase } from 'rxdb';
+import { Playlist, PlaylistDefaultsEnum, playlistSchema } from '@src/app/db/domain/playlist.schema';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ import { createRxDatabase, RxCollection, RxDatabase } from 'rxdb';
 export class DatabaseService {
   private _trackDB: RxDatabase;
   private _trackCollection: RxCollection;
+  private _playlistCollection: RxCollection;
 
   constructor(private fileLoadingService: FileLoadingService) {}
 
@@ -21,17 +23,37 @@ export class DatabaseService {
       name: 'trackdb',
       storage: getRxStorageDexie(),
     });
-    this._trackCollection = await this._trackDB
+    await this._trackDB
       .addCollections({
         [DatabaseCollectionEnum.TRACKS]: {
           schema: trackSchema,
         },
+        [DatabaseCollectionEnum.PLAYLISTS]: {
+          schema: playlistSchema,
+        },
       })
-      .then((res) => res[DatabaseCollectionEnum.TRACKS]);
+      .then((res) => {
+        this._trackCollection = res[DatabaseCollectionEnum.TRACKS];
+        this._playlistCollection = res[DatabaseCollectionEnum.PLAYLISTS];
+      });
   }
 
   public getTracks(): Promise<Track[]> {
     return this._trackCollection.find().exec();
+  }
+
+  public getPlaylists(): Promise<Playlist[]> {
+    return this._playlistCollection.find().exec();
+  }
+
+  public async createPlaylist(): Promise<void> {
+    const playlist: Playlist = {
+      id: Math.random(),
+      name: PlaylistDefaultsEnum.NAME,
+      thumbUrl: PlaylistDefaultsEnum.THUMBURL,
+      tracks: [],
+    };
+    await this._playlistCollection.upsert(playlist);
   }
 
   public async isTrackCollectionEmpty(): Promise<boolean> {
@@ -43,11 +65,6 @@ export class DatabaseService {
     const tracks: Track[] = await this.fileLoadingService.loadMusic();
     await this._trackDB.remove();
     await this.initDatabase();
-
-    await this.isTrackCollectionEmpty();
-
     await this._trackCollection.bulkInsert(tracks);
-
-    await this.isTrackCollectionEmpty();
   }
 }
