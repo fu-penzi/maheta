@@ -3,14 +3,14 @@
     <li
       *cdkVirtualFor="let playlist of playlists; index as i; trackBy: playlistByIndex"
       class="scroll-element"
-      [routerLink]="playlist.id"
-      mat-ripple
     >
-      <img class="thumb" src="{{ playlist.thumbUrl }}" alt="{{ playlist.thumbUrl }}" />
+      <div class="content" [routerLink]="playlist.id" mat-ripple>
+        <img class="thumb" src="{{ playlist.thumbUrl }}" alt="{{ playlist.thumbUrl }}" />
 
-      <div class="info" [class.active]="false">
-        <span class="info__title">{{ playlist.name }}</span>
-        <span class="info__author">10 songs</span>
+        <div class="info" [class.active]="false">
+          <span class="info__title">{{ playlist.name }}</span>
+          <span class="info__author">10 songs</span>
+        </div>
       </div>
 
       <div class="menu">

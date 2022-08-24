@@ -10,6 +10,10 @@
 
 @mixin track-list() {
   .scroll-element {
+    position: relative;
+  }
+
+  .content {
     display: flex;
     width: calc(100vw);
     align-items: center;
@@ -17,33 +21,36 @@
     padding-left: spacing(4);
     padding-right: spacing(2);
     margin-top: spacing(1);
-  }
 
-  .thumb {
-    object-fit: cover;
-    width: size(lg);
-    height: size(lg);
-    min-width: size(lg);
-    min-height: size(lg);
-  }
+    .thumb {
+      object-fit: cover;
+      width: size(lg);
+      height: size(lg);
+      min-width: size(lg);
+      min-height: size(lg);
+    }
 
-  .info {
-    display: flex;
-    flex-direction: column;
-    width: calc(50%);
-    padding-left: spacing(4);
+    .info {
+      display: flex;
+      flex-direction: column;
+      width: calc(50%);
+      padding-left: spacing(4);
 
-    & > * {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      & > * {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
   }
 
   .menu {
+    height: size(xl);
+    position: absolute;
+    right: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
-    margin-left: auto;
   }
 
   :host(.web) {

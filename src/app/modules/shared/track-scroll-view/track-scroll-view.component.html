@@ -3,14 +3,14 @@
     <li
       *cdkVirtualFor="let track of tracks; index as i; trackBy: trackByIndex"
       class="scroll-element"
-      (click)="playPosition(i)"
-      mat-ripple
     >
-      <img class="thumb" src="{{ track.thumbUrl }}" alt="{{ track.thumbUrl }}" />
+      <div class="content" (click)="playPosition(i)" mat-ripple>
+        <img class="thumb" src="{{ track.thumbUrl }}" alt="{{ track.thumbUrl }}" />
 
-      <div class="info" [class.active]="isCurrentTrack(track)">
-        <span class="info__title">{{ track.title }}</span>
-        <span class="info__author">{{ track.author }}</span>
+        <div class="info" [class.active]="isCurrentTrack(track)">
+          <span class="info__title">{{ track.title }}</span>
+          <span class="info__author">{{ track.author }}</span>
+        </div>
       </div>
 
       <div class="menu">
