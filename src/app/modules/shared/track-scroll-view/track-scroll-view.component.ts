@@ -1,8 +1,13 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Capacitor } from '@capacitor/core';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import { PlatformEnum } from '@src/app/model/platform.enum';
+import {
+  AddToPlaylistDialogComponent,
+  AddToPlaylistDialogData,
+} from '@src/app/modules/shared/add-to-playlist-dialog/add-to-playlist-dialog.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 
 @Component({
@@ -16,7 +21,10 @@ export class TrackScrollViewComponent implements OnInit {
 
   @Input() public tracks: Track[];
 
-  constructor(private readonly musicControlService: MusicControlService) {}
+  constructor(
+    private readonly musicControlService: MusicControlService,
+    public matDialogService: MatDialog
+  ) {}
 
   public get currentTrack(): Track {
     return this.musicControlService.currentTrack;
@@ -48,5 +56,12 @@ export class TrackScrollViewComponent implements OnInit {
       return false;
     }
     return this.currentTrack.uri === track.uri;
+  }
+
+  public openAddToPlaylistDialog(track: Track): void {
+    const data: AddToPlaylistDialogData = {
+      track,
+    };
+    this.matDialogService.open(AddToPlaylistDialogComponent, { data });
   }
 }

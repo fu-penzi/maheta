@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { SharedModule } from '@src/app/modules/shared/shared.module';
 
-import { PlaylistsComponent } from '@maheta/playlists/playlists.component';
 import { PlaylistTracksComponent } from '@maheta/playlists/components/playlist-tracks/playlist-tracks.component';
-import { UrlParamsEnum } from '@src/app/model/url-params.enum';
+import { PlaylistsComponent } from '@maheta/playlists/playlists.component';
 
 @NgModule({
   declarations: [PlaylistsComponent, PlaylistTracksComponent],

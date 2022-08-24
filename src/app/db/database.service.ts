@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
+import { Playlist, PlaylistDefaultsEnum, playlistSchema } from '@src/app/db/domain/playlist.schema';
 import { Track, trackSchema } from '@src/app/db/domain/track.schema';
 import { DatabaseCollectionEnum } from '@src/app/model/database-collection.enum';
 import { FileLoadingService } from '@src/app/services/file-loading.service';
 
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
 import { createRxDatabase, RxCollection, RxDatabase } from 'rxdb';
-import { Playlist, PlaylistDefaultsEnum, playlistSchema } from '@src/app/db/domain/playlist.schema';
 
 @Injectable({
   providedIn: 'root',
@@ -54,6 +54,10 @@ export class DatabaseService {
       tracks: [''],
     };
     await this._playlistCollection.upsert(playlist);
+  }
+
+  public addTrackToPlaylist(track: Track, playlist: Playlist): void {
+    //  TODO
   }
 
   public async isTrackCollectionEmpty(): Promise<boolean> {

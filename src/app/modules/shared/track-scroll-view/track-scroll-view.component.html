@@ -15,9 +15,19 @@
 
       <div class="menu">
         <span class="menu__duration">{{ track.duration | mahetaDuration }}</span>
-        <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon button with a bookmark icon"
+        >
           <mat-icon>more_vert</mat-icon>
         </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openAddToPlaylistDialog(track)">
+            <mat-icon>playlist_add</mat-icon>
+            Add to playlist
+          </button>
+        </mat-menu>
       </div>
     </li>
   </ul>
