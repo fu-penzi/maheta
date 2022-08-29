@@ -14,9 +14,19 @@
       </div>
 
       <div class="menu">
-        <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon button with a bookmark icon"
+        >
           <mat-icon>more_vert</mat-icon>
         </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="deletePlaylist(playlist)">
+            <mat-icon>delete_forever</mat-icon>
+            Delete playlist
+          </button>
+        </mat-menu>
       </div>
     </li>
   </ul>
