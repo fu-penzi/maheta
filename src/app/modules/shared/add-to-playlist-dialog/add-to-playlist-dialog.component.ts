@@ -33,6 +33,7 @@ export class AddToPlaylistDialogComponent {
 
   public addTrackToPlaylist(track: Track, playlist: Playlist): void {
     this.databaseService.addTrackToPlaylist(track, playlist);
+    this.close();
   }
 
   public close(): void {

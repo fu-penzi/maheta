@@ -6,7 +6,7 @@ import { DatabaseCollectionEnum } from '@src/app/model/database-collection.enum'
 import { FileLoadingService } from '@src/app/services/file-loading.service';
 
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
-import { createRxDatabase, RxCollection, RxDatabase } from 'rxdb';
+import { createRxDatabase, RxCollection, RxDatabase, RxDocument, RxDocumentData } from 'rxdb';
 
 @Injectable({
   providedIn: 'root',
@@ -51,13 +51,31 @@ export class DatabaseService {
       id: `${Math.random()}`,
       name: PlaylistDefaultsEnum.NAME,
       thumbUrl: PlaylistDefaultsEnum.THUMBURL,
-      tracks: [''],
+      tracks: [],
     };
     await this._playlistCollection.upsert(playlist);
   }
 
-  public addTrackToPlaylist(track: Track, playlist: Playlist): void {
-    //  TODO
+  public async deletePlaylist(playlist: Playlist): Promise<void> {
+    const playlistDocument: RxDocument<Playlist> = await this.getPlaylistDocument(playlist);
+    await playlistDocument.remove();
+  }
+
+  public async addTrackToPlaylist(track: Track, playlist: Playlist): Promise<void> {
+    const playlistDocument: RxDocument<Playlist> = await this.getPlaylistDocument(playlist);
+
+    await playlistDocument.atomicUpdate((oldData: RxDocumentData<any>) => {
+      if (!oldData?.tracks.includes(track.uri)) {
+        oldData.tracks.push(track.uri);
+      }
+      return oldData;
+    });
+  }
+
+  public async getPlaylistTracks(playlist: Playlist): Promise<Track[]> {
+    const playlistDocument: RxDocument<Playlist> = await this.getPlaylistDocument(playlist);
+
+    return playlistDocument.populate('tracks');
   }
 
   public async isTrackCollectionEmpty(): Promise<boolean> {
@@ -70,5 +88,16 @@ export class DatabaseService {
     await this._trackDB.remove();
     await this.initDatabase();
     await this._trackCollection.bulkInsert(tracks);
+  }
+
+  private getPlaylistDocument(playlist: Playlist): Promise<RxDocument<Playlist>> {
+    return this._playlistCollection
+      .find({
+        selector: {
+          id: playlist.id,
+        },
+      })
+      .exec()
+      .then((res: RxDocument<any>[]) => res?.pop());
   }
 }
