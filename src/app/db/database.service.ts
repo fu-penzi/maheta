@@ -6,7 +6,15 @@ import { DatabaseCollectionEnum } from '@src/app/model/database-collection.enum'
 import { FileLoadingService } from '@src/app/services/file-loading.service';
 
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
-import { createRxDatabase, RxCollection, RxDatabase, RxDocument, RxDocumentData } from 'rxdb';
+import {
+  createRxDatabase,
+  RxChangeEvent,
+  RxCollection,
+  RxDatabase,
+  RxDocument,
+  RxDocumentData,
+} from 'rxdb';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +25,10 @@ export class DatabaseService {
   private _playlistCollection: RxCollection;
 
   constructor(private fileLoadingService: FileLoadingService) {}
+
+  public get databaseChanges$(): Observable<RxChangeEvent<unknown>> {
+    return this._trackDB.$;
+  }
 
   public async initDatabase(): Promise<void> {
     this._trackDB = await createRxDatabase({
