@@ -29,9 +29,6 @@ export class AppBarComponent {
   }
 
   public openCreatePlaylistDialog(): void {
-    // const data: AddToPlaylistDialogData = {
-    //   track,
-    // };
     this.matDialogService.open(CreatePlaylistDialogComponent);
   }
 

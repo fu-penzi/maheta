@@ -9,7 +9,7 @@
 
         <div class="info" [class.active]="false">
           <span class="info__title">{{ playlist.name }}</span>
-          <span class="info__author">10 songs</span>
+          <span class="info__author">{{ getPlaylistLengthCaption(playlist) }}</span>
         </div>
       </div>
 
