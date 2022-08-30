@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { DatabaseService } from '@src/app/db/database.service';
+import { Playlist } from '@src/app/db/domain/playlist.schema';
 
 @Component({
   selector: 'maheta-playlist-scroll-view',

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -9,7 +10,6 @@ import { SharedModule } from '@src/app/modules/shared/shared.module';
 import { MusicControlModule } from '@src/app/services/music-control/music-control.module';
 
 import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
-import { FormBuilder } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
