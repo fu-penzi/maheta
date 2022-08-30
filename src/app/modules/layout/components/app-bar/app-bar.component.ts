@@ -4,6 +4,8 @@ import { DatabaseService } from '@src/app/db/database.service';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { NavigationService } from '@src/app/services/navigation.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/create-playlist-dialog/create-playlist-dialog.component';
 
 @Component({
   selector: 'maheta-app-bar',
@@ -14,7 +16,8 @@ export class AppBarComponent {
   constructor(
     private themeService: ThemeService,
     private navigation: NavigationService,
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private matDialogService: MatDialog
   ) {}
 
   public get themeClass(): ThemeClassEnum {
@@ -25,8 +28,11 @@ export class AppBarComponent {
     this.navigation.back();
   }
 
-  public addPlaylist(): void {
-    this.databaseService.createPlaylist();
+  public openCreatePlaylistDialog(): void {
+    // const data: AddToPlaylistDialogData = {
+    //   track,
+    // };
+    this.matDialogService.open(CreatePlaylistDialogComponent);
   }
 
   public switchTheme(): void {

@@ -46,10 +46,11 @@ export class DatabaseService {
     return this._playlistCollection.find().exec();
   }
 
-  public async createPlaylist(): Promise<void> {
+  public async createPlaylist(name?: string): Promise<void> {
+    const id: string = `${Math.floor(Math.random() * 1000)}`;
     const playlist: Playlist = {
-      id: `${Math.random()}`,
-      name: PlaylistDefaultsEnum.NAME,
+      id,
+      name: name || PlaylistDefaultsEnum.NAME + id,
       thumbUrl: PlaylistDefaultsEnum.THUMBURL,
       tracks: [],
     };

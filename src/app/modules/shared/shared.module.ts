@@ -12,6 +12,10 @@ import { AddToPlaylistDialogComponent } from '@src/app/modules/shared/add-to-pla
 import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-scroll-view/playlist-scroll-view.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
+import { CreatePlaylistDialogComponent } from './create-playlist-dialog/create-playlist-dialog.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,6 +23,7 @@ import { DurationPipe } from '@src/app/pipes/duration.pipe';
     PlaylistScrollViewComponent,
     DurationPipe,
     AddToPlaylistDialogComponent,
+    CreatePlaylistDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -29,6 +34,9 @@ import { DurationPipe } from '@src/app/pipes/duration.pipe';
     RouterModule,
     MatMenuModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
   ],
   exports: [
     CommonModule,
