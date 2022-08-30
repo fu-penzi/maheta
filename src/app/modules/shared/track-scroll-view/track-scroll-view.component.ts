@@ -1,14 +1,13 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Capacitor } from '@capacitor/core';
 
 import { Track } from '@src/app/db/domain/track.schema';
-import { PlatformEnum } from '@src/app/model/platform.enum';
 import {
   AddToPlaylistDialogComponent,
   AddToPlaylistDialogData,
 } from '@src/app/modules/shared/add-to-playlist-dialog/add-to-playlist-dialog.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
+import { tracksMock } from '@src/mock/tracks';
 
 @Component({
   selector: 'maheta-track-scroll-view',
@@ -16,10 +15,7 @@ import { MusicControlService } from '@src/app/services/music-control/music-contr
   styleUrls: ['./track-scroll-view.component.scss'],
 })
 export class TrackScrollViewComponent implements OnInit {
-  @HostBinding('class.web') isWeb: boolean = false;
-  @HostBinding('class.mobile') isMobile: boolean = false;
-
-  @Input() public tracks: Track[];
+  @Input() public tracks: Track[] | null;
 
   constructor(
     private readonly musicControlService: MusicControlService,
@@ -31,16 +27,8 @@ export class TrackScrollViewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.tracks = this.tracks ?? tracksMock;
     this.musicControlService.nextQueue = this.tracks;
-
-    //TODO fix this
-    if (
-      [PlatformEnum.ANDROID, PlatformEnum.IOS].includes(Capacitor.getPlatform() as PlatformEnum)
-    ) {
-      this.isMobile = true;
-    } else {
-      this.isWeb = true;
-    }
   }
 
   public playPosition(position: number): void {

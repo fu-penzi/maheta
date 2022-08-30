@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { DatabaseService } from '@src/app/db/database.service';
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { Track } from '@src/app/db/domain/track.schema';
 import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
-import { tracksMock } from '@src/mock/tracks';
+
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'maheta-playlist-tracks',
@@ -14,16 +16,20 @@ import { tracksMock } from '@src/mock/tracks';
 })
 export class PlaylistTracksComponent implements OnInit {
   public playlist: Playlist | undefined;
+  public playlistTracks$: Promise<Track[]> | Observable<Track[]>;
 
-  constructor(private musicLibraryService: MusicLibraryService, private route: ActivatedRoute) {}
-
-  public get playlistTracks(): Track[] {
-    // return this.playlist?.tracks ?? [];
-    return tracksMock;
-  }
+  constructor(
+    private musicLibraryService: MusicLibraryService,
+    private databaseService: DatabaseService,
+    private route: ActivatedRoute
+  ) {}
 
   public ngOnInit(): void {
     const playlistId: string = this.route.snapshot.paramMap.get(UrlParamsEnum.playlistId) ?? '';
     this.playlist = this.musicLibraryService.getPlaylist(playlistId);
+
+    this.playlistTracks$ = this.playlist
+      ? this.databaseService.getPlaylistTracks(this.playlist)
+      : of([]);
   }
 }
