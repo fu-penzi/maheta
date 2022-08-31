@@ -11,7 +11,6 @@ import {
   EditLyricsDialogData,
 } from '@src/app/modules/shared/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
-import { tracksMock } from '@src/mock/tracks';
 
 @Component({
   selector: 'maheta-track-scroll-view',
@@ -19,7 +18,7 @@ import { tracksMock } from '@src/mock/tracks';
   styleUrls: ['./track-scroll-view.component.scss'],
 })
 export class TrackScrollViewComponent implements OnInit {
-  @Input() public tracks: Track[] | null;
+  @Input() public tracks: Track[];
 
   constructor(
     private readonly musicControlService: MusicControlService,
@@ -31,7 +30,6 @@ export class TrackScrollViewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.tracks = this.tracks || tracksMock;
     this.musicControlService.nextQueue = this.tracks;
   }
 

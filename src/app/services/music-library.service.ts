@@ -9,7 +9,6 @@ import { tracksMock } from '@src/mock/tracks';
 
 import { groupBy, sortBy } from 'lodash';
 import { Observable, of, startWith } from 'rxjs';
-import { logger } from '@src/devUtils';
 
 @Injectable({
   providedIn: 'root',

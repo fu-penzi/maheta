@@ -76,3 +76,10 @@
     <!--  </button>-->
   </div>
 </div>
+
+<div class="track-lyrics" *ngIf="track?.lyrics">
+  <h1 class="track-lyrics__header"><mat-icon>music_note</mat-icon> Lyrics</h1>
+  <div class="track-lyrics__lyrics">
+    {{ track.lyrics }}
+  </div>
+</div>

@@ -67,3 +67,23 @@
     margin: 0 spacing(4);
   }
 }
+
+.track-lyrics {
+  &__header {
+    display: flex;
+    align-items: center;
+    color: $accent;
+    border-bottom: 1px solid $accent-dark;
+    padding-bottom: spacing(2);
+    margin-bottom: spacing(6);
+  }
+
+  &__lyrics {
+    white-space:pre-wrap;
+    line-height: 2.5rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  padding-bottom: spacing(20);
+}

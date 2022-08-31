@@ -7,8 +7,6 @@ import { Track } from '@src/app/db/domain/track.schema';
 import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
 
-import { Observable, of } from 'rxjs';
-
 @Component({
   selector: 'maheta-playlist-tracks',
   templateUrl: './playlist-tracks.component.html',
@@ -16,7 +14,7 @@ import { Observable, of } from 'rxjs';
 })
 export class PlaylistTracksComponent implements OnInit {
   public playlist: Playlist | undefined;
-  public playlistTracks$: Observable<Track[]>;
+  public playlistTracks: Track[] = [];
 
   constructor(
     private musicLibraryService: MusicLibraryService,
@@ -27,9 +25,10 @@ export class PlaylistTracksComponent implements OnInit {
   public ngOnInit(): void {
     const playlistId: string = this.route.snapshot.paramMap.get(UrlParamsEnum.playlistId) ?? '';
     this.playlist = this.musicLibraryService.getPlaylist(playlistId);
-
-    this.playlistTracks$ = this.playlist
-      ? this.databaseService.getPlaylistTracks$(this.playlist)
-      : of([]);
+    if (this.playlist) {
+      this.databaseService.getPlaylistTracks$(this.playlist).subscribe((tracks: Track[]) => {
+        this.playlistTracks = tracks;
+      });
+    }
   }
 }

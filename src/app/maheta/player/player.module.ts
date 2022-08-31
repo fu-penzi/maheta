@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '@src/app/modules/shared/shared.module';
 
 import { PlayerComponent } from '@maheta/player/player.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   //TODO add guard when nothing is playing
@@ -24,6 +25,7 @@ import { PlayerComponent } from '@maheta/player/player.component';
     MatSliderModule,
     FormsModule,
     MatIconModule,
+    MatDividerModule,
   ],
 })
 export class PlayerModule {}
