@@ -6,6 +6,10 @@ import {
   AddToPlaylistDialogComponent,
   AddToPlaylistDialogData,
 } from '@src/app/modules/shared/add-to-playlist-dialog/add-to-playlist-dialog.component';
+import {
+  EditLyricsDialogComponent,
+  EditLyricsDialogData,
+} from '@src/app/modules/shared/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { tracksMock } from '@src/mock/tracks';
 
@@ -51,5 +55,12 @@ export class TrackScrollViewComponent implements OnInit {
       track,
     };
     this.matDialogService.open(AddToPlaylistDialogComponent, { data });
+  }
+
+  public openEditLyricsDialog(track: Track): void {
+    const data: EditLyricsDialogData = {
+      track,
+    };
+    this.matDialogService.open(EditLyricsDialogComponent, { data });
   }
 }

@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { DatabaseService } from '@src/app/db/database.service';
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicLibraryService } from '@src/app/services/music-library.service';

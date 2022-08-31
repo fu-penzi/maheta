@@ -12,11 +12,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 
 import { AddToPlaylistDialogComponent } from '@src/app/modules/shared/add-to-playlist-dialog/add-to-playlist-dialog.component';
+import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/create-playlist-dialog/create-playlist-dialog.component';
+import { EditLyricsDialogComponent } from '@src/app/modules/shared/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-scroll-view/playlist-scroll-view.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
-
-import { CreatePlaylistDialogComponent } from './create-playlist-dialog/create-playlist-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +25,7 @@ import { CreatePlaylistDialogComponent } from './create-playlist-dialog/create-p
     DurationPipe,
     AddToPlaylistDialogComponent,
     CreatePlaylistDialogComponent,
+    EditLyricsDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -39,12 +40,6 @@ import { CreatePlaylistDialogComponent } from './create-playlist-dialog/create-p
     MatInputModule,
     ReactiveFormsModule,
   ],
-  exports: [
-    CommonModule,
-    TrackScrollViewComponent,
-    PlaylistScrollViewComponent,
-    DurationPipe,
-    AddToPlaylistDialogComponent,
-  ],
+  exports: [CommonModule, TrackScrollViewComponent, PlaylistScrollViewComponent, DurationPipe],
 })
 export class SharedModule {}

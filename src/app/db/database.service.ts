@@ -134,7 +134,7 @@ export class DatabaseService {
     return this._trackCollection
       .findOne({
         selector: {
-          id: track.uri,
+          uri: track.uri,
         },
       })
       .$.pipe(take(1));
