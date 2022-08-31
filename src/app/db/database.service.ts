@@ -6,15 +6,16 @@ import { DatabaseCollectionEnum } from '@src/app/model/database-collection.enum'
 import { FileLoadingService } from '@src/app/services/file-loading.service';
 
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
+import { RxDBUpdatePlugin } from 'rxdb/plugins/update';
 import {
+  addRxPlugin,
   createRxDatabase,
   RxChangeEvent,
   RxCollection,
   RxDatabase,
   RxDocument,
-  RxDocumentData,
 } from 'rxdb';
-import { Observable } from 'rxjs';
+import { from, Observable, switchMap, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,9 @@ export class DatabaseService {
   private _trackCollection: RxCollection;
   private _playlistCollection: RxCollection;
 
-  constructor(private fileLoadingService: FileLoadingService) {}
+  constructor(private fileLoadingService: FileLoadingService) {
+    addRxPlugin(RxDBUpdatePlugin);
+  }
 
   public get databaseChanges$(): Observable<RxChangeEvent<unknown>> {
     return this._trackDB.$;
@@ -51,14 +54,32 @@ export class DatabaseService {
   }
 
   public getTracks(): Promise<Track[]> {
-    return this._trackCollection.find().exec();
+    return this._trackCollection
+      .find()
+      .exec()
+      .then((documents: RxDocument[]) =>
+        documents.map((trackDocument: RxDocument) => trackDocument.toMutableJSON() as Track)
+      );
+  }
+
+  public updateTrack$(track: Track): Observable<unknown> {
+    return this.getTrackDocument$(track).pipe(
+      switchMap((document: RxDocument) => document.update(track))
+    );
   }
 
   public getPlaylists(): Promise<Playlist[]> {
-    return this._playlistCollection.find().exec();
+    return this._playlistCollection
+      .find()
+      .exec()
+      .then((documents: RxDocument[]) =>
+        documents.map(
+          (playlistDocument: RxDocument) => playlistDocument.toMutableJSON() as Playlist
+        )
+      );
   }
 
-  public async createPlaylist(name?: string): Promise<void> {
+  public createPlaylist(name?: string): Promise<void> {
     const id: string = `${Math.floor(Math.random() * 1000)}`;
     const playlist: Playlist = {
       id,
@@ -66,29 +87,25 @@ export class DatabaseService {
       thumbUrl: PlaylistDefaultsEnum.THUMBURL,
       tracks: [],
     };
-    await this._playlistCollection.upsert(playlist);
+    return this._playlistCollection.upsert(playlist);
   }
 
-  public async deletePlaylist(playlist: Playlist): Promise<void> {
-    const playlistDocument: RxDocument<Playlist> = await this.getPlaylistDocument(playlist);
-    await playlistDocument.remove();
+  public deletePlaylist$(playlist: Playlist): Observable<boolean> {
+    return this.getPlaylistDocument$(playlist).pipe(
+      switchMap((document: RxDocument) => document.remove())
+    );
   }
 
-  public async addTrackToPlaylist(track: Track, playlist: Playlist): Promise<void> {
-    const playlistDocument: RxDocument<Playlist> = await this.getPlaylistDocument(playlist);
-
-    await playlistDocument.atomicUpdate((oldData: RxDocumentData<any>) => {
-      if (!oldData?.tracks.includes(track.uri)) {
-        oldData.tracks.push(track.uri);
-      }
-      return oldData;
-    });
+  public updatePlaylist$(playlist: Playlist): Observable<unknown> {
+    return this.getPlaylistDocument$(playlist).pipe(
+      switchMap((document: RxDocument) => document.update(playlist))
+    );
   }
 
-  public async getPlaylistTracks(playlist: Playlist): Promise<Track[]> {
-    const playlistDocument: RxDocument<Playlist> = await this.getPlaylistDocument(playlist);
-
-    return playlistDocument.populate('tracks');
+  public getPlaylistTracks$(playlist: Playlist): Observable<Track[]> {
+    return this.getPlaylistDocument$(playlist).pipe(
+      switchMap((document: RxDocument) => from(document.populate('tracks')))
+    );
   }
 
   public async isTrackCollectionEmpty(): Promise<boolean> {
@@ -103,14 +120,23 @@ export class DatabaseService {
     await this._trackCollection.bulkInsert(tracks);
   }
 
-  private getPlaylistDocument(playlist: Playlist): Promise<RxDocument<Playlist>> {
+  private getPlaylistDocument$(playlist: Playlist): Observable<RxDocument> {
     return this._playlistCollection
-      .find({
+      .findOne({
         selector: {
           id: playlist.id,
         },
       })
-      .exec()
-      .then((res: RxDocument<any>[]) => res?.pop());
+      .$.pipe(take(1));
+  }
+
+  private getTrackDocument$(track: Track): Observable<RxDocument> {
+    return this._trackCollection
+      .findOne({
+        selector: {
+          id: track.uri,
+        },
+      })
+      .$.pipe(take(1));
   }
 }

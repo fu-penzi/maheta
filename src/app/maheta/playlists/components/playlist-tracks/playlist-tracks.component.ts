@@ -16,7 +16,7 @@ import { Observable, of } from 'rxjs';
 })
 export class PlaylistTracksComponent implements OnInit {
   public playlist: Playlist | undefined;
-  public playlistTracks$: Promise<Track[]> | Observable<Track[]>;
+  public playlistTracks$: Observable<Track[]>;
 
   constructor(
     private musicLibraryService: MusicLibraryService,
@@ -29,7 +29,7 @@ export class PlaylistTracksComponent implements OnInit {
     this.playlist = this.musicLibraryService.getPlaylist(playlistId);
 
     this.playlistTracks$ = this.playlist
-      ? this.databaseService.getPlaylistTracks(this.playlist)
+      ? this.databaseService.getPlaylistTracks$(this.playlist)
       : of([]);
   }
 }

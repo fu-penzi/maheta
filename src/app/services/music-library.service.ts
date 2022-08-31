@@ -8,7 +8,8 @@ import { FileLoadingService } from '@src/app/services/file-loading.service';
 import { tracksMock } from '@src/mock/tracks';
 
 import { groupBy, sortBy } from 'lodash';
-import { startWith } from 'rxjs';
+import { Observable, of, startWith } from 'rxjs';
+import { logger } from '@src/devUtils';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,8 @@ export class MusicLibraryService {
 
   public async initLibrary(): Promise<void> {
     this.databaseService.databaseChanges$.pipe(startWith({})).subscribe(async () => {
-      this.tracks = (await this.databaseService.getTracks()) || tracksMock;
+      const tracks: Track[] = await this.databaseService.getTracks();
+      this.tracks = tracks.length > 0 ? tracks : tracksMock;
       this.playlists = await this.databaseService.getPlaylists();
       this.setupAlbums();
     });
@@ -37,6 +39,30 @@ export class MusicLibraryService {
 
   public getPlaylist(id: string): Playlist | undefined {
     return this.playlists.find((playlist: Playlist) => playlist.id === id);
+  }
+
+  public deletePlaylist$(playlist: Playlist): Observable<boolean> {
+    return this.databaseService.deletePlaylist$(playlist);
+  }
+
+  public addTrackToPlaylist$(playlist: Playlist, track: Track): Observable<unknown> {
+    if (playlist.tracks.includes(track.uri)) {
+      return of();
+    }
+
+    const playlistUpdate: Playlist = {
+      ...playlist,
+      tracks: [...playlist.tracks, track.uri],
+    };
+    return this.databaseService.updatePlaylist$(playlistUpdate);
+  }
+
+  public addLyricsToTrack$(track: Track, lyrics: string): Observable<unknown> {
+    const trackUpdate: Track = {
+      ...track,
+      lyrics,
+    };
+    return this.databaseService.updateTrack$(trackUpdate);
   }
 
   private setupAlbums(): void {

@@ -19,7 +19,6 @@ export class AddToPlaylistDialogComponent {
   constructor(
     private dialogRef: MatDialogRef<AddToPlaylistDialogComponent>,
     private musicLibraryService: MusicLibraryService,
-    private databaseService: DatabaseService,
     @Inject(MAT_DIALOG_DATA) public data: AddToPlaylistDialogData
   ) {}
 
@@ -31,9 +30,8 @@ export class AddToPlaylistDialogComponent {
     return this.musicLibraryService.playlists;
   }
 
-  public addTrackToPlaylist(track: Track, playlist: Playlist): void {
-    this.databaseService.addTrackToPlaylist(track, playlist);
-    this.close();
+  public addTrackToPlaylist(playlist: Playlist, track: Track): void {
+    this.musicLibraryService.addTrackToPlaylist$(playlist, track).subscribe(() => this.close());
   }
 
   public close(): void {

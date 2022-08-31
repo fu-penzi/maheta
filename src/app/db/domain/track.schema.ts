@@ -8,6 +8,7 @@ export interface Track {
   album: string;
   thumbUrl: string;
   duration: number;
+  lyrics?: string;
 }
 
 export enum TrackDefaultsEnum {
@@ -50,6 +51,9 @@ export const trackSchema: RxJsonSchema<Track> = {
       // minimum: 0,
       // maximum: 150,
       // multipleOf: 1,
+    },
+    lyrics: {
+      type: 'string',
     },
   },
   required: ['uri', 'src', 'title', 'author', 'duration', 'album', 'thumbUrl'],

@@ -3,6 +3,7 @@ import { environment } from '@environment/environment';
 
 import { DatabaseService } from '@src/app/db/database.service';
 import { Playlist } from '@src/app/db/domain/playlist.schema';
+import { MusicLibraryService } from '@src/app/services/music-library.service';
 
 @Component({
   selector: 'maheta-playlist-scroll-view',
@@ -12,7 +13,7 @@ import { Playlist } from '@src/app/db/domain/playlist.schema';
 export class PlaylistScrollViewComponent {
   @Input() public playlists: Playlist[];
 
-  constructor(private databaseService: DatabaseService) {}
+  constructor(private musicLibraryService: MusicLibraryService) {}
 
   public getPlaylistLengthCaption(playlist: Playlist): string {
     const playlistLength = playlist.tracks?.length || 0;
@@ -24,6 +25,6 @@ export class PlaylistScrollViewComponent {
   }
 
   public deletePlaylist(playlist: Playlist): void {
-    this.databaseService.deletePlaylist(playlist);
+    this.musicLibraryService.deletePlaylist$(playlist).subscribe();
   }
 }

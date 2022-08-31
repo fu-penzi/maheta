@@ -3,7 +3,7 @@ import { RxJsonSchema } from 'rxdb';
 export interface Playlist {
   id: string;
   name: string;
-  tracks?: string[];
+  tracks: string[];
   thumbUrl: string;
 }
 
@@ -36,5 +36,5 @@ export const playlistSchema: RxJsonSchema<Playlist> = {
       type: 'string',
     },
   },
-  required: ['id', 'name', 'thumbUrl'],
+  required: ['id', 'name', 'thumbUrl', 'tracks'],
 };

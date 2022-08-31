@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Choose playlist</h1>
 <div mat-dialog-content>
   <div *ngFor="let playlist of playlists">
-    <button mat-menu-item (click)="addTrackToPlaylist(track, playlist)">{{ playlist.name }}</button>
+    <button mat-menu-item (click)="addTrackToPlaylist(playlist, track)">{{ playlist.name }}</button>
   </div>
 </div>
 <div mat-dialog-actions>

@@ -27,7 +27,7 @@ export class TrackScrollViewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.tracks = this.tracks ?? tracksMock;
+    this.tracks = this.tracks || tracksMock;
     this.musicControlService.nextQueue = this.tracks;
   }
 
