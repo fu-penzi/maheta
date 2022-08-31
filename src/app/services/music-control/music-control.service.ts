@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import { QueueService } from '@src/app/services/queue.service';
-import { tracksMock } from '@src/mock/tracks';
 
 import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
 import { interval, map, Observable } from 'rxjs';
@@ -23,10 +22,7 @@ export class MusicControlService {
   }
 
   public get currentTrack(): Track {
-    // if (this.queueService.currentItem?.track) {
     return this.queueService.currentItem;
-    // }
-    return tracksMock[0];
   }
 
   public get currentTrackTime(): Observable<number> {

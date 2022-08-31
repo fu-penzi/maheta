@@ -24,7 +24,6 @@ export class QueueService<T> {
 
   public moveTo(index: number): void {
     if (index >= this._queue.length) {
-      console.error('Incorrect queue index');
       return;
     }
 

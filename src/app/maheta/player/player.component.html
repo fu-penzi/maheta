@@ -77,9 +77,16 @@
   </div>
 </div>
 
-<div class="track-lyrics" *ngIf="track?.lyrics">
+<div class="track-lyrics" *ngIf="lyrics">
   <h1 class="track-lyrics__header"><mat-icon>music_note</mat-icon> Lyrics</h1>
   <div class="track-lyrics__lyrics">
-    {{ track.lyrics }}
+    <span
+      *ngFor="let lyric of lyrics"
+      #lyricSpan
+      (click)="lyricClick(lyricSpan)"
+      [class.active]="lyricSpan === activeLyricSpan"
+    >
+      {{ lyric }}
+    </span>
   </div>
 </div>

@@ -4,6 +4,7 @@ import { MatSliderChange } from '@angular/material/slider';
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
+import { logger } from '@src/devUtils';
 
 interface SliderSettings {
   value: number;
@@ -18,6 +19,7 @@ interface SliderSettings {
   styleUrls: ['./player.component.scss'],
 })
 export class PlayerComponent implements OnInit {
+  public activeLyricSpan: HTMLSpanElement;
   public sliderSettings: SliderSettings;
   public currentTrackTime: number;
   private _isSliderHeld: boolean = false;
@@ -29,6 +31,14 @@ export class PlayerComponent implements OnInit {
 
   public get track(): Track {
     return this.musicControlService.currentTrack;
+  }
+
+  public get lyrics(): string[] | undefined {
+    if (!this.track.lyrics) {
+      return;
+    }
+
+    return this.track.lyrics.replace(/(?:\r\n|\r|\n)/g, ' \n').split(/ /g);
   }
 
   public ngOnInit(): void {
@@ -71,6 +81,10 @@ export class PlayerComponent implements OnInit {
     const time: number = (value * this.track?.duration) / this.sliderSettings.max;
     this.musicControlService.seekTo(time);
     this._isSliderHeld = false;
+  }
+
+  public lyricClick(lyricSpan: HTMLSpanElement): void {
+    this.activeLyricSpan = lyricSpan;
   }
 
   private setupSlider(): void {
