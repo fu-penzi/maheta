@@ -4,7 +4,6 @@ import { MatSliderChange } from '@angular/material/slider';
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
-import { logger } from '@src/devUtils';
 
 interface SliderSettings {
   value: number;

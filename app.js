@@ -13,6 +13,16 @@ function createWindow() {
     },
   });
 
+  mainWindow.webContents.on('did-fail-load', () => {
+    mainWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, `/dist/maheta/index.html`),
+        protocol: 'file:',
+        slashes: true,
+      })
+    );
+  });
+
   mainWindow.loadURL(
     url.format({
       pathname: path.join(__dirname, `/dist/maheta/index.html`),
