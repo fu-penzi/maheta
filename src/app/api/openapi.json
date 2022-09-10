@@ -1,0 +1,428 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Maheta API - OpenAPI 3.0",
+    "description": "This is api for MS translator services",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/api/v3"
+    }
+  ],
+  "tags": [
+    {
+      "name": "translator",
+      "description": "Translating and dictionary data"
+    }
+  ],
+  "paths": {
+    "/translator/languages": {
+      "get": {
+        "tags": [
+          "translator"
+        ],
+        "summary": "Get list of available languages",
+        "description": "Get list of available languages",
+        "operationId": "getLanguages",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Language"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Language"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/translator/languages/{language}": {
+      "get": {
+        "tags": [
+          "translator"
+        ],
+        "summary": "Get language",
+        "description": "Get language",
+        "operationId": "getLanguage",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "path",
+            "description": "Code of language to get",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Language"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Language"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/translator/translate/{text}": {
+      "get": {
+        "tags": [
+          "translator"
+        ],
+        "summary": "Get text translation and source language",
+        "description": "Translate text and get source language",
+        "operationId": "getTranslation",
+        "parameters": [
+          {
+            "name": "text",
+            "in": "path",
+            "description": "Text to translate",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "This i a text I want to translate"
+            }
+          },
+          {
+            "name": "targetLanguage",
+            "in": "query",
+            "description": "Code of translation target language (defaults to English)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "sourceLanguage",
+            "in": "query",
+            "description": "Code of translation source language",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "pl"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Translation"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Translation"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/translator/transliterate/{text}": {
+      "get": {
+        "tags": [
+          "translator"
+        ],
+        "summary": "Transliterate text to chosen script",
+        "description": "Transliterate text to chosen script (defaults to Latn)",
+        "operationId": "getTransliteration",
+        "parameters": [
+          {
+            "name": "text",
+            "in": "path",
+            "description": "Input text",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "起きる"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Input language code",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "ja"
+            }
+          },
+          {
+            "name": "fromScript",
+            "in": "query",
+            "description": "Input text script",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "Japn"
+            }
+          },
+          {
+            "name": "toScript",
+            "in": "query",
+            "description": "Output text script (defeaults to Latn)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "Latn"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transliteration"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transliteration"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/translator/detect/{text}": {
+      "get": {
+        "tags": [
+          "translator"
+        ],
+        "summary": "Detect input text language",
+        "description": "Detect input text language",
+        "operationId": "getLanguageDetection",
+        "parameters": [
+          {
+            "name": "text",
+            "in": "path",
+            "description": "Text to detect",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "This i a text I want to detect"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Detection"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Detection"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/translator/lookup/{word}": {
+      "get": {
+        "tags": [
+          "translator"
+        ],
+        "summary": "Get dictionary data about word",
+        "description": "Detect input text language",
+        "operationId": "getWordLookup",
+        "parameters": [
+          {
+            "name": "word",
+            "in": "path",
+            "description": "Word to lookup",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "起きる"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lookup"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lookup"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Language": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Japanese"
+          },
+          "code": {
+            "type": "string",
+            "example": "ja"
+          },
+          "scriptCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "Jpan",
+              "Latn"
+            ]
+          }
+        },
+        "xml": {
+          "name": "language"
+        }
+      },
+      "Translation": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "example": "Lucky punch"
+          },
+          "sourceLanguage": {
+            "$ref": "#/components/schemas/Language"
+          }
+        },
+        "xml": {
+          "name": "translation"
+        }
+      },
+      "Transliteration": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "example": "okiru"
+          },
+          "script": {
+            "type": "string",
+            "example": "Latn"
+          }
+        },
+        "xml": {
+          "name": "transliteration"
+        }
+      },
+      "Detection": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string",
+            "example": "en"
+          }
+        },
+        "xml": {
+          "name": "detection"
+        }
+      },
+      "Lookup": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "$ref": "#/components/schemas/Language"
+          },
+          "translations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "originate",
+              "happen",
+              "occur",
+              "wake up"
+            ]
+          },
+          "transliteration": {
+            "$ref": "#/components/schemas/Transliteration"
+          }
+        },
+        "xml": {
+          "name": "detection"
+        }
+      }
+    }
+  }
+}
