@@ -1,0 +1,13 @@
+<h1 class="dialog-header-container">Edit lyrics</h1>
+<div class="dialog-content-container">
+  <form [formGroup]="form">
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Name</mat-label>
+      <textarea matInput formControlName="lyrics" placeholder="Track lyrics..."></textarea>
+    </mat-form-field>
+  </form>
+</div>
+<div class="dialog-footer-container">
+  <button mat-button (click)="close()">Close</button>
+  <button mat-raised-button color="accent" (click)="save()">Save</button>
+</div>

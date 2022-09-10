@@ -1,0 +1,15 @@
+@use 'variables' as *;
+@include dialog;
+
+.dialog-content-container {
+  overflow: hidden;
+}
+
+.form-field {
+  display: block;
+  width: 100%;
+
+  textarea {
+    height: 180px;
+  }
+}

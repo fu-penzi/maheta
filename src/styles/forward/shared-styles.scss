@@ -70,3 +70,25 @@
     }
   }
 }
+
+@mixin dialog() {
+  .dialog-header-container {
+    margin-bottom: spacing(4);
+  }
+
+  .dialog-content-container {
+    max-height: 250px;
+    margin-bottom: spacing(4);
+    overflow-y: scroll;
+  }
+
+  .dialog-footer-container {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: spacing(4);
+
+    button + button {
+      margin-left: spacing(4);
+    }
+  }
+}

@@ -5,11 +5,11 @@ import { Track } from '@src/app/db/domain/track.schema';
 import {
   AddToPlaylistDialogComponent,
   AddToPlaylistDialogData,
-} from '@src/app/modules/shared/add-to-playlist-dialog/add-to-playlist-dialog.component';
+} from '@src/app/modules/shared/dialog/add-to-playlist-dialog/add-to-playlist-dialog.component';
 import {
   EditLyricsDialogComponent,
   EditLyricsDialogData,
-} from '@src/app/modules/shared/edit-lyrics-dialog/edit-lyrics-dialog.component';
+} from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 
 @Component({
@@ -52,13 +52,13 @@ export class TrackScrollViewComponent implements OnInit {
     const data: AddToPlaylistDialogData = {
       track,
     };
-    this.matDialogService.open(AddToPlaylistDialogComponent, { data });
+    this.matDialogService.open(AddToPlaylistDialogComponent, { data, width: '100%' });
   }
 
   public openEditLyricsDialog(track: Track): void {
     const data: EditLyricsDialogData = {
       track,
     };
-    this.matDialogService.open(EditLyricsDialogComponent, { data });
+    this.matDialogService.open(EditLyricsDialogComponent, { data, width: '100%' });
   }
 }

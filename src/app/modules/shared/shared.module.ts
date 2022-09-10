@@ -11,12 +11,20 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 
-import { AddToPlaylistDialogComponent } from '@src/app/modules/shared/add-to-playlist-dialog/add-to-playlist-dialog.component';
-import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/create-playlist-dialog/create-playlist-dialog.component';
-import { EditLyricsDialogComponent } from '@src/app/modules/shared/edit-lyrics-dialog/edit-lyrics-dialog.component';
+import { AddToPlaylistDialogComponent } from '@src/app/modules/shared/dialog/add-to-playlist-dialog/add-to-playlist-dialog.component';
+import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/dialog/create-playlist-dialog/create-playlist-dialog.component';
+import { EditLyricsDialogComponent } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-scroll-view/playlist-scroll-view.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
+
+const exportedModules = [
+  CommonModule,
+  TrackScrollViewComponent,
+  PlaylistScrollViewComponent,
+  DurationPipe,
+];
+const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponent, DurationPipe];
 
 @NgModule({
   declarations: [
@@ -40,6 +48,6 @@ import { DurationPipe } from '@src/app/pipes/duration.pipe';
     MatInputModule,
     ReactiveFormsModule,
   ],
-  exports: [CommonModule, TrackScrollViewComponent, PlaylistScrollViewComponent, DurationPipe],
+  exports: [...exportedModules, ...exportedComponents],
 })
 export class SharedModule {}

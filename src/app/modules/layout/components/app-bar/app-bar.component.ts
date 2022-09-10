@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DatabaseService } from '@src/app/db/database.service';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
-import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/create-playlist-dialog/create-playlist-dialog.component';
+import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/dialog/create-playlist-dialog/create-playlist-dialog.component';
 import { NavigationService } from '@src/app/services/navigation.service';
 
 @Component({
