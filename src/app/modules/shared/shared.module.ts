@@ -17,6 +17,8 @@ import { EditLyricsDialogComponent } from '@src/app/modules/shared/dialog/edit-l
 import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-scroll-view/playlist-scroll-view.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
+import { LoadingDialogComponent } from './dialog/loading-dialog/loading-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const exportedModules = [
   CommonModule,
@@ -34,6 +36,7 @@ const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponen
     AddToPlaylistDialogComponent,
     CreatePlaylistDialogComponent,
     EditLyricsDialogComponent,
+    LoadingDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +50,7 @@ const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponen
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
   ],
   exports: [...exportedModules, ...exportedComponents],
 })

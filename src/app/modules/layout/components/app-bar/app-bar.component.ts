@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
 import { DatabaseService } from '@src/app/db/database.service';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/dialog/create-playlist-dialog/create-playlist-dialog.component';
+import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-dialog/loading-dialog.component';
 import { NavigationService } from '@src/app/services/navigation.service';
 
 @Component({
@@ -26,6 +27,22 @@ export class AppBarComponent {
 
   public back(): void {
     this.navigation.back();
+  }
+
+  public reloadDatabaseTrackData(): void {
+    const dialogConf: MatDialogConfig<LoadingDialogComponent> = {
+      width: '100%',
+      disableClose: true,
+    };
+    const dialogRef: MatDialogRef<LoadingDialogComponent> = this.matDialogService.open(
+      LoadingDialogComponent,
+      dialogConf
+    );
+
+    this.databaseService
+      .reloadDatabaseTrackData()
+      .then(() => dialogRef.close())
+      .catch(() => dialogRef.close());
   }
 
   public openCreatePlaylistDialog(): void {

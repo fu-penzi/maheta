@@ -120,6 +120,21 @@ export class DatabaseService {
     await this._trackCollection.bulkInsert(tracks);
   }
 
+  public async reloadDatabaseTrackData(): Promise<void> {
+    const tracks: Track[] = await this.fileLoadingService.loadMusic();
+    await this._trackCollection.remove();
+    await this._trackDB
+      .addCollections({
+        [DatabaseCollectionEnum.TRACKS]: {
+          schema: trackSchema,
+        },
+      })
+      .then((res) => {
+        this._trackCollection = res[DatabaseCollectionEnum.TRACKS];
+      });
+    await this._trackCollection.bulkInsert(tracks);
+  }
+
   private getPlaylistDocument$(playlist: Playlist): Observable<RxDocument> {
     return this._playlistCollection
       .findOne({
