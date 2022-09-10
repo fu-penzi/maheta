@@ -1,3 +1,5 @@
+import { Track } from '@src/app/db/domain/track.schema';
+
 import { RxJsonSchema } from 'rxdb';
 
 export interface Playlist {
@@ -5,6 +7,7 @@ export interface Playlist {
   name: string;
   tracks: string[];
   thumbUrl: string;
+  trackPopulation?: Track[];
 }
 
 export enum PlaylistDefaultsEnum {
@@ -34,6 +37,9 @@ export const playlistSchema: RxJsonSchema<Playlist> = {
     },
     thumbUrl: {
       type: 'string',
+    },
+    trackPopulation: {
+      type: 'array',
     },
   },
   required: ['id', 'name', 'thumbUrl', 'tracks'],

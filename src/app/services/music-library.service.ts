@@ -8,7 +8,7 @@ import { FileLoadingService } from '@src/app/services/file-loading.service';
 import { tracksMock } from '@src/mock/tracks';
 
 import { groupBy, sortBy } from 'lodash';
-import { Observable, of, startWith } from 'rxjs';
+import { combineLatest, filter, map, mergeMap, Observable, of, startWith, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +17,8 @@ export class MusicLibraryService {
   public tracks: Track[];
   public playlists: Playlist[];
   public albums: Album[];
+
+  public databaseUpdate$: Subject<void> = new Subject<void>();
 
   constructor(
     private fileLoadingService: FileLoadingService,
@@ -29,6 +31,7 @@ export class MusicLibraryService {
       this.tracks = tracks.length > 0 ? tracks : tracksMock;
       this.playlists = await this.databaseService.getPlaylists();
       this.setupAlbums();
+      this.databaseUpdate$.next();
     });
   }
 
@@ -36,8 +39,19 @@ export class MusicLibraryService {
     return this.albums.find((album: Album) => album.title === title);
   }
 
-  public getPlaylist(id: string): Playlist | undefined {
-    return this.playlists.find((playlist: Playlist) => playlist.id === id);
+  public getPlaylist$(id: string): Observable<Playlist> {
+    return this.databaseUpdate$.pipe(
+      startWith({}),
+      map(() => this.playlists.find((playlist: Playlist) => playlist.id === id) as Playlist),
+      filter((playlist: Playlist) => !!playlist),
+      mergeMap((playlist: Playlist) =>
+        combineLatest(of(playlist), this.databaseService.getPlaylistTrackPopulation$(playlist))
+      ),
+      map(([playlist, trackPopulation]) => ({
+        ...playlist,
+        trackPopulation: trackPopulation ?? [],
+      }))
+    );
   }
 
   public deletePlaylist$(playlist: Playlist): Observable<boolean> {
@@ -46,12 +60,25 @@ export class MusicLibraryService {
 
   public addTrackToPlaylist$(playlist: Playlist, track: Track): Observable<unknown> {
     if (playlist.tracks.includes(track.uri)) {
-      return of();
+      return of([]);
     }
 
     const playlistUpdate: Playlist = {
       ...playlist,
+      trackPopulation: undefined,
       tracks: [...playlist.tracks, track.uri],
+    };
+    return this.databaseService.updatePlaylist$(playlistUpdate);
+  }
+
+  public removeTrackFromPlaylist$(playlist: Playlist, track: Track): Observable<unknown> {
+    if (!playlist.tracks.includes(track.uri)) {
+      return of();
+    }
+    const playlistUpdate: Playlist = {
+      ...playlist,
+      trackPopulation: undefined,
+      tracks: playlist.tracks.filter((trackUri: string) => trackUri !== track.uri),
     };
     return this.databaseService.updatePlaylist$(playlistUpdate);
   }

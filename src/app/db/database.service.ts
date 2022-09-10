@@ -102,7 +102,7 @@ export class DatabaseService {
     );
   }
 
-  public getPlaylistTracks$(playlist: Playlist): Observable<Track[]> {
+  public getPlaylistTrackPopulation$(playlist: Playlist): Observable<Track[]> {
     return this.getPlaylistDocument$(playlist).pipe(
       switchMap((document: RxDocument) => from(document.populate('tracks')))
     );

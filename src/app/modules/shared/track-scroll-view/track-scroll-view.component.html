@@ -23,14 +23,24 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="openAddToPlaylistDialog(track)">
-            <mat-icon>playlist_add</mat-icon>
-            Add to playlist
-          </button>
           <button mat-menu-item (click)="openEditLyricsDialog(track)">
             <mat-icon>music_note</mat-icon>
             Edit lyrics
           </button>
+
+          <ng-container *ngIf="playlist">
+            <button mat-menu-item (click)="deleteFromPlaylist(track)">
+              <mat-icon>delete_forever</mat-icon>
+              Delete from playlist
+            </button>
+          </ng-container>
+
+          <ng-container *ngIf="!playlist">
+            <button mat-menu-item (click)="openAddToPlaylistDialog(track)">
+              <mat-icon>playlist_add</mat-icon>
+              Add to playlist
+            </button>
+          </ng-container>
         </mat-menu>
       </div>
     </li>

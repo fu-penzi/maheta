@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 
 import { DatabaseService } from '@src/app/db/database.service';
 import { Playlist } from '@src/app/db/domain/playlist.schema';
-import { Track } from '@src/app/db/domain/track.schema';
 import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
 
@@ -13,8 +12,7 @@ import { MusicLibraryService } from '@src/app/services/music-library.service';
   styleUrls: ['./playlist-tracks.component.scss'],
 })
 export class PlaylistTracksComponent implements OnInit {
-  public playlist: Playlist | undefined;
-  public playlistTracks: Track[] = [];
+  public playlist: Playlist;
 
   constructor(
     private musicLibraryService: MusicLibraryService,
@@ -24,11 +22,8 @@ export class PlaylistTracksComponent implements OnInit {
 
   public ngOnInit(): void {
     const playlistId: string = this.route.snapshot.paramMap.get(UrlParamsEnum.playlistId) ?? '';
-    this.playlist = this.musicLibraryService.getPlaylist(playlistId);
-    if (this.playlist) {
-      this.databaseService.getPlaylistTracks$(this.playlist).subscribe((tracks: Track[]) => {
-        this.playlistTracks = tracks;
-      });
-    }
+    this.musicLibraryService.getPlaylist$(playlistId).subscribe((playlist: Playlist) => {
+      this.playlist = playlist;
+    });
   }
 }

@@ -11,6 +11,8 @@ import {
   EditLyricsDialogData,
 } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
+import { Playlist } from '@src/app/db/domain/playlist.schema';
+import { MusicLibraryService } from '@src/app/services/music-library.service';
 
 @Component({
   selector: 'maheta-track-scroll-view',
@@ -19,9 +21,11 @@ import { MusicControlService } from '@src/app/services/music-control/music-contr
 })
 export class TrackScrollViewComponent implements OnInit {
   @Input() public tracks: Track[];
+  @Input() public playlist: Playlist;
 
   constructor(
     private readonly musicControlService: MusicControlService,
+    private readonly musicLibraryService: MusicLibraryService,
     public matDialogService: MatDialog
   ) {}
 
@@ -46,6 +50,10 @@ export class TrackScrollViewComponent implements OnInit {
       return false;
     }
     return this.currentTrack.uri === track.uri;
+  }
+
+  public deleteFromPlaylist(track: Track): void {
+    this.musicLibraryService.removeTrackFromPlaylist$(this.playlist, track).subscribe();
   }
 
   public openAddToPlaylistDialog(track: Track): void {
