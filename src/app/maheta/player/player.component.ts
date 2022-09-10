@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 
 import { Track } from '@src/app/db/domain/track.schema';
+import { getSentences, getWords } from '@src/app/helpers/string.helper';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
 
@@ -12,15 +13,20 @@ interface SliderSettings {
   step: number;
 }
 
+interface LyricSentence {
+  words: string[];
+}
+
 @Component({
   selector: 'maheta-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss'],
 })
 export class PlayerComponent implements OnInit {
-  public activeLyricSpan: HTMLSpanElement;
   public sliderSettings: SliderSettings;
   public currentTrackTime: number;
+  public highlightedWord: string = '';
+
   private _isSliderHeld: boolean = false;
 
   constructor(
@@ -32,12 +38,14 @@ export class PlayerComponent implements OnInit {
     return this.musicControlService.currentTrack;
   }
 
-  public get lyrics(): string[] | undefined {
-    if (!this.track.lyrics) {
-      return;
+  public get lyricSentences(): LyricSentence[] {
+    if (!this.track?.lyrics) {
+      return [];
     }
 
-    return this.track.lyrics.replace(/(?:\r\n|\r|\n)/g, ' \n').split(/ /g);
+    return getSentences(this.track.lyrics).map((sentence: string) => ({
+      words: getWords(sentence),
+    }));
   }
 
   public ngOnInit(): void {
@@ -82,8 +90,20 @@ export class PlayerComponent implements OnInit {
     this._isSliderHeld = false;
   }
 
-  public lyricClick(lyricSpan: HTMLSpanElement): void {
-    this.activeLyricSpan = lyricSpan;
+  public wordSelect(word: string | undefined): void {
+    if (!word) {
+      return;
+    }
+
+    this.highlightedWord = word;
+  }
+
+  public isWordHighlighted(word: string | undefined): boolean {
+    if (!word) {
+      return false;
+    }
+
+    return word === this.highlightedWord;
   }
 
   private setupSlider(): void {

@@ -77,16 +77,17 @@
   </div>
 </div>
 
-<div class="track-lyrics" *ngIf="lyrics">
-  <h1 class="track-lyrics__header"><mat-icon>music_note</mat-icon> Lyrics</h1>
+<div class="track-lyrics" *ngIf="lyricSentences">
+  <h1 class="track-lyrics__header"><mat-icon>music_note</mat-icon>Lyrics</h1>
   <div class="track-lyrics__lyrics">
-    <span
-      *ngFor="let lyric of lyrics"
-      #lyricSpan
-      (click)="lyricClick(lyricSpan)"
-      [class.active]="lyricSpan === activeLyricSpan"
-    >
-      {{ lyric }}
-    </span>
+    <div *ngFor="let sentence of lyricSentences">
+      <span
+        *ngFor="let word of sentence.words"
+        (click)="wordSelect(word)"
+        [class.active]="isWordHighlighted(word)"
+      >
+        {{ word }}
+      </span>
+    </div>
   </div>
 </div>
