@@ -10,12 +10,14 @@ import { SharedModule } from '@src/app/modules/shared/shared.module';
 import { MusicControlModule } from '@src/app/services/music-control/music-control.module';
 
 import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     LayoutModule,
     BrowserAnimationsModule,
     MusicControlModule,

@@ -3,11 +3,6 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "paths": {
-      "@src/*": ["./src/*"],
-      "@maheta/*": ["./src/app/maheta/*"],
-      "@environment/*": ["./src/environments/*"]
-    },
     "types": ["node"]
   },
   "files": ["src/main.ts", "src/polyfills.ts"],

@@ -6,7 +6,7 @@ mockServer({
   uiPath: '/',
   title: 'Api mock server',
   version: 1,
-  urlBase: 'http://localhost:3001',
+  urlBase: 'http://192.168.0.106:3001',
   urlPath: '/api/v3',
   port: 3001,
   contentType: 'application/json',

@@ -19,7 +19,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3001/api/v3"
+      "url": "http://192.168.0.106:3001/api/v3"
     }
   ],
   "tags": [
@@ -41,15 +41,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Language"
-                  }
-                }
-              },
-              "application/xml": {
+              "*/*": {
                 "schema": {
                   "type": "array",
                   "items": {
@@ -89,12 +81,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Language"
-                }
-              },
-              "application/xml": {
+              "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/Language"
                 }
@@ -151,12 +138,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Translation"
-                }
-              },
-              "application/xml": {
+              "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/Translation"
                 }
@@ -223,12 +205,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Transliteration"
-                }
-              },
-              "application/xml": {
+              "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/Transliteration"
                 }
@@ -265,12 +242,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Detection"
-                }
-              },
-              "application/xml": {
+              "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/Detection"
                 }
@@ -307,14 +279,9 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/Lookup"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/Lookup"
+                  "$ref": "#/components/schemas/WordLookup"
                 }
               }
             }
@@ -397,7 +364,7 @@
           "name": "detection"
         }
       },
-      "Lookup": {
+      "WordLookup": {
         "type": "object",
         "properties": {
           "language": {
