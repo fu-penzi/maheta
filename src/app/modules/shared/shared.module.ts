@@ -9,16 +9,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 
 import { AddToPlaylistDialogComponent } from '@src/app/modules/shared/dialog/add-to-playlist-dialog/add-to-playlist-dialog.component';
 import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/dialog/create-playlist-dialog/create-playlist-dialog.component';
 import { EditLyricsDialogComponent } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
+import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-dialog/loading-dialog.component';
 import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-scroll-view/playlist-scroll-view.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
-import { LoadingDialogComponent } from './dialog/loading-dialog/loading-dialog.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const exportedModules = [
   CommonModule,
@@ -40,6 +41,7 @@ const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponen
   ],
   imports: [
     CommonModule,
+    MatSnackBarModule,
     MatRippleModule,
     MatIconModule,
     MatButtonModule,

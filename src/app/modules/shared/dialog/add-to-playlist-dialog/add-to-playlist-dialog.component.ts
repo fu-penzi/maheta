@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from '@environment/environment';
 
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { Track } from '@src/app/db/domain/track.schema';
@@ -18,6 +20,7 @@ export class AddToPlaylistDialogComponent {
   constructor(
     private dialogRef: MatDialogRef<AddToPlaylistDialogComponent>,
     private musicLibraryService: MusicLibraryService,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: AddToPlaylistDialogData
   ) {}
 
@@ -30,7 +33,18 @@ export class AddToPlaylistDialogComponent {
   }
 
   public addTrackToPlaylist(playlist: Playlist, track: Track): void {
+    if (playlist.tracks.includes(track.uri)) {
+      this.openSnackBar(
+        environment.locales.MAHETA.ADD_TO_PLAYLIST_DIALOG.message(track.title, playlist.name),
+        environment.locales.MAHETA.ADD_TO_PLAYLIST_DIALOG.action
+      );
+      return;
+    }
     this.musicLibraryService.addTrackToPlaylist$(playlist, track).subscribe(() => this.close());
+  }
+
+  public openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, { duration: 1500 });
   }
 
   public close(): void {
