@@ -8,65 +8,93 @@ import { PlatformEnum } from '@src/app/model/platform.enum';
 import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories.enum';
 
 import * as musicMetadata from 'music-metadata-browser';
+import { IAudioMetadata } from 'music-metadata-browser';
 
 enum FileTypeEnum {
   FILE = 'file',
   DIR = 'directory',
 }
 
+interface ReadOptions {
+  path: string;
+  directory?: Directory;
+}
+
+const defaultReadOptions: ReadOptions = {
+  path: '',
+  directory: Directory.ExternalStorage,
+};
+
 @Injectable({
   providedIn: 'root',
 })
 export class FileLoadingService {
-  // TODO _searchDirPath from user input (let user select library root)
-  private _searchDirPath: string = 'Music';
-  private _trackPaths: string[] = [];
-  private _tracks: Track[] = [];
+  public tracks: Track[] = [];
 
-  public async loadMusic(): Promise<Track[]> {
-    if (Capacitor.getPlatform() === PlatformEnum.ANDROID) {
-      this._trackPaths = await this.readMusicPaths();
-      this._tracks = await Promise.all(
-        this._trackPaths.map(async (trackPath) => {
-          const capacitorPath: string = Capacitor.convertFileSrc(trackPath);
-          const metadata = await musicMetadata
-            .fetchFromUrl(capacitorPath)
-            .catch((err) => console.error(`Failed to get ${trackPath} metadata: ${err}`));
+  private _readOptionsArray: ReadOptions[] = [];
+  private _trackPathsSet: Set<string> = new Set<string>();
 
-          return {
-            uri: trackPath,
-            src: capacitorPath,
-            title: metadata?.common.title ?? trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
-            author: metadata?.common.artist ?? TrackDefaultsEnum.AUTHOR,
-            album: metadata?.common.album ?? TrackDefaultsEnum.ALBUM,
-            thumbUrl: metadata?.common.picture
-              ? `data:${
-                  metadata?.common.picture[0].format
-                };base64,${metadata?.common.picture[0].data.toString('base64')}`
-              : TrackDefaultsEnum.THUMBURL,
-            duration: metadata?.format.duration ?? 0,
-          };
-        })
-      );
-    }
-    return this._tracks;
-
-    //TODO add db and handling for other platforms
-    // this.testInitDatabase().catch((err) => console.error(`Failed on database init ${err}`));
+  constructor() {
+    this._readOptionsArray.push(defaultReadOptions, {
+      path: '/storage/15F2-1213/',
+    });
   }
 
-  private readMusicPaths(): Promise<string[]> {
-    //TODO change getUri params
-    return Filesystem.getUri({
-      path: this._searchDirPath,
-      directory: Directory.ExternalStorage,
-    })
+  public async loadMusic(): Promise<Track[]> {
+    if (Capacitor.getPlatform() !== PlatformEnum.ANDROID) {
+      //TODO add db and handling for other platforms
+      return this.tracks;
+    }
+
+    for (const readOptions of this._readOptionsArray) {
+      const trackPaths = await this.readTrackPaths(readOptions);
+      trackPaths.forEach((trackPath: string) => this._trackPathsSet.add(trackPath));
+    }
+
+    this.tracks = await Promise.all(
+      [...this._trackPathsSet].map(async (trackPath) => this.getTrackWithMetadata(trackPath))
+    );
+
+    return this.tracks;
+  }
+
+  private async getTrackWithMetadata(trackPath: string): Promise<Track> {
+    const capacitorPath: string = Capacitor.convertFileSrc(trackPath);
+    const metadata = await musicMetadata
+      .fetchFromUrl(capacitorPath)
+      .catch((err) => console.error(`Failed to get ${trackPath} metadata: ${err}`));
+
+    return this.getTrackObject(trackPath, capacitorPath, metadata ?? undefined);
+  }
+
+  private getTrackObject(
+    trackPath: string,
+    capacitorPath: string,
+    metadata: IAudioMetadata | undefined
+  ): Track {
+    return {
+      uri: trackPath,
+      src: capacitorPath,
+      title: metadata?.common.title ?? trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
+      author: metadata?.common.artist ?? TrackDefaultsEnum.AUTHOR,
+      album: metadata?.common.album ?? TrackDefaultsEnum.ALBUM,
+      thumbUrl: metadata?.common.picture
+        ? `data:${
+            metadata?.common.picture[0].format
+          };base64,${metadata?.common.picture[0].data.toString('base64')}`
+        : TrackDefaultsEnum.THUMBURL,
+      duration: metadata?.format.duration ?? 0,
+    };
+  }
+
+  private readTrackPaths(readOptions: ReadOptions): Promise<string[]> {
+    return Filesystem.stat(readOptions)
       .then((uriResult) => this.readDirRecursive(uriResult.uri))
       .then((res) => [res].flat(Infinity).filter((t: unknown) => typeof t == 'string' && !!t))
       .then((res) => res as string[])
       .catch((err) => {
         console.error(
-          `Error: ${err} occurred when loading tracks from directory:${this._searchDirPath}`
+          `Error: ${err} occurred when loading tracks from directory:${readOptions.path}`
         );
         return [];
       });

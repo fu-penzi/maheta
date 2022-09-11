@@ -25,7 +25,7 @@ export class LayoutChildrenGuard implements CanActivate {
     return this.databaseService
       .initDatabase()
       .then(() => this.databaseService.isTrackCollectionEmpty())
-      .then((isEmpty: boolean) => (true ? this.databaseService.reloadDatabaseData() : {}))
+      .then((isEmpty: boolean) => (isEmpty ? this.databaseService.reloadDatabaseData() : {}))
       .then(() => this.musicLibraryService.initLibrary())
       .then(() => {
         this._loadingDialogRef?.close();
