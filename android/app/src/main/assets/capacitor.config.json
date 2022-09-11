@@ -1,0 +1,10 @@
+{
+	"appId": "com.fupenzi.maheta",
+	"appName": "Maheta",
+	"webDir": "dist/maheta",
+	"bundledWebRuntime": false,
+	"server": {
+		"url": "http://192.168.0.106:8100",
+		"cleartext": true
+	}
+}

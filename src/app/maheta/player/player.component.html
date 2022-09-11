@@ -77,7 +77,7 @@
   </div>
 </div>
 
-<div class="track-lyrics" *ngIf="lyricSentences">
+<div class="track-lyrics" *ngIf="lyricSentences?.length">
   <h1 class="track-lyrics__header"><mat-icon>music_note</mat-icon>Lyrics</h1>
   <div  class="track-lyrics__lyrics">
     <div *ngFor="let sentence of lyricSentences">
