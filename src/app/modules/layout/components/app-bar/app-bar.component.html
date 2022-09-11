@@ -14,6 +14,14 @@
     </button>
 
     <button
+      mat-icon-button
+      (click)="openEditStorageSettingsDialog()"
+      aria-label="Example icon button"
+    >
+      <mat-icon>sd_storage</mat-icon>
+    </button>
+
+    <button
       *ngIf="isCurrentTabPlaylists()"
       mat-icon-button
       (click)="openCreatePlaylistDialog()"

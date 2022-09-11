@@ -3,24 +3,22 @@ import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem, ReaddirResult, StatResult } from '@capacitor/filesystem';
 
 import { Track, TrackDefaultsEnum } from '@src/app/db/domain/track.schema';
+import { LocalStorageEnum } from '@src/app/model/localStorage.enum';
 import { MusicFileExtensionEnum } from '@src/app/model/music-file-extension.enum';
 import { PlatformEnum } from '@src/app/model/platform.enum';
 import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories.enum';
 
 import * as musicMetadata from 'music-metadata-browser';
 import { IAudioMetadata } from 'music-metadata-browser';
+import { isArray } from 'lodash';
+import { ReadOptionsLocalStorage } from '@src/app/model/read-options-local.storage';
 
 enum FileTypeEnum {
   FILE = 'file',
   DIR = 'directory',
 }
 
-interface ReadOptions {
-  path: string;
-  directory?: Directory;
-}
-
-const defaultReadOptions: ReadOptions = {
+const defaultReadOptions: ReadOptionsLocalStorage = {
   path: '',
   directory: Directory.ExternalStorage,
 };
@@ -30,23 +28,15 @@ const defaultReadOptions: ReadOptions = {
 })
 export class FileLoadingService {
   public tracks: Track[] = [];
-
-  private _readOptionsArray: ReadOptions[] = [];
   private _trackPathsSet: Set<string> = new Set<string>();
-
-  constructor() {
-    this._readOptionsArray.push(defaultReadOptions, {
-      path: '/storage/15F2-1213/',
-    });
-  }
 
   public async loadMusic(): Promise<Track[]> {
     if (Capacitor.getPlatform() !== PlatformEnum.ANDROID) {
       //TODO add db and handling for other platforms
       return this.tracks;
     }
-
-    for (const readOptions of this._readOptionsArray) {
+    const readOptionsArray: ReadOptionsLocalStorage[] = this.getReadOptions();
+    for (const readOptions of readOptionsArray) {
       const trackPaths = await this.readTrackPaths(readOptions);
       trackPaths.forEach((trackPath: string) => this._trackPathsSet.add(trackPath));
     }
@@ -56,6 +46,21 @@ export class FileLoadingService {
     );
 
     return this.tracks;
+  }
+
+  private getReadOptions(): ReadOptionsLocalStorage[] {
+    const storageItem = localStorage.getItem(LocalStorageEnum.userTrackReadOptions);
+    if (!storageItem) {
+      return [defaultReadOptions];
+    }
+
+    const userReadOptions = JSON.parse(storageItem);
+    if (!isArray(userReadOptions)) {
+      return [defaultReadOptions];
+    }
+
+    userReadOptions.filter((readOption) => 'path' in readOption);
+    return [defaultReadOptions, ...userReadOptions];
   }
 
   private async getTrackWithMetadata(trackPath: string): Promise<Track> {
@@ -87,7 +92,7 @@ export class FileLoadingService {
     };
   }
 
-  private readTrackPaths(readOptions: ReadOptions): Promise<string[]> {
+  private readTrackPaths(readOptions: ReadOptionsLocalStorage): Promise<string[]> {
     return Filesystem.stat(readOptions)
       .then((uriResult) => this.readDirRecursive(uriResult.uri))
       .then((res) => [res].flat(Infinity).filter((t: unknown) => typeof t == 'string' && !!t))

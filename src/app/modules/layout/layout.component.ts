@@ -1,12 +1,12 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { environment } from '@environment/environment';
 
 import { PlatformEnum } from '@src/app/model/platform.enum';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { NavigationService } from '@src/app/services/navigation.service';
-import { SplashScreen } from '@capacitor/splash-screen';
 
 interface BottomNavTab {
   icon: string;

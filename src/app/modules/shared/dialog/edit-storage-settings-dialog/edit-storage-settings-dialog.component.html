@@ -1,0 +1,15 @@
+<h1 class="dialog-header-container">Edit music folder paths</h1>
+<form [formGroup]="form" class="dialog-content-container">
+  <div formArrayName="readOptionsPaths">
+    <div *ngFor="let readOptions of readOptionsPaths; index as i">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>#{{ i }}</mat-label>
+        <input matInput placeholder="/storage/15F2-1213/Music" [formControlName]="i" />
+      </mat-form-field>
+    </div>
+  </div>
+</form>
+<div class="dialog-footer-container">
+  <button mat-button (click)="close()">Close</button>
+  <button mat-raised-button color="accent" (click)="save()">Save</button>
+</div>
