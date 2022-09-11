@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 
 import { Track } from '@src/app/db/domain/track.schema';
-import { getSentences, getWords } from '@src/app/helpers/string.helper';
+import {
+  detectLanguage,
+  getSentences,
+  getTokenizer,
+  getWords,
+} from '@src/app/helpers/string.helper';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
 
@@ -43,8 +48,9 @@ export class PlayerComponent implements OnInit {
       return [];
     }
 
+    const tokenizer = getTokenizer(detectLanguage(this.track.lyrics));
     return getSentences(this.track.lyrics).map((sentence: string) => ({
-      words: getWords(sentence),
+      words: getWords(sentence, tokenizer),
     }));
   }
 
