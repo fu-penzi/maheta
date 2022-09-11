@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { CanActivate, UrlTree } from '@angular/router';
 
 import { DatabaseService } from '@src/app/db/database.service';
@@ -14,32 +14,18 @@ import { Observable } from 'rxjs';
 })
 export class LayoutChildrenGuard implements CanActivate {
   private _loadingDialogRef: MatDialogRef<LoadingDialogComponent>;
-  private _loadingDialogConf: MatDialogConfig<LoadingDialogComponent> = {
-    width: '100%',
-    disableClose: true,
-  };
 
   constructor(
     private readonly fileLoadingService: FileLoadingService,
     private musicLibraryService: MusicLibraryService,
-    private databaseService: DatabaseService,
-    private matDialogService: MatDialog
+    private databaseService: DatabaseService
   ) {}
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.databaseService
       .initDatabase()
       .then(() => this.databaseService.isTrackCollectionEmpty())
-      .then((isEmpty: boolean) => {
-        if (isEmpty) {
-          this._loadingDialogRef = this.matDialogService.open(
-            LoadingDialogComponent,
-            this._loadingDialogConf
-          );
-          return this.databaseService.reloadDatabaseData();
-        }
-        return;
-      })
+      .then((isEmpty: boolean) => (true ? this.databaseService.reloadDatabaseData() : {}))
       .then(() => this.musicLibraryService.initLibrary())
       .then(() => {
         this._loadingDialogRef?.close();

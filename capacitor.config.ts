@@ -12,6 +12,14 @@ const config: CapacitorConfig = {
     url: `http://${hostIp}:8100`,
     cleartext: true,
   },
+  plugins: {
+    SplashScreen: {
+      launchAutoHide: false,
+      showSpinner: true,
+      androidSpinnerStyle: 'horizontal',
+      spinnerColor: '#501E68',
+    },
+  },
 };
 
 export default config;
