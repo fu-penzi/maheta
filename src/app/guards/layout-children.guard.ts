@@ -6,6 +6,7 @@ import { FileLoadingService } from '@src/app/services/file-loading.service';
 import { MusicLibraryService } from '@src/app/services/music-library.service';
 
 import { Observable } from 'rxjs';
+import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 
 @Injectable({
   providedIn: 'root',

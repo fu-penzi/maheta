@@ -21,6 +21,7 @@ import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-d
 import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-scroll-view/playlist-scroll-view.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
+import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 
 const exportedModules = [
   CommonModule,

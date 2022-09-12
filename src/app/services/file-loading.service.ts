@@ -9,6 +9,7 @@ import { PlatformEnum } from '@src/app/model/platform.enum';
 import { ReadOptionsLocalStorage } from '@src/app/model/read-options-local.storage';
 import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories.enum';
 
+import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { isArray } from 'lodash';
 import * as musicMetadata from 'music-metadata-browser';
 import { IAudioMetadata } from 'music-metadata-browser';
@@ -32,12 +33,14 @@ export class FileLoadingService {
   public tracks: Track[] = [];
   private _trackPathsSet: Set<string> = new Set<string>();
 
+  constructor(private diagnostic: Diagnostic) {}
+
   public async loadMusic(): Promise<Track[]> {
     if (Capacitor.getPlatform() !== PlatformEnum.ANDROID) {
       //TODO add db and handling for other platforms
       return this.tracks;
     }
-    const readOptionsArray: ReadOptionsLocalStorage[] = this.getReadOptions();
+    const readOptionsArray: ReadOptionsLocalStorage[] = await this.getReadOptions();
     for (const readOptions of readOptionsArray) {
       const trackPaths = await this.readTrackPaths(readOptions);
       trackPaths.forEach((trackPath: string) => this._trackPathsSet.add(trackPath));
@@ -50,19 +53,32 @@ export class FileLoadingService {
     return this.tracks;
   }
 
-  private getReadOptions(): ReadOptionsLocalStorage[] {
+  private async getReadOptions(): Promise<ReadOptionsLocalStorage[]> {
+    const sdCardReadOptions: ReadOptionsLocalStorage[] = await this.diagnostic
+      .getExternalSdCardDetails()
+      .then((sdCardDetails) =>
+        sdCardDetails
+          .filter((sdCardDetail: any) => sdCardDetail?.path)
+          .map((sdCardDetail: any) => ({
+            path: sdCardDetail.path,
+          }))
+      );
+    const systemDetectedReadOptions: ReadOptionsLocalStorage[] = [
+      defaultReadOptions,
+      ...sdCardReadOptions,
+    ];
     const storageItem = localStorage.getItem(LocalStorageEnum.userTrackReadOptions);
     if (!storageItem) {
-      return [defaultReadOptions];
+      return systemDetectedReadOptions;
     }
 
     const userReadOptions = JSON.parse(storageItem);
     if (!isArray(userReadOptions)) {
-      return [defaultReadOptions];
+      return systemDetectedReadOptions;
     }
 
     userReadOptions.filter((readOption) => 'path' in readOption);
-    return [defaultReadOptions, ...userReadOptions];
+    return [...systemDetectedReadOptions, ...userReadOptions];
   }
 
   private async getTrackWithMetadata(trackPath: string): Promise<Track> {

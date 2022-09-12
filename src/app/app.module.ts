@@ -11,6 +11,7 @@ import { SharedModule } from '@src/app/modules/shared/shared.module';
 import { MusicControlModule } from '@src/app/services/music-control/music-control.module';
 
 import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
+import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,7 @@ import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
     BrowserAnimationsModule,
     MusicControlModule,
   ],
-  providers: [FormBuilder, MusicControls, SharedModule],
+  providers: [FormBuilder, MusicControls, SharedModule, Diagnostic],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
