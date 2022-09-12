@@ -41,7 +41,7 @@ export class AppBarComponent {
     );
 
     this.databaseService
-      .reloadTracksCollection()
+      .resetTracksCollection()
       .then(() => dialogRef.close())
       .catch(() => dialogRef.close());
   }

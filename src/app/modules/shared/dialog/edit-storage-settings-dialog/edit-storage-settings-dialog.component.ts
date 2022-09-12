@@ -50,7 +50,7 @@ export class EditStorageSettingsDialogComponent implements OnInit {
     );
 
     this.databaseService
-      .reloadTracksCollection()
+      .resetTracksCollection()
       .then(() => loadingDialogRef.close())
       .catch(() => loadingDialogRef.close());
     this.dialogRef.close();

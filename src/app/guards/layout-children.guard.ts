@@ -21,7 +21,6 @@ export class LayoutChildrenGuard implements CanActivate {
     return this.databaseService
       .initDatabase()
       .then(() => this.musicLibraryService.initLibrary())
-      .then(() => true)
-      .catch(() => false);
+      .then(() => true);
   }
 }

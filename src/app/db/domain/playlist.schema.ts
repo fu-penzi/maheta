@@ -10,6 +10,10 @@ export interface Playlist {
   trackPopulation?: Track[];
 }
 
+export enum PlaylistPopulationEnum {
+  tracks = 'tracks',
+}
+
 export enum PlaylistDefaultsEnum {
   NAME = 'Playlist #',
   THUMBURL = 'assets/note.jpg',

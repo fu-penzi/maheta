@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 
 import { DatabaseService } from '@src/app/db/database.service';
 import { Album, AlbumDefaultsEnum } from '@src/app/db/domain/album';
-import { Playlist } from '@src/app/db/domain/playlist.schema';
+import { Playlist, PlaylistPopulationEnum } from '@src/app/db/domain/playlist.schema';
 import { Track } from '@src/app/db/domain/track.schema';
+import { PlaylistCollectionService } from '@src/app/db/playlist-collection/playlist-collection.service';
+import { TrackCollectionService } from '@src/app/db/track-collection/track-collection.service';
 import { FileLoadingService } from '@src/app/services/file-loading.service';
 import { tracksMock } from '@src/mock/tracks';
 
 import { groupBy, sortBy } from 'lodash';
-import { combineLatest, filter, map, mergeMap, Observable, of, startWith, Subject } from 'rxjs';
+import { concatMap, filter, map, mergeMap, Observable, of, startWith, Subject, zip } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,17 +24,25 @@ export class MusicLibraryService {
 
   constructor(
     private fileLoadingService: FileLoadingService,
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private trackCollectionService: TrackCollectionService,
+    private playlistCollectionService: PlaylistCollectionService
   ) {}
 
   public async initLibrary(): Promise<void> {
-    this.databaseService.databaseChanges$.pipe(startWith({})).subscribe(async () => {
-      const tracks: Track[] = await this.databaseService.getTracks();
-      this.tracks = tracks.length > 0 ? tracks : tracksMock;
-      this.playlists = await this.databaseService.getPlaylists();
-      this.setupAlbums();
-      this.databaseUpdate$.next();
-    });
+    this.databaseService.databaseChanges$
+      .pipe(
+        startWith({}),
+        concatMap(() =>
+          zip(this.trackCollectionService.getAll$(), this.playlistCollectionService.getAll$())
+        )
+      )
+      .subscribe(([tracks, playlists]: [Track[], Playlist[]]) => {
+        this.tracks = tracks.length > 0 ? tracks : tracksMock;
+        this.playlists = playlists;
+        this.setupAlbums();
+        this.databaseUpdate$.next();
+      });
   }
 
   public getAlbum(title: string): Album | undefined {
@@ -45,7 +55,13 @@ export class MusicLibraryService {
       map(() => this.playlists.find((playlist: Playlist) => playlist.id === id) as Playlist),
       filter((playlist: Playlist) => !!playlist),
       mergeMap((playlist: Playlist) =>
-        combineLatest(of(playlist), this.databaseService.getPlaylistTrackPopulation$(playlist))
+        zip(
+          of(playlist),
+          this.playlistCollectionService.getPopulation$<Track>(
+            playlist,
+            PlaylistPopulationEnum.tracks
+          )
+        )
       ),
       map(([playlist, trackPopulation]) => ({
         ...playlist,
@@ -55,7 +71,7 @@ export class MusicLibraryService {
   }
 
   public deletePlaylist$(playlist: Playlist): Observable<boolean> {
-    return this.databaseService.deletePlaylist$(playlist);
+    return this.playlistCollectionService.delete$(playlist);
   }
 
   public addTrackToPlaylist$(playlist: Playlist, track: Track): Observable<unknown> {
@@ -68,7 +84,7 @@ export class MusicLibraryService {
       trackPopulation: undefined,
       tracks: [...playlist.tracks, track.uri],
     };
-    return this.databaseService.updatePlaylist$(playlistUpdate);
+    return this.playlistCollectionService.update$(playlistUpdate);
   }
 
   public removeTrackFromPlaylist$(playlist: Playlist, track: Track): Observable<unknown> {
@@ -80,7 +96,7 @@ export class MusicLibraryService {
       trackPopulation: undefined,
       tracks: playlist.tracks.filter((trackUri: string) => trackUri !== track.uri),
     };
-    return this.databaseService.updatePlaylist$(playlistUpdate);
+    return this.playlistCollectionService.update$(playlistUpdate);
   }
 
   public addLyricsToTrack$(track: Track, lyrics: string): Observable<unknown> {
@@ -88,7 +104,7 @@ export class MusicLibraryService {
       ...track,
       lyrics,
     };
-    return this.databaseService.updateTrack$(trackUpdate);
+    return this.trackCollectionService.update$(trackUpdate);
   }
 
   private setupAlbums(): void {
