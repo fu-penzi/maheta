@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Playlist, PlaylistDefaultsEnum, playlistSchema } from '@src/app/db/domain/playlist.schema';
 import { Track, trackSchema } from '@src/app/db/domain/track.schema';
 import { DatabaseCollectionEnum } from '@src/app/model/database-collection.enum';
-import { FileLoadingService } from '@src/app/services/file-loading.service';
+import { FileLoadingService, TrackLoadingResult } from '@src/app/services/file-loading.service';
 
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
 import { RxDBUpdatePlugin } from 'rxdb/plugins/update';
@@ -51,6 +51,11 @@ export class DatabaseService {
         this._trackCollection = res[DatabaseCollectionEnum.TRACKS];
         this._playlistCollection = res[DatabaseCollectionEnum.PLAYLISTS];
       });
+
+    const isDatabaseEmpty: boolean = await this.isTrackCollectionEmpty();
+    if (isDatabaseEmpty) {
+      await this.reloadDatabaseData();
+    }
   }
 
   public getTracks(): Promise<Track[]> {
@@ -108,20 +113,7 @@ export class DatabaseService {
     );
   }
 
-  public async isTrackCollectionEmpty(): Promise<boolean> {
-    const tracks: Track[] = await this.getTracks();
-    return !tracks?.length;
-  }
-
-  public async reloadDatabaseData(): Promise<void> {
-    const tracks: Track[] = await this.fileLoadingService.loadMusic();
-    await this._trackDB.remove();
-    await this.initDatabase();
-    await this._trackCollection.bulkInsert(tracks);
-  }
-
-  public async reloadDatabaseTrackData(): Promise<void> {
-    const tracks: Track[] = await this.fileLoadingService.loadMusic();
+  public async reloadTracksCollection(): Promise<void> {
     await this._trackCollection.remove();
     await this._trackDB
       .addCollections({
@@ -132,7 +124,18 @@ export class DatabaseService {
       .then((res) => {
         this._trackCollection = res[DatabaseCollectionEnum.TRACKS];
       });
-    await this._trackCollection.bulkInsert(tracks);
+
+    const tracksLoadingResult: TrackLoadingResult = await this.fileLoadingService.loadTracks();
+    await this._trackCollection.bulkUpsert(tracksLoadingResult.tracksWithoutMetadata);
+    tracksLoadingResult.trackWithMetadata$.subscribe((track: Track) => {
+      this._trackCollection.upsert(track);
+    });
+  }
+
+  private async reloadDatabaseData(): Promise<void> {
+    await this._trackDB.remove();
+    await this.initDatabase();
+    await this.reloadTracksCollection();
   }
 
   private getPlaylistDocument$(playlist: Playlist): Observable<RxDocument> {
@@ -153,5 +156,10 @@ export class DatabaseService {
         },
       })
       .$.pipe(take(1));
+  }
+
+  private async isTrackCollectionEmpty(): Promise<boolean> {
+    const tracks: Track[] = await this.getTracks();
+    return !tracks?.length;
   }
 }

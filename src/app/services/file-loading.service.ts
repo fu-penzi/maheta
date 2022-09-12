@@ -13,10 +13,16 @@ import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { isArray } from 'lodash';
 import * as musicMetadata from 'music-metadata-browser';
 import { IAudioMetadata } from 'music-metadata-browser';
+import { concatMap, from, Observable, of, ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
 
 enum FileTypeEnum {
   FILE = 'file',
   DIR = 'directory',
+}
+
+export interface TrackLoadingResult {
+  tracksWithoutMetadata: Track[];
+  trackWithMetadata$: Observable<Track>;
 }
 
 const defaultReadOptions: ReadOptionsLocalStorage = {
@@ -24,42 +30,63 @@ const defaultReadOptions: ReadOptionsLocalStorage = {
   directory: Directory.ExternalStorage,
 };
 
-const maxFileSize: number = 100000000;
-
 @Injectable({
   providedIn: 'root',
 })
 export class FileLoadingService {
-  public tracks: Track[] = [];
+  public trackUpdate$: ReplaySubject<Track> = new ReplaySubject<Track>();
+
   private _trackPathsSet: Set<string> = new Set<string>();
+  private _onReload$: Subject<void> = new Subject<void>();
 
   constructor(private diagnostic: Diagnostic) {}
 
-  public async loadMusic(): Promise<Track[]> {
+  public async loadTracks(): Promise<TrackLoadingResult> {
+    this._onReload$.next();
     if (Capacitor.getPlatform() !== PlatformEnum.ANDROID) {
-      //TODO add db and handling for other platforms
-      return this.tracks;
+      return {
+        tracksWithoutMetadata: [],
+        trackWithMetadata$: of(),
+      };
     }
+
     const readOptionsArray: ReadOptionsLocalStorage[] = await this.getReadOptions();
     for (const readOptions of readOptionsArray) {
       const trackPaths = await this.readTrackPaths(readOptions);
       trackPaths.forEach((trackPath: string) => this._trackPathsSet.add(trackPath));
     }
 
-    this.tracks = await Promise.all(
-      [...this._trackPathsSet].map(async (trackPath) => this.getTrackWithMetadata(trackPath))
+    const tracks: Track[] = [...this._trackPathsSet].map((trackPath) =>
+      this.getTrackObject(trackPath, Capacitor.convertFileSrc(trackPath))
     );
+    return {
+      tracksWithoutMetadata: tracks,
+      trackWithMetadata$: this.loadTracksMetadata(tracks),
+    };
+  }
 
-    return this.tracks;
+  private loadTracksMetadata(tracks: Track[]): Observable<Track> {
+    return of(...tracks).pipe(
+      concatMap((track: Track) => from(this.getTrackWithMetadata(track.uri))),
+      tap((track: Track) => this.trackUpdate$.next(track)),
+      takeUntil(this._onReload$)
+    );
   }
 
   private async getReadOptions(): Promise<ReadOptionsLocalStorage[]> {
     const sdCardReadOptions: ReadOptionsLocalStorage[] = await this.diagnostic
-      .getExternalSdCardDetails()
-      .then((sdCardDetails) =>
+      .isExternalStorageAuthorized()
+      .then((isAuthorized: boolean) =>
+        isAuthorized ? [] : this.diagnostic.requestExternalStorageAuthorization()
+      )
+      .then(() => this.diagnostic.isExternalStorageAuthorized())
+      .then((isAuthorized: boolean) =>
+        isAuthorized ? [] : this.diagnostic.getExternalSdCardDetails()
+      )
+      .then((sdCardDetails: any) =>
         sdCardDetails
-          .filter((sdCardDetail: any) => sdCardDetail?.path)
-          .map((sdCardDetail: any) => ({
+          ?.filter((sdCardDetail: any) => sdCardDetail?.path)
+          ?.map((sdCardDetail: any) => ({
             path: sdCardDetail.path,
           }))
       );
@@ -82,12 +109,7 @@ export class FileLoadingService {
   }
 
   private async getTrackWithMetadata(trackPath: string): Promise<Track> {
-    const fileStat: StatResult = await Filesystem.stat({ path: trackPath });
     const capacitorPath: string = Capacitor.convertFileSrc(trackPath);
-    if (fileStat.size > maxFileSize) {
-      return this.getTrackObject(trackPath, capacitorPath);
-    }
-
     const metadata = await musicMetadata
       .fetchFromUrl(capacitorPath)
       .catch((err) => console.error(`Failed to get ${trackPath} metadata: ${err}`));
