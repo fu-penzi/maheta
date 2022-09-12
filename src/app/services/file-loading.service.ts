@@ -6,12 +6,12 @@ import { Track, TrackDefaultsEnum } from '@src/app/db/domain/track.schema';
 import { LocalStorageEnum } from '@src/app/model/localStorage.enum';
 import { MusicFileExtensionEnum } from '@src/app/model/music-file-extension.enum';
 import { PlatformEnum } from '@src/app/model/platform.enum';
+import { ReadOptionsLocalStorage } from '@src/app/model/read-options-local.storage';
 import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories.enum';
 
+import { isArray } from 'lodash';
 import * as musicMetadata from 'music-metadata-browser';
 import { IAudioMetadata } from 'music-metadata-browser';
-import { isArray } from 'lodash';
-import { ReadOptionsLocalStorage } from '@src/app/model/read-options-local.storage';
 
 enum FileTypeEnum {
   FILE = 'file',
@@ -22,6 +22,8 @@ const defaultReadOptions: ReadOptionsLocalStorage = {
   path: '',
   directory: Directory.ExternalStorage,
 };
+
+const maxFileSize: number = 100000000;
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +66,12 @@ export class FileLoadingService {
   }
 
   private async getTrackWithMetadata(trackPath: string): Promise<Track> {
+    const fileStat: StatResult = await Filesystem.stat({ path: trackPath });
     const capacitorPath: string = Capacitor.convertFileSrc(trackPath);
+    if (fileStat.size > maxFileSize) {
+      return this.getTrackObject(trackPath, capacitorPath);
+    }
+
     const metadata = await musicMetadata
       .fetchFromUrl(capacitorPath)
       .catch((err) => console.error(`Failed to get ${trackPath} metadata: ${err}`));
@@ -75,7 +82,7 @@ export class FileLoadingService {
   private getTrackObject(
     trackPath: string,
     capacitorPath: string,
-    metadata: IAudioMetadata | undefined
+    metadata?: IAudioMetadata | undefined
   ): Track {
     return {
       uri: trackPath,
