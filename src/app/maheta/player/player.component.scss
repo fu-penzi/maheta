@@ -6,7 +6,7 @@
   margin: spacing(5) spacing(8) 0;
 
   & > * {
-    padding-bottom: spacing(10);
+    padding-bottom: spacing(6);
   }
 }
 
@@ -26,8 +26,14 @@
   align-items: center;
   margin: 0 auto;
   overflow: hidden;
+  width: calc(80%);
+  text-align: center;
+  @include text-ellipsis;
 
   &__title {
+    width: calc(100%);
+    @include text-ellipsis;
+
     margin-bottom: spacing(1);
     line-height: 2.3rem;
     font-size: 1.5rem;
@@ -35,6 +41,9 @@
   }
 
   &__author {
+    width: calc(100%);
+    @include text-ellipsis;
+
     color: $text-secondary;
     font-size: 1.25rem;
   }
@@ -49,7 +58,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: -10px;
-    margin-bottom: spacing(8);
+    margin-bottom: spacing(4);
     color: $text-secondary;
   }
 

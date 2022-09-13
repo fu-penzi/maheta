@@ -36,11 +36,7 @@
       width: calc(50%);
       padding-left: spacing(4);
 
-      & > * {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
+      @include text-ellipsis;
     }
   }
 
