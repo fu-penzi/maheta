@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
-import { DatabaseService } from '@src/app/db/database.service';
-import { PlaylistCollectionService } from '@src/app/db/playlist-collection/playlist-collection.service';
+import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
 
 @Component({
   selector: 'maheta-create-playlist-dialog',
@@ -14,9 +13,9 @@ export class CreatePlaylistDialogComponent implements OnInit {
   public form: FormGroup;
 
   constructor(
+    private musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
     private dialogRef: MatDialogRef<CreatePlaylistDialogComponent>,
-    private fb: FormBuilder,
-    private playlistCollectionServiceionService: PlaylistCollectionService
+    private fb: FormBuilder
   ) {}
 
   public ngOnInit(): void {
@@ -24,7 +23,7 @@ export class CreatePlaylistDialogComponent implements OnInit {
   }
 
   public save(): void {
-    this.playlistCollectionServiceionService.createPlaylist(this.playlistName?.value);
+    this.musicLibraryPlaylistsService.createPlaylist(this.playlistName?.value);
     this.close();
   }
 

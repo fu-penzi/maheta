@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DatabaseService } from '@src/app/db/database.service';
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { UrlParamsEnum } from '@src/app/model/url-params.enum';
-import { MusicLibraryService } from '@src/app/services/music-library.service';
+import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
 
 @Component({
   selector: 'maheta-playlist-tracks',
@@ -15,14 +15,14 @@ export class PlaylistTracksComponent implements OnInit {
   public playlist: Playlist;
 
   constructor(
-    private musicLibraryService: MusicLibraryService,
+    private musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
     private databaseService: DatabaseService,
     private route: ActivatedRoute
   ) {}
 
   public ngOnInit(): void {
     const playlistId: string = this.route.snapshot.paramMap.get(UrlParamsEnum.playlistId) ?? '';
-    this.musicLibraryService.getPlaylist$(playlistId).subscribe((playlist: Playlist) => {
+    this.musicLibraryPlaylistsService.getPlaylist$(playlistId).subscribe((playlist: Playlist) => {
       this.playlist = playlist;
     });
   }

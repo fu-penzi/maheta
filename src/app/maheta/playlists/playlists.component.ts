@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Playlist } from '@src/app/db/domain/playlist.schema';
-import { MusicLibraryService } from '@src/app/services/music-library.service';
+import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
 
 @Component({
   selector: 'maheta-playlists',
@@ -9,9 +9,9 @@ import { MusicLibraryService } from '@src/app/services/music-library.service';
   styleUrls: ['./playlists.component.scss'],
 })
 export class PlaylistsComponent {
-  constructor(private readonly musicLibraryService: MusicLibraryService) {}
+  constructor(private readonly musicLibraryPlaylistsService: MusicLibraryPlaylistsService) {}
 
   public get playlists(): Playlist[] {
-    return this.musicLibraryService.playlists;
+    return this.musicLibraryPlaylistsService.playlists;
   }
 }

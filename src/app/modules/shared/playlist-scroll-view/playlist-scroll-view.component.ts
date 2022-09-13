@@ -1,9 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { environment } from '@environment/environment';
 
-import { DatabaseService } from '@src/app/db/database.service';
 import { Playlist } from '@src/app/db/domain/playlist.schema';
-import { MusicLibraryService } from '@src/app/services/music-library.service';
+import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
 
 @Component({
   selector: 'maheta-playlist-scroll-view',
@@ -13,7 +12,7 @@ import { MusicLibraryService } from '@src/app/services/music-library.service';
 export class PlaylistScrollViewComponent {
   @Input() public playlists: Playlist[];
 
-  constructor(private musicLibraryService: MusicLibraryService) {}
+  constructor(private musicLibraryPlaylistsService: MusicLibraryPlaylistsService) {}
 
   public getPlaylistLengthCaption(playlist: Playlist): string {
     const playlistLength = playlist.tracks?.length || 0;
@@ -25,6 +24,6 @@ export class PlaylistScrollViewComponent {
   }
 
   public deletePlaylist(playlist: Playlist): void {
-    this.musicLibraryService.deletePlaylist$(playlist).subscribe();
+    this.musicLibraryPlaylistsService.deletePlaylist$(playlist).subscribe();
   }
 }

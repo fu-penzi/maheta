@@ -1,4 +1,7 @@
-import { CollectionPopulationEnum, DocumentSelector } from '@src/app/db/model/collection.model';
+import {
+  CollectionPopulationEnum,
+  DocumentSelector,
+} from '@src/app/db/collections/collection.model';
 
 import { RxCollection, RxDocument } from 'rxdb';
 import { concatMap, from, map, Observable, switchMap, take } from 'rxjs';
@@ -16,7 +19,7 @@ export abstract class CollectionService<CollectionDocument> {
     );
   }
 
-  public update$(documentItem: CollectionDocument): Observable<unknown> {
+  public upsert$(documentItem: CollectionDocument): Observable<unknown> {
     return this.getDocument$(documentItem).pipe(
       switchMap((document: RxDocument) => document.update(documentItem))
     );

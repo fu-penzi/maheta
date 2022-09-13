@@ -5,7 +5,8 @@ import { environment } from '@environment/environment';
 
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { Track } from '@src/app/db/domain/track.schema';
-import { MusicLibraryService } from '@src/app/services/music-library.service';
+import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
+import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
 export interface AddToPlaylistDialogData {
   track: Track;
@@ -19,7 +20,8 @@ export interface AddToPlaylistDialogData {
 export class AddToPlaylistDialogComponent {
   constructor(
     private dialogRef: MatDialogRef<AddToPlaylistDialogComponent>,
-    private musicLibraryService: MusicLibraryService,
+    private musicLibraryTracksService: MusicLibraryTracksService,
+    private musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: AddToPlaylistDialogData
   ) {}
@@ -29,7 +31,7 @@ export class AddToPlaylistDialogComponent {
   }
 
   public get playlists(): Playlist[] {
-    return this.musicLibraryService.playlists;
+    return this.musicLibraryPlaylistsService.playlists;
   }
 
   public addTrackToPlaylist(playlist: Playlist, track: Track): void {
@@ -40,7 +42,9 @@ export class AddToPlaylistDialogComponent {
       );
       return;
     }
-    this.musicLibraryService.addTrackToPlaylist$(playlist, track).subscribe(() => this.close());
+    this.musicLibraryPlaylistsService
+      .addTrackToPlaylist$(playlist, track)
+      .subscribe(() => this.close());
   }
 
   public openSnackBar(message: string, action: string): void {

@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { Track } from '@src/app/db/domain/track.schema';
-import { MusicLibraryService } from '@src/app/services/music-library.service';
+import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
 export interface EditLyricsDialogData {
   track: Track;
@@ -20,7 +20,7 @@ export class EditLyricsDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditLyricsDialogComponent>,
-    private musicLibraryService: MusicLibraryService,
+    private musicLibraryTracksService: MusicLibraryTracksService,
     @Inject(MAT_DIALOG_DATA) public data: EditLyricsDialogData
   ) {}
 
@@ -33,7 +33,7 @@ export class EditLyricsDialogComponent implements OnInit {
   }
 
   public save(): void {
-    this.musicLibraryService
+    this.musicLibraryTracksService
       .addLyricsToTrack$(this.track, this.lyrics?.value)
       .subscribe(() => this.close());
   }

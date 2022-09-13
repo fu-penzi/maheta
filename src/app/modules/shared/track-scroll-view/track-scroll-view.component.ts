@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
+import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { Track } from '@src/app/db/domain/track.schema';
 import {
   AddToPlaylistDialogComponent,
@@ -11,8 +12,7 @@ import {
   EditLyricsDialogData,
 } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
-import { Playlist } from '@src/app/db/domain/playlist.schema';
-import { MusicLibraryService } from '@src/app/services/music-library.service';
+import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
 
 @Component({
   selector: 'maheta-track-scroll-view',
@@ -25,7 +25,7 @@ export class TrackScrollViewComponent implements OnInit {
 
   constructor(
     private readonly musicControlService: MusicControlService,
-    private readonly musicLibraryService: MusicLibraryService,
+    private readonly musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
     public matDialogService: MatDialog
   ) {}
 
@@ -53,7 +53,7 @@ export class TrackScrollViewComponent implements OnInit {
   }
 
   public deleteFromPlaylist(track: Track): void {
-    this.musicLibraryService.removeTrackFromPlaylist$(this.playlist, track).subscribe();
+    this.musicLibraryPlaylistsService.removeTrackFromPlaylist$(this.playlist, track).subscribe();
   }
 
   public openAddToPlaylistDialog(track: Track): void {

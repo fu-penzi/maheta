@@ -1,3 +1,4 @@
+import { IAudioMetadata } from 'music-metadata-browser';
 import { RxJsonSchema } from 'rxdb';
 
 export interface Track {
@@ -16,6 +17,26 @@ export enum TrackDefaultsEnum {
   AUTHOR = 'Unknown',
   ALBUM = 'Unknown',
   THUMBURL = 'assets/note.jpg',
+}
+
+export function getTrackObject(
+  trackPath: string,
+  capacitorPath: string,
+  metadata?: IAudioMetadata | undefined
+): Track {
+  return {
+    uri: trackPath,
+    src: capacitorPath,
+    title: metadata?.common.title ?? trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
+    author: metadata?.common.artist ?? TrackDefaultsEnum.AUTHOR,
+    album: metadata?.common.album ?? TrackDefaultsEnum.ALBUM,
+    thumbUrl: metadata?.common.picture
+      ? `data:${
+          metadata?.common.picture[0].format
+        };base64,${metadata?.common.picture[0].data.toString('base64')}`
+      : TrackDefaultsEnum.THUMBURL,
+    duration: metadata?.format.duration ?? 0,
+  };
 }
 
 export const trackSchema: RxJsonSchema<Track> = {

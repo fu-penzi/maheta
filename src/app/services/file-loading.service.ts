@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem, ReaddirResult, StatResult } from '@capacitor/filesystem';
 
-import { Track, TrackDefaultsEnum } from '@src/app/db/domain/track.schema';
+import { getTrackObject, Track } from '@src/app/db/domain/track.schema';
 import { LocalStorageEnum } from '@src/app/model/localStorage.enum';
 import { MusicFileExtensionEnum } from '@src/app/model/music-file-extension.enum';
 import { PlatformEnum } from '@src/app/model/platform.enum';
@@ -12,7 +12,6 @@ import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { isArray } from 'lodash';
 import * as musicMetadata from 'music-metadata-browser';
-import { IAudioMetadata } from 'music-metadata-browser';
 import { concatMap, from, Observable, of, ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
 
 enum FileTypeEnum {
@@ -57,7 +56,7 @@ export class FileLoadingService {
     }
 
     const tracks: Track[] = [...this._trackPathsSet].map((trackPath) =>
-      this.getTrackObject(trackPath, Capacitor.convertFileSrc(trackPath))
+      getTrackObject(trackPath, Capacitor.convertFileSrc(trackPath))
     );
     return {
       tracksWithoutMetadata: tracks,
@@ -114,27 +113,7 @@ export class FileLoadingService {
       .fetchFromUrl(capacitorPath)
       .catch((err) => console.error(`Failed to get ${trackPath} metadata: ${err}`));
 
-    return this.getTrackObject(trackPath, capacitorPath, metadata ?? undefined);
-  }
-
-  private getTrackObject(
-    trackPath: string,
-    capacitorPath: string,
-    metadata?: IAudioMetadata | undefined
-  ): Track {
-    return {
-      uri: trackPath,
-      src: capacitorPath,
-      title: metadata?.common.title ?? trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
-      author: metadata?.common.artist ?? TrackDefaultsEnum.AUTHOR,
-      album: metadata?.common.album ?? TrackDefaultsEnum.ALBUM,
-      thumbUrl: metadata?.common.picture
-        ? `data:${
-            metadata?.common.picture[0].format
-          };base64,${metadata?.common.picture[0].data.toString('base64')}`
-        : TrackDefaultsEnum.THUMBURL,
-      duration: metadata?.format.duration ?? 0,
-    };
+    return getTrackObject(trackPath, capacitorPath, metadata ?? undefined);
   }
 
   private readTrackPaths(readOptions: ReadOptionsLocalStorage): Promise<string[]> {

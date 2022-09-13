@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { CollectionService } from '@src/app/db/collections/collection.service';
 import { Track } from '@src/app/db/domain/track.schema';
-import { CollectionService } from '@src/app/db/model/collection.service';
 import { FileLoadingService, TrackLoadingResult } from '@src/app/services/file-loading.service';
 
 @Injectable({

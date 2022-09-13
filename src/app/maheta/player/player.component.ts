@@ -9,7 +9,6 @@ import {
   getWords,
 } from '@src/app/helpers/string.helper';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
-import { MusicLibraryService } from '@src/app/services/music-library.service';
 
 interface SliderSettings {
   value: number;
@@ -34,10 +33,7 @@ export class PlayerComponent implements OnInit {
 
   private _isSliderHeld: boolean = false;
 
-  constructor(
-    private readonly musicLibraryService: MusicLibraryService,
-    private readonly musicControlService: MusicControlService
-  ) {}
+  constructor(private readonly musicControlService: MusicControlService) {}
 
   public get track(): Track {
     return this.musicControlService.currentTrack;
