@@ -1,4 +1,4 @@
-<cdk-virtual-scroll-viewport itemSize="32" minBufferPx="200" maxBufferPx="100000">
+<cdk-virtual-scroll-viewport itemSize="32" minBufferPx="=64" maxBufferPx="1000">
   <ul class="album-list">
     <li *cdkVirtualFor="let album of albums" class="album">
       <a routerLink="{{ album.title }}">
