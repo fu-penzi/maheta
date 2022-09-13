@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { PlaylistCollectionService } from '@src/app/db/collections/playlist-collection.service';
 import { TrackCollectionService } from '@src/app/db/collections/track-collection.service';
 import { playlistSchema } from '@src/app/db/domain/playlist.schema';
-import { trackSchema } from '@src/app/db/domain/track.schema';
+import { Track, trackSchema } from '@src/app/db/domain/track.schema';
 import { DatabaseCollectionEnum } from '@src/app/model/database-collection.enum';
 
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
@@ -39,6 +39,7 @@ export class DatabaseService {
   }
 
   public async resetTracksCollection(): Promise<void> {
+    const tracksBackup: Track[] = await firstValueFrom(this.trackCollectionService.getAll$());
     await this.trackCollectionService.collection.remove();
     await this._trackDB
       .addCollections({
@@ -50,7 +51,7 @@ export class DatabaseService {
         this.trackCollectionService.collection = res[DatabaseCollectionEnum.TRACKS];
       });
 
-    await this.trackCollectionService.reloadCollectionData();
+    await this.trackCollectionService.reloadCollectionData(tracksBackup);
   }
 
   private async reloadDatabaseData(): Promise<void> {

@@ -22,6 +22,7 @@ export enum TrackDefaultsEnum {
 export function getTrackObject(
   trackPath: string,
   capacitorPath: string,
+  lyrics?: string,
   metadata?: IAudioMetadata | undefined
 ): Track {
   return {
@@ -36,6 +37,7 @@ export function getTrackObject(
         };base64,${metadata?.common.picture[0].data.toString('base64')}`
       : TrackDefaultsEnum.THUMBURL,
     duration: metadata?.format.duration ?? 0,
+    lyrics: lyrics || '',
   };
 }
 

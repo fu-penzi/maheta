@@ -33,9 +33,8 @@ export class EditLyricsDialogComponent implements OnInit {
   }
 
   public save(): void {
-    this.musicLibraryTracksService
-      .addLyricsToTrack$(this.track, this.lyrics?.value)
-      .subscribe(() => this.close());
+    this.musicLibraryTracksService.addLyricsToTrack$(this.track, this.lyrics?.value);
+    this.close();
   }
 
   public close(): void {

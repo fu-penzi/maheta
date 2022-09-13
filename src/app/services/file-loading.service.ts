@@ -19,11 +19,6 @@ enum FileTypeEnum {
   DIR = 'directory',
 }
 
-export interface TrackLoadingResult {
-  tracksWithoutMetadata: Track[];
-  trackWithMetadata$: Observable<Track>;
-}
-
 const defaultReadOptions: ReadOptionsLocalStorage = {
   path: '',
   directory: Directory.ExternalStorage,
@@ -40,13 +35,10 @@ export class FileLoadingService {
 
   constructor(private diagnostic: Diagnostic) {}
 
-  public async loadTracks(): Promise<TrackLoadingResult> {
+  public async getTracksWithoutMetadata(): Promise<Track[]> {
     this._onReload$.next();
     if (Capacitor.getPlatform() !== PlatformEnum.ANDROID) {
-      return {
-        tracksWithoutMetadata: [],
-        trackWithMetadata$: of(),
-      };
+      return [];
     }
 
     const readOptionsArray: ReadOptionsLocalStorage[] = await this.getReadOptions();
@@ -55,21 +47,24 @@ export class FileLoadingService {
       trackPaths.forEach((trackPath: string) => this._trackPathsSet.add(trackPath));
     }
 
-    const tracks: Track[] = [...this._trackPathsSet].map((trackPath) =>
+    return [...this._trackPathsSet].map((trackPath) =>
       getTrackObject(trackPath, Capacitor.convertFileSrc(trackPath))
     );
-    return {
-      tracksWithoutMetadata: tracks,
-      trackWithMetadata$: this.loadTracksMetadata(tracks),
-    };
   }
 
-  private loadTracksMetadata(tracks: Track[]): Observable<Track> {
+  public getTracksWithMetadata$(tracks: Track[]): Observable<Track> {
     return of(...tracks).pipe(
-      concatMap((track: Track) => from(this.getTrackWithMetadata(track.uri))),
+      concatMap((track: Track) => from(this.getTrackWithMetadata(track))),
       tap((track: Track) => this.trackUpdate$.next(track)),
       takeUntil(this._onReload$)
     );
+  }
+
+  private getLyricsFromBackup(track: Track, trackBackupArray: Track[]): string | undefined {
+    const backupTrack: Track | undefined = trackBackupArray.find(
+      (backupTrack: Track) => track.uri === backupTrack.uri
+    );
+    return backupTrack?.lyrics ?? track?.lyrics;
   }
 
   private async getReadOptions(): Promise<ReadOptionsLocalStorage[]> {
@@ -107,13 +102,12 @@ export class FileLoadingService {
     return [...systemDetectedReadOptions, ...userReadOptions];
   }
 
-  private async getTrackWithMetadata(trackPath: string): Promise<Track> {
-    const capacitorPath: string = Capacitor.convertFileSrc(trackPath);
+  private async getTrackWithMetadata(track: Track): Promise<Track> {
     const metadata = await musicMetadata
-      .fetchFromUrl(capacitorPath)
-      .catch((err) => console.error(`Failed to get ${trackPath} metadata: ${err}`));
+      .fetchFromUrl(track.src)
+      .catch((err) => console.error(`Failed to get ${track.src} metadata: ${err}`));
 
-    return getTrackObject(trackPath, capacitorPath, metadata ?? undefined);
+    return getTrackObject(track.uri, track.src, track.lyrics, metadata ?? undefined);
   }
 
   private readTrackPaths(readOptions: ReadOptionsLocalStorage): Promise<string[]> {
