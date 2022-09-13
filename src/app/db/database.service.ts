@@ -5,12 +5,12 @@ import { TrackCollectionService } from '@src/app/db/collections/track-collection
 import { playlistSchema } from '@src/app/db/domain/playlist.schema';
 import { Track, trackSchema } from '@src/app/db/domain/track.schema';
 import { DatabaseCollectionEnum } from '@src/app/model/database-collection.enum';
+import { logger } from '@src/devUtils';
 
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
 import { RxDBUpdatePlugin } from 'rxdb/plugins/update';
 import { addRxPlugin, createRxDatabase, RxChangeEvent, RxDatabase } from 'rxdb';
 import { firstValueFrom, Observable } from 'rxjs';
-import { logger } from '@src/devUtils';
 
 @Injectable({
   providedIn: 'root',

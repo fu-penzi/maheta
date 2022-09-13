@@ -5,9 +5,9 @@ import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/dialog/create-playlist-dialog/create-playlist-dialog.component';
 import { EditStorageSettingsDialogComponent } from '@src/app/modules/shared/dialog/edit-storage-settings-dialog/edit-storage-settings-dialog.component';
+import { MahetaService, ProgressBarConfig } from '@src/app/services/maheta.service';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 import { NavigationService } from '@src/app/services/navigation.service';
-import { MahetaService, ProgressBarConfig } from '@src/app/services/maheta.service';
 
 @Component({
   selector: 'maheta-app-bar',

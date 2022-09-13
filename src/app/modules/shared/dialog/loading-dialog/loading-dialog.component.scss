@@ -1,7 +1,7 @@
 @use 'variables' as *;
 @include dialog;
 
-.dialog-header-container{
+.dialog-header-container {
   margin-top: spacing(2);
   font-size: 2rem;
   text-transform: capitalize;
