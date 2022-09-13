@@ -1,5 +1,8 @@
 import { IAudioMetadata } from 'music-metadata-browser';
 import { RxJsonSchema } from 'rxdb';
+import { Directory, Filesystem, WriteFileResult } from '@capacitor/filesystem';
+import { logger } from '@src/devUtils';
+import { Capacitor } from '@capacitor/core';
 
 export interface Track {
   uri: string;
@@ -19,23 +22,42 @@ export enum TrackDefaultsEnum {
   THUMBURL = 'assets/note.jpg',
 }
 
-export function getTrackObject(
+export function getDefaultTrackObject(trackPath: string, capacitorPath: string): Track {
+  return {
+    uri: trackPath,
+    src: capacitorPath,
+    title: trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
+    author: TrackDefaultsEnum.AUTHOR,
+    album: TrackDefaultsEnum.ALBUM,
+    thumbUrl: TrackDefaultsEnum.THUMBURL,
+    duration: 0,
+    lyrics: '',
+  };
+}
+
+export async function getTrackObject(
   trackPath: string,
   capacitorPath: string,
   lyrics?: string,
   metadata?: IAudioMetadata | undefined
-): Track {
+): Promise<Track> {
+  let thumbUrl: string = '';
+  if (metadata?.common.picture) {
+    thumbUrl = await Filesystem.writeFile({
+      path: metadata?.common.album ? metadata?.common.album : `${Math.random() * 2342412342352}`,
+      data: `data:${
+        metadata?.common.picture[0].format
+      };base64,${metadata?.common.picture[0].data.toString('base64')}`,
+      directory: Directory.Library,
+    }).then((res: WriteFileResult) => Capacitor.convertFileSrc(res.uri));
+  }
   return {
     uri: trackPath,
     src: capacitorPath,
     title: metadata?.common.title ?? trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
     author: metadata?.common.artist ?? TrackDefaultsEnum.AUTHOR,
     album: metadata?.common.album ?? TrackDefaultsEnum.ALBUM,
-    thumbUrl: metadata?.common.picture
-      ? `data:${
-          metadata?.common.picture[0].format
-        };base64,${metadata?.common.picture[0].data.toString('base64')}`
-      : TrackDefaultsEnum.THUMBURL,
+    thumbUrl: thumbUrl || TrackDefaultsEnum.THUMBURL,
     duration: metadata?.format.duration ?? 0,
     lyrics: lyrics || '',
   };

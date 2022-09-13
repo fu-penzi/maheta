@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem, ReaddirResult, StatResult } from '@capacitor/filesystem';
 
-import { getTrackObject, Track } from '@src/app/db/domain/track.schema';
+import { getDefaultTrackObject, getTrackObject, Track } from '@src/app/db/domain/track.schema';
 import { LocalStorageEnum } from '@src/app/model/localStorage.enum';
 import { MusicFileExtensionEnum } from '@src/app/model/music-file-extension.enum';
 import { PlatformEnum } from '@src/app/model/platform.enum';
@@ -48,7 +48,7 @@ export class FileLoadingService {
     }
 
     return [...this._trackPathsSet].map((trackPath) =>
-      getTrackObject(trackPath, Capacitor.convertFileSrc(trackPath))
+      getDefaultTrackObject(trackPath, Capacitor.convertFileSrc(trackPath))
     );
   }
 
