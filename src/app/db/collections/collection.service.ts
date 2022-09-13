@@ -23,9 +23,7 @@ export abstract class CollectionService<CollectionDocument> {
   }
 
   public upsert$(documentItem: CollectionDocument): Observable<unknown> {
-    return this.getDocument$(documentItem).pipe(
-      switchMap((document: RxDocument) => document.update(documentItem))
-    );
+    return from(this.collection.upsert(documentItem));
   }
 
   public delete$(documentItem: CollectionDocument): Observable<boolean> {
