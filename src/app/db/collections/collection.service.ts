@@ -4,12 +4,15 @@ import {
 } from '@src/app/db/collections/collection.model';
 
 import { RxCollection, RxDocument } from 'rxdb';
-import { concatMap, from, map, Observable, switchMap, take } from 'rxjs';
+import { concatMap, from, map, Observable, of, switchMap, take } from 'rxjs';
 
 export abstract class CollectionService<CollectionDocument> {
   public collection: RxCollection;
 
   public getAll$(): Observable<CollectionDocument[]> {
+    if (!this.collection) {
+      return of([]);
+    }
     return from(this.collection.find().exec()).pipe(
       map((documents: RxDocument[]) =>
         documents.map(

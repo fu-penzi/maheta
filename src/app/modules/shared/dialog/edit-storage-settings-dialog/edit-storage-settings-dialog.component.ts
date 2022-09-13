@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { LocalStorageEnum } from '@src/app/model/localStorage.enum';
 import { ReadOptionsLocalStorage } from '@src/app/model/read-options-local.storage';
-import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-dialog/loading-dialog.component';
+import { MahetaService } from '@src/app/services/maheta.service';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
 import { isArray } from 'lodash';
@@ -18,6 +18,7 @@ export class EditStorageSettingsDialogComponent implements OnInit {
   public form: FormGroup;
 
   constructor(
+    private mahetaService: MahetaService,
     private dialogRef: MatDialogRef<EditStorageSettingsDialogComponent>,
     private musicLibraryTracksService: MusicLibraryTracksService,
     private matDialogService: MatDialog,
@@ -40,19 +41,11 @@ export class EditStorageSettingsDialogComponent implements OnInit {
       }));
     localStorage.setItem(LocalStorageEnum.userTrackReadOptions, JSON.stringify(readOptionsArray));
 
-    const dialogConf: MatDialogConfig<LoadingDialogComponent> = {
-      width: '100%',
-      disableClose: true,
-    };
-    const loadingDialogRef: MatDialogRef<LoadingDialogComponent> = this.matDialogService.open(
-      LoadingDialogComponent,
-      dialogConf
-    );
-
+    this.mahetaService.openLoadingDialog();
     this.musicLibraryTracksService
       .resetTracksLibrary()
-      .then(() => loadingDialogRef.close())
-      .catch(() => loadingDialogRef.close());
+      .then(() => this.mahetaService.closeLoadingDialog())
+      .catch(() => this.mahetaService.closeLoadingDialog());
     this.dialogRef.close();
   }
 

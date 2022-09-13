@@ -10,6 +10,7 @@ import { getRxStorageDexie } from 'rxdb/plugins/dexie';
 import { RxDBUpdatePlugin } from 'rxdb/plugins/update';
 import { addRxPlugin, createRxDatabase, RxChangeEvent, RxDatabase } from 'rxdb';
 import { firstValueFrom, Observable } from 'rxjs';
+import { logger } from '@src/devUtils';
 
 @Injectable({
   providedIn: 'root',
@@ -29,17 +30,19 @@ export class DatabaseService {
   }
 
   public async initDatabase(): Promise<void> {
-    await this.setupDatabase();
     const isDatabaseEmpty: boolean = await firstValueFrom(
       this.trackCollectionService.isCollectionEmpty()
     );
     if (isDatabaseEmpty) {
       await this.reloadDatabaseData();
+    } else {
+      await this.setupDatabase();
     }
   }
 
-  public async resetTracksCollection(): Promise<void> {
-    const tracksBackup: Track[] = await firstValueFrom(this.trackCollectionService.getAll$());
+  public async resetTracksCollection(backup?: Track[]): Promise<void> {
+    const tracksBackup: Track[] =
+      backup || (await firstValueFrom(this.trackCollectionService.getAll$()));
     await this.trackCollectionService.collection.remove();
     await this._trackDB
       .addCollections({
@@ -55,9 +58,10 @@ export class DatabaseService {
   }
 
   private async reloadDatabaseData(): Promise<void> {
-    await this._trackDB.remove();
+    const tracksBackup: Track[] = await firstValueFrom(this.trackCollectionService.getAll$());
+    await this._trackDB?.remove();
     await this.setupDatabase();
-    await this.resetTracksCollection();
+    await this.resetTracksCollection(tracksBackup);
   }
 
   private async setupDatabase(): Promise<void> {

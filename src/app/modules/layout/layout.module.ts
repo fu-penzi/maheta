@@ -9,10 +9,18 @@ import { PlayerBarComponent } from '@src/app/modules/layout/components/player-ba
 import { LayoutComponent } from '@src/app/modules/layout/layout.component';
 import { ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { SharedModule } from '@src/app/modules/shared/shared.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [LayoutComponent, PlayerBarComponent, AppBarComponent],
-  imports: [SharedModule, RouterModule, MatToolbarModule, MatButtonModule, MatIconModule],
+  imports: [
+    SharedModule,
+    RouterModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressBarModule,
+  ],
   providers: [ThemeService],
 })
 export class LayoutModule {}

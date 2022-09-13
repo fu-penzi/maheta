@@ -5,11 +5,7 @@
   <span>Player</span>
 
   <div class="menu">
-    <button
-      mat-icon-button
-      (click)="reloadDatabaseTrackData()"
-      aria-label="Example icon button"
-    >
+    <button mat-icon-button (click)="reloadDatabaseTrackData()" aria-label="Example icon button">
       <mat-icon>refresh</mat-icon>
     </button>
 
@@ -31,3 +27,9 @@
     </button>
   </div>
 </mat-toolbar>
+<mat-progress-bar
+  *ngIf="progressBarConfig.isShown"
+  color="accent"
+  mode="determinate"
+  [value]="progressBarConfig.progress"
+></mat-progress-bar>

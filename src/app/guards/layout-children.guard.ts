@@ -16,9 +16,9 @@ export class LayoutChildrenGuard implements CanActivate {
   ) {}
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.databaseService.initDatabase().then(() => {
-      this.musicLibraryService.initLibrary();
-      return true;
-    });
+    return this.databaseService
+      .initDatabase()
+      .then(() => this.musicLibraryService.initLibrary())
+      .then(() => true);
   }
 }
