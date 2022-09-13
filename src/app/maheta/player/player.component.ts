@@ -43,6 +43,10 @@ export class PlayerComponent implements OnInit {
     return this.musicControlService.currentTrack;
   }
 
+  public get duration(): number {
+    return this.track.duration || this.musicControlService.currentTrackDuration || 999999;
+  }
+
   public get lyricSentences(): LyricSentence[] {
     if (!this.lyrics) {
       return [];
@@ -98,7 +102,7 @@ export class PlayerComponent implements OnInit {
     if (!sliderChange?.value) {
       return;
     }
-    const time: number = (sliderChange.value * this.track?.duration) / this.sliderSettings.max;
+    const time: number = (sliderChange.value * this.duration) / this.sliderSettings.max;
     this._isSliderHeld = true;
     this.currentTrackTime = time;
   }
@@ -107,7 +111,7 @@ export class PlayerComponent implements OnInit {
     if (!value) {
       return;
     }
-    const time: number = (value * this.track?.duration) / this.sliderSettings.max;
+    const time: number = (value * this.duration) / this.sliderSettings.max;
     this.musicControlService.seekTo(time);
     this._isSliderHeld = false;
   }
@@ -147,8 +151,7 @@ export class PlayerComponent implements OnInit {
     this.musicControlService.currentTrackTime.subscribe((currentTrackTime: number) => {
       if (!this._isSliderHeld) {
         this.currentTrackTime = currentTrackTime;
-        this.sliderSettings.value =
-          (currentTrackTime / this.track?.duration) * this.sliderSettings.max;
+        this.sliderSettings.value = (currentTrackTime / this.duration) * this.sliderSettings.max;
       }
     });
   }

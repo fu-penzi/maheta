@@ -37,6 +37,10 @@ export class MusicControlService {
     this.queueService.repeat = repeat;
   }
 
+  public get currentTrackDuration(): number {
+    return this._currentTrackAudio.duration;
+  }
+
   public get currentTrack(): Track {
     return this.queueService.currentItem;
   }

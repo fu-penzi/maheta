@@ -1,33 +1,31 @@
-<cdk-virtual-scroll-viewport itemSize="64" minBufferPx="=64" maxBufferPx="1000">
-  <ul>
-    <li
-      *cdkVirtualFor="let playlist of playlists; index as i; trackBy: playlistByIndex"
-      class="scroll-element"
-    >
-      <div class="content" [routerLink]="playlist.id" mat-ripple>
-        <img class="thumb" src="{{ playlist.thumbUrl }}" alt="{{ playlist.thumbUrl }}" />
+<ul>
+  <li
+    *ngFor="let playlist of playlists; index as i; trackBy: playlistByIndex"
+    class="scroll-element"
+  >
+    <div class="content" [routerLink]="playlist.id" mat-ripple>
+      <img class="thumb" src="{{ playlist.thumbUrl }}" alt="{{ playlist.thumbUrl }}" />
 
-        <div class="info" [class.active]="false">
-          <span class="info__title">{{ playlist.name }}</span>
-          <span class="info__author">{{ getPlaylistLengthCaption(playlist) }}</span>
-        </div>
+      <div class="info" [class.active]="false">
+        <span class="info__title">{{ playlist.name }}</span>
+        <span class="info__author">{{ getPlaylistLengthCaption(playlist) }}</span>
       </div>
+    </div>
 
-      <div class="menu">
-        <button
-          mat-icon-button
-          [matMenuTriggerFor]="menu"
-          aria-label="Example icon button with a bookmark icon"
-        >
-          <mat-icon>more_vert</mat-icon>
+    <div class="menu">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon button with a bookmark icon"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="deletePlaylist(playlist)">
+          <mat-icon>delete_forever</mat-icon>
+          Delete playlist
         </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="deletePlaylist(playlist)">
-            <mat-icon>delete_forever</mat-icon>
-            Delete playlist
-          </button>
-        </mat-menu>
-      </div>
-    </li>
-  </ul>
-</cdk-virtual-scroll-viewport>
+      </mat-menu>
+    </div>
+  </li>
+</ul>
