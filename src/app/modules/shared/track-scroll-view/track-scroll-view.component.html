@@ -1,4 +1,4 @@
-<cdk-virtual-scroll-viewport itemSize="64">
+<cdk-virtual-scroll-viewport itemSize="64" minBufferPx="200" maxBufferPx="100000">
   <ul>
     <li
       *cdkVirtualFor="let track of tracks; index as i; trackBy: trackByIndex"

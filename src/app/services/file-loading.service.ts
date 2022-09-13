@@ -12,7 +12,6 @@ import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories
 import { isArray } from 'lodash';
 import * as musicMetadata from 'music-metadata-browser';
 import { concatMap, from, Observable, of, ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
-import { logger } from '@src/devUtils';
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 
 enum FileTypeEnum {

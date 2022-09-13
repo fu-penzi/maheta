@@ -1,4 +1,4 @@
-<cdk-virtual-scroll-viewport itemSize="64">
+<cdk-virtual-scroll-viewport itemSize="64" minBufferPx="200" maxBufferPx="100000">
   <ul>
     <li
       *cdkVirtualFor="let playlist of playlists; index as i; trackBy: playlistByIndex"
