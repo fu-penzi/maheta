@@ -9,6 +9,7 @@ import {
   getWords,
 } from '@src/app/helpers/string.helper';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
+import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
 interface SliderSettings {
   value: number;
@@ -33,19 +34,22 @@ export class PlayerComponent implements OnInit {
 
   private _isSliderHeld: boolean = false;
 
-  constructor(private readonly musicControlService: MusicControlService) {}
+  constructor(
+    private readonly musicControlService: MusicControlService,
+    private musicLibraryTracksService: MusicLibraryTracksService
+  ) {}
 
   public get track(): Track {
     return this.musicControlService.currentTrack;
   }
 
   public get lyricSentences(): LyricSentence[] {
-    if (!this.track?.lyrics) {
+    if (!this.lyrics) {
       return [];
     }
 
-    const tokenizer = getTokenizer(detectLanguage(this.track.lyrics));
-    return getSentences(this.track.lyrics).map((sentence: string) => ({
+    const tokenizer = getTokenizer(detectLanguage(this.lyrics));
+    return getSentences(this.lyrics).map((sentence: string) => ({
       words: getWords(sentence, tokenizer),
     }));
   }
@@ -106,6 +110,14 @@ export class PlayerComponent implements OnInit {
     }
 
     return word === this.highlightedWord;
+  }
+
+  private get lyrics(): string | undefined {
+    return (
+      this.musicLibraryTracksService.tracks.find(
+        (track) => track.uri === this.musicControlService.currentTrack.uri
+      ) || this.musicControlService.currentTrack
+    )?.lyrics;
   }
 
   private setupSlider(): void {
