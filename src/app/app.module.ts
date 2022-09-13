@@ -10,8 +10,8 @@ import { LayoutModule } from '@src/app/modules/layout/layout.module';
 import { SharedModule } from '@src/app/modules/shared/shared.module';
 import { MusicControlModule } from '@src/app/services/music-control/music-control.module';
 
-import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
+import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
 
 @NgModule({
   declarations: [AppComponent],
