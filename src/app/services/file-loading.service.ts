@@ -9,10 +9,11 @@ import { PlatformEnum } from '@src/app/model/platform.enum';
 import { ReadOptionsLocalStorage } from '@src/app/model/read-options-local.storage';
 import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories.enum';
 
-import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { isArray } from 'lodash';
 import * as musicMetadata from 'music-metadata-browser';
 import { concatMap, from, Observable, of, ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
+import { logger } from '@src/devUtils';
+import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 
 enum FileTypeEnum {
   FILE = 'file',
@@ -60,13 +61,6 @@ export class FileLoadingService {
     );
   }
 
-  private getLyricsFromBackup(track: Track, trackBackupArray: Track[]): string | undefined {
-    const backupTrack: Track | undefined = trackBackupArray.find(
-      (backupTrack: Track) => track.uri === backupTrack.uri
-    );
-    return backupTrack?.lyrics ?? track?.lyrics;
-  }
-
   private async getReadOptions(): Promise<ReadOptionsLocalStorage[]> {
     const sdCardReadOptions: ReadOptionsLocalStorage[] = await this.diagnostic
       .isExternalStorageAuthorized()
@@ -75,7 +69,7 @@ export class FileLoadingService {
       )
       .then(() => this.diagnostic.isExternalStorageAuthorized())
       .then((isAuthorized: boolean) =>
-        isAuthorized ? [] : this.diagnostic.getExternalSdCardDetails()
+        isAuthorized ? this.diagnostic.getExternalSdCardDetails() : []
       )
       .then((sdCardDetails: any) =>
         sdCardDetails
