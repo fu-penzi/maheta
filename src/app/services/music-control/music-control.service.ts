@@ -21,6 +21,22 @@ export class MusicControlService {
     return this._playing;
   }
 
+  public get isShuffle(): boolean {
+    return this.queueService.shuffle;
+  }
+
+  public set isShuffle(shuffle: boolean) {
+    this.queueService.shuffle = shuffle;
+  }
+
+  public get isRepeat(): boolean {
+    return this.queueService.repeat;
+  }
+
+  public set isRepeat(repeat: boolean) {
+    this.queueService.repeat = repeat;
+  }
+
   public get currentTrack(): Track {
     return this.queueService.currentItem;
   }
@@ -57,17 +73,17 @@ export class MusicControlService {
   }
 
   public next(): void {
-    this.queueService.moveBy(1);
+    this.queueService.moveToNext();
 
-    if (this._playing) {
+    if (this._playing && (this.isRepeat || !this.queueService.isEnd())) {
       this.play();
     }
   }
 
   public prev(): void {
-    this.queueService.moveBy(-1);
+    this.queueService.moveToPrev();
 
-    if (this._playing) {
+    if (this._playing && (this.isRepeat || !this.queueService.isStart())) {
       this.play();
     }
   }

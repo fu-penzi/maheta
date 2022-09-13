@@ -78,6 +78,22 @@ export class PlayerComponent implements OnInit {
     return this.musicControlService.isPlaying;
   }
 
+  public isShuffle(): boolean {
+    return this.musicControlService.isShuffle;
+  }
+
+  public toggleShuffle(): void {
+    this.musicControlService.isShuffle = !this.musicControlService.isShuffle;
+  }
+
+  public isRepeat(): boolean {
+    return this.musicControlService.isRepeat;
+  }
+
+  public toggleRepeat(): void {
+    this.musicControlService.isRepeat = !this.musicControlService.isRepeat;
+  }
+
   public sliderHold(sliderChange: MatSliderChange): void {
     if (!sliderChange?.value) {
       return;

@@ -23,7 +23,12 @@
   </div>
 
   <div class="track-controls__buttons">
-    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+    <button
+      [color]="isShuffle() ? 'accent' : undefined"
+      (click)="toggleShuffle()"
+      mat-icon-button
+      aria-label="Example icon button with a bookmark icon"
+    >
       <mat-icon>shuffle</mat-icon>
     </button>
 
@@ -67,19 +72,20 @@
       </button>
     </div>
 
-    <button mat-icon-button aria-label="Example icon button with a bookmark icon">
+    <button
+      mat-icon-button
+      [color]="isRepeat() ? 'accent' : undefined"
+      (click)="toggleRepeat()"
+      aria-label="Example icon button with a bookmark icon"
+    >
       <mat-icon>repeat</mat-icon>
     </button>
-
-    <!--  <button mat-icon-button aria-label="Example icon button with a bookmark icon">-->
-    <!--    <mat-icon>repeat_one</mat-icon>-->
-    <!--  </button>-->
   </div>
 </div>
 
 <div class="track-lyrics" *ngIf="lyricSentences?.length">
   <h1 class="track-lyrics__header"><mat-icon>music_note</mat-icon>Lyrics</h1>
-  <div  class="track-lyrics__lyrics">
+  <div class="track-lyrics__lyrics">
     <div *ngFor="let sentence of lyricSentences">
       <span
         *ngFor="let word of sentence.words"
