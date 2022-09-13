@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { DatabaseService } from '@src/app/db/database.service';
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
@@ -16,7 +15,6 @@ export class PlaylistTracksComponent implements OnInit {
 
   constructor(
     private musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
-    private databaseService: DatabaseService,
     private route: ActivatedRoute
   ) {}
 

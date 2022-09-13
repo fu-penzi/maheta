@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
-import { DatabaseService } from '@src/app/db/database.service';
 import { LocalStorageEnum } from '@src/app/model/localStorage.enum';
 import { ReadOptionsLocalStorage } from '@src/app/model/read-options-local.storage';
 import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-dialog/loading-dialog.component';
+import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
 import { isArray } from 'lodash';
 
@@ -19,7 +19,7 @@ export class EditStorageSettingsDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<EditStorageSettingsDialogComponent>,
-    private databaseService: DatabaseService,
+    private musicLibraryTracksService: MusicLibraryTracksService,
     private matDialogService: MatDialog,
     private fb: FormBuilder
   ) {}
@@ -49,8 +49,8 @@ export class EditStorageSettingsDialogComponent implements OnInit {
       dialogConf
     );
 
-    this.databaseService
-      .resetTracksCollection()
+    this.musicLibraryTracksService
+      .resetTracksLibrary()
       .then(() => loadingDialogRef.close())
       .catch(() => loadingDialogRef.close());
     this.dialogRef.close();

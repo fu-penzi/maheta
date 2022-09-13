@@ -24,7 +24,7 @@ export class MusicLibraryService {
     private playlistCollectionService: PlaylistCollectionService
   ) {}
 
-  public async initLibrary(): Promise<void> {
+  public initLibrary(): void {
     this.databaseService.databaseChanges$
       .pipe(
         startWith({}),
@@ -37,5 +37,9 @@ export class MusicLibraryService {
         this.playlists = playlists;
         this.libraryUpdate$.next();
       });
+  }
+
+  public resetTracksCollection(): Promise<void> {
+    return this.databaseService.resetTracksCollection();
   }
 }

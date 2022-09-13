@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
-import { DatabaseService } from '@src/app/db/database.service';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/dialog/create-playlist-dialog/create-playlist-dialog.component';
 import { EditStorageSettingsDialogComponent } from '@src/app/modules/shared/dialog/edit-storage-settings-dialog/edit-storage-settings-dialog.component';
 import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-dialog/loading-dialog.component';
+import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 import { NavigationService } from '@src/app/services/navigation.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class AppBarComponent {
   constructor(
     private themeService: ThemeService,
     private navigation: NavigationService,
-    private databaseService: DatabaseService,
+    private musicLibraryTracksService: MusicLibraryTracksService,
     private matDialogService: MatDialog
   ) {}
 
@@ -40,8 +40,8 @@ export class AppBarComponent {
       dialogConf
     );
 
-    this.databaseService
-      .resetTracksCollection()
+    this.musicLibraryTracksService
+      .resetTracksLibrary()
       .then(() => dialogRef.close())
       .catch(() => dialogRef.close());
   }
