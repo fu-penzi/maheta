@@ -24,7 +24,7 @@ export class QueueService<T> {
   public moveToNext(): void {
     if (this.shuffle) {
       const randomItem = random(this._queue.length);
-      this._cursor = this._cursor === randomItem ? random(this._queue.length) : randomItem;
+      this._cursor = this._cursor === randomItem ? random(this._queue.length - 1) : randomItem;
       this.currentItem$.next(this.currentItem);
       return;
     }
@@ -75,6 +75,6 @@ export class QueueService<T> {
   }
 
   public isEnd(): boolean {
-    return this._cursor === this._queue.length;
+    return this._cursor === this._queue.length - 1;
   }
 }

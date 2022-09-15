@@ -10,6 +10,7 @@ import {
 } from '@src/app/helpers/string.helper';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
+import { UrlEnum } from '@src/app/model/url.enum';
 
 interface SliderSettings {
   value: number;
@@ -41,6 +42,10 @@ export class PlayerComponent implements OnInit {
 
   public get track(): Track {
     return this.musicControlService.currentTrack;
+  }
+
+  public get albumUrl(): string {
+    return '/' + UrlEnum.ALBUMS + '/' + this.track.album;
   }
 
   public get duration(): number {

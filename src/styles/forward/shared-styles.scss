@@ -3,7 +3,7 @@
 
 @mixin scroll-view() {
   cdk-virtual-scroll-viewport {
-    height: calc(100vh - 192px);
+    height: calc(100vh - 200px);
     overflow-x: hidden;
   }
 }

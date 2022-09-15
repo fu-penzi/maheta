@@ -4,13 +4,15 @@ import { Track } from '@src/app/db/domain/track.schema';
 import { QueueService } from '@src/app/services/queue.service';
 
 import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
-import { interval, map, Observable } from 'rxjs';
+import { interval, map, Observable, Subject } from 'rxjs';
 
 @Injectable()
 export class MusicControlService {
   private _playing: boolean = false;
   private _nextQueue: Track[] | null = null;
   private _currentTrackAudio: HTMLAudioElement;
+
+  private _togglePlay$: Subject<void> = new Subject<void>();
 
   constructor(private queueService: QueueService<Track>, private musicControls: MusicControls) {
     this.setupCurrentTrackAudio();
@@ -19,6 +21,11 @@ export class MusicControlService {
 
   public get isPlaying(): boolean {
     return this._playing;
+  }
+
+  public set isPlaying(playing: boolean) {
+    this._playing = playing;
+    this._togglePlay$.next();
   }
 
   public get isShuffle(): boolean {
@@ -67,13 +74,11 @@ export class MusicControlService {
   }
 
   public play(): void {
-    this._currentTrackAudio.play();
-    this._playing = true;
+    this.isPlaying = true;
   }
 
   public pause(): void {
-    this._currentTrackAudio.pause();
-    this._playing = false;
+    this.isPlaying = false;
   }
 
   public next(): void {
@@ -108,7 +113,6 @@ export class MusicControlService {
   private setQueuePosition(position: number): void {
     this._currentTrackAudio.pause();
     this.queueService.moveTo(position);
-    this._currentTrackAudio.play();
   }
 
   private updateCurrentTrackAudio(): void {
@@ -181,6 +185,13 @@ export class MusicControlService {
     this._currentTrackAudio = new Audio();
     this._currentTrackAudio.addEventListener('ended', () => {
       this.next();
+    });
+    this._togglePlay$.subscribe(async () => {
+      if (this.isPlaying) {
+        await this._currentTrackAudio.play();
+      } else {
+        await this._currentTrackAudio.pause();
+      }
     });
   }
 }

@@ -1,9 +1,9 @@
 <img class="track-thumb" src="{{ this.track?.thumbUrl }}" alt="track-thumb" />
 
-<div class="track-info">
+<a class="track-info" routerLink="{{  albumUrl }}">
   <strong class="track-info__title">{{ this.track?.title }}</strong>
   <span class="track-info__author">{{ this.track?.author }}</span>
-</div>
+</a>
 
 <div class="track-controls">
   <mat-slider
@@ -19,7 +19,7 @@
   </mat-slider>
   <div class="track-controls__track-time">
     <span>{{ this.currentTrackTime | mahetaDuration }}</span>
-    <span>{{ this.duration| mahetaDuration }}</span>
+    <span>{{ this.duration | mahetaDuration }}</span>
   </div>
 
   <div class="track-controls__buttons">
