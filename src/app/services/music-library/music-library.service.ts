@@ -40,6 +40,6 @@ export class MusicLibraryService {
   }
 
   public resetTracksCollection(): Promise<void> {
-    return this.databaseService.resetTracksCollection();
+    return this.databaseService.dropTracksCollection();
   }
 }

@@ -5,7 +5,6 @@ import { TrackCollectionService } from '@src/app/db/collections/track-collection
 import { playlistSchema } from '@src/app/db/domain/playlist.schema';
 import { Track, trackSchema } from '@src/app/db/domain/track.schema';
 import { DatabaseCollectionEnum } from '@src/app/model/database-collection.enum';
-import { logger } from '@src/devUtils';
 
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
 import { RxDBUpdatePlugin } from 'rxdb/plugins/update';
@@ -31,15 +30,10 @@ export class DatabaseService {
 
   public async initDatabase(): Promise<void> {
     await this.setupDatabase();
-    const isDatabaseEmpty: boolean = await firstValueFrom(
-      this.trackCollectionService.isCollectionEmpty()
-    );
-    if (isDatabaseEmpty) {
-      await this.reloadDatabaseData();
-    }
+    this.reloadTrackCollection();
   }
 
-  public async resetTracksCollection(backup?: Track[]): Promise<void> {
+  public async dropTracksCollection(backup?: Track[]): Promise<void> {
     const tracksBackup: Track[] =
       backup || (await firstValueFrom(this.trackCollectionService.getAll$()));
     await this.trackCollectionService.collection.remove();
@@ -56,11 +50,16 @@ export class DatabaseService {
     await this.trackCollectionService.reloadCollectionData(tracksBackup);
   }
 
-  private async reloadDatabaseData(): Promise<void> {
+  private async reloadTrackCollection(): Promise<void> {
+    const tracksBackup: Track[] = await firstValueFrom(this.trackCollectionService.getAll$());
+    await this.trackCollectionService.reloadCollectionData(tracksBackup);
+  }
+
+  private async resetDatabaseData(): Promise<void> {
     const tracksBackup: Track[] = await firstValueFrom(this.trackCollectionService.getAll$());
     await this._trackDB?.remove();
     await this.setupDatabase();
-    await this.resetTracksCollection(tracksBackup);
+    await this.dropTracksCollection(tracksBackup);
   }
 
   private async setupDatabase(): Promise<void> {

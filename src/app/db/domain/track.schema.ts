@@ -1,8 +1,8 @@
-import { IAudioMetadata } from 'music-metadata-browser';
-import { RxJsonSchema } from 'rxdb';
-import { Directory, Filesystem, WriteFileResult } from '@capacitor/filesystem';
-import { logger } from '@src/devUtils';
 import { Capacitor } from '@capacitor/core';
+import { Directory, Filesystem, WriteFileResult } from '@capacitor/filesystem';
+
+import { IAudioMetadata, IPicture } from 'music-metadata-browser';
+import { RxJsonSchema } from 'rxdb';
 
 export interface Track {
   uri: string;
@@ -12,6 +12,7 @@ export interface Track {
   album: string;
   thumbUrl: string;
   duration: number;
+  metadataLoaded?: boolean;
   lyrics?: string;
 }
 
@@ -32,6 +33,7 @@ export function getDefaultTrackObject(trackPath: string, capacitorPath: string):
     thumbUrl: TrackDefaultsEnum.THUMBURL,
     duration: 0,
     lyrics: '',
+    metadataLoaded: false,
   };
 }
 
@@ -41,16 +43,18 @@ export async function getTrackObject(
   lyrics?: string,
   metadata?: IAudioMetadata | undefined
 ): Promise<Track> {
-  let thumbUrl: string = '';
-  if (metadata?.common.picture) {
-    thumbUrl = await Filesystem.writeFile({
-      path: metadata?.common.album ? metadata?.common.album : `${Math.random() * 2342412342352}`,
-      data: `data:${
-        metadata?.common.picture[0].format
-      };base64,${metadata?.common.picture[0].data.toString('base64')}`,
+  let thumbUrl: string | undefined = '';
+  const picture: IPicture | undefined = metadata?.common.picture?.shift();
+  if (picture) {
+    const albumName: string = metadata?.common.album || `${Math.random() * 2342412342352}`;
+    thumbUrl = await Filesystem.stat({
+      path: albumName,
       directory: Directory.Library,
-    }).then((res: WriteFileResult) => Capacitor.convertFileSrc(res.uri));
+    })
+      .then((res) => Capacitor.convertFileSrc(res.uri))
+      .catch(() => createPicture(picture, albumName));
   }
+
   return {
     uri: trackPath,
     src: capacitorPath,
@@ -60,7 +64,16 @@ export async function getTrackObject(
     thumbUrl: thumbUrl || TrackDefaultsEnum.THUMBURL,
     duration: metadata?.format.duration ?? 0,
     lyrics: lyrics || '',
+    metadataLoaded: true,
   };
+}
+
+function createPicture(picture: IPicture, albumName: string): Promise<string> {
+  return Filesystem.writeFile({
+    path: albumName,
+    data: `data:${picture.format};base64,${picture.data.toString('base64')}`,
+    directory: Directory.Library,
+  }).then((res: WriteFileResult) => Capacitor.convertFileSrc(res.uri));
 }
 
 export const trackSchema: RxJsonSchema<Track> = {
@@ -88,14 +101,12 @@ export const trackSchema: RxJsonSchema<Track> = {
     album: {
       type: 'string',
     },
+    metadataLoaded: {
+      type: 'boolean',
+    },
     duration: {
       description: 'track duration',
       type: 'number',
-
-      // number fields that are used in an index, must have set minimum, maximum and multipleOf
-      // minimum: 0,
-      // maximum: 150,
-      // multipleOf: 1,
     },
     lyrics: {
       type: 'string',

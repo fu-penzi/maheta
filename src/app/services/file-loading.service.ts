@@ -9,10 +9,10 @@ import { PlatformEnum } from '@src/app/model/platform.enum';
 import { ReadOptionsLocalStorage } from '@src/app/model/read-options-local.storage';
 import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories.enum';
 
+import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { isArray } from 'lodash';
 import * as musicMetadata from 'music-metadata-browser';
 import { concatMap, from, Observable, of, ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
-import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 
 enum FileTypeEnum {
   FILE = 'file',
@@ -23,6 +23,11 @@ const defaultReadOptions: ReadOptionsLocalStorage = {
   path: '',
   directory: Directory.ExternalStorage,
 };
+
+export interface TrackChanges {
+  addTracks: Track[];
+  deleteTracks: Track[];
+}
 
 @Injectable({
   providedIn: 'root',
@@ -35,21 +40,21 @@ export class FileLoadingService {
 
   constructor(private diagnostic: Diagnostic) {}
 
-  public async getTracksWithoutMetadata(): Promise<Track[]> {
+  public async getTrackChanges(existingTracks: Track[]): Promise<TrackChanges> {
     this._onReload$.next();
-    if (Capacitor.getPlatform() !== PlatformEnum.ANDROID) {
-      return [];
-    }
+    const tracksWithoutMetadata: Track[] = await this.getTracksWithoutMetadata();
 
-    const readOptionsArray: ReadOptionsLocalStorage[] = await this.getReadOptions();
-    for (const readOptions of readOptionsArray) {
-      const trackPaths = await this.readTrackPaths(readOptions);
-      trackPaths.forEach((trackPath: string) => this._trackPathsSet.add(trackPath));
-    }
-
-    return [...this._trackPathsSet].map((trackPath) =>
-      getDefaultTrackObject(trackPath, Capacitor.convertFileSrc(trackPath))
+    const existingTrackPaths: string[] = existingTracks.map((track: Track) => track.uri);
+    const deleteTracks: Track[] = existingTracks.filter(
+      (track: Track) => !this._trackPathsSet.has(track.uri)
     );
+
+    return {
+      addTracks: tracksWithoutMetadata.filter(
+        (track: Track) => !existingTrackPaths.includes(track.uri)
+      ),
+      deleteTracks,
+    };
   }
 
   public getTracksWithMetadata$(tracks: Track[]): Observable<Track> {
@@ -57,6 +62,22 @@ export class FileLoadingService {
       concatMap((track: Track) => from(this.getTrackWithMetadata(track))),
       tap((track: Track) => this.trackUpdate$.next(track)),
       takeUntil(this._onReload$)
+    );
+  }
+
+  private async getTracksWithoutMetadata(): Promise<Track[]> {
+    this._onReload$.next();
+    if (Capacitor.getPlatform() !== PlatformEnum.ANDROID) {
+      return [];
+    }
+    this._trackPathsSet.clear();
+    const readOptionsArray: ReadOptionsLocalStorage[] = await this.getReadOptions();
+    for (const readOptions of readOptionsArray) {
+      const trackPaths = await this.readTrackPaths(readOptions);
+      trackPaths.forEach((trackPath: string) => this._trackPathsSet.add(trackPath));
+    }
+    return [...this._trackPathsSet].map((trackPath) =>
+      getDefaultTrackObject(trackPath, Capacitor.convertFileSrc(trackPath))
     );
   }
 

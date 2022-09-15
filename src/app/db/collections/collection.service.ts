@@ -14,6 +14,7 @@ export abstract class CollectionService<CollectionDocument> {
       return of([]);
     }
     return from(this.collection.find().exec()).pipe(
+      take(1),
       map((documents: RxDocument[]) =>
         documents.map(
           (trackDocument: RxDocument) => trackDocument.toMutableJSON() as CollectionDocument

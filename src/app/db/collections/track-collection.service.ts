@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { CollectionService } from '@src/app/db/collections/collection.service';
 import { Track } from '@src/app/db/domain/track.schema';
-import { FileLoadingService } from '@src/app/services/file-loading.service';
+import { FileLoadingService, TrackChanges } from '@src/app/services/file-loading.service';
 import { MahetaService } from '@src/app/services/maheta.service';
 
-import { finalize } from 'rxjs';
+import { concat, concatMap, finalize, firstValueFrom, map, take, takeWhile, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,24 +19,36 @@ export class TrackCollectionService extends CollectionService<Track> {
   }
 
   public async reloadCollectionData(tracksBackup: Track[]): Promise<void> {
-    let tracksLoadingResult: Track[] = await this.fileLoadingService.getTracksWithoutMetadata();
-    tracksLoadingResult = tracksLoadingResult.map((track: Track) => ({
+    const { addTracks, deleteTracks } = await this.fileLoadingService.getTrackChanges(tracksBackup);
+
+    deleteTracks.map((track: Track) => this.delete$(track).subscribe());
+
+    const tracksLoadingResult: Track[] = addTracks.map((track: Track) => ({
       ...track,
       lyrics: this.getLyricsFromBackup(track, tracksBackup),
     }));
-
     await this.collection.bulkUpsert(tracksLoadingResult);
+    this.loadTracksMetadata();
+  }
 
-    const trackNumber: number = tracksLoadingResult.length;
-    let i = 0;
-    this.mahetaService.showProgressBar();
-    this.fileLoadingService
-      .getTracksWithMetadata$(tracksLoadingResult)
-      .pipe(finalize(() => this.mahetaService.hideProgressBar()))
+  private loadTracksMetadata(): void {
+    let trackNumber: number;
+    let progress: number = 0;
+    this.getAll$()
+      .pipe(
+        map((tracks: Track[]) => tracks.filter((track: Track) => !track.metadataLoaded)),
+        takeWhile((tracks: Track[]) => !!tracks.length),
+        tap((tracks: Track[]) => {
+          this.mahetaService.showProgressBar();
+          trackNumber = tracks.length;
+        }),
+        concatMap((tracks: Track[]) => this.fileLoadingService.getTracksWithMetadata$(tracks)),
+        tap(() => progress++),
+        finalize(() => this.mahetaService.hideProgressBar())
+      )
       .subscribe((track: Track) => {
         this.collection.upsert(track);
-        i++;
-        this.mahetaService.updateProgressBar((i / trackNumber) * 100);
+        this.mahetaService.updateProgressBar((progress / trackNumber) * 100);
       });
   }
 
