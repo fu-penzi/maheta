@@ -36,6 +36,7 @@ export class MusicLibraryAlbumsService {
       title: albumTitle ?? AlbumDefaultsEnum.TITLE,
       author: tracksByAlbum[albumTitle][0]?.author ?? AlbumDefaultsEnum.AUTHOR,
       thumbUrl: tracksByAlbum[albumTitle][0]?.thumbUrl ?? AlbumDefaultsEnum.THUMBURL,
+      year: tracksByAlbum[albumTitle][0]?.year,
       tracks: tracksByAlbum[albumTitle],
     }));
   }

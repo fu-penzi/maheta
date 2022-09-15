@@ -5,6 +5,7 @@ export interface Album {
   author: string;
   thumbUrl: string;
   tracks: Track[];
+  year?: number;
 }
 
 export enum AlbumDefaultsEnum {

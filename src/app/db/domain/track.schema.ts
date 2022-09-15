@@ -12,6 +12,7 @@ export interface Track {
   album: string;
   thumbUrl: string;
   duration: number;
+  year?: number;
   metadataLoaded?: boolean;
   lyrics?: string;
 }
@@ -54,13 +55,13 @@ export async function getTrackObject(
       .then((res) => Capacitor.convertFileSrc(res.uri))
       .catch(() => createPicture(picture, albumName));
   }
-
   return {
     uri: trackPath,
     src: capacitorPath,
     title: metadata?.common.title ?? trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
     author: metadata?.common.artist ?? TrackDefaultsEnum.AUTHOR,
     album: metadata?.common.album ?? TrackDefaultsEnum.ALBUM,
+    year: metadata?.common.year,
     thumbUrl: thumbUrl || TrackDefaultsEnum.THUMBURL,
     duration: metadata?.format.duration ?? 0,
     lyrics: lyrics || '',
@@ -103,6 +104,9 @@ export const trackSchema: RxJsonSchema<Track> = {
     },
     metadataLoaded: {
       type: 'boolean',
+    },
+    year: {
+      type: 'number',
     },
     duration: {
       description: 'track duration',
