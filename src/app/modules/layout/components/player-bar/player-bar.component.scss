@@ -14,7 +14,17 @@
   justify-content: space-between;
   align-items: center;
   padding: spacing(4) 140px spacing(4) spacing(3);
-  border-top: 1px solid $accent;
+}
+
+mat-progress-bar {
+  height: 2px;
+}
+
+//noinspection Stylelint
+::ng-deep {
+  .light-theme .mat-progress-bar.mat-accent .mat-progress-bar-buffer {
+    background-color: $primary-light;
+  }
 }
 
 .track {

@@ -1,4 +1,5 @@
 <div *ngIf="!isTabPlayer">
+  <mat-progress-bar color="accent" mode="determinate" [value]="trackProgress"></mat-progress-bar>
   <a class="player-bar" [routerLink]="currentTrack ? playerRouterLink : undefined">
     <div class="track">
       <img

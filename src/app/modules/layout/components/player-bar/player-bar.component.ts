@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { getDefaultTrackObject, Track } from '@src/app/db/domain/track.schema';
 import { UrlEnum } from '@src/app/model/url.enum';
@@ -10,7 +10,9 @@ import { NavigationService } from '@src/app/services/navigation.service';
   templateUrl: './player-bar.component.html',
   styleUrls: ['./player-bar.component.scss'],
 })
-export class PlayerBarComponent {
+export class PlayerBarComponent implements OnInit {
+  public trackProgress: number = 0;
+
   constructor(
     private musicControlService: MusicControlService,
     private navigation: NavigationService
@@ -30,6 +32,12 @@ export class PlayerBarComponent {
 
   public get playerRouterLink(): string {
     return UrlEnum.PLAYER;
+  }
+
+  public ngOnInit(): void {
+    this.musicControlService.currentTrackTime.subscribe((currentTrackTime: number) => {
+      this.trackProgress = (currentTrackTime / this.musicControlService.currentTrackDuration) * 100;
+    });
   }
 
   public play(): void {
