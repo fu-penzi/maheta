@@ -23,11 +23,11 @@ export enum TrackDefaultsEnum {
   THUMBURL = 'assets/note.jpg',
 }
 
-export function getDefaultTrackObject(trackPath: string, capacitorPath: string): Track {
+export function getDefaultTrackObject(trackPath?: string, capacitorPath?: string): Track {
   return {
-    uri: trackPath,
-    src: capacitorPath,
-    title: trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
+    uri: trackPath || '',
+    src: capacitorPath || '',
+    title: trackPath?.split('/').pop() ?? TrackDefaultsEnum.TITLE,
     author: TrackDefaultsEnum.AUTHOR,
     album: TrackDefaultsEnum.ALBUM,
     thumbUrl: TrackDefaultsEnum.THUMBURL,

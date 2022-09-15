@@ -1,26 +1,32 @@
-<div *ngIf="currentTrack && !isTabPlayer">
-  <a class="player-bar" [routerLink]="playerRouterLink">
+<div *ngIf="!isTabPlayer">
+  <a class="player-bar" [routerLink]="currentTrack ? playerRouterLink : undefined">
     <div class="track">
       <img
         class="track-thumb"
-        src="{{ currentTrack.thumbUrl }}"
-        alt="{{ currentTrack.thumbUrl }}"
+        src="{{ currentTrack?.thumbUrl || defaultTrack.thumbUrl }}"
+        alt="{{ currentTrack?.thumbUrl || defaultTrack.thumbUrl }}"
       />
 
       <div class="track-info">
-        <span class="track-info__title">{{ currentTrack.title }}</span>
-        <span class="track-info__author">{{ currentTrack.author }}</span>
+        <span class="track-info__title">{{ currentTrack?.title || defaultTrack.title }}</span>
+        <span class="track-info__author">{{ currentTrack?.author || defaultTrack.author }}</span>
       </div>
     </div>
   </a>
   <div class="controls">
-    <button (click)="prev()" mat-icon-button aria-label="Example icon button with a bookmark icon">
+    <button
+      (click)="prev()"
+      [disabled]="!currentTrack"
+      mat-icon-button
+      aria-label="Example icon button with a bookmark icon"
+    >
       <mat-icon>skip_previous</mat-icon>
     </button>
 
     <ng-container *ngIf="!isPlaying()">
       <button
         (click)="play()"
+        [disabled]="!currentTrack"
         mat-fab
         color="accent"
         aria-label="Example icon button with a bookmark icon"
@@ -32,6 +38,7 @@
     <ng-container *ngIf="isPlaying()">
       <button
         (click)="pause()"
+        [disabled]="!currentTrack"
         mat-fab
         color="accent"
         aria-label="Example icon button with a bookmark icon"
@@ -40,7 +47,12 @@
       </button>
     </ng-container>
 
-    <button (click)="next()" mat-icon-button aria-label="Example icon button with a bookmark icon">
+    <button
+      (click)="next()"
+      [disabled]="!currentTrack"
+      mat-icon-button
+      aria-label="Example icon button with a bookmark icon"
+    >
       <mat-icon>skip_next</mat-icon>
     </button>
   </div>

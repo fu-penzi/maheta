@@ -6,7 +6,7 @@
   margin: spacing(5) spacing(8) 0;
 
   & > * {
-    padding-bottom: spacing(6);
+    padding-bottom: spacing(8);
   }
 }
 
@@ -24,7 +24,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
+  margin: 0 auto spacing(5);
   overflow: hidden;
   width: calc(80%);
   text-align: center;
