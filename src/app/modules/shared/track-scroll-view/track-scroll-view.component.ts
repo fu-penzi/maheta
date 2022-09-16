@@ -13,6 +13,7 @@ import {
 } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
+import { logger } from '@src/devUtils';
 
 @Component({
   selector: 'maheta-track-scroll-view',
@@ -23,18 +24,17 @@ export class TrackScrollViewComponent implements OnInit {
   @Input() public tracks: Track[];
   @Input() public playlist: Playlist;
 
+  public currentTrack: Track;
+
   constructor(
     private readonly musicControlService: MusicControlService,
     private readonly musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
     public matDialogService: MatDialog
   ) {}
 
-  public get currentTrack(): Track {
-    return this.musicControlService.currentTrack;
-  }
-
   public ngOnInit(): void {
     this.musicControlService.nextQueue = this.tracks;
+    this.musicControlService.currentTrack$.subscribe((track: Track) => (this.currentTrack = track));
   }
 
   public playPosition(position: number): void {

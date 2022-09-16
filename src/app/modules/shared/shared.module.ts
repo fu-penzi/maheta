@@ -23,6 +23,8 @@ import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-sc
 import { WordOverviewSheetComponent } from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview-sheet.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatChipsModule } from '@angular/material/chips';
 
 const exportedModules = [
   CommonModule,
@@ -59,6 +61,8 @@ const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponen
     MatInputModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
+    MatBadgeModule,
+    MatChipsModule,
   ],
   exports: [...exportedModules, ...exportedComponents],
 })

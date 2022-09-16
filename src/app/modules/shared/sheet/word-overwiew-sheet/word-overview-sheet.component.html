@@ -1,0 +1,22 @@
+<h2 class="sheet-header-container">
+  <span>Lookup</span>
+  <button mat-icon-button (click)="close()" aria-label="Example icon button with a heart icon">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+
+<div class="sheet-content-container" [class.loading]="!wordLookupDto">
+  <ng-container *ngIf="wordLookupDto">
+    <p class="transliteration">{{ wordLookupDto?.transliteration?.text }}</p>
+    <h1 class="word">
+      {{ word }}
+    </h1>
+    <div class="translations">
+      <span *ngFor="let translation of wordLookupDto?.translations; last as isLast">
+        {{ translation + (isLast ? '' : ',') }}
+      </span>
+    </div>
+    <h2 class="language">{{ wordLookupDto?.language?.name }}</h2>
+  </ng-container>
+  <mat-spinner *ngIf="!wordLookupDto" color="accent" strokeWidth="5" diameter="100"></mat-spinner>
+</div>

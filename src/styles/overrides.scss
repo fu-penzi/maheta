@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 /*
 * Slider
 */
@@ -10,6 +12,10 @@
   .mat-slider-track-wrapper {
     transform: scaleY(1.7);
   }
+
+  .mat-slider-thumb {
+    transform: scale(0.7) !important;
+  }
 }
 
 /*
@@ -20,3 +26,17 @@
     padding: 0 !important;
   }
 }
+
+/*
+* Sheet
+*/
+
+.cdk-overlay-container mat-bottom-sheet-container {
+  background-color: $background !important;
+  color: $text !important;
+  padding: 0 !important;
+}
+
+/*
+* Dialog
+*/

@@ -6,13 +6,14 @@
   margin: spacing(5) spacing(8) 0;
 
   & > * {
-    padding-bottom: spacing(8);
+    margin-bottom: spacing(8);
   }
 }
 
 .track-thumb {
   display: block;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   object-fit: cover;
   width: 250px;
   height: 250px;
@@ -52,7 +53,8 @@
 .track-controls {
   width: 100%;
   max-width: $tablet;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
 
   &__track-time {
     display: flex;
@@ -90,11 +92,13 @@
 
   &__lyrics {
     white-space: pre-wrap;
+    overflow: hidden;
     line-height: 2.5rem;
     font-size: 1.5rem;
 
     span {
-      padding: spacing(0.6) spacing(0.25);
+      margin-left: -4px;
+      padding: spacing(0.6) 0;
       border-radius: spacing(2);
     }
 

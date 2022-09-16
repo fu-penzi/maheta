@@ -88,3 +88,17 @@
     }
   }
 }
+
+@mixin sheet() {
+  .sheet-header-container {
+    background-color: $background;
+    height: size(lg);
+    padding: spacing(2) spacing(3);
+  }
+
+  .sheet-content-container {
+    background-color: $background;
+    margin: spacing(2) spacing(3);
+    overflow-y: scroll;
+  }
+}

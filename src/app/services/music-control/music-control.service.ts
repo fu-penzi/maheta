@@ -4,7 +4,7 @@ import { Track } from '@src/app/db/domain/track.schema';
 import { QueueService } from '@src/app/services/queue.service';
 
 import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
-import { interval, map, Observable, Subject } from 'rxjs';
+import { interval, map, Observable, ReplaySubject, Subject } from 'rxjs';
 
 @Injectable()
 export class MusicControlService {
@@ -13,10 +13,15 @@ export class MusicControlService {
   private _currentTrackAudio: HTMLAudioElement;
 
   private _togglePlay$: Subject<void> = new Subject<void>();
+  private _currentTrack$: ReplaySubject<Track> = new ReplaySubject<Track>();
 
   constructor(private queueService: QueueService<Track>, private musicControls: MusicControls) {
     this.setupCurrentTrackAudio();
     this.currentTrackValueChanges();
+  }
+
+  public get currentTrack$(): Observable<Track> {
+    return this._currentTrack$.asObservable();
   }
 
   public get isPlaying(): boolean {
@@ -120,17 +125,14 @@ export class MusicControlService {
     this._currentTrackAudio.src = this.currentTrack.src;
   }
 
-  private setupNativeMusicControls(currentTrack: Track): void {
-    this.musicControls.destroy();
-    this.musicControls.create({
+  private async setupNativeMusicControls(currentTrack: Track): Promise<void> {
+    await this.musicControls.create({
       track: currentTrack.title,
       artist: currentTrack.author,
       isPlaying: this.isPlaying,
       dismissable: true,
       hasSkipForward: true,
       hasSkipBackward: true,
-
-      ticker: 'Now playing "Time is Running Out"',
       playIcon: 'media_play',
       pauseIcon: 'media_pause',
       prevIcon: 'media_prev',
@@ -156,7 +158,6 @@ export class MusicControlService {
           break;
         case 'music-controls-destroy':
           break;
-
         case 'music-controls-media-button':
           this.play();
           break;
@@ -178,6 +179,7 @@ export class MusicControlService {
     this.queueService.currentItem$.subscribe((currentTrack: Track) => {
       this.updateCurrentTrackAudio();
       this.setupNativeMusicControls(currentTrack);
+      this._currentTrack$.next(this.currentTrack);
     });
   }
 

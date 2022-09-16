@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
@@ -6,13 +6,13 @@ import { MusicLibraryTracksService } from '@src/app/services/music-library/music
 @Component({
   selector: 'maheta-songs',
   templateUrl: './songs.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./songs.component.scss'],
 })
-export class SongsComponent {
+export class SongsComponent implements OnInit {
+  public tracks: Track[] = [];
   constructor(private musicLibraryTracksService: MusicLibraryTracksService) {}
 
-  public get tracks(): Track[] {
-    return this.musicLibraryTracksService.tracks;
+  public ngOnInit(): void {
+    this.tracks = this.musicLibraryTracksService.tracks;
   }
 }

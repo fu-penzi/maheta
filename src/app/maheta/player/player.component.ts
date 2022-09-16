@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSliderChange } from '@angular/material/slider';
 
 import { Track } from '@src/app/db/domain/track.schema';
@@ -8,9 +9,13 @@ import {
   getTokenizer,
   getWords,
 } from '@src/app/helpers/string.helper';
+import { UrlEnum } from '@src/app/model/url.enum';
+import {
+  WordOverviewSheetComponent,
+  WordOverviewSheetData,
+} from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview-sheet.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
-import { UrlEnum } from '@src/app/model/url.enum';
 
 interface SliderSettings {
   value: number;
@@ -29,6 +34,7 @@ interface LyricSentence {
   styleUrls: ['./player.component.scss'],
 })
 export class PlayerComponent implements OnInit {
+  public lyricSentences: LyricSentence[] = [];
   public sliderSettings: SliderSettings;
   public currentTrackTime: number;
   public highlightedWord: string = '';
@@ -37,7 +43,8 @@ export class PlayerComponent implements OnInit {
 
   constructor(
     private readonly musicControlService: MusicControlService,
-    private musicLibraryTracksService: MusicLibraryTracksService
+    private musicLibraryTracksService: MusicLibraryTracksService,
+    private bottomSheet: MatBottomSheet
   ) {}
 
   public get track(): Track {
@@ -45,26 +52,16 @@ export class PlayerComponent implements OnInit {
   }
 
   public get albumUrl(): string {
-    return '/' + UrlEnum.ALBUMS + '/' + this.track.album;
+    return '/' + UrlEnum.ALBUMS + '/' + this.track?.album;
   }
 
   public get duration(): number {
-    return this.track.duration || this.musicControlService.currentTrackDuration || 999999;
-  }
-
-  public get lyricSentences(): LyricSentence[] {
-    if (!this.lyrics) {
-      return [];
-    }
-
-    const tokenizer = getTokenizer(detectLanguage(this.lyrics));
-    return getSentences(this.lyrics).map((sentence: string) => ({
-      words: getWords(sentence, tokenizer),
-    }));
+    return this.track?.duration || this.musicControlService.currentTrackDuration || 999999;
   }
 
   public ngOnInit(): void {
     this.setupSlider();
+    this.setupLyrics();
   }
 
   public play(): void {
@@ -125,8 +122,8 @@ export class PlayerComponent implements OnInit {
     if (!word) {
       return;
     }
-
     this.highlightedWord = word;
+    this.openWordOverviewSheet(word.trim());
   }
 
   public isWordHighlighted(word: string | undefined): boolean {
@@ -140,9 +137,16 @@ export class PlayerComponent implements OnInit {
   private get lyrics(): string | undefined {
     return (
       this.musicLibraryTracksService.tracks.find(
-        (track) => track.uri === this.musicControlService.currentTrack.uri
+        (track) => track?.uri === this.musicControlService.currentTrack?.uri
       ) || this.musicControlService.currentTrack
     )?.lyrics;
+  }
+
+  private openWordOverviewSheet(word: string): void {
+    const wordOverviewSheetData: WordOverviewSheetData = { word };
+    this.bottomSheet.open(WordOverviewSheetComponent, {
+      data: wordOverviewSheetData,
+    });
   }
 
   private setupSlider(): void {
@@ -159,5 +163,17 @@ export class PlayerComponent implements OnInit {
         this.sliderSettings.value = (currentTrackTime / this.duration) * this.sliderSettings.max;
       }
     });
+  }
+
+  private setupLyrics(): void {
+    if (!this.lyrics) {
+      this.lyricSentences = [];
+      return;
+    }
+
+    const tokenizer = getTokenizer(detectLanguage(this.lyrics));
+    this.lyricSentences = getSentences(this.lyrics).map((sentence: string) => ({
+      words: getWords(sentence, tokenizer),
+    }));
   }
 }

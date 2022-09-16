@@ -1,0 +1,53 @@
+@use '@angular/material' as mat;
+@use 'variables' as *;
+@include sheet;
+
+.sheet-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+
+  @include mat.elevation(2);
+}
+
+.sheet-content-container {
+  padding-top: spacing(2);
+  position: relative;
+  height: 50vh;
+  font-size: spacing(5);
+
+  .transliteration {
+    color: $accent;
+    font-size: spacing(4);
+    letter-spacing: spacing(1);
+    margin-bottom: spacing(2);
+  }
+
+  .word {
+    font-weight: 500;
+    font-size: spacing(8);
+  }
+
+  .translations span:first-child {
+    font-weight: 500;
+  }
+
+  .language {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+    font-size: spacing(10);
+    color: $text;
+    opacity: 0.05;
+    margin: 0;
+  }
+}
+
+.sheet-content-container.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

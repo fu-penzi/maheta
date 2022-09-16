@@ -13,8 +13,6 @@ export class AlbumsComponent implements OnInit {
   constructor(private musicLibraryAlbumsService: MusicLibraryAlbumsService) {}
 
   public ngOnInit(): void {
-    this.musicLibraryAlbumsService.albums$.subscribe((albums: Album[]) => {
-      this.albums = albums;
-    });
+    this.musicLibraryAlbumsService.albums$.subscribe((albums: Album[]) => (this.albums = albums));
   }
 }
