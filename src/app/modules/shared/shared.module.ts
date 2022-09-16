@@ -2,6 +2,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -19,10 +20,9 @@ import { EditLyricsDialogComponent } from '@src/app/modules/shared/dialog/edit-l
 import { EditStorageSettingsDialogComponent } from '@src/app/modules/shared/dialog/edit-storage-settings-dialog/edit-storage-settings-dialog.component';
 import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-dialog/loading-dialog.component';
 import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-scroll-view/playlist-scroll-view.component';
+import { WordOverviewSheetComponent } from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview-sheet.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
-
-import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 
 const exportedModules = [
   CommonModule,
@@ -34,6 +34,7 @@ const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponen
 
 @NgModule({
   declarations: [
+    WordOverviewSheetComponent,
     TrackScrollViewComponent,
     PlaylistScrollViewComponent,
     DurationPipe,
@@ -50,6 +51,7 @@ const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponen
     MatIconModule,
     MatButtonModule,
     ScrollingModule,
+    MatBottomSheetModule,
     RouterModule,
     MatMenuModule,
     MatDialogModule,

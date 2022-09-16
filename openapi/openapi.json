@@ -41,7 +41,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
@@ -81,7 +81,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Language"
                 }
@@ -138,7 +138,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Translation"
                 }
@@ -205,7 +205,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Transliteration"
                 }
@@ -242,7 +242,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Detection"
                 }
@@ -279,7 +279,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/WordLookup"
                 }
