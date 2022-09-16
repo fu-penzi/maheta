@@ -84,7 +84,7 @@ export class MusicControlService {
   public next(): void {
     this.queueService.moveToNext();
 
-    if (this._playing && (this.isRepeat || !this.queueService.isEnd())) {
+    if (this._playing) {
       this.play();
     }
   }
@@ -92,7 +92,7 @@ export class MusicControlService {
   public prev(): void {
     this.queueService.moveToPrev();
 
-    if (this._playing && (this.isRepeat || !this.queueService.isStart())) {
+    if (this._playing) {
       this.play();
     }
   }
@@ -184,6 +184,9 @@ export class MusicControlService {
   private setupCurrentTrackAudio(): void {
     this._currentTrackAudio = new Audio();
     this._currentTrackAudio.addEventListener('ended', () => {
+      if (this.queueService.isEnd() && !this.isRepeat) {
+        return;
+      }
       this.next();
     });
     this._togglePlay$.subscribe(async () => {
