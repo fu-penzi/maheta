@@ -5,25 +5,34 @@ import { Track } from '@src/app/db/domain/track.schema';
 import { MusicLibraryService } from '@src/app/services/music-library/music-library.service';
 
 import { groupBy, sortBy } from 'lodash';
+import { map, Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MusicLibraryAlbumsService {
   public albums: Album[] = [];
+  private _albums$: ReplaySubject<Album[]> = new ReplaySubject<Album[]>();
 
   constructor(private musicLibraryService: MusicLibraryService) {
     this.setupLibrary();
   }
 
-  public setupLibrary(): void {
-    this.musicLibraryService.libraryUpdate$.subscribe(() => {
-      this.setupAlbums();
-    });
+  public get albums$(): Observable<Album[]> {
+    return this._albums$.asObservable();
   }
 
-  public getAlbum(title: string): Album | undefined {
-    return this.albums.find((album: Album) => album.title === title);
+  public getAlbum(title: string): Observable<Album | undefined> {
+    return this._albums$.pipe(
+      map((albums: Album[]) => albums.find((album: Album) => album.title === title))
+    );
+  }
+
+  private setupLibrary(): void {
+    this.musicLibraryService.libraryUpdate$.subscribe(() => {
+      this.setupAlbums();
+      this._albums$.next(this.albums);
+    });
   }
 
   private get tracks(): Track[] {

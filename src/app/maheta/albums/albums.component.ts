@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Album } from '@src/app/db/domain/album';
 import { MusicLibraryAlbumsService } from '@src/app/services/music-library/music-library-albums.service';
@@ -8,10 +8,13 @@ import { MusicLibraryAlbumsService } from '@src/app/services/music-library/music
   templateUrl: './albums.component.html',
   styleUrls: ['./albums.component.scss'],
 })
-export class AlbumsComponent {
+export class AlbumsComponent implements OnInit {
+  public albums: Album[] = [];
   constructor(private musicLibraryAlbumsService: MusicLibraryAlbumsService) {}
 
-  public get albums(): Album[] {
-    return this.musicLibraryAlbumsService.albums;
+  public ngOnInit(): void {
+    this.musicLibraryAlbumsService.albums$.subscribe((albums: Album[]) => {
+      this.albums = albums;
+    });
   }
 }

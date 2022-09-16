@@ -9,12 +9,15 @@ import {
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicLibraryService } from '@src/app/services/music-library/music-library.service';
 
-import { filter, map, mergeMap, Observable, of, startWith, zip } from 'rxjs';
+import { filter, map, mergeMap, Observable, of, ReplaySubject, startWith, zip } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MusicLibraryPlaylistsService {
+  private _playlists: Playlist[] = [];
+  private _playlists$: ReplaySubject<Playlist[]> = new ReplaySubject<Playlist[]>();
+
   constructor(
     private musicLibraryService: MusicLibraryService,
     private playlistCollectionService: PlaylistCollectionService
@@ -23,11 +26,11 @@ export class MusicLibraryPlaylistsService {
   }
 
   public get playlists(): Playlist[] {
-    return this.musicLibraryService.playlists;
+    return this._playlists;
   }
 
-  public setupLibrary(): void {
-    this.musicLibraryService.libraryUpdate$.subscribe();
+  public get playlists$(): Observable<Playlist[]> {
+    return this._playlists$.asObservable();
   }
 
   public createPlaylist(name?: string): void {
@@ -37,7 +40,7 @@ export class MusicLibraryPlaylistsService {
   public getPlaylist$(id: string): Observable<Playlist> {
     return this.musicLibraryService.libraryUpdate$.pipe(
       startWith({}),
-      map(() => this.playlists.find((playlist: Playlist) => playlist.id === id) as Playlist),
+      map(() => this._playlists.find((playlist: Playlist) => playlist.id === id) as Playlist),
       filter((playlist: Playlist) => !!playlist),
       mergeMap((playlist: Playlist) =>
         zip(
@@ -77,6 +80,13 @@ export class MusicLibraryPlaylistsService {
     return this.playlistUpdate$({
       ...playlist,
       tracks: playlist.tracks.filter((trackUri: string) => trackUri !== track.uri),
+    });
+  }
+
+  private setupLibrary(): void {
+    this.musicLibraryService.libraryUpdate$.subscribe(() => {
+      this._playlists = this.musicLibraryService.playlists;
+      this._playlists$.next(this._playlists);
     });
   }
 

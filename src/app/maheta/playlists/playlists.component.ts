@@ -9,9 +9,13 @@ import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/mu
   styleUrls: ['./playlists.component.scss'],
 })
 export class PlaylistsComponent {
+  public playlists: Playlist[] = [];
+
   constructor(private readonly musicLibraryPlaylistsService: MusicLibraryPlaylistsService) {}
 
-  public get playlists(): Playlist[] {
-    return this.musicLibraryPlaylistsService.playlists;
+  public ngOnInit(): void {
+    this.musicLibraryPlaylistsService.playlists$.subscribe((playlists: Playlist[]) => {
+      this.playlists = playlists;
+    });
   }
 }
