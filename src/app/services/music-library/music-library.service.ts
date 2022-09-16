@@ -38,8 +38,4 @@ export class MusicLibraryService {
         this.libraryUpdate$.next();
       });
   }
-
-  public resetTracksCollection(): Promise<void> {
-    return this.databaseService.dropTracksCollection();
-  }
 }

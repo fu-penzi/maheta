@@ -38,7 +38,15 @@ export class AppBarComponent {
   public reloadDatabaseTrackData(): void {
     this.mahetaService.openLoadingDialog();
     this.musicLibraryTracksService
-      .resetTracksLibrary()
+      .reloadTracksLibrary()
+      .then(() => this.mahetaService.closeLoadingDialog())
+      .catch(() => this.mahetaService.closeLoadingDialog());
+  }
+
+  public dropDatabaseTrackData(): void {
+    this.mahetaService.openLoadingDialog();
+    this.musicLibraryTracksService
+      .dropTracksLibrary()
       .then(() => this.mahetaService.closeLoadingDialog())
       .catch(() => this.mahetaService.closeLoadingDialog());
   }

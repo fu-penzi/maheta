@@ -30,7 +30,12 @@ export class DatabaseService {
 
   public async initDatabase(): Promise<void> {
     await this.setupDatabase();
-    this.reloadTrackCollection();
+    const isDatabaseEmpty: boolean = await firstValueFrom(
+      this.trackCollectionService.isCollectionEmpty()
+    );
+    if (isDatabaseEmpty) {
+      await this.reloadTracksCollection();
+    }
   }
 
   public async dropTracksCollection(backup?: Track[]): Promise<void> {
@@ -50,12 +55,12 @@ export class DatabaseService {
     await this.trackCollectionService.reloadCollectionData(tracksBackup);
   }
 
-  private async reloadTrackCollection(): Promise<void> {
+  public async reloadTracksCollection(): Promise<void> {
     const tracksBackup: Track[] = await firstValueFrom(this.trackCollectionService.getAll$());
     await this.trackCollectionService.reloadCollectionData(tracksBackup);
   }
 
-  private async resetDatabaseData(): Promise<void> {
+  private async dropDatabaseData(): Promise<void> {
     const tracksBackup: Track[] = await firstValueFrom(this.trackCollectionService.getAll$());
     await this._trackDB?.remove();
     await this.setupDatabase();

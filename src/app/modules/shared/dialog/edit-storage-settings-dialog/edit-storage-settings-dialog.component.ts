@@ -43,7 +43,7 @@ export class EditStorageSettingsDialogComponent implements OnInit {
 
     this.mahetaService.openLoadingDialog();
     this.musicLibraryTracksService
-      .resetTracksLibrary()
+      .reloadTracksLibrary()
       .then(() => this.mahetaService.closeLoadingDialog())
       .catch(() => this.mahetaService.closeLoadingDialog());
     this.dialogRef.close();

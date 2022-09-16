@@ -10,6 +10,7 @@ import { PlayerBarComponent } from '@src/app/modules/layout/components/player-ba
 import { LayoutComponent } from '@src/app/modules/layout/layout.component';
 import { ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { SharedModule } from '@src/app/modules/shared/shared.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [LayoutComponent, PlayerBarComponent, AppBarComponent],
@@ -20,6 +21,7 @@ import { SharedModule } from '@src/app/modules/shared/shared.module';
     MatButtonModule,
     MatIconModule,
     MatProgressBarModule,
+    MatMenuModule,
   ],
   providers: [ThemeService],
 })

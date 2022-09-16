@@ -5,18 +5,6 @@
   <span>Player</span>
 
   <div class="menu">
-    <button mat-icon-button (click)="reloadDatabaseTrackData()" aria-label="Example icon button">
-      <mat-icon>refresh</mat-icon>
-    </button>
-
-    <button
-      mat-icon-button
-      (click)="openEditStorageSettingsDialog()"
-      aria-label="Example icon button"
-    >
-      <mat-icon>sd_storage</mat-icon>
-    </button>
-
     <button
       *ngIf="isCurrentTabPlaylists()"
       mat-icon-button
@@ -25,6 +13,27 @@
     >
       <mat-icon>playlist_add</mat-icon>
     </button>
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon button with a bookmark icon"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="reloadDatabaseTrackData()">
+        <mat-icon>update</mat-icon>
+        Update tracks
+      </button>
+      <button mat-menu-item (click)="openEditStorageSettingsDialog()">
+        <mat-icon>sd_storage</mat-icon>
+        Customize folder paths
+      </button>
+      <button mat-menu-item class="warn-button" (click)="dropDatabaseTrackData()">
+        <mat-icon>delete_forever</mat-icon>
+        Hard reset
+      </button>
+    </mat-menu>
   </div>
 </mat-toolbar>
 <mat-progress-bar

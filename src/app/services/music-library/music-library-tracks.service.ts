@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { TrackCollectionService } from '@src/app/db/collections/track-collection.service';
+import { DatabaseService } from '@src/app/db/database.service';
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicLibraryService } from '@src/app/services/music-library/music-library.service';
 
@@ -11,6 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class MusicLibraryTracksService {
   constructor(
+    private databaseService: DatabaseService,
     private musicLibraryService: MusicLibraryService,
     private trackCollectionService: TrackCollectionService
   ) {
@@ -33,7 +35,11 @@ export class MusicLibraryTracksService {
     return this.trackCollectionService.upsert$(trackUpdate);
   }
 
-  public resetTracksLibrary(): Promise<void> {
-    return this.musicLibraryService.resetTracksCollection();
+  public dropTracksLibrary(): Promise<void> {
+    return this.databaseService.dropTracksCollection();
+  }
+
+  public reloadTracksLibrary(): Promise<void> {
+    return this.databaseService.reloadTracksCollection();
   }
 }
