@@ -4,8 +4,6 @@ import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bott
 
 import { TranslatorService, WordLookupDto } from '@src/app/api';
 
-import { delay } from 'rxjs';
-
 export interface WordOverviewSheetData {
   word: string;
 }
@@ -31,7 +29,6 @@ export class WordOverviewSheetComponent implements OnInit {
   public ngOnInit(): void {
     this.translatorService
       .getWordLookup(this.word)
-      .pipe(delay(2000))
       .subscribe((wordLookupDto: WordLookupDto) => (this.wordLookupDto = wordLookupDto));
   }
 

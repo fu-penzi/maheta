@@ -43,7 +43,7 @@ import { Configuration } from '../configuration';
   providedIn: 'root',
 })
 export class TranslatorService {
-  protected basePath = 'http://192.168.0.106:3001/api/v3';
+  protected basePath = 'https://maheta-api.azurewebsites.net';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
   public encoder: HttpParameterCodec;

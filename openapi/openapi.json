@@ -19,7 +19,7 @@
   },
   "servers": [
     {
-      "url": "http://192.168.0.106:3001/api/v3"
+      "url": "https://maheta-api.azurewebsites.net"
     }
   ],
   "tags": [
