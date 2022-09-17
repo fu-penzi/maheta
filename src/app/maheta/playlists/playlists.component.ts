@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
@@ -8,7 +8,7 @@ import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/mu
   templateUrl: './playlists.component.html',
   styleUrls: ['./playlists.component.scss'],
 })
-export class PlaylistsComponent {
+export class PlaylistsComponent implements OnInit {
   public playlists: Playlist[] = [];
 
   constructor(private readonly musicLibraryPlaylistsService: MusicLibraryPlaylistsService) {}

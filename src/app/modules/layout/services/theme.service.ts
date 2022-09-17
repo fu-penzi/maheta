@@ -8,7 +8,6 @@ export enum ThemeClassEnum {
 @Injectable()
 export class ThemeService {
   private _theme: ThemeClassEnum = ThemeClassEnum.light;
-  constructor() {}
 
   public get theme(): ThemeClassEnum {
     return this._theme;

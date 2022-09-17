@@ -1,6 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -22,8 +21,9 @@ import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
     LayoutModule,
     BrowserAnimationsModule,
     MusicControlModule,
+    SharedModule,
   ],
-  providers: [FormBuilder, MusicControls, SharedModule, Diagnostic],
+  providers: [MusicControls, Diagnostic],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

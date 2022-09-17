@@ -2,8 +2,10 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,8 +25,6 @@ import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-sc
 import { WordOverviewSheetComponent } from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview-sheet.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatChipsModule } from '@angular/material/chips';
 
 const exportedModules = [
   CommonModule,

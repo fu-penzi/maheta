@@ -25,12 +25,14 @@
         <mat-icon>update</mat-icon>
         Update tracks
       </button>
+
       <button mat-menu-item (click)="openEditStorageSettingsDialog()">
         <mat-icon>sd_storage</mat-icon>
         Customize folder paths
       </button>
+
       <button mat-menu-item class="warn-button" (click)="dropDatabaseTrackData()">
-        <mat-icon>delete_forever</mat-icon>
+        <mat-icon color="warn">delete_forever</mat-icon>
         Hard reset
       </button>
     </mat-menu>

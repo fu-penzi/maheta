@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'mahetaDuration',
 })
 export class DurationPipe implements PipeTransform {
-  transform(totalSeconds: number | undefined | null, ...args: unknown[]): string {
+  transform(totalSeconds: number | undefined | null): string {
     if (!totalSeconds) {
       return '0:00';
     }

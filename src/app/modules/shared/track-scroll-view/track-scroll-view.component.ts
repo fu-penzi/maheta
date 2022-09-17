@@ -13,7 +13,6 @@ import {
 } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
-import { logger } from '@src/devUtils';
 
 @Component({
   selector: 'maheta-track-scroll-view',

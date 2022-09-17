@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TrackScrollViewComponent } from './track-scroll-view.component';
+import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 
 describe('TrackScrollViewComponent', () => {
   let component: TrackScrollViewComponent;

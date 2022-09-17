@@ -37,7 +37,6 @@
   //  warn
   --warn: #{mat.get-color-from-palette($-warn)};
 }
-// TODO fix duplicated styles
 .light-theme {
   @include mat.all-component-themes(light-theme.$light-theme);
   @include theme-colors(light-theme.$light-theme);

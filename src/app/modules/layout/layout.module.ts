@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
@@ -10,7 +11,6 @@ import { PlayerBarComponent } from '@src/app/modules/layout/components/player-ba
 import { LayoutComponent } from '@src/app/modules/layout/layout.component';
 import { ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { SharedModule } from '@src/app/modules/shared/shared.module';
-import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [LayoutComponent, PlayerBarComponent, AppBarComponent],

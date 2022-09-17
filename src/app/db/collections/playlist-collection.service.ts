@@ -6,8 +6,4 @@ import { Playlist } from '@src/app/db/domain/playlist.schema';
 @Injectable({
   providedIn: 'root',
 })
-export class PlaylistCollectionService extends CollectionService<Playlist> {
-  constructor() {
-    super();
-  }
-}
+export class PlaylistCollectionService extends CollectionService<Playlist> {}

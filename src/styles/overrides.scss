@@ -40,3 +40,50 @@
 /*
 * Dialog
 */
+
+mat-dialog-container {
+  background-color: $background !important;
+  color: $text !important;
+
+  .mat-form-field-flex {
+    background-color: $primary-light !important;
+  }
+
+  .mat-focused .mat-form-field-ripple {
+    background-color: $accent !important;
+  }
+
+  .mat-focused .mat-form-field-label {
+    color: $accent !important;
+  }
+
+  input {
+    caret-color: $text !important;
+  }
+
+  .mat-form-field-label {
+    color: $text !important;
+  }
+
+  ::placeholder {
+    color: $text !important;
+    opacity: 0.5;
+  }
+}
+
+/*
+* Menu
+*/
+
+.mat-menu-content {
+  color: $text;
+  background-color: $primary-light;
+
+  .mat-menu-item {
+    color: $text;
+  }
+
+  .mat-icon-no-color {
+    color: $text !important;
+  }
+}
