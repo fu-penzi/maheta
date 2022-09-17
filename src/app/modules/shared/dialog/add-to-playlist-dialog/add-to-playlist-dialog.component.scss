@@ -1,2 +1,17 @@
 @use 'variables' as *;
 @include dialog;
+
+.dialog-content-container {
+  button {
+    border: 1px solid $primary-light;
+    border-radius: spacing(1);
+  }
+
+  button:not(:last-child) {
+    margin-bottom: spacing(2);
+  }
+}
+
+::ng-deep button.playlist.mat-focus-indicator.mat-menu-item {
+  color: $accent !important;
+}

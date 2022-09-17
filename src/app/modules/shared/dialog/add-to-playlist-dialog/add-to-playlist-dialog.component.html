@@ -1,11 +1,11 @@
 <h1 class="dialog-header-container">Choose playlist</h1>
 <div class="dialog-content-container">
   <ng-container *ngIf="!!playlists?.length">
-    <div *ngFor="let playlist of playlists">
-      <button mat-menu-item (click)="addTrackToPlaylist(playlist, track)">
+    <ng-container *ngFor="let playlist of playlists">
+      <button class="playlist" mat-menu-item (click)="addTrackToPlaylist(playlist, track)">
         {{ playlist.name }}
       </button>
-    </div>
+    </ng-container >
   </ng-container>
   <div *ngIf="!playlists?.length">No playlists!</div>
 </div>

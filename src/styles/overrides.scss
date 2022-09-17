@@ -49,6 +49,9 @@ mat-dialog-container {
     background-color: $primary-light !important;
   }
 
+  .mat-form-field-label {
+    color: $text !important;
+  }
   .mat-focused .mat-form-field-ripple {
     background-color: $accent !important;
   }
@@ -59,10 +62,6 @@ mat-dialog-container {
 
   input {
     caret-color: $text !important;
-  }
-
-  .mat-form-field-label {
-    color: $text !important;
   }
 
   ::placeholder {
