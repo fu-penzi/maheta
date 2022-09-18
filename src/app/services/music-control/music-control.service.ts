@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Track } from '@src/app/db/domain/track.schema';
-import { QueueService } from '@src/app/services/queue.service';
+import { QueueService, RepeatModeEnum } from '@src/app/services/queue.service';
 
 import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
 import { interval, map, Observable, ReplaySubject, Subject } from 'rxjs';
@@ -11,8 +11,8 @@ export class MusicControlService {
   private _playing: boolean = false;
   private _nextQueue: Track[] | null = null;
   private _currentTrackAudio: HTMLAudioElement;
-
   private _togglePlay$: Subject<void> = new Subject<void>();
+
   private _currentTrack$: ReplaySubject<Track> = new ReplaySubject<Track>();
 
   constructor(private queueService: QueueService<Track>, private musicControls: MusicControls) {
@@ -41,12 +41,24 @@ export class MusicControlService {
     this.queueService.shuffle = shuffle;
   }
 
-  public get isRepeat(): boolean {
-    return this.queueService.repeat;
+  public nextRepeatMode(): void {
+    this.repeatMode = (this.repeatMode + 1) % 3;
   }
 
-  public set isRepeat(repeat: boolean) {
-    this.queueService.repeat = repeat;
+  public get isRepeatOne(): boolean {
+    return this.queueService.isRepeatOne;
+  }
+
+  public get isRepeatQueue(): boolean {
+    return this.queueService.isRepeatQueue;
+  }
+
+  public get repeatMode(): RepeatModeEnum {
+    return this.queueService.repeatMode;
+  }
+
+  public set repeatMode(repeatMode: RepeatModeEnum) {
+    this.queueService.repeatMode = repeatMode;
   }
 
   public get currentTrackDuration(): number {
@@ -186,7 +198,7 @@ export class MusicControlService {
   private setupCurrentTrackAudio(): void {
     this._currentTrackAudio = new Audio();
     this._currentTrackAudio.addEventListener('ended', () => {
-      if (this.queueService.isEnd() && !this.isRepeat) {
+      if (this.queueService.isEnd() && !this.isRepeatOne) {
         return;
       }
       this.next();

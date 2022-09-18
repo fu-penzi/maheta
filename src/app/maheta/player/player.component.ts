@@ -92,12 +92,16 @@ export class PlayerComponent implements OnInit {
     this.musicControlService.isShuffle = !this.musicControlService.isShuffle;
   }
 
-  public isRepeat(): boolean {
-    return this.musicControlService.isRepeat;
+  public isRepeatOne(): boolean {
+    return this.musicControlService.isRepeatOne;
   }
 
-  public toggleRepeat(): void {
-    this.musicControlService.isRepeat = !this.musicControlService.isRepeat;
+  public isRepeatQueue(): boolean {
+    return this.musicControlService.isRepeatQueue;
+  }
+
+  public nextRepeatMode(): void {
+    this.musicControlService.nextRepeatMode();
   }
 
   public sliderHold(sliderChange: MatSliderChange): void {
@@ -166,14 +170,16 @@ export class PlayerComponent implements OnInit {
   }
 
   private setupLyrics(): void {
-    if (!this.lyrics) {
-      this.lyricSentences = [];
-      return;
-    }
+    this.musicControlService.currentTrack$.subscribe(() => {
+      if (!this.lyrics) {
+        this.lyricSentences = [];
+        return;
+      }
 
-    const tokenizer = getTokenizer(detectLanguage(this.lyrics));
-    this.lyricSentences = getSentences(this.lyrics).map((sentence: string) => ({
-      words: getWords(sentence, tokenizer),
-    }));
+      const tokenizer = getTokenizer(detectLanguage(this.lyrics));
+      this.lyricSentences = getSentences(this.lyrics).map((sentence: string) => ({
+        words: getWords(sentence, tokenizer),
+      }));
+    });
   }
 }

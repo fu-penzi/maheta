@@ -20,8 +20,8 @@ export class PlaylistTracksComponent implements OnInit {
 
   public ngOnInit(): void {
     const playlistId: string = this.route.snapshot.paramMap.get(UrlParamsEnum.playlistId) ?? '';
-    this.musicLibraryPlaylistsService.getPlaylist$(playlistId).subscribe((playlist: Playlist) => {
-      this.playlist = playlist;
-    });
+    this.musicLibraryPlaylistsService
+      .getPlaylist$(playlistId)
+      .subscribe((playlist: Playlist) => (this.playlist = playlist));
   }
 }

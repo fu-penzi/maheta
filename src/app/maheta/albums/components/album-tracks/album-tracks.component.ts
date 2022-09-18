@@ -30,7 +30,6 @@ export class AlbumTracksComponent implements OnInit {
     this._albumTitle = this.route.snapshot.paramMap.get(UrlParamsEnum.albumTitle) ?? '';
     this.musicLibraryAlbumsService
       .getAlbum(this._albumTitle)
-      .pipe(take(1))
       .subscribe((album) => (this.album = album));
   }
 }

@@ -74,11 +74,12 @@
 
     <button
       mat-icon-button
-      [color]="isRepeat() ? 'accent' : undefined"
-      (click)="toggleRepeat()"
+      [color]="isRepeatOne() || isRepeatQueue() ? 'accent' : undefined"
+      (click)="nextRepeatMode()"
       aria-label="Example icon button with a bookmark icon"
     >
-      <mat-icon>repeat</mat-icon>
+      <mat-icon *ngIf="!isRepeatOne()">repeat</mat-icon>
+      <mat-icon *ngIf="isRepeatOne()">repeat_one</mat-icon>
     </button>
   </div>
 </div>
