@@ -1,4 +1,6 @@
-<img class="track-thumb" src="{{ this.track?.thumbUrl }}" alt="track-thumb" />
+<object class="track-thumb" [data]="this.track?.thumbUrl | safe" type="image/jpeg">
+  <img class="track-thumb" [src]="'' | safe" [alt]="track?.title" />
+</object>
 
 <a class="track-info" routerLink="{{ albumUrl }}">
   <strong class="track-info__title">{{ this.track?.title }}</strong>

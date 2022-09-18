@@ -4,7 +4,9 @@
     class="scroll-element"
   >
     <div class="content" [routerLink]="playlist.id" mat-ripple>
-      <img class="thumb" src="{{ playlist.thumbUrl }}" alt="{{ playlist.thumbUrl }}" />
+      <object class="thumb" [data]="playlist.thumbUrl | safe" type="image/jpeg">
+        <img class="thumb" [src]="'' | safe" [alt]="playlist.name" />
+      </object>
 
       <div class="info" [class.active]="false">
         <span class="info__title">{{ playlist.name }}</span>

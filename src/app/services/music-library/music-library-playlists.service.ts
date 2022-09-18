@@ -9,7 +9,18 @@ import {
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicLibraryService } from '@src/app/services/music-library/music-library.service';
 
-import { filter, map, mergeMap, Observable, of, ReplaySubject, startWith, zip } from 'rxjs';
+import {
+  concatMap,
+  filter,
+  map,
+  mergeMap,
+  Observable,
+  of,
+  ReplaySubject,
+  startWith,
+  take,
+  zip,
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -66,10 +77,19 @@ export class MusicLibraryPlaylistsService {
     if (playlist.tracks.includes(track.uri)) {
       return of([]);
     }
-    return this.playlistUpdate$({
-      ...playlist,
-      tracks: [...playlist.tracks, track.uri],
-    });
+
+    return this.getPlaylist$(playlist.id).pipe(
+      take(1),
+      concatMap((playlistUpdate: Playlist) => {
+        return this.playlistUpdate$({
+          ...playlistUpdate,
+          thumbUrl:
+            (playlistUpdate?.trackPopulation && playlistUpdate?.trackPopulation[0]?.thumbUrl) ||
+            playlistUpdate.thumbUrl,
+          tracks: [...playlistUpdate.tracks, track.uri],
+        });
+      })
+    );
   }
 
   public removeTrackFromPlaylist$(playlist: Playlist, track: Track): Observable<unknown> {
@@ -84,7 +104,7 @@ export class MusicLibraryPlaylistsService {
   }
 
   private setupLibrary(): void {
-    this.musicLibraryService.libraryUpdate$.subscribe(() => {
+    this.musicLibraryService.libraryUpdate$.pipe(startWith({})).subscribe(() => {
       this._playlists = this.musicLibraryService.playlists;
       this._playlists$.next(this._playlists);
     });

@@ -1,7 +1,9 @@
 <ul class="album-list">
   <li *ngFor="let album of albums" class="album">
     <a routerLink="{{ album.title }}">
-      <img class="album__thumb" src="{{ album.thumbUrl }}" alt="{{ album.thumbUrl }}" />
+      <object class="album__thumb" [data]="album.thumbUrl | safe" type="image/jpeg">
+        <img class="album__thumb" [src]="'' | safe" [alt]="album.title" />
+      </object>
 
       <div class="album-info">
         <p class="album-info__title">{{ album.title }}</p>

@@ -2,11 +2,14 @@
   <mat-progress-bar color="accent" mode="determinate" [value]="trackProgress"></mat-progress-bar>
   <a class="player-bar" [routerLink]="currentTrack ? playerRouterLink : undefined">
     <div class="track">
-      <img
+      <object
         class="track-thumb"
-        src="{{ currentTrack?.thumbUrl || defaultTrack.thumbUrl }}"
-        alt="{{ currentTrack?.thumbUrl || defaultTrack.thumbUrl }}"
-      />
+        [data]="currentTrack?.thumbUrl || defaultTrack.thumbUrl | safe"
+        type="image/jpeg"
+      >
+        >
+        <img class="track-thumb" [src]="'' | safe" [alt]="currentTrack?.title" />
+      </object>
 
       <div class="track-info">
         <span class="track-info__title">{{ currentTrack?.title || defaultTrack.title }}</span>

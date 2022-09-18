@@ -12,10 +12,11 @@
 }
 
 .sheet-content-container {
-  padding-top: spacing(2);
+  padding-top: spacing(6);
   position: relative;
   height: 50vh;
   font-size: spacing(5);
+  text-align: center;
 
   .transliteration {
     color: $accent;

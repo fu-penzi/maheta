@@ -25,6 +25,7 @@ import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-sc
 import { WordOverviewSheetComponent } from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview-sheet.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
+import { SafePipe } from '@src/app/pipes/safe-pipe.pipe';
 
 const exportedModules = [
   CommonModule,
@@ -40,6 +41,7 @@ const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponen
     TrackScrollViewComponent,
     PlaylistScrollViewComponent,
     DurationPipe,
+    SafePipe,
     AddToPlaylistDialogComponent,
     CreatePlaylistDialogComponent,
     EditLyricsDialogComponent,
@@ -64,6 +66,6 @@ const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponen
     MatBadgeModule,
     MatChipsModule,
   ],
-  exports: [...exportedModules, ...exportedComponents],
+  exports: [...exportedModules, ...exportedComponents, SafePipe],
 })
 export class SharedModule {}

@@ -5,7 +5,9 @@
       class="scroll-element"
     >
       <div class="content" (click)="playPosition(i)" mat-ripple>
-        <img class="thumb" src="{{ track.thumbUrl }}" alt="{{ track.thumbUrl }}" />
+        <object class="thumb" [data]="track.thumbUrl | safe" type="image/jpeg">
+          <img class="thumb" [src]="'' | safe" [alt]="track?.title" />
+        </object>
 
         <div class="info" [class.active]="isCurrentTrack(track)">
           <span class="info__title">{{ track.title }}</span>
