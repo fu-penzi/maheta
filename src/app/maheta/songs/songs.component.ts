@@ -13,6 +13,6 @@ export class SongsComponent implements OnInit {
   constructor(private musicLibraryTracksService: MusicLibraryTracksService) {}
 
   public ngOnInit(): void {
-    this.tracks = this.musicLibraryTracksService.tracks;
+    this.musicLibraryTracksService.tracks$.subscribe((tracks: Track[]) => (this.tracks = tracks));
   }
 }

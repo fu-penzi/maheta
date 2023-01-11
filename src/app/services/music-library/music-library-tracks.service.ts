@@ -5,12 +5,15 @@ import { DatabaseService } from '@src/app/db/database.service';
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicLibraryService } from '@src/app/services/music-library/music-library.service';
 
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MusicLibraryTracksService {
+  public tracks: Track[] = [];
+  private _tracks$: ReplaySubject<Track[]> = new ReplaySubject<Track[]>();
+
   constructor(
     private databaseService: DatabaseService,
     private musicLibraryService: MusicLibraryService,
@@ -19,12 +22,15 @@ export class MusicLibraryTracksService {
     this.setupLibrary();
   }
 
-  public get tracks(): Track[] {
-    return this.musicLibraryService.tracks;
+  public get tracks$(): Observable<Track[]> {
+    return this._tracks$.asObservable();
   }
 
   public setupLibrary(): void {
-    this.musicLibraryService.libraryUpdate$.pipe().subscribe();
+    this.musicLibraryService.libraryUpdate$.subscribe(() => {
+      this.tracks = this.musicLibraryService.tracks;
+      this._tracks$.next(this.tracks);
+    });
   }
 
   public addLyricsToTrack$(track: Track, lyrics: string): Observable<unknown> {
