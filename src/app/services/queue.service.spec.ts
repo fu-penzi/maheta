@@ -7,7 +7,9 @@ describe('QueueService', () => {
   let service: QueueService<Track[]>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [QueueService],
+    });
     service = TestBed.inject(QueueService);
   });
 
