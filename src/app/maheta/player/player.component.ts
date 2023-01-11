@@ -1,185 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatSliderChange } from '@angular/material/slider';
 
 import { Track } from '@src/app/db/domain/track.schema';
-import {
-  detectLanguage,
-  getSentences,
-  getTokenizer,
-  getWords,
-} from '@src/app/helpers/string.helper';
 import { UrlEnum } from '@src/app/model/url.enum';
-import {
-  WordOverviewSheetComponent,
-  WordOverviewSheetData,
-} from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview-sheet.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
-import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
-
-interface SliderSettings {
-  value: number;
-  max: number;
-  min: number;
-  step: number;
-}
-
-interface LyricSentence {
-  words: string[];
-}
+import { BaseComponent } from '@src/app/modules/shared/base.component';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'maheta-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss'],
 })
-export class PlayerComponent implements OnInit {
-  public lyricSentences: LyricSentence[] = [];
-  public sliderSettings: SliderSettings;
-  public currentTrackTime: number;
-  public highlightedWord: string = '';
+export class PlayerComponent extends BaseComponent implements OnInit {
+  public currentTrack: Track;
 
-  private _isSliderHeld: boolean = false;
-
-  constructor(
-    private readonly musicControlService: MusicControlService,
-    private musicLibraryTracksService: MusicLibraryTracksService,
-    private bottomSheet: MatBottomSheet
-  ) {}
-
-  public get track(): Track {
-    return this.musicControlService.currentTrack;
-  }
-
-  public get albumUrl(): string {
-    return '/' + UrlEnum.ALBUMS + '/' + this.track?.album;
-  }
-
-  public get duration(): number {
-    return this.track?.duration || this.musicControlService.currentTrackDuration || 999999;
+  constructor(private readonly musicControlService: MusicControlService) {
+    super();
   }
 
   public ngOnInit(): void {
-    this.setupSlider();
-    this.setupLyrics();
+    this.musicControlService.currentTrack$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((currentTrack: Track) => (this.currentTrack = currentTrack));
   }
 
-  public play(): void {
-    this.musicControlService.play();
-  }
-
-  public pause(): void {
-    this.musicControlService.pause();
-  }
-
-  public next(): void {
-    this.musicControlService.next();
-  }
-
-  public prev(): void {
-    this.musicControlService.prev();
-  }
-
-  public isPlaying(): boolean {
-    return this.musicControlService.isPlaying;
-  }
-
-  public isShuffle(): boolean {
-    return this.musicControlService.isShuffle;
-  }
-
-  public toggleShuffle(): void {
-    this.musicControlService.isShuffle = !this.musicControlService.isShuffle;
-  }
-
-  public isRepeatOne(): boolean {
-    return this.musicControlService.isRepeatOne;
-  }
-
-  public isRepeatQueue(): boolean {
-    return this.musicControlService.isRepeatQueue;
-  }
-
-  public nextRepeatMode(): void {
-    this.musicControlService.nextRepeatMode();
-  }
-
-  public sliderHold(sliderChange: MatSliderChange): void {
-    if (!sliderChange?.value) {
-      return;
-    }
-    const time: number = (sliderChange.value * this.duration) / this.sliderSettings.max;
-    this._isSliderHeld = true;
-    this.currentTrackTime = time;
-  }
-
-  public sliderRelease(value: number | null): void {
-    if (!value) {
-      return;
-    }
-    const time: number = (value * this.duration) / this.sliderSettings.max;
-    this.musicControlService.seekTo(time);
-    this._isSliderHeld = false;
-  }
-
-  public wordSelect(word: string | undefined): void {
-    if (!word) {
-      return;
-    }
-    this.highlightedWord = word;
-    this.openWordOverviewSheet(word.trim());
-  }
-
-  public isWordHighlighted(word: string | undefined): boolean {
-    if (!word) {
-      return false;
-    }
-
-    return word === this.highlightedWord;
-  }
-
-  private get lyrics(): string | undefined {
-    return (
-      this.musicLibraryTracksService.tracks.find(
-        (track) => track?.uri === this.musicControlService.currentTrack?.uri
-      ) || this.musicControlService.currentTrack
-    )?.lyrics;
-  }
-
-  private openWordOverviewSheet(word: string): void {
-    const wordOverviewSheetData: WordOverviewSheetData = { word };
-    this.bottomSheet.open(WordOverviewSheetComponent, {
-      data: wordOverviewSheetData,
-    });
-  }
-
-  private setupSlider(): void {
-    this.sliderSettings = {
-      value: 0,
-      min: 0,
-      max: 1000,
-      step: 1,
-    };
-
-    this.musicControlService.currentTrackTime.subscribe((currentTrackTime: number) => {
-      if (!this._isSliderHeld) {
-        this.currentTrackTime = currentTrackTime;
-        this.sliderSettings.value = (currentTrackTime / this.duration) * this.sliderSettings.max;
-      }
-    });
-  }
-
-  private setupLyrics(): void {
-    this.musicControlService.currentTrack$.subscribe(() => {
-      if (!this.lyrics) {
-        this.lyricSentences = [];
-        return;
-      }
-
-      const tokenizer = getTokenizer(detectLanguage(this.lyrics));
-      this.lyricSentences = getSentences(this.lyrics).map((sentence: string) => ({
-        words: getWords(sentence, tokenizer),
-      }));
-    });
+  public get albumUrl(): string {
+    return '/' + UrlEnum.ALBUMS + '/' + this.currentTrack?.album;
   }
 }

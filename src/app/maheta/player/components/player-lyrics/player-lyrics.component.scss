@@ -1,0 +1,38 @@
+@use 'variables' as *;
+@use '@angular/material' as mat;
+
+.track-lyrics {
+  &__header {
+    display: flex;
+    align-items: center;
+    color: $accent;
+    border-bottom: 1px solid $accent-dark;
+    padding-bottom: spacing(2);
+    margin-bottom: spacing(6);
+  }
+
+  &__lyrics {
+    white-space: pre-wrap;
+    overflow: hidden;
+    line-height: 2.5rem;
+    font-size: 1.5rem;
+
+    span {
+      margin-left: -4px;
+      padding: spacing(0.6) 0;
+      border-radius: spacing(2);
+    }
+
+    span:first-child {
+      margin-left: -7px;
+    }
+
+    .active {
+      color: $accent;
+      background-color: $primary-light;
+      @include mat.elevation(5);
+    }
+  }
+
+  padding-bottom: spacing(20);
+}

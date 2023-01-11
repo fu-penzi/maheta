@@ -8,11 +8,13 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '@src/app/modules/shared/shared.module';
 
+import { PlayerControlsComponent } from '@maheta/player/components/player-controls/player-controls.component';
+import { PlayerLyricsComponent } from '@maheta/player/components/player-lyrics/player-lyrics.component';
 import { PlayerComponent } from '@maheta/player/player.component';
 
 @NgModule({
   //TODO add guard when nothing is playing
-  declarations: [PlayerComponent],
+  declarations: [PlayerComponent, PlayerControlsComponent, PlayerLyricsComponent],
   imports: [
     RouterModule.forChild([
       {

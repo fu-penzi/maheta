@@ -5,6 +5,7 @@ import { QueueService, RepeatModeEnum } from '@src/app/services/queue.service';
 
 import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
 import { interval, map, Observable, ReplaySubject, Subject } from 'rxjs';
+import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
 @Injectable()
 export class MusicControlService {
@@ -15,7 +16,11 @@ export class MusicControlService {
 
   private _currentTrack$: ReplaySubject<Track> = new ReplaySubject<Track>();
 
-  constructor(private queueService: QueueService<Track>, private musicControls: MusicControls) {
+  constructor(
+    private musicLibraryTracksService: MusicLibraryTracksService,
+    private musicControls: MusicControls,
+    private queueService: QueueService<Track>
+  ) {
     this.setupCurrentTrackAudio();
     this.currentTrackValueChanges();
   }
@@ -39,10 +44,6 @@ export class MusicControlService {
 
   public set isShuffle(shuffle: boolean) {
     this.queueService.shuffle = shuffle;
-  }
-
-  public nextRepeatMode(): void {
-    this.repeatMode = (this.repeatMode + 1) % 3;
   }
 
   public get isRepeatOne(): boolean {
@@ -77,6 +78,10 @@ export class MusicControlService {
     if (this._nextQueue !== tracks) {
       this._nextQueue = tracks;
     }
+  }
+
+  public nextRepeatMode(): void {
+    this.repeatMode = (this.repeatMode + 1) % 3;
   }
 
   public playPosition(position: number): void {

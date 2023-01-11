@@ -1,5 +1,4 @@
 @use 'variables' as *;
-@use '@angular/material' as mat;
 
 :host {
   display: block;
@@ -48,70 +47,4 @@
     color: $text-secondary;
     font-size: 1.25rem;
   }
-}
-
-.track-controls {
-  width: 100%;
-  max-width: $tablet;
-  margin-left: auto;
-  margin-right: auto;
-
-  &__track-time {
-    display: flex;
-    justify-content: space-between;
-    margin-top: -10px;
-    margin-bottom: spacing(4);
-    color: $text-secondary;
-  }
-
-  &__buttons {
-    display: flex;
-    max-width: 350px;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 auto;
-
-    @include m-fab(xl);
-    @include m-icon-button(lg);
-  }
-
-  &__center-buttons :nth-child(2) {
-    margin: 0 spacing(4);
-  }
-}
-
-.track-lyrics {
-  &__header {
-    display: flex;
-    align-items: center;
-    color: $accent;
-    border-bottom: 1px solid $accent-dark;
-    padding-bottom: spacing(2);
-    margin-bottom: spacing(6);
-  }
-
-  &__lyrics {
-    white-space: pre-wrap;
-    overflow: hidden;
-    line-height: 2.5rem;
-    font-size: 1.5rem;
-
-    span {
-      margin-left: -4px;
-      padding: spacing(0.6) 0;
-      border-radius: spacing(2);
-    }
-
-    span:first-child {
-      margin-left: -7px;
-    }
-
-    .active {
-      color: $accent;
-      background-color: $primary-light;
-      @include mat.elevation(5);
-    }
-  }
-
-  padding-bottom: spacing(20);
 }
