@@ -5,24 +5,27 @@ import { TrackCollectionService } from '@src/app/db/collections/track-collection
 import { DatabaseService } from '@src/app/db/database.service';
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { Track } from '@src/app/db/domain/track.schema';
-import { tracksMock } from '@src/mock/tracks';
 
-import { concatMap, startWith, Subject, zip } from 'rxjs';
+import { concatMap, Observable, ReplaySubject, startWith, zip } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MusicLibraryService {
-  public tracks: Track[];
-  public playlists: Playlist[];
+  public tracks: Track[] = [];
+  public playlists: Playlist[] = [];
 
-  public libraryUpdate$: Subject<void> = new Subject<void>();
+  private _libraryUpdate$: ReplaySubject<void> = new ReplaySubject<void>(1);
 
   constructor(
     private databaseService: DatabaseService,
     private trackCollectionService: TrackCollectionService,
     private playlistCollectionService: PlaylistCollectionService
   ) {}
+
+  public get libraryUpdate$(): Observable<void> {
+    return this._libraryUpdate$.asObservable();
+  }
 
   public initLibrary(): void {
     this.databaseService.databaseChanges$
@@ -33,9 +36,9 @@ export class MusicLibraryService {
         )
       )
       .subscribe(([tracks, playlists]: [Track[], Playlist[]]) => {
-        this.tracks = tracks.length > 0 ? tracks : tracksMock;
+        this.tracks = tracks;
         this.playlists = playlists;
-        this.libraryUpdate$.next();
+        this._libraryUpdate$.next();
       });
   }
 }

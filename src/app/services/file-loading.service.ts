@@ -13,6 +13,7 @@ import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { isArray } from 'lodash';
 import * as musicMetadata from 'music-metadata-browser';
 import { concatMap, from, Observable, of, ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
+import { tracksMock } from '@src/mock/tracks';
 
 enum FileTypeEnum {
   FILE = 'file',
@@ -58,6 +59,10 @@ export class FileLoadingService {
   }
 
   public getTracksWithMetadata$(tracks: Track[]): Observable<Track> {
+    if (Capacitor.getPlatform() !== PlatformEnum.ANDROID) {
+      return of(...tracksMock);
+    }
+
     return of(...tracks).pipe(
       concatMap((track: Track) => from(this.getTrackWithMetadata(track))),
       tap((track: Track) => this.trackUpdate$.next(track)),
@@ -68,8 +73,9 @@ export class FileLoadingService {
   private async getTracksWithoutMetadata(): Promise<Track[]> {
     this._onReload$.next();
     if (Capacitor.getPlatform() !== PlatformEnum.ANDROID) {
-      return [];
+      return tracksMock;
     }
+
     this._trackPathsSet.clear();
     const readOptionsArray: ReadOptionsLocalStorage[] = await this.getReadOptions();
     for (const readOptions of readOptionsArray) {
