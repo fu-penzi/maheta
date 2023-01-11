@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import { UrlEnum } from '@src/app/model/url.enum';
-import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
+import { MusicControlService } from '@src/app/services/music-control/music-control.service';
+
 import { takeUntil } from 'rxjs';
 
 @Component({
