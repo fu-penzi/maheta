@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { Track } from '@src/app/db/domain/track.schema';
+import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 import { QueueService, RepeatModeEnum } from '@src/app/services/queue.service';
 
 import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
 import { interval, map, Observable, ReplaySubject, Subject } from 'rxjs';
-import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
 @Injectable()
 export class MusicControlService {

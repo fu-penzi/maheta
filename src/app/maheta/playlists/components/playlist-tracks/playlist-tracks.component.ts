@@ -3,8 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { UrlParamsEnum } from '@src/app/model/url-params.enum';
-import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
+import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
+
 import { takeUntil } from 'rxjs';
 
 @Component({

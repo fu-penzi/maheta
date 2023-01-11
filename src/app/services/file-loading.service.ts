@@ -8,12 +8,12 @@ import { MusicFileExtensionEnum } from '@src/app/model/music-file-extension.enum
 import { PlatformEnum } from '@src/app/model/platform.enum';
 import { ReadOptionsLocalStorage } from '@src/app/model/read-options-local.storage';
 import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories.enum';
+import { tracksMock } from '@src/mock/tracks';
 
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { isArray } from 'lodash';
 import * as musicMetadata from 'music-metadata-browser';
 import { concatMap, from, Observable, of, ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
-import { tracksMock } from '@src/mock/tracks';
 
 enum FileTypeEnum {
   FILE = 'file',
