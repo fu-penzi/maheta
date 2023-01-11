@@ -1,0 +1,69 @@
+<mat-slider
+  color="accent"
+  [max]="sliderSettings.max"
+  [min]="sliderSettings.min"
+  [step]="sliderSettings.step"
+  [value]="sliderSettings.value"
+  (valueChange)="sliderRelease($event)"
+  (input)="sliderHold($event)"
+  aria-labelledby="example-name-label"
+>
+</mat-slider>
+
+<div class="track-time">
+  <span>{{ this.currentTrackTime | mahetaDuration }}</span>
+  <span>{{ this.duration | mahetaDuration }}</span>
+</div>
+
+<div class="control-buttons">
+  <button
+    [color]="isShuffle() ? 'accent' : undefined"
+    (click)="toggleShuffle()"
+    mat-icon-button
+    aria-label="Example icon button with a bookmark icon"
+  >
+    <mat-icon>shuffle</mat-icon>
+  </button>
+
+  <div class="center-buttons">
+    <button (click)="prev()" mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <mat-icon>skip_previous</mat-icon>
+    </button>
+
+    <ng-container *ngIf="!isPlaying()">
+      <button
+        (click)="play()"
+        mat-fab
+        color="accent"
+        aria-label="Example icon button with a bookmark icon"
+      >
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+    </ng-container>
+
+    <ng-container *ngIf="isPlaying()">
+      <button
+        (click)="pause()"
+        mat-fab
+        color="accent"
+        aria-label="Example icon button with a bookmark icon"
+      >
+        <mat-icon>pause</mat-icon>
+      </button>
+    </ng-container>
+
+    <button (click)="next()" mat-icon-button aria-label="Example icon button with a bookmark icon">
+      <mat-icon>skip_next</mat-icon>
+    </button>
+  </div>
+
+  <button
+    mat-icon-button
+    [color]="isRepeatOne() || isRepeatQueue() ? 'accent' : undefined"
+    (click)="nextRepeatMode()"
+    aria-label="Example icon button with a bookmark icon"
+  >
+    <mat-icon *ngIf="!isRepeatOne()">repeat</mat-icon>
+    <mat-icon *ngIf="isRepeatOne()">repeat_one</mat-icon>
+  </button>
+</div>

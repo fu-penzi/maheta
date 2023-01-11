@@ -1,102 +1,12 @@
-<object class="track-thumb" [data]="this.track?.thumbUrl | safe" type="image/jpeg">
-  <img class="track-thumb" [src]="'' | safe" [alt]="track?.title" />
+<object class="track-thumb" [data]="this.currentTrack?.thumbUrl | safe" type="image/jpeg">
+  <img class="track-thumb" [src]="'' | safe" [alt]="currentTrack?.title" />
 </object>
 
-<a class="track-info" routerLink="{{ albumUrl }}">
-  <strong class="track-info__title">{{ this.track?.title }}</strong>
-  <span class="track-info__author">{{ this.track?.author }}</span>
+<a class="track-info" [routerLink]="albumUrl">
+  <strong class="track-info__title">{{ this.currentTrack?.title }}</strong>
+  <span class="track-info__author">{{ this.currentTrack?.author }}</span>
 </a>
 
-<div class="track-controls">
-  <mat-slider
-    color="accent"
-    [max]="sliderSettings.max"
-    [min]="sliderSettings.min"
-    [step]="sliderSettings.step"
-    [value]="sliderSettings.value"
-    (valueChange)="sliderRelease($event)"
-    (input)="sliderHold($event)"
-    aria-labelledby="example-name-label"
-  >
-  </mat-slider>
-  <div class="track-controls__track-time">
-    <span>{{ this.currentTrackTime | mahetaDuration }}</span>
-    <span>{{ this.duration | mahetaDuration }}</span>
-  </div>
+<maheta-player-controls [track]="currentTrack"></maheta-player-controls>
 
-  <div class="track-controls__buttons">
-    <button
-      [color]="isShuffle() ? 'accent' : undefined"
-      (click)="toggleShuffle()"
-      mat-icon-button
-      aria-label="Example icon button with a bookmark icon"
-    >
-      <mat-icon>shuffle</mat-icon>
-    </button>
-
-    <div class="track-controls__center-buttons">
-      <button
-        (click)="prev()"
-        mat-icon-button
-        aria-label="Example icon button with a bookmark icon"
-      >
-        <mat-icon>skip_previous</mat-icon>
-      </button>
-
-      <ng-container *ngIf="!isPlaying()">
-        <button
-          (click)="play()"
-          mat-fab
-          color="accent"
-          aria-label="Example icon button with a bookmark icon"
-        >
-          <mat-icon>play_arrow</mat-icon>
-        </button>
-      </ng-container>
-
-      <ng-container *ngIf="isPlaying()">
-        <button
-          (click)="pause()"
-          mat-fab
-          color="accent"
-          aria-label="Example icon button with a bookmark icon"
-        >
-          <mat-icon>pause</mat-icon>
-        </button>
-      </ng-container>
-
-      <button
-        (click)="next()"
-        mat-icon-button
-        aria-label="Example icon button with a bookmark icon"
-      >
-        <mat-icon>skip_next</mat-icon>
-      </button>
-    </div>
-
-    <button
-      mat-icon-button
-      [color]="isRepeatOne() || isRepeatQueue() ? 'accent' : undefined"
-      (click)="nextRepeatMode()"
-      aria-label="Example icon button with a bookmark icon"
-    >
-      <mat-icon *ngIf="!isRepeatOne()">repeat</mat-icon>
-      <mat-icon *ngIf="isRepeatOne()">repeat_one</mat-icon>
-    </button>
-  </div>
-</div>
-
-<div class="track-lyrics" *ngIf="lyricSentences?.length">
-  <h1 class="track-lyrics__header"><mat-icon>music_note</mat-icon>Lyrics</h1>
-  <div class="track-lyrics__lyrics">
-    <div *ngFor="let sentence of lyricSentences">
-      <span
-        *ngFor="let word of sentence.words"
-        (click)="wordSelect(word)"
-        [class.active]="isWordHighlighted(word)"
-      >
-        {{ word }}
-      </span>
-    </div>
-  </div>
-</div>
+<maheta-player-lyrics [track]="currentTrack"></maheta-player-lyrics>

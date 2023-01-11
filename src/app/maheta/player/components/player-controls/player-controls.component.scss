@@ -1,0 +1,33 @@
+@use 'variables' as *;
+@use '@angular/material' as mat;
+
+:host {
+  display: block;
+  width: 100%;
+  max-width: $tablet;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.track-time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -10px;
+  margin-bottom: spacing(4);
+  color: $text-secondary;
+}
+
+.control-buttons {
+  display: flex;
+  max-width: 350px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+
+  .center-buttons :nth-child(2) {
+    margin: 0 spacing(4);
+  }
+
+  @include m-fab(xl);
+  @include m-icon-button(lg);
+}
