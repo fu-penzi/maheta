@@ -26,6 +26,7 @@ import { WordOverviewSheetComponent } from '@src/app/modules/shared/sheet/word-o
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
 import { SafePipe } from '@src/app/pipes/safe-pipe.pipe';
+import { DialogFooterButtonsComponent } from './dialog/components/dialog-footer-buttons/dialog-footer-buttons.component';
 
 const exportedModules = [
   CommonModule,
@@ -47,6 +48,7 @@ const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponen
     EditLyricsDialogComponent,
     LoadingDialogComponent,
     EditStorageSettingsDialogComponent,
+    DialogFooterButtonsComponent,
   ],
   imports: [
     CommonModule,

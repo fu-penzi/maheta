@@ -1,0 +1,6 @@
+@use 'variables' as *;
+@include dialog;
+
+:host {
+  display: block;
+}

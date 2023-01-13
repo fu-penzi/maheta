@@ -15,6 +15,7 @@
   <span *ngIf="!playlists?.length" i18n>No playlists!</span>
 </div>
 
-<div class="dialog-footer-container">
-  <button (click)="close()" color="accent" mat-button i18n>Close</button>
-</div>
+<maheta-dialog-footer-buttons
+  (primaryButtonEvent)="close()"
+  secondaryButtonLabel="Close"
+></maheta-dialog-footer-buttons>
