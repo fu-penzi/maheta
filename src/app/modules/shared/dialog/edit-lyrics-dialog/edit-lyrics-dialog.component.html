@@ -14,7 +14,9 @@
   </form>
 </div>
 
-<div class="dialog-footer-container">
-  <button (click)="close()" mat-button i18n>Close</button>
-  <button (click)="save()" color="accent" mat-raised-button i18n>Save</button>
-</div>
+<maheta-dialog-footer-buttons
+  (secondaryButtonEvent)="close()"
+  (primaryButtonEvent)="save()"
+  secondaryButtonLabel="Close"
+  primaryButtonLabel="Save"
+></maheta-dialog-footer-buttons>

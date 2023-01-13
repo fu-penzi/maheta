@@ -1,0 +1,14 @@
+<div class="dialog-footer-container">
+  <button *ngIf="secondaryButtonLabel" (click)="secondaryButtonClick()" mat-button>
+    {{ secondaryButtonLabel }}
+  </button>
+
+  <button
+    *ngIf="primaryButtonLabel"
+    (click)="primaryButtonClick()"
+    color="accent"
+    mat-raised-button
+  >
+    {{ primaryButtonLabel }}
+  </button>
+</div>
