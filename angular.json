@@ -5,6 +5,9 @@
   "projects": {
     "Maheta": {
       "projectType": "application",
+      "i18n": {
+        "sourceLocale": "en-US"
+      },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -22,11 +25,19 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/variables"]
+              "includePaths": [
+                "src/variables"
+              ]
             },
-            "styles": ["src/theme.scss", "src/styles.scss"],
+            "styles": [
+              "src/theme.scss",
+              "src/styles.scss"
+            ],
             "scripts": [],
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"
@@ -90,11 +101,19 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/variables"]
+              "includePaths": [
+                "src/variables"
+              ]
             },
-            "styles": ["src/theme.scss", "src/styles.scss"],
+            "styles": [
+              "src/theme.scss",
+              "src/styles.scss"
+            ],
             "scripts": [],
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"
@@ -104,13 +123,18 @@
         "lint": {
           "builder": "@angular-builders/custom-webpack:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
   },
   "cli": {
-    "schematicCollections": ["@angular-eslint/schematics"]
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

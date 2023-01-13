@@ -1,4 +1,4 @@
-<h1 class="dialog-header-container">Edit music folder paths</h1>
+<h1 class="dialog-header-container" i18n>Edit music folder paths</h1>
 
 <form class="dialog-content-container" [formGroup]="form">
   <ng-container formArrayName="readOptionsPaths">
@@ -14,6 +14,6 @@
 </form>
 
 <div class="dialog-footer-container">
-  <button (click)="close()" mat-button>Close</button>
-  <button (click)="save()" color="accent" mat-raised-button>Save</button>
+  <button (click)="close()" mat-button i18n>Close</button>
+  <button (click)="save()" color="accent" mat-raised-button i18n>Save</button>
 </div>

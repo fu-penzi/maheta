@@ -28,20 +28,20 @@
         <mat-menu #menu="matMenu">
           <button (click)="openEditLyricsDialog(track)" mat-menu-item>
             <mat-icon>music_note</mat-icon>
-            Edit lyrics
+            <ng-container i18n>Edit lyrics</ng-container>
           </button>
 
           <ng-container *ngIf="playlist">
             <button (click)="deleteFromPlaylist(track)" mat-menu-item>
               <mat-icon>delete_forever</mat-icon>
-              Delete from playlist
+              <ng-container i18n>Delete from playlist</ng-container>
             </button>
           </ng-container>
 
           <ng-container *ngIf="!playlist">
             <button (click)="openAddToPlaylistDialog(track)" mat-menu-item>
               <mat-icon>playlist_add</mat-icon>
-              Add to playlist
+              <ng-container i18n>Add to playlist</ng-container>
             </button>
           </ng-container>
         </mat-menu>

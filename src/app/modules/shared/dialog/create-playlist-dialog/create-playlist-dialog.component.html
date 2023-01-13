@@ -1,15 +1,15 @@
-<h1 class="dialog-header-container">Create playlist</h1>
+<h1 class="dialog-header-container" i18n>Create playlist</h1>
 
 <div class="dialog-content-container">
   <form [formGroup]="form">
     <mat-form-field appearance="fill">
-      <mat-label>Name</mat-label>
+      <mat-label i18n>Name</mat-label>
       <input formControlName="playlistName" matInput placeholder="Playlist #X" />
     </mat-form-field>
   </form>
 </div>
 
 <div class="dialog-footer-container">
-  <button (click)="close()" mat-button>Close</button>
-  <button (click)="save()" color="accent" mat-raised-button>Save</button>
+  <button (click)="close()" mat-button i18n>Close</button>
+  <button (click)="save()" color="accent" mat-raised-button i18n>Save</button>
 </div>
