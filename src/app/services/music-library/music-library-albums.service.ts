@@ -22,6 +22,10 @@ export class MusicLibraryAlbumsService {
     return this._albums$.asObservable();
   }
 
+  private get tracks(): Track[] {
+    return this.musicLibraryService.tracks;
+  }
+
   public getAlbum(title: string): Observable<Album | undefined> {
     return this._albums$.pipe(
       map((albums: Album[]) => albums.find((album: Album) => album.title === title))
@@ -33,10 +37,6 @@ export class MusicLibraryAlbumsService {
       this.setupAlbums();
       this._albums$.next(this.albums);
     });
-  }
-
-  private get tracks(): Track[] {
-    return this.musicLibraryService.tracks;
   }
 
   private setupAlbums(): void {

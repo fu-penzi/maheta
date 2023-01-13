@@ -1,12 +1,21 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*", "src/app/api/*"],
-  "plugins": ["simple-import-sort"],
+  "ignorePatterns": [
+    "projects/**/*",
+    "src/app/api/*"
+  ],
+  "plugins": [
+    "simple-import-sort"
+  ],
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": [
+        "*.ts"
+      ],
       "parserOptions": {
-        "project": ["tsconfig.json"],
+        "project": [
+          "tsconfig.json"
+        ],
         "createDefaultProgram": true
       },
       "extends": [
@@ -38,29 +47,60 @@
             "allowExpressions": true
           }
         ],
-        "@typescript-eslint/no-useless-constructor": ["off"],
-        "@typescript-eslint/no-empty-function": ["off"],
-        "@typescript-eslint/no-inferrable-types": ["off"],
+        "@typescript-eslint/no-useless-constructor": [
+          "off"
+        ],
+        "@typescript-eslint/no-empty-function": [
+          "off"
+        ],
+        "@typescript-eslint/no-inferrable-types": [
+          "off"
+        ],
         "@typescript-eslint/naming-convention": [
           "error",
           {
-            "selector": ["variableLike", "memberLike", "property", "method"],
-            "format": ["camelCase", "UPPER_CASE"]
+            "selector": [
+              "variableLike",
+              "memberLike",
+              "property",
+              "method"
+            ],
+            "format": [
+              "camelCase",
+              "UPPER_CASE"
+            ]
           },
           {
-            "selector": ["classProperty"],
-            "modifiers": ["private"],
-            "format": ["camelCase", "UPPER_CASE"],
+            "selector": [
+              "classProperty"
+            ],
+            "modifiers": [
+              "private"
+            ],
+            "format": [
+              "camelCase",
+              "UPPER_CASE"
+            ],
             "leadingUnderscore": "require"
           },
           {
-            "selector": ["typeLike"],
-            "format": ["PascalCase"]
+            "selector": [
+              "typeLike"
+            ],
+            "format": [
+              "PascalCase"
+            ]
           },
           {
-            "selector": ["enum"],
-            "format": ["PascalCase"],
-            "suffix": ["Enum"]
+            "selector": [
+              "enum"
+            ],
+            "format": [
+              "PascalCase"
+            ],
+            "suffix": [
+              "Enum"
+            ]
           }
         ],
         "@typescript-eslint/member-ordering": [
@@ -75,6 +115,18 @@
                 "protected-field",
                 "private-field",
                 "constructor",
+                [
+                  "public-get",
+                  "public-set"
+                ],
+                [
+                  "protected-get",
+                  "protected-set"
+                ],
+                [
+                  "private-get",
+                  "private-set"
+                ],
                 "public-method",
                 "protected-method",
                 "private-method"
@@ -86,41 +138,80 @@
         "@typescript-eslint/lines-between-class-members": [
           "error",
           "always",
-          { "exceptAfterSingleLine": true }
+          {
+            "exceptAfterSingleLine": true
+          }
         ],
-        "@typescript-eslint/no-duplicate-enum-values": ["off"],
-        "@typescript-eslint/no-extraneous-class": ["off"],
-        "@typescript-eslint/no-unnecessary-condition": ["off"],
-        "@typescript-eslint/non-nullable-type-assertion-style": ["off"],
-        "@typescript-eslint/prefer-nullish-coalescing": ["off"],
+        "@typescript-eslint/no-duplicate-enum-values": [
+          "off"
+        ],
+        "@typescript-eslint/no-extraneous-class": [
+          "off"
+        ],
+        "@typescript-eslint/no-unnecessary-condition": [
+          "off"
+        ],
+        "@typescript-eslint/non-nullable-type-assertion-style": [
+          "off"
+        ],
+        "@typescript-eslint/prefer-nullish-coalescing": [
+          "off"
+        ],
         "no-unused-vars": "error",
-        "eqeqeq": ["error", "smart"],
-        "linebreak-style": ["error", "unix"],
+        "eqeqeq": [
+          "error",
+          "smart"
+        ],
+        "linebreak-style": [
+          "error",
+          "unix"
+        ],
         "prefer-const": "error",
         "no-new-wrappers": "error",
         "simple-import-sort/imports": [
           "error",
           {
             "groups": [
-              ["^@angular", "^@capacitor", "^@environment"],
-              ["^@src*"],
-              ["^@maheta*"],
-              ["^../", "./", "^.", "^"]
+              [
+                "^@angular",
+                "^@capacitor",
+                "^@environment"
+              ],
+              [
+                "^@src*"
+              ],
+              [
+                "^@maheta*"
+              ],
+              [
+                "^../",
+                "./",
+                "^.",
+                "^"
+              ]
             ]
           }
         ],
         "no-restricted-imports": [
           "error",
           {
-            "patterns": ["./*", "../*", "*devUtils*"]
+            "patterns": [
+              "./*",
+              "../*",
+              "*devUtils*"
+            ]
           }
         ],
         "no-console": "warn"
       }
     },
     {
-      "files": ["*.html"],
-      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
       "rules": {}
     }
   ]

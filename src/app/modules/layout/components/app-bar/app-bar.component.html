@@ -1,46 +1,50 @@
-<mat-toolbar color="primary" class="app-bar">
-  <button mat-icon-button (click)="back()" aria-label="Example icon button">
+<mat-toolbar class="app-bar" color="primary">
+  <button (click)="back()" aria-label="Example icon button" mat-icon-button>
     <mat-icon>arrow_back</mat-icon>
   </button>
+
   <span>Player</span>
 
   <div class="menu">
     <button
       *ngIf="isCurrentTabPlaylists()"
-      mat-icon-button
       (click)="openCreatePlaylistDialog()"
       aria-label="Example icon button"
+      mat-icon-button
     >
       <mat-icon>playlist_add</mat-icon>
     </button>
+
     <button
-      mat-icon-button
       [matMenuTriggerFor]="menu"
       aria-label="Example icon button with a bookmark icon"
+      mat-icon-button
     >
       <mat-icon>more_vert</mat-icon>
     </button>
+
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="reloadDatabaseTrackData()">
+      <button (click)="reloadDatabaseTrackData()" mat-menu-item>
         <mat-icon>update</mat-icon>
-        Update tracks
+        <ng-container>Update tracks</ng-container>
       </button>
 
-      <button mat-menu-item (click)="openEditStorageSettingsDialog()">
+      <button (click)="openEditStorageSettingsDialog()" mat-menu-item>
         <mat-icon>sd_storage</mat-icon>
-        Customize folder paths
+        <ng-container>Customize folder paths</ng-container>
       </button>
 
-      <button mat-menu-item class="warn-button" (click)="dropDatabaseTrackData()">
+      <button class="warn-button" (click)="dropDatabaseTrackData()" mat-menu-item>
         <mat-icon color="warn">delete_forever</mat-icon>
-        Hard reset
+        <ng-container>Hard reset</ng-container>
       </button>
     </mat-menu>
   </div>
 </mat-toolbar>
+
 <mat-progress-bar
   *ngIf="progressBarConfig.isShown"
+  [value]="progressBarConfig.progress"
   color="accent"
   mode="determinate"
-  [value]="progressBarConfig.progress"
 ></mat-progress-bar>

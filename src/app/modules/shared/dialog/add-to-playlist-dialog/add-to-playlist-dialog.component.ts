@@ -6,7 +6,6 @@ import { environment } from '@environment/environment';
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
-import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
 export interface AddToPlaylistDialogData {
   track: Track;
@@ -20,7 +19,6 @@ export interface AddToPlaylistDialogData {
 export class AddToPlaylistDialogComponent {
   constructor(
     private dialogRef: MatDialogRef<AddToPlaylistDialogComponent>,
-    private musicLibraryTracksService: MusicLibraryTracksService,
     private musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: AddToPlaylistDialogData

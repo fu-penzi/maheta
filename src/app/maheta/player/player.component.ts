@@ -19,13 +19,13 @@ export class PlayerComponent extends BaseComponent implements OnInit {
     super();
   }
 
+  public get albumUrl(): string {
+    return '/' + UrlEnum.ALBUMS + '/' + this.currentTrack?.album;
+  }
+
   public ngOnInit(): void {
     this.musicControlService.currentTrack$
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((currentTrack: Track) => (this.currentTrack = currentTrack));
-  }
-
-  public get albumUrl(): string {
-    return '/' + UrlEnum.ALBUMS + '/' + this.currentTrack?.album;
   }
 }

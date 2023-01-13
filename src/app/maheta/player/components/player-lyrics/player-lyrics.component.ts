@@ -36,6 +36,14 @@ export class PlayerLyricsComponent implements OnChanges {
     private bottomSheet: MatBottomSheet
   ) {}
 
+  private get lyrics(): string | undefined {
+    return (
+      this.musicLibraryTracksService.tracks.find(
+        (track) => track?.uri === this.musicControlService.currentTrack?.uri
+      ) || this.musicControlService.currentTrack
+    )?.lyrics;
+  }
+
   public ngOnChanges(): void {
     this.setupLyrics();
   }
@@ -50,14 +58,6 @@ export class PlayerLyricsComponent implements OnChanges {
 
   public isWordHighlighted(word: string | undefined): boolean {
     return !!word && word === this.highlightedWord;
-  }
-
-  private get lyrics(): string | undefined {
-    return (
-      this.musicLibraryTracksService.tracks.find(
-        (track) => track?.uri === this.musicControlService.currentTrack?.uri
-      ) || this.musicControlService.currentTrack
-    )?.lyrics;
   }
 
   private openWordOverviewSheet(word: string): void {

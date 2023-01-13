@@ -31,12 +31,12 @@ export class PlayerControlsComponent implements OnInit {
 
   constructor(private readonly musicControlService: MusicControlService) {}
 
-  public ngOnInit(): void {
-    this.setupSlider();
-  }
-
   public get duration(): number {
     return this.track?.duration || this.musicControlService.currentTrackDuration || 999999;
+  }
+
+  public ngOnInit(): void {
+    this.setupSlider();
   }
 
   public sliderHold(sliderChange: MatSliderChange): void {
