@@ -3,7 +3,7 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
 
-  <span>Player</span>
+  <span>Maheta</span>
 
   <div class="menu">
     <button
@@ -26,17 +26,17 @@
     <mat-menu #menu="matMenu">
       <button (click)="reloadDatabaseTrackData()" mat-menu-item>
         <mat-icon>update</mat-icon>
-        <ng-container>Update tracks</ng-container>
+        <ng-container i18n>Update tracks</ng-container>
       </button>
 
       <button (click)="openEditStorageSettingsDialog()" mat-menu-item>
         <mat-icon>sd_storage</mat-icon>
-        <ng-container>Customize folder paths</ng-container>
+        <ng-container i18n>Customize folder paths</ng-container>
       </button>
 
       <button class="warn-button" (click)="dropDatabaseTrackData()" mat-menu-item>
         <mat-icon color="warn">delete_forever</mat-icon>
-        <ng-container>Hard reset</ng-container>
+        <ng-container i18n>Hard reset</ng-container>
       </button>
     </mat-menu>
   </div>

@@ -1,15 +1,20 @@
-<h1 class="dialog-header-container">Edit lyrics</h1>
+<h1 class="dialog-header-container" i18n>Edit lyrics</h1>
 
 <div class="dialog-content-container">
   <form [formGroup]="form">
     <mat-form-field class="form-field" appearance="fill">
       <mat-label>Lyrics</mat-label>
-      <textarea matInput formControlName="lyrics" placeholder="Track lyrics..."></textarea>
+      <textarea
+        matInput
+        formControlName="lyrics"
+        placeholder="Track lyrics..."
+        i18n-placeholder
+      ></textarea>
     </mat-form-field>
   </form>
 </div>
 
 <div class="dialog-footer-container">
-  <button (click)="close()" mat-button>Close</button>
-  <button (click)="save()" color="accent" mat-raised-button>Save</button>
+  <button (click)="close()" mat-button i18n>Close</button>
+  <button (click)="save()" color="accent" mat-raised-button i18n>Save</button>
 </div>

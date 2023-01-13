@@ -1,4 +1,4 @@
-<h1 class="dialog-header-container">Choose playlist</h1>
+<h1 class="dialog-header-container" i18n>Choose playlist</h1>
 
 <div class="dialog-content-container">
   <ng-container *ngIf="!!playlists?.length">
@@ -12,9 +12,9 @@
     </button>
   </ng-container>
 
-  <div *ngIf="!playlists?.length">No playlists!</div>
+  <span *ngIf="!playlists?.length" i18n>No playlists!</span>
 </div>
 
 <div class="dialog-footer-container">
-  <button (click)="close()" color="accent" mat-button>Close</button>
+  <button (click)="close()" color="accent" mat-button i18n>Close</button>
 </div>

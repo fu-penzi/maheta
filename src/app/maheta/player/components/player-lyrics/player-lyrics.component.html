@@ -1,5 +1,9 @@
 <div class="track-lyrics" *ngIf="lyricSentences?.length">
-  <h1 class="track-lyrics__header"><mat-icon>music_note</mat-icon>Lyrics</h1>
+  <h1 class="track-lyrics__header">
+    <mat-icon>music_note</mat-icon>
+    <ng-container i18n>Lyrics</ng-container>
+  </h1>
+
   <div class="track-lyrics__lyrics">
     <div *ngFor="let sentence of lyricSentences">
       <span
