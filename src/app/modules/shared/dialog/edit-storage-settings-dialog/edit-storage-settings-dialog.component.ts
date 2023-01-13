@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { LocalStorageEnum } from '@src/app/model/localStorage.enum';
 import { ReadOptionsLocalStorage } from '@src/app/model/read-options-local.storage';
@@ -21,16 +21,15 @@ export class EditStorageSettingsDialogComponent implements OnInit {
     private mahetaService: MahetaService,
     private dialogRef: MatDialogRef<EditStorageSettingsDialogComponent>,
     private musicLibraryTracksService: MusicLibraryTracksService,
-    private matDialogService: MatDialog,
     private fb: FormBuilder
   ) {}
 
-  public ngOnInit(): void {
-    this.buildForm();
-  }
-
   public get readOptionsPaths(): AbstractControl[] {
     return (this.form.get('readOptionsPaths') as FormArray)?.controls;
+  }
+
+  public ngOnInit(): void {
+    this.buildForm();
   }
 
   public save(): void {

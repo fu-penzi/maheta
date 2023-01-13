@@ -10,11 +10,11 @@
     <maheta-player-bar></maheta-player-bar>
     <mat-toolbar class="bottom-nav" color="primary">
       <a
+        class="bottom-nav__tab"
         *ngFor="let tab of bottomNavTabs"
         (click)="selectTab(tab)"
-        routerLink="{{ tab.url }}"
-        class="bottom-nav__tab"
         [class.active]="isTabActive(tab)"
+        [routerLink]="tab.url"
         aria-label="Example icon button with a bookmark icon"
       >
         <mat-icon>{{ tab.icon }}</mat-icon>

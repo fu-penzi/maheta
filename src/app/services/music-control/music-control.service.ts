@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { Track } from '@src/app/db/domain/track.schema';
-import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 import { QueueService, RepeatModeEnum } from '@src/app/services/queue.service';
 
 import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
@@ -16,11 +15,7 @@ export class MusicControlService {
 
   private _currentTrack$: ReplaySubject<Track> = new ReplaySubject<Track>();
 
-  constructor(
-    private musicLibraryTracksService: MusicLibraryTracksService,
-    private musicControls: MusicControls,
-    private queueService: QueueService<Track>
-  ) {
+  constructor(private musicControls: MusicControls, private queueService: QueueService<Track>) {
     this.setupCurrentTrackAudio();
     this.currentTrackValueChanges();
   }

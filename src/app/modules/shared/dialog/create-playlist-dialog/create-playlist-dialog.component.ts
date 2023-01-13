@@ -18,6 +18,10 @@ export class CreatePlaylistDialogComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
+  private get playlistName(): AbstractControl {
+    return this.form.get('playlistName') as AbstractControl;
+  }
+
   public ngOnInit(): void {
     this.buildForm();
   }
@@ -29,10 +33,6 @@ export class CreatePlaylistDialogComponent implements OnInit {
 
   public close(): void {
     this.dialogRef.close();
-  }
-
-  private get playlistName(): AbstractControl {
-    return this.form.get('playlistName') as AbstractControl;
   }
 
   private buildForm(): void {

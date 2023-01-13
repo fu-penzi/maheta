@@ -25,6 +25,10 @@ mat-progress-bar {
   .light-theme .mat-progress-bar.mat-accent .mat-progress-bar-buffer {
     background-color: $primary-light;
   }
+
+  .mat-progress-bar-background.mat-progress-bar-element {
+    display: none;
+  }
 }
 
 .track {

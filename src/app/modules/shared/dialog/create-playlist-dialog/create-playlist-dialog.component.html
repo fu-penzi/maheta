@@ -1,4 +1,5 @@
 <h1 class="dialog-header-container">Create playlist</h1>
+
 <div class="dialog-content-container">
   <form [formGroup]="form">
     <mat-form-field appearance="fill">
@@ -7,7 +8,8 @@
     </mat-form-field>
   </form>
 </div>
+
 <div class="dialog-footer-container">
-  <button mat-button (click)="close()">Close</button>
-  <button mat-raised-button color="accent" (click)="save()">Save</button>
+  <button (click)="close()" mat-button>Close</button>
+  <button (click)="save()" color="accent" mat-raised-button>Save</button>
 </div>

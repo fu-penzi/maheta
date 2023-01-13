@@ -1,11 +1,11 @@
 <mat-slider
-  color="accent"
+  (valueChange)="sliderRelease($event)"
+  (input)="sliderHold($event)"
   [max]="sliderSettings.max"
   [min]="sliderSettings.min"
   [step]="sliderSettings.step"
   [value]="sliderSettings.value"
-  (valueChange)="sliderRelease($event)"
-  (input)="sliderHold($event)"
+  color="accent"
   aria-labelledby="example-name-label"
 >
 </mat-slider>
@@ -17,25 +17,25 @@
 
 <div class="control-buttons">
   <button
-    [color]="isShuffle() ? 'accent' : undefined"
     (click)="toggleShuffle()"
-    mat-icon-button
+    [color]="isShuffle() ? 'accent' : undefined"
     aria-label="Example icon button with a bookmark icon"
+    mat-icon-button
   >
     <mat-icon>shuffle</mat-icon>
   </button>
 
   <div class="center-buttons">
-    <button (click)="prev()" mat-icon-button aria-label="Example icon button with a bookmark icon">
+    <button (click)="prev()" aria-label="Example icon button with a bookmark icon" mat-icon-button>
       <mat-icon>skip_previous</mat-icon>
     </button>
 
     <ng-container *ngIf="!isPlaying()">
       <button
         (click)="play()"
-        mat-fab
         color="accent"
         aria-label="Example icon button with a bookmark icon"
+        mat-fab
       >
         <mat-icon>play_arrow</mat-icon>
       </button>
@@ -44,24 +44,24 @@
     <ng-container *ngIf="isPlaying()">
       <button
         (click)="pause()"
-        mat-fab
         color="accent"
         aria-label="Example icon button with a bookmark icon"
+        mat-fab
       >
         <mat-icon>pause</mat-icon>
       </button>
     </ng-container>
 
-    <button (click)="next()" mat-icon-button aria-label="Example icon button with a bookmark icon">
+    <button (click)="next()" aria-label="Example icon button with a bookmark icon" mat-icon-button>
       <mat-icon>skip_next</mat-icon>
     </button>
   </div>
 
   <button
-    mat-icon-button
-    [color]="isRepeatOne() || isRepeatQueue() ? 'accent' : undefined"
     (click)="nextRepeatMode()"
+    [color]="isRepeatOne() || isRepeatQueue() ? 'accent' : undefined"
     aria-label="Example icon button with a bookmark icon"
+    mat-icon-button
   >
     <mat-icon *ngIf="!isRepeatOne()">repeat</mat-icon>
     <mat-icon *ngIf="isRepeatOne()">repeat_one</mat-icon>

@@ -24,12 +24,16 @@ export class EditLyricsDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: EditLyricsDialogData
   ) {}
 
-  public ngOnInit(): void {
-    this.buildForm();
-  }
-
   public get track(): Track {
     return this.data.track;
+  }
+
+  private get lyrics(): AbstractControl {
+    return this.form.get('lyrics') as AbstractControl;
+  }
+
+  public ngOnInit(): void {
+    this.buildForm();
   }
 
   public save(): void {
@@ -39,10 +43,6 @@ export class EditLyricsDialogComponent implements OnInit {
 
   public close(): void {
     this.dialogRef.close();
-  }
-
-  private get lyrics(): AbstractControl {
-    return this.form.get('lyrics') as AbstractControl;
   }
 
   private buildForm(): void {
