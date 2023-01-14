@@ -1,11 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { environment } from '@environment/environment';
 
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
+import { locales } from '@src/locales/locales';
 
 export interface AddToPlaylistDialogData {
   track: Track;
@@ -35,8 +35,8 @@ export class AddToPlaylistDialogComponent {
   public addTrackToPlaylist(playlist: Playlist, track: Track): void {
     if (playlist.tracks.includes(track.uri)) {
       this.openSnackBar(
-        environment.locales.MAHETA.ADD_TO_PLAYLIST_DIALOG.message(track.title, playlist.name),
-        environment.locales.MAHETA.ADD_TO_PLAYLIST_DIALOG.action
+        $localize`:@@AddToPlaylistDialogComponent.snackbarMessage: Track is already in playlist ${playlist.name}`,
+        locales.CLOSE
       );
       return;
     }
