@@ -15,6 +15,8 @@ import { NavigationService } from '@src/app/services/navigation.service';
   styleUrls: ['./app-bar.component.scss'],
 })
 export class AppBarComponent {
+  public readonly urlEnum: typeof UrlEnum = UrlEnum;
+
   constructor(
     private mahetaService: MahetaService,
     private themeService: ThemeService,

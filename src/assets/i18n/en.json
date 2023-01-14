@@ -18,6 +18,7 @@
   "APP_BAR": {
     "updateTracks": "Update tracks",
     "customizeFolderPaths": "Customize folder paths",
+    "settings": "Settings",
     "hardReset": "Hard reset"
   },
   "EDIT_LYRICS": {
@@ -40,5 +41,8 @@
   },
   "STORAGE_SETTINGS": {
     "header": "Edit music folder paths"
+  },
+  "SETTINGS": {
+    "display": "Display"
   }
 }

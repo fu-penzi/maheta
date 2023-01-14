@@ -18,6 +18,7 @@
   "APP_BAR": {
     "updateTracks": "Aktualizuj utwory",
     "customizeFolderPaths": "Edytuj ścieżki folderów",
+    "settings": "Ustawienia",
     "hardReset": "Hard reset"
   },
   "EDIT_LYRICS": {
@@ -40,5 +41,8 @@
   },
   "STORAGE_SETTINGS": {
     "header": "Edytuj ścieżki folderów z muzyką"
+  },
+  "SETTINGS": {
+    "display": "Wygląd"
   }
 }

@@ -1,0 +1,19 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+  margin-top: spacing(1);
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+mat-divider {
+  margin-bottom: spacing(5);
+}
+
+.form-name {
+  font-size: 15px;
+  margin-bottom: spacing(3);
+}

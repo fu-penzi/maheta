@@ -1,0 +1,21 @@
+<mat-accordion>
+  <mat-expansion-panel [formGroup]="displayForm">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>view_compact</mat-icon>
+        <ng-container>{{ 'SETTINGS.display' | translate }}</ng-container>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-divider></mat-divider>
+    <p class="form-name">Language</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Language</mat-label>
+      <mat-select formControlName="language">
+        <mat-option *ngFor="let language of languages" [value]="language.code">
+          {{ language.code }} - {{ language.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-expansion-panel>
+</mat-accordion>
