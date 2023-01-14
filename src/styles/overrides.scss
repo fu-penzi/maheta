@@ -87,3 +87,11 @@ mat-dialog-container {
     color: $text !important;
   }
 }
+
+/*
+* Accordion
+*/
+
+mat-panel-title .mat-icon {
+  margin-right: 10px;
+}

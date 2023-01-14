@@ -3,4 +3,5 @@ export enum UrlEnum {
   SONGS = 'songs',
   ALBUMS = 'albums',
   PLAYLISTS = 'playlists',
+  SETTINGS = 'settings',
 }

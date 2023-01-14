@@ -12,6 +12,11 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: UrlEnum.SETTINGS,
+        loadChildren: () =>
+          import('./maheta/settings/settings.module').then((m) => m.SettingsModule),
+      },
+      {
         path: UrlEnum.PLAYER,
         loadChildren: () => import('./maheta/player/player.module').then((m) => m.PlayerModule),
       },

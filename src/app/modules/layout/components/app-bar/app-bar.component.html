@@ -34,6 +34,11 @@
         <ng-container>{{ 'APP_BAR.customizeFolderPaths' | translate }}</ng-container>
       </button>
 
+      <button [routerLink]="urlEnum.SETTINGS" mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <ng-container>{{ 'APP_BAR.settings' | translate }}</ng-container>
+      </button>
+
       <button class="warn-button" (click)="dropDatabaseTrackData()" mat-menu-item>
         <mat-icon color="warn">delete_forever</mat-icon>
         <ng-container>{{ 'APP_BAR.hardReset' | translate }}</ng-container>
