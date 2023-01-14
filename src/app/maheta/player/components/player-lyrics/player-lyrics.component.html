@@ -1,7 +1,7 @@
 <div class="track-lyrics" *ngIf="lyricSentences?.length">
   <h1 class="track-lyrics__header">
     <mat-icon>music_note</mat-icon>
-    <ng-container i18n="@@lyrics">Lyrics</ng-container>
+    <ng-container>{{ 'global.lyrics' | translate }}</ng-container>
   </h1>
 
   <div class="track-lyrics__lyrics">

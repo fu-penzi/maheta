@@ -6,7 +6,8 @@ import { PlatformEnum } from '@src/app/model/platform.enum';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { NavigationService } from '@src/app/services/navigation.service';
-import { locales } from '@src/locales/locales';
+
+import { TranslateService } from '@ngx-translate/core';
 
 interface BottomNavTab {
   icon: string;
@@ -25,7 +26,11 @@ export class LayoutComponent implements OnInit {
 
   public bottomNavTabs: BottomNavTab[];
 
-  constructor(private themeService: ThemeService, private navigation: NavigationService) {}
+  constructor(
+    private themeService: ThemeService,
+    private navigation: NavigationService,
+    private translate: TranslateService
+  ) {}
 
   public get themeClass(): ThemeClassEnum {
     return this.themeService.theme;
@@ -57,17 +62,17 @@ export class LayoutComponent implements OnInit {
     this.bottomNavTabs = [
       {
         icon: 'library_music',
-        name: locales.BOTTOM_NAVIGATION.songs,
+        name: this.translate.instant('TABS.songs'),
         url: UrlEnum.SONGS,
       },
       {
         icon: 'album',
-        name: locales.BOTTOM_NAVIGATION.albums,
+        name: this.translate.instant('TABS.albums'),
         url: UrlEnum.ALBUMS,
       },
       {
         icon: 'playlist_play',
-        name: locales.BOTTOM_NAVIGATION.playlists,
+        name: this.translate.instant('TABS.playlists'),
         url: UrlEnum.PLAYLISTS,
       },
     ];

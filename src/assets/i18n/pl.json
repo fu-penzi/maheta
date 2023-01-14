@@ -1,0 +1,44 @@
+{
+  "global": {
+    "loading": "Ładowanie",
+    "lyrics": "Tekst",
+    "close": "Zamknij",
+    "save": "Zapisz",
+    "translation": "Tłumaczenie",
+    "editLyrics": "Edytuj tekst"
+  },
+  "PLAYLIST": {
+    "deletePlaylist": "Usuń playlistę",
+    "songPlural": "{playlistLength, plural, =1 {1 song} other {{playlistLength} songs}}"
+  },
+  "TRACK_MENU": {
+    "deleteFromPlaylist": "Usuń z playlisty",
+    "addToPlaylist": "Dodaj do playlisty"
+  },
+  "APP_BAR": {
+    "updateTracks": "Aktualizuj utwory",
+    "customizeFolderPaths": "Edytuj ścieżki folderów",
+    "hardReset": "Hard reset"
+  },
+  "EDIT_LYRICS": {
+    "lyricsPlaceholder": "Tekst utworu..."
+  },
+  "CREATE_PLAYLIST": {
+    "createPlaylist": "Utwórz playlitę",
+    "name": "Nazwa"
+  },
+  "ADD_TO_PLAYLIST": {
+    "choosePlaylist": "Wybierz playlistę",
+    "noPlaylists": "Brak playlist!",
+    "snackbarMessage": "Utwór jest już na playliście {playlistName}!"
+  },
+  "TABS": {
+    "player": "Player",
+    "songs": "Utwory",
+    "albums": "Albumy",
+    "playlists": "Playlisty"
+  },
+  "STORAGE_SETTINGS": {
+    "header": "Edytuj ścieżki folderów z muzyką"
+  }
+}

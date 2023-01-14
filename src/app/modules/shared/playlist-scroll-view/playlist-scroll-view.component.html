@@ -12,8 +12,7 @@
         <div class="info" [class.active]="false">
           <span class="info__title">{{ playlist.name }}</span>
           <span class="info__author" i18n="@@songPlural">
-            {getPlaylistLength(playlist), plural, =1 {1 song} other
-            {{{getPlaylistLength(playlist)}} songs}}
+            {{ 'PLAYLIST.songPlural' | translate: { playlistLength: getPlaylistLength(playlist) } }}
           </span>
         </div>
       </div>
@@ -30,7 +29,7 @@
         <mat-menu #menu="matMenu">
           <button (click)="deletePlaylist(playlist)" mat-menu-item>
             <mat-icon>delete_forever</mat-icon>
-            <ng-container i18n="@@deletePlaylist">Delete playlist</ng-container>
+            <ng-container>{{ 'PLAYLIST.deletePlaylist' | translate }}</ng-container>
           </button>
         </mat-menu>
       </div>

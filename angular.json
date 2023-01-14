@@ -5,14 +5,6 @@
   "projects": {
     "Maheta": {
       "projectType": "application",
-      "i18n": {
-        "sourceLocale": "en-US",
-        "locales": {
-          "pl": {
-            "translation": "src/locales/message.pl.xlf"
-          }
-        }
-      },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -25,8 +17,6 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
-            "localize": true,
-            "aot": true,
             "outputPath": "dist/maheta",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -71,9 +61,6 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
-            },
-            "pl": {
-              "localize": ["pl"]
             }
           },
           "defaultConfiguration": "production"
@@ -86,9 +73,6 @@
             },
             "development": {
               "browserTarget": "Maheta:build:development"
-            },
-            "pl": {
-              "browserTarget": "Maheta:build:development,pl"
             }
           },
           "defaultConfiguration": "development"

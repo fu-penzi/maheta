@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,6 +11,12 @@ import { MusicControlModule } from '@src/app/services/music-control/music-contro
 
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
+import { TranslateCompiler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler';
+export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +28,17 @@ import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
     BrowserAnimationsModule,
     MusicControlModule,
     SharedModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpLoaderFactory,
+        deps: [HttpClient],
+      },
+      compiler: {
+        provide: TranslateCompiler,
+        useClass: TranslateMessageFormatCompiler,
+      },
+    }),
   ],
   providers: [MusicControls, Diagnostic],
   bootstrap: [AppComponent],

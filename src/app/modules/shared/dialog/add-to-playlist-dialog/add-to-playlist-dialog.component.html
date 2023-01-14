@@ -1,4 +1,4 @@
-<h1 class="dialog-header-container" i18n="@@choosePlaylist">Choose playlist</h1>
+<h1 class="dialog-header-container">{{ 'ADD_TO_PLAYLIST.choosePlaylist' | translate }}</h1>
 
 <div class="dialog-content-container">
   <ng-container *ngIf="!!playlists?.length">
@@ -12,10 +12,10 @@
     </button>
   </ng-container>
 
-  <span *ngIf="!playlists?.length" i18n="@@noPlaylists!">No playlists!</span>
+  <span *ngIf="!playlists?.length">{{ 'ADD_TO_PLAYLIST.noPlaylists' | translate }}</span>
 </div>
 
 <maheta-dialog-footer-buttons
   (secondaryButtonEvent)="close()"
-  secondaryButtonLabel="Close"
+  [secondaryButtonLabel]="'global.close' | translate"
 ></maheta-dialog-footer-buttons>

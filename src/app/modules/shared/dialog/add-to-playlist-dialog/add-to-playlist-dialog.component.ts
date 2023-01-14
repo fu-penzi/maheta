@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
-import { locales } from '@src/locales/locales';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface AddToPlaylistDialogData {
   track: Track;
@@ -21,6 +21,7 @@ export class AddToPlaylistDialogComponent {
     private dialogRef: MatDialogRef<AddToPlaylistDialogComponent>,
     private musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
     private snackBar: MatSnackBar,
+    private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) public data: AddToPlaylistDialogData
   ) {}
 
@@ -35,8 +36,8 @@ export class AddToPlaylistDialogComponent {
   public addTrackToPlaylist(playlist: Playlist, track: Track): void {
     if (playlist.tracks.includes(track.uri)) {
       this.openSnackBar(
-        $localize`:@@AddToPlaylistDialogComponent.snackbarMessage: Track is already in playlist ${playlist.name}`,
-        locales.CLOSE
+        this.translate.instant('ADD_TO_PLAYLIST.snackbarMessage', { playlistName: playlist.name }),
+        this.translate.instant('global.close')
       );
       return;
     }
