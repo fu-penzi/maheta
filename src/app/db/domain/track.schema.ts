@@ -20,7 +20,7 @@ export interface Track {
 export enum TrackDefaultsEnum {
   TITLE = 'Werfaerwf fw fawef wef gaer gar ',
   AUTHOR = 'Ulfric Stormcloak',
-  ALBUM = 'Unknown sads ad asdads ad',
+  ALBUM = 'Unknown',
   THUMBURL = 'assets/note.jpg',
 }
 
@@ -60,9 +60,7 @@ export async function getTrackObject(
     src: capacitorPath,
     title: metadata?.common.title ?? trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
     author: metadata?.common.artist ?? TrackDefaultsEnum.AUTHOR,
-    album:
-      metadata?.common.album ??
-      TrackDefaultsEnum.ALBUM + +Math.floor(Math.random() * 2323).toString(),
+    album: metadata?.common.album ?? TrackDefaultsEnum.ALBUM,
     year: metadata?.common.year,
     thumbUrl: thumbUrl || TrackDefaultsEnum.THUMBURL,
     duration: metadata?.format.duration ?? 0,

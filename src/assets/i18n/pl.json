@@ -7,6 +7,10 @@
     "translation": "Tłumaczenie",
     "editLyrics": "Edytuj tekst"
   },
+  "languages": {
+    "en": "angielski",
+    "pl": "polski"
+  },
   "PLAYLIST": {
     "deletePlaylist": "Usuń playlistę",
     "songPlural": "{playlistLength, plural, =1 {1 song} other {{playlistLength} songs}}"

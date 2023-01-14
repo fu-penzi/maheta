@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 
-import {
-  AppLanguage,
-  AppLanguageCodeEnum,
-  LocalizationService,
-} from '@src/app/services/localization.service';
+import { AppLanguageCodeEnum, LocalizationService } from '@src/app/services/localization.service';
 
 @Component({
   selector: 'maheta-settings',
@@ -14,7 +10,8 @@ import {
 })
 export class SettingsComponent implements OnInit {
   public form: FormGroup;
-  public languages: AppLanguage[] = [];
+  public readonly languageCodes: AppLanguageCodeEnum[] = Object.values(AppLanguageCodeEnum);
+
   constructor(private localizationService: LocalizationService, private fb: FormBuilder) {}
 
   public get displayForm(): FormGroup {
@@ -26,7 +23,6 @@ export class SettingsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.languages = this.localizationService.languages;
     this.buildForm();
     this.languageControl?.valueChanges.subscribe((languageCode: AppLanguageCodeEnum) =>
       this.localizationService.setLanguage(languageCode)
@@ -36,7 +32,7 @@ export class SettingsComponent implements OnInit {
   private buildForm(): void {
     this.form = this.fb.group({
       display: this.fb.group({
-        language: [this.localizationService.language.code],
+        language: [this.localizationService.language],
       }),
     });
   }
