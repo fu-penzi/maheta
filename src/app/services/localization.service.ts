@@ -9,49 +9,27 @@ export enum AppLanguageCodeEnum {
   POLISH = 'pl',
 }
 
-export interface AppLanguage {
-  code: AppLanguageCodeEnum;
-  name: string;
-}
-
-const appLanguages: {
-  [key in AppLanguageCodeEnum]: AppLanguage;
-} = {
-  [AppLanguageCodeEnum.ENGLISH]: {
-    code: AppLanguageCodeEnum.ENGLISH,
-    name: 'English',
-  },
-  [AppLanguageCodeEnum.POLISH]: {
-    code: AppLanguageCodeEnum.POLISH,
-    name: 'Polish',
-  },
-};
-
 @Injectable({
   providedIn: 'root',
 })
 export class LocalizationService {
-  public readonly defaultLanguage: AppLanguage = appLanguages[AppLanguageCodeEnum.ENGLISH];
-  public language: AppLanguage = appLanguages[AppLanguageCodeEnum.ENGLISH];
+  public readonly defaultLanguage: AppLanguageCodeEnum = AppLanguageCodeEnum.ENGLISH;
+  public language: AppLanguageCodeEnum = AppLanguageCodeEnum.ENGLISH;
 
   constructor(public translate: TranslateService) {}
-
-  public get languages(): AppLanguage[] {
-    return Object.values(appLanguages);
-  }
 
   public init(): void {
     const language: AppLanguageCodeEnum = localStorage.getItem(
       LocalStorageEnum.language
     ) as AppLanguageCodeEnum;
-    this.language = appLanguages[language] || this.language;
-    this.translate.setDefaultLang(this.defaultLanguage.code);
-    this.translate.use(this.language.code);
+    this.language = language || this.language;
+    this.translate.setDefaultLang(this.defaultLanguage);
+    this.translate.use(this.language);
   }
 
   public setLanguage(language: AppLanguageCodeEnum): void {
-    this.language = appLanguages[language];
-    this.translate.use(language);
+    this.language = language;
+    this.translate.use(this.language);
     localStorage.setItem(LocalStorageEnum.language, language);
     window.location.reload();
   }
