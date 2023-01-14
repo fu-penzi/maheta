@@ -1,25 +1,23 @@
 <!--<div [ngClass]="['mat-typography', themeClass]">-->
-<div>
-  <maheta-app-bar></maheta-app-bar>
+<maheta-app-bar></maheta-app-bar>
 
-  <div class="page-content">
-    <router-outlet></router-outlet>
-  </div>
+<div class="page-content">
+  <router-outlet></router-outlet>
+</div>
 
-  <div class="bottom-wrapper">
-    <maheta-player-bar></maheta-player-bar>
-    <mat-toolbar class="bottom-nav" color="primary">
-      <a
-        class="bottom-nav__tab"
-        *ngFor="let tab of bottomNavTabs"
-        (click)="selectTab(tab)"
-        [class.active]="isTabActive(tab)"
-        [routerLink]="tab.url"
-        aria-label="Example icon button with a bookmark icon"
-      >
-        <mat-icon>{{ tab.icon }}</mat-icon>
-        <span class="bottom-nav__tab-name">{{ tab.name }}</span>
-      </a>
-    </mat-toolbar>
-  </div>
+<div class="bottom-wrapper">
+  <maheta-player-bar></maheta-player-bar>
+  <mat-toolbar class="bottom-nav" color="primary">
+    <a
+      class="bottom-nav__tab"
+      *ngFor="let tab of bottomNavTabs"
+      (click)="selectTab(tab)"
+      [class.active]="isTabActive(tab)"
+      [routerLink]="tab.url"
+      aria-label="Example icon button with a bookmark icon"
+    >
+      <mat-icon>{{ tab.icon }}</mat-icon>
+      <span class="bottom-nav__tab-name">{{ tab.name }}</span>
+    </a>
+  </mat-toolbar>
 </div>

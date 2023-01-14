@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { TranslateService } from '@ngx-translate/core';
+import { LocalizationService } from '@src/app/services/localization.service';
 
 @Component({
   selector: 'maheta-root',
@@ -9,8 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
   title = 'Maheta';
-  constructor(translate: TranslateService) {
-    translate.setDefaultLang('en');
-    translate.use('en');
+  constructor(private localizationService: LocalizationService) {
+    this.localizationService.init();
   }
 }
