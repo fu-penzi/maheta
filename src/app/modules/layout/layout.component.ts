@@ -1,12 +1,12 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { environment } from '@environment/environment';
 
 import { PlatformEnum } from '@src/app/model/platform.enum';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { NavigationService } from '@src/app/services/navigation.service';
+import { locales } from '@src/locales/locales';
 
 interface BottomNavTab {
   icon: string;
@@ -57,17 +57,17 @@ export class LayoutComponent implements OnInit {
     this.bottomNavTabs = [
       {
         icon: 'library_music',
-        name: environment.locales.MAHETA.BOTTOM_NAVIGATION.songs,
+        name: locales.BOTTOM_NAVIGATION.songs,
         url: UrlEnum.SONGS,
       },
       {
         icon: 'album',
-        name: environment.locales.MAHETA.BOTTOM_NAVIGATION.albums,
+        name: locales.BOTTOM_NAVIGATION.albums,
         url: UrlEnum.ALBUMS,
       },
       {
         icon: 'playlist_play',
-        name: environment.locales.MAHETA.BOTTOM_NAVIGATION.playlists,
+        name: locales.BOTTOM_NAVIGATION.playlists,
         url: UrlEnum.PLAYLISTS,
       },
     ];

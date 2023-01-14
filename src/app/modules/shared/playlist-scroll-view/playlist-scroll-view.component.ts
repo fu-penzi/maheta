@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { environment } from '@environment/environment';
 
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
@@ -14,9 +13,8 @@ export class PlaylistScrollViewComponent {
 
   constructor(private musicLibraryPlaylistsService: MusicLibraryPlaylistsService) {}
 
-  public getPlaylistLengthCaption(playlist: Playlist): string {
-    const playlistLength = playlist.tracks?.length || 0;
-    return environment.locales.MAHETA.PLAYLIST.lengthCaption(playlistLength);
+  public getPlaylistLength(playlist: Playlist): number {
+    return playlist.tracks?.length ?? 0;
   }
 
   public playlistByIndex(index: number): number {
