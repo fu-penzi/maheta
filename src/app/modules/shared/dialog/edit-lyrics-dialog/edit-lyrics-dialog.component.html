@@ -1,14 +1,13 @@
-<h1 class="dialog-header-container" i18n="@@editLyrics">Edit lyrics</h1>
+<h1 class="dialog-header-container">{{ 'global.editLyrics' | translate }}</h1>
 
 <div class="dialog-content-container">
   <form [formGroup]="form">
     <mat-form-field class="form-field" appearance="fill">
-      <mat-label>Lyrics</mat-label>
+      <mat-label>{{ 'global.lyrics' | translate }}</mat-label>
       <textarea
+        [placeholder]="'EDIT_LYRICS.lyricsPlaceholder' | translate"
         matInput
         formControlName="lyrics"
-        placeholder="Track lyrics..."
-        i18n-placeholder="@@trackLyrics"
       ></textarea>
     </mat-form-field>
   </form>
@@ -17,6 +16,6 @@
 <maheta-dialog-footer-buttons
   (secondaryButtonEvent)="close()"
   (primaryButtonEvent)="save()"
-  secondaryButtonLabel="Close"
-  primaryButtonLabel="Save"
+  [primaryButtonLabel]="'global.save' | translate"
+  [secondaryButtonLabel]="'global.close' | translate"
 ></maheta-dialog-footer-buttons>

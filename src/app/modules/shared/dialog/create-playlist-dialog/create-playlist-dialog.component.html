@@ -1,9 +1,9 @@
-<h1 class="dialog-header-container" i18n="@@createPlaylist">Create playlist</h1>
+<h1 class="dialog-header-container">{{ 'CREATE_PLAYLIST.createPlaylist' | translate }}</h1>
 
 <div class="dialog-content-container">
   <form [formGroup]="form">
     <mat-form-field appearance="fill">
-      <mat-label i18n="@@name">Name</mat-label>
+      <mat-label>{{ 'CREATE_PLAYLIST.name' | translate }}</mat-label>
       <input formControlName="playlistName" matInput placeholder="Playlist #X" />
     </mat-form-field>
   </form>
@@ -12,6 +12,6 @@
 <maheta-dialog-footer-buttons
   (secondaryButtonEvent)="close()"
   (primaryButtonEvent)="save()"
-  secondaryButtonLabel="Close"
-  primaryButtonLabel="Save"
+  [primaryButtonLabel]="'global.save' | translate"
+  [secondaryButtonLabel]="'global.close' | translate"
 ></maheta-dialog-footer-buttons>

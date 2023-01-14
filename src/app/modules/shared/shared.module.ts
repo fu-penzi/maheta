@@ -17,6 +17,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 
 import { AddToPlaylistDialogComponent } from '@src/app/modules/shared/dialog/add-to-playlist-dialog/add-to-playlist-dialog.component';
+import { DialogFooterButtonsComponent } from '@src/app/modules/shared/dialog/components/dialog-footer-buttons/dialog-footer-buttons.component';
 import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/dialog/create-playlist-dialog/create-playlist-dialog.component';
 import { EditLyricsDialogComponent } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { EditStorageSettingsDialogComponent } from '@src/app/modules/shared/dialog/edit-storage-settings-dialog/edit-storage-settings-dialog.component';
@@ -26,7 +27,8 @@ import { WordOverviewSheetComponent } from '@src/app/modules/shared/sheet/word-o
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
 import { SafePipe } from '@src/app/pipes/safe-pipe.pipe';
-import { DialogFooterButtonsComponent } from './dialog/components/dialog-footer-buttons/dialog-footer-buttons.component';
+
+import { TranslateModule } from '@ngx-translate/core';
 
 const exportedModules = [
   CommonModule,
@@ -67,7 +69,8 @@ const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponen
     MatProgressSpinnerModule,
     MatBadgeModule,
     MatChipsModule,
+    TranslateModule,
   ],
-  exports: [...exportedModules, ...exportedComponents, SafePipe],
+  exports: [...exportedModules, ...exportedComponents, SafePipe, TranslateModule],
 })
 export class SharedModule {}
