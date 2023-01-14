@@ -8,9 +8,9 @@
     </mat-expansion-panel-header>
 
     <mat-divider></mat-divider>
-    <p class="form-name">Language</p>
+    <p class="form-name">{{ 'SETTINGS.language' | translate }}</p>
     <mat-form-field appearance="fill">
-      <mat-label>Language</mat-label>
+      <mat-label>{{ 'SETTINGS.language' | translate }}</mat-label>
       <mat-select formControlName="language">
         <mat-option *ngFor="let language of languages" [value]="language.code">
           {{ language.code }} - {{ language.name }}

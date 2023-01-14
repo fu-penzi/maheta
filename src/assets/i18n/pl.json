@@ -43,6 +43,7 @@
     "header": "Edytuj ścieżki folderów z muzyką"
   },
   "SETTINGS": {
-    "display": "Wygląd"
+    "display": "Wygląd",
+    "language": "Język"
   }
 }

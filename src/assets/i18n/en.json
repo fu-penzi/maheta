@@ -43,6 +43,7 @@
     "header": "Edit music folder paths"
   },
   "SETTINGS": {
-    "display": "Display"
+    "display": "Display",
+    "language": "Language"
   }
 }
