@@ -10,7 +10,6 @@ import { SharedModule } from '@src/app/modules/shared/shared.module';
 import { MusicControlModule } from '@src/app/services/music-control/music-control.module';
 
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
-import { MusicControls } from '@awesome-cordova-plugins/music-controls/ngx';
 import { TranslateCompiler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler';
@@ -40,7 +39,7 @@ export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       },
     }),
   ],
-  providers: [MusicControls, Diagnostic],
+  providers: [Diagnostic],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

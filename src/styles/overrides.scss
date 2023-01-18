@@ -1,5 +1,13 @@
 @use 'variables' as *;
 
+.mat-progress-bar .mat-progress-bar-fill {
+  transition: none !important;
+}
+
+.mat-slider.mat-slider-thumb-container {
+  transition: none !important;
+}
+
 /*
 * Slider
 */

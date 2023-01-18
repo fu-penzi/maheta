@@ -11,7 +11,7 @@
 
         <div class="info" [class.active]="false">
           <span class="info__title">{{ playlist.name }}</span>
-          <span class="info__author" i18n="@@songPlural">
+          <span class="info__author">
             {{ 'PLAYLIST.songPlural' | translate: { playlistLength: getPlaylistLength(playlist) } }}
           </span>
         </div>
