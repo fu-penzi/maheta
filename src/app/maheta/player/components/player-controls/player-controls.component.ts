@@ -2,7 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 
 import { Track } from '@src/app/db/domain/track.schema';
+import { BaseComponent } from '@src/app/modules/shared/base.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
+
+import { takeUntil } from 'rxjs';
 
 interface SliderSettings {
   value: number;
@@ -16,11 +19,11 @@ interface SliderSettings {
   templateUrl: './player-controls.component.html',
   styleUrls: ['./player-controls.component.scss'],
 })
-export class PlayerControlsComponent implements OnInit {
+export class PlayerControlsComponent extends BaseComponent implements OnInit {
   @Input() track: Track;
 
-  public currentTrackTime: number;
-  public readonly sliderSettings: SliderSettings = {
+  public currentTrackTime: number = 0;
+  public sliderSettings: SliderSettings = {
     value: 0,
     min: 0,
     max: 1000,
@@ -29,10 +32,28 @@ export class PlayerControlsComponent implements OnInit {
 
   private _isSliderHeld: boolean = false;
 
-  constructor(private readonly musicControlService: MusicControlService) {}
+  constructor(private musicControlService: MusicControlService) {
+    super();
+  }
 
   public get duration(): number {
-    return this.track?.duration || this.musicControlService.currentTrackDuration || 999999;
+    return this.musicControlService.currentTrackDuration;
+  }
+
+  public get isPlaying(): boolean {
+    return this.musicControlService.isPlaying;
+  }
+
+  public get isRepeatOne(): boolean {
+    return this.musicControlService.isRepeatOne;
+  }
+
+  public get isRepeatQueue(): boolean {
+    return this.musicControlService.isRepeatQueue;
+  }
+
+  public get isShuffle(): boolean {
+    return this.musicControlService.isShuffle;
   }
 
   public ngOnInit(): void {
@@ -73,24 +94,8 @@ export class PlayerControlsComponent implements OnInit {
     this.musicControlService.prev();
   }
 
-  public isPlaying(): boolean {
-    return this.musicControlService.isPlaying;
-  }
-
-  public isShuffle(): boolean {
-    return this.musicControlService.isShuffle;
-  }
-
   public toggleShuffle(): void {
     this.musicControlService.isShuffle = !this.musicControlService.isShuffle;
-  }
-
-  public isRepeatOne(): boolean {
-    return this.musicControlService.isRepeatOne;
-  }
-
-  public isRepeatQueue(): boolean {
-    return this.musicControlService.isRepeatQueue;
   }
 
   public nextRepeatMode(): void {
@@ -98,11 +103,13 @@ export class PlayerControlsComponent implements OnInit {
   }
 
   private setupSlider(): void {
-    this.musicControlService.currentTrackTime.subscribe((currentTrackTime: number) => {
-      if (!this._isSliderHeld) {
-        this.currentTrackTime = currentTrackTime;
-        this.sliderSettings.value = (currentTrackTime / this.duration) * this.sliderSettings.max;
-      }
-    });
+    this.musicControlService.currentTrackAudioTime$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((currentTrackTime: number) => {
+        if (!this._isSliderHeld) {
+          this.currentTrackTime = currentTrackTime;
+          this.sliderSettings.value = (currentTrackTime / this.duration) * this.sliderSettings.max;
+        }
+      });
   }
 }

@@ -61,7 +61,7 @@ export class DatabaseService {
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   private async dropDatabaseData(): Promise<void> {
     const tracksBackup: Track[] = await firstValueFrom(this.trackCollectionService.getAll$());
     await this._trackDB?.remove();

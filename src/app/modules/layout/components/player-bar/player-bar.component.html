@@ -1,5 +1,9 @@
 <div *ngIf="!isTabPlayer">
-  <mat-progress-bar [value]="trackProgress" color="accent" mode="determinate"></mat-progress-bar>
+  <mat-progress-bar
+    [value]="trackProgress$ | async"
+    color="accent"
+    mode="determinate"
+  ></mat-progress-bar>
 
   <a class="player-bar" [routerLink]="currentTrack ? playerRouterLink : undefined">
     <div class="track">
