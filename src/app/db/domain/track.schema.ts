@@ -18,8 +18,8 @@ export interface Track {
 }
 
 export enum TrackDefaultsEnum {
-  TITLE = 'Werfaerwf fw fawef wef gaer gar ',
-  AUTHOR = 'Ulfric Stormcloak',
+  TITLE = 'Unknown',
+  AUTHOR = 'Unknown',
   ALBUM = 'Unknown',
   THUMBURL = 'assets/note.jpg',
 }

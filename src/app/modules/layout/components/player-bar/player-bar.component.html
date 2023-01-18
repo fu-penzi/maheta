@@ -1,4 +1,4 @@
-<div *ngIf="!isTabPlayer">
+<div [hidden]="isTabPlayer">
   <mat-progress-bar
     [value]="trackProgress$ | async"
     color="accent"
