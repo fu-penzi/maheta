@@ -1,17 +1,17 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 // insert your ip here
-const hostIp = '192.168.0.104';
+// const hostIp = '192.168.0.104';
 
 const config: CapacitorConfig = {
   appId: 'com.fupenzi.maheta',
   appName: 'Maheta',
   webDir: 'dist/maheta',
   bundledWebRuntime: false,
-  server: {
-    url: `http://${hostIp}:8100`,
-    cleartext: true,
-  },
+  // server: {
+  //   url: `http://${hostIp}:8100`,
+  //   cleartext: true,
+  // },
   plugins: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     SplashScreen: {

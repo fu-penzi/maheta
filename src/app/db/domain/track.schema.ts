@@ -21,7 +21,7 @@ export enum TrackDefaultsEnum {
   TITLE = 'Unknown',
   AUTHOR = 'Unknown',
   ALBUM = 'Unknown',
-  THUMBURL = 'assets/vp.jpg',
+  THUMBURL = 'assets/note.jpg',
 }
 
 export function getDefaultTrackObject(trackPath?: string, capacitorPath?: string): Track {
