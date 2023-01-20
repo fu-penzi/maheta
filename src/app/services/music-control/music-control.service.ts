@@ -26,6 +26,7 @@ export class MusicControlService {
   private _nextQueue: Track[] | null = null;
   private _currentTrackAudio: HTMLAudioElement;
   private _currentTrack$: ReplaySubject<Track> = new ReplaySubject<Track>();
+  private _currentQueue$: BehaviorSubject<Track[]> = new BehaviorSubject<Track[]>([]);
   private _currentTrackAudioTime$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   private readonly _seekOffset: number = 30;
@@ -52,13 +53,21 @@ export class MusicControlService {
     MediaSession.setActionHandler({ action: 'seekbackward' }, () =>
       this.seekTo(this.currentTrackAudioTime, -this._seekOffset)
     );
-
+    this.updatePlaybackState();
     this.watchCurrentItemChanges();
     this.setupCureentTrackAudioTimeSubject();
   }
 
+  public get queuePosition(): number {
+    return this.queueService.queuePosition;
+  }
+
   public get currentTrack(): Track {
     return this.queueService.currentItem;
+  }
+
+  public get currentQueue$(): Observable<Track[]> {
+    return this._currentQueue$.asObservable();
   }
 
   public get currentTrack$(): Observable<Track> {
@@ -107,6 +116,7 @@ export class MusicControlService {
     if (this._nextQueue) {
       this.queueService.clear();
       this.queueService.add(this._nextQueue);
+      this._currentQueue$.next(this._nextQueue);
       this._nextQueue = null;
     }
     this._currentTrackAudio.pause();
@@ -162,7 +172,6 @@ export class MusicControlService {
         this.pause();
       }
       this.currentTrackDuration = this.currentTrack?.duration || this.currentTrackDuration;
-      this.updatePlaybackState();
       this.updateNativeMusicControls(currentTrack);
       this._currentTrack$.next(this.currentTrack);
     });
@@ -175,13 +184,10 @@ export class MusicControlService {
   }
 
   private updatePlaybackState(): void {
-    const playbackState: MediaSessionPlaybackStateEnum = this._currentTrackAudio.paused
-      ? MediaSessionPlaybackStateEnum.PAUSED
-      : MediaSessionPlaybackStateEnum.PLAYING;
     MediaSession.setPlaybackState({
-      playbackState: this._currentTrackAudio.src
-        ? playbackState
-        : MediaSessionPlaybackStateEnum.NONE,
+      playbackState: this._currentTrackAudio.paused
+        ? MediaSessionPlaybackStateEnum.PAUSED
+        : MediaSessionPlaybackStateEnum.PLAYING,
     });
   }
 
@@ -204,6 +210,6 @@ export class MusicControlService {
           sizes: '512x512',
         },
       ],
-    });
+    }).then(() => this.updatePlaybackState());
   }
 }

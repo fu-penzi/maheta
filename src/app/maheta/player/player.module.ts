@@ -11,6 +11,10 @@ import { SharedModule } from '@src/app/modules/shared/shared.module';
 import { PlayerControlsComponent } from '@maheta/player/components/player-controls/player-controls.component';
 import { PlayerLyricsComponent } from '@maheta/player/components/player-lyrics/player-lyrics.component';
 import { PlayerComponent } from '@maheta/player/player.component';
+import { SwiperModule } from 'swiper/angular';
+import SwiperCore, { Virtual } from 'swiper';
+
+SwiperCore.use([Virtual]);
 
 @NgModule({
   //TODO add guard when nothing is playing
@@ -28,6 +32,7 @@ import { PlayerComponent } from '@maheta/player/player.component';
     FormsModule,
     MatIconModule,
     MatDividerModule,
+    SwiperModule,
   ],
 })
 export class PlayerModule {}

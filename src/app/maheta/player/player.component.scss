@@ -2,11 +2,20 @@
 
 :host {
   display: block;
-  margin: spacing(5) spacing(8) 0;
+  min-height: calc(100vh - 125px);
+}
 
-  & > * {
-    margin-bottom: spacing(8);
+.player {
+  width: 100%;
+  padding: spacing(12) 0 spacing(7) 0;
+
+  .swiper {
+    padding-bottom: spacing(8);
   }
+}
+
+.player-bottom {
+  padding: 0 spacing(9);
 }
 
 .track-thumb {
@@ -14,17 +23,18 @@
   margin-left: auto;
   margin-right: auto;
   object-fit: cover;
-  width: 250px;
-  height: 250px;
-  min-width: 250px;
-  min-height: 250px;
+  width: 100%;
+  //width: 250px;
+  //height: 250px;
+  //min-width: 250px;
+  //min-height: 250px;
 }
 
 .track-info {
   display: flex;
+  margin: 0 auto;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto spacing(5);
   overflow: hidden;
   width: calc(80%);
   text-align: center;
@@ -32,19 +42,17 @@
 
   &__title {
     width: calc(100%);
-    @include text-ellipsis;
-
     margin-bottom: spacing(1);
     line-height: 2.3rem;
     font-size: 1.5rem;
     font-weight: 500;
+    @include text-ellipsis;
   }
 
   &__author {
     width: calc(100%);
-    @include text-ellipsis;
-
     color: $text-secondary;
     font-size: 1.25rem;
+    @include text-ellipsis;
   }
 }
