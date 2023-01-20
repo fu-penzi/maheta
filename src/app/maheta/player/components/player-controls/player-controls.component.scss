@@ -13,16 +13,22 @@
   display: flex;
   justify-content: space-between;
   margin-top: -10px;
-  margin-bottom: spacing(4);
   color: $text-secondary;
 }
 
 .control-buttons {
+  width: 102%;
+  margin-left: 50%;
+  transform: translateX(-50%);
   display: flex;
   max-width: 350px;
   align-items: center;
   justify-content: space-between;
-  margin: 0 auto;
+
+  .center-buttons {
+    display: flex;
+    align-items: center;
+  }
 
   .center-buttons :nth-child(2) {
     margin: 0 spacing(4);
@@ -30,4 +36,16 @@
 
   @include m-fab(xl);
   @include m-icon-button(lg);
+}
+
+.icon-button {
+  @include m-icon(42px);
+}
+
+.icon-button:active {
+  color: $accent;
+}
+
+.icon-button-secondary {
+  @include m-icon(28px);
 }

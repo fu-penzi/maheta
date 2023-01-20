@@ -2,20 +2,31 @@
 
 :host {
   display: block;
+  position: relative;
   min-height: calc(100vh - 125px);
 }
 
-.player {
+.swiper-carousel-wrapper {
+  position: absolute;
+  top: 0;
   width: 100%;
-  padding: spacing(12) 0 spacing(7) 0;
+  z-index: 0;
 
   .swiper {
     padding-bottom: spacing(8);
   }
+
+  .slide {
+    min-height: calc(100vh - 125px);
+    padding-top: spacing(8);
+  }
 }
 
 .player-bottom {
-  padding: 0 spacing(9);
+  position: absolute;
+  width: 100%;
+  bottom: 40px;
+  padding: 0 spacing(8);
 }
 
 .track-thumb {
@@ -33,6 +44,8 @@
 .track-info {
   display: flex;
   margin: 0 auto;
+  padding-top: 325px;
+  padding-bottom: spacing(5);
   flex-direction: column;
   align-items: center;
   overflow: hidden;

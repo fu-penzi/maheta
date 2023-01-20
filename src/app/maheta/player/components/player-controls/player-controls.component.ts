@@ -66,7 +66,7 @@ export class PlayerControlsComponent extends BaseComponent implements OnInit {
     }
     const time: number = (sliderChange.value * this.duration) / this.sliderSettings.max;
     this._isSliderHeld = true;
-    this.currentTrackTime = time;
+    this.currentTrackTime = time < 10 ? 0 : time;
   }
 
   public sliderRelease(value: number | null): void {
@@ -74,8 +74,15 @@ export class PlayerControlsComponent extends BaseComponent implements OnInit {
       return;
     }
     const time: number = (value * this.duration) / this.sliderSettings.max;
-    this.musicControlService.seekTo(time);
+    this.musicControlService.seekTo(time < 10 ? 0 : time);
     this._isSliderHeld = false;
+  }
+
+  public onTouchEnd(): void {
+    if (this._isSliderHeld) {
+      this.musicControlService.seekTo(this.currentTrackTime);
+      this._isSliderHeld = false;
+    }
   }
 
   public play(): void {

@@ -21,6 +21,13 @@
   }
 }
 
+@mixin m-icon($size) {
+  width: $size;
+  height: $size;
+  font-size: $size;
+  line-height: $size;
+}
+
 @mixin m-fab($size) {
   .mat-fab {
     width: size($size);

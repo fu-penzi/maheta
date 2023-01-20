@@ -1,4 +1,4 @@
-<div class="player">
+<div class="swiper-carousel-wrapper">
   <swiper
     class="swiper"
     (slideChange)="handleSlideChange($event)"
@@ -8,17 +8,19 @@
     #swiper
   >
     <ng-template *ngFor="let track of currentQueue" swiperSlide>
-      <object class="track-thumb" [data]="track.thumbUrl | safe" type="image/jpeg">
-        <img class="track-thumb" [src]="'' | safe" [alt]="currentTrack?.title" loading="lazy" />
-      </object>
+      <div class="slide">
+        <object class="track-thumb" [data]="track.thumbUrl | safe" type="image/jpeg">
+          <img class="track-thumb" [src]="'' | safe" [alt]="currentTrack?.title" />
+        </object>
+      </div>
     </ng-template>
   </swiper>
-
-  <a class="track-info" [routerLink]="albumUrl">
-    <strong class="track-info__title">{{ this.currentTrack?.title }}</strong>
-    <span class="track-info__author">{{ this.currentTrack?.author }}</span>
-  </a>
 </div>
+
+<a class="track-info" [routerLink]="albumUrl">
+  <strong class="track-info__title">{{ this.currentTrack?.title }}</strong>
+  <span class="track-info__author">{{ this.currentTrack?.author }}</span>
+</a>
 
 <div class="player-bottom">
   <maheta-player-controls [track]="currentTrack"></maheta-player-controls>
