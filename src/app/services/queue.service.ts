@@ -14,8 +14,12 @@ export class QueueService<T> {
   public repeatMode: RepeatModeEnum = RepeatModeEnum.none;
   public shuffle: boolean = false;
 
-  private _cursor: number;
+  private _queuePosition: number;
   private _queue: T[] = [];
+
+  public get queuePosition(): number {
+    return this._queuePosition;
+  }
 
   public get isRepeatOne(): boolean {
     return this.repeatMode === RepeatModeEnum.repeatOne;
@@ -26,12 +30,12 @@ export class QueueService<T> {
   }
 
   public get currentItem(): T {
-    if (this._cursor >= this._queue.length) {
+    if (this._queuePosition >= this._queue.length) {
       console.error('Incorrect queue index');
-      this._cursor = 0;
+      this._queuePosition = 0;
     }
 
-    return this._queue[this._cursor];
+    return this._queue[this._queuePosition];
   }
 
   public moveToNext(): void {
@@ -41,17 +45,18 @@ export class QueueService<T> {
     }
     if (this.shuffle) {
       const randomItem = random(this._queue.length);
-      this._cursor = this._cursor === randomItem ? random(this._queue.length - 1) : randomItem;
+      this._queuePosition =
+        this._queuePosition === randomItem ? random(this._queue.length - 1) : randomItem;
       this.currentItem$.next(this.currentItem);
       return;
     }
     if (this.isRepeatQueue && this.isEnd()) {
-      this._cursor = 0;
+      this._queuePosition = 0;
       this.currentItem$.next(this.currentItem);
       return;
     }
     if (!this.isEnd()) {
-      this._cursor += 1;
+      this._queuePosition += 1;
     }
     this.currentItem$.next(this.currentItem);
   }
@@ -63,16 +68,18 @@ export class QueueService<T> {
     }
     if (this.shuffle) {
       const randomItem = random(this._queue.length);
-      this._cursor = this._cursor === randomItem ? random(this._queue.length) : randomItem;
+      this._queuePosition =
+        this._queuePosition === randomItem ? random(this._queue.length) : randomItem;
+      this.currentItem$.next(this.currentItem);
       return;
     }
     if (this.isRepeatQueue && this.isStart()) {
-      this._cursor = this._queue.length - 1;
+      this._queuePosition = this._queue.length - 1;
       this.currentItem$.next(this.currentItem);
       return;
     }
     if (!this.isStart()) {
-      this._cursor -= 1;
+      this._queuePosition -= 1;
     }
     this.currentItem$.next(this.currentItem);
   }
@@ -82,7 +89,7 @@ export class QueueService<T> {
       return;
     }
 
-    this._cursor = index;
+    this._queuePosition = index;
     this.currentItem$.next(this.currentItem);
   }
 
@@ -91,15 +98,15 @@ export class QueueService<T> {
   }
 
   public clear(): void {
-    this._cursor = 0;
+    this._queuePosition = 0;
     this._queue.length = 0;
   }
 
   public isStart(): boolean {
-    return this._cursor === 0;
+    return this._queuePosition === 0;
   }
 
   public isEnd(): boolean {
-    return this._cursor === this._queue.length - 1;
+    return this._queuePosition === this._queue.length - 1;
   }
 }

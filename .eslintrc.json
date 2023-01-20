@@ -86,13 +86,6 @@
             }
           }
         ],
-        "@typescript-eslint/lines-between-class-members": [
-          "error",
-          "always",
-          {
-            "exceptAfterSingleLine": true
-          }
-        ],
         "@typescript-eslint/no-duplicate-enum-values": ["off"],
         "@typescript-eslint/no-extraneous-class": ["off"],
         "@typescript-eslint/no-unnecessary-condition": ["off"],
