@@ -146,6 +146,10 @@ export class MusicControlService {
   }
 
   public prev(): void {
+    if (this._currentTrackAudio.currentTime > 2) {
+      this.seekTo(0);
+      return;
+    }
     this.queueService.moveToPrev();
   }
 

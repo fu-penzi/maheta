@@ -13,14 +13,14 @@
 .mat-slider.mat-slider-horizontal {
   display: block;
   padding: 0;
-  margin: 0 -5px;
+  margin: 0 -7px;
 
   .mat-slider-track-wrapper {
     transform: scaleY(1.7);
   }
 
   .mat-slider-thumb {
-    transform: scale(0.7) !important;
+    transform: scale(0.55) !important;
   }
 }
 

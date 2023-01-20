@@ -1,6 +1,7 @@
 <mat-slider
   (valueChange)="sliderRelease($event)"
   (input)="sliderHold($event)"
+  (touchend)="onTouchEnd()"
   [class.mat-slider-min-value]="false"
   [max]="sliderSettings.max"
   [min]="sliderSettings.min"
@@ -17,19 +18,16 @@
 </div>
 
 <div class="control-buttons">
-  <button
+  <mat-icon
+    class="icon-button-secondary"
     (click)="toggleShuffle()"
     [color]="isShuffle ? 'accent' : undefined"
     aria-label="Example icon button with a bookmark icon"
-    mat-icon-button
-  >
-    <mat-icon>shuffle</mat-icon>
-  </button>
+    >shuffle
+  </mat-icon>
 
   <div class="center-buttons">
-    <button (click)="prev()" aria-label="Example icon button with a bookmark icon" mat-icon-button>
-      <mat-icon>skip_previous</mat-icon>
-    </button>
+    <mat-icon class="icon-button" (click)="prev()">skip_previous</mat-icon>
 
     <ng-container *ngIf="!isPlaying">
       <button
@@ -53,18 +51,24 @@
       </button>
     </ng-container>
 
-    <button (click)="next()" aria-label="Example icon button with a bookmark icon" mat-icon-button>
-      <mat-icon>skip_next</mat-icon>
-    </button>
+    <mat-icon class="icon-button" (click)="next()">skip_next</mat-icon>
   </div>
 
-  <button
+  <mat-icon
+    class="icon-button-secondary"
+    *ngIf="!isRepeatOne"
     (click)="nextRepeatMode()"
     [color]="isRepeatOne || isRepeatQueue ? 'accent' : undefined"
-    aria-label="Example icon button with a bookmark icon"
-    mat-icon-button
   >
-    <mat-icon *ngIf="!isRepeatOne">repeat</mat-icon>
-    <mat-icon *ngIf="isRepeatOne">repeat_one</mat-icon>
-  </button>
+    repeat
+  </mat-icon>
+
+  <mat-icon
+    class="icon-button-secondary"
+    *ngIf="isRepeatOne"
+    (click)="nextRepeatMode()"
+    [color]="isRepeatOne || isRepeatQueue ? 'accent' : undefined"
+  >
+    repeat_one
+  </mat-icon>
 </div>
