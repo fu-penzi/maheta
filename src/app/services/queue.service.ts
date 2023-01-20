@@ -4,14 +4,14 @@ import { random } from 'lodash';
 import { Subject } from 'rxjs';
 
 export enum RepeatModeEnum {
-  none,
-  repeatQueue,
-  repeatOne,
+  NONE,
+  REPEAT_QUEUE,
+  REPEAT_ONE,
 }
 @Injectable()
 export class QueueService<T> {
   public currentItem$: Subject<T> = new Subject<T>();
-  public repeatMode: RepeatModeEnum = RepeatModeEnum.none;
+  public repeatMode: RepeatModeEnum = RepeatModeEnum.NONE;
   public shuffle: boolean = false;
 
   private _queuePosition: number;
@@ -22,16 +22,16 @@ export class QueueService<T> {
   }
 
   public get isRepeatOne(): boolean {
-    return this.repeatMode === RepeatModeEnum.repeatOne;
+    return this.repeatMode === RepeatModeEnum.REPEAT_ONE;
   }
 
   public get isRepeatQueue(): boolean {
-    return this.repeatMode === RepeatModeEnum.repeatQueue;
+    return this.repeatMode === RepeatModeEnum.REPEAT_QUEUE;
   }
 
   public get currentItem(): T {
     if (this._queuePosition >= this._queue.length) {
-      console.error('Incorrect queue index');
+      // console.error('Incorrect queue index');
       this._queuePosition = 0;
     }
 

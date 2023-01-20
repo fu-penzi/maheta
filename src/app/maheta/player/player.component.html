@@ -1,5 +1,12 @@
 <div class="player">
-  <swiper class="swiper" [virtual]="swiperVirtualOptions" [config]="swiperOptions" #swiper>
+  <swiper
+    class="swiper"
+    (slideChange)="handleSlideChange($event)"
+    [virtual]="swiperVirtualOptions"
+    [config]="swiperOptions"
+    [rewind]="rewind"
+    #swiper
+  >
     <ng-template *ngFor="let track of currentQueue" swiperSlide>
       <object class="track-thumb" [data]="track.thumbUrl | safe" type="image/jpeg">
         <img class="track-thumb" [src]="'' | safe" [alt]="currentTrack?.title" loading="lazy" />
