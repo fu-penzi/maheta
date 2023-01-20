@@ -25,6 +25,8 @@ export class MusicControlService {
 
   private _nextQueue: Track[] | null = null;
   private _currentTrackAudio: HTMLAudioElement;
+
+  private _repeatMode$: ReplaySubject<RepeatModeEnum> = new ReplaySubject<RepeatModeEnum>(1);
   private _currentTrack$: ReplaySubject<Track> = new ReplaySubject<Track>();
   private _currentQueue$: BehaviorSubject<Track[]> = new BehaviorSubject<Track[]>([]);
   private _currentTrackAudioTime$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
@@ -32,13 +34,13 @@ export class MusicControlService {
   private readonly _seekOffset: number = 30;
 
   constructor(private queueService: QueueService<Track>) {
+    this._repeatMode$.next(this.queueService.repeatMode);
     this._currentTrackAudio = new Audio();
     this._currentTrackAudio.preload = 'metadata';
     this._currentTrackAudio.addEventListener('play', () => this.updatePlaybackState());
     this._currentTrackAudio.addEventListener('pause', () => this.updatePlaybackState());
     this._currentTrackAudio.addEventListener('ended', () => this.onTrackEnded());
     this._currentTrackAudio.addEventListener('loadedmetadata', () => this.onLoadedMetadata());
-
     MediaSession.setActionHandler({ action: 'play' }, () => this.play());
     MediaSession.setActionHandler({ action: 'pause' }, () => this.pause());
     MediaSession.setActionHandler({ action: 'previoustrack' }, () => this.prev());
@@ -102,6 +104,10 @@ export class MusicControlService {
     return this.queueService.repeatMode;
   }
 
+  public get repeatMode$(): Observable<RepeatModeEnum> {
+    return this._repeatMode$.asObservable();
+  }
+
   public set nextQueue(tracks: Track[]) {
     if (this._nextQueue !== tracks) {
       this._nextQueue = tracks;
@@ -110,6 +116,7 @@ export class MusicControlService {
 
   public nextRepeatMode(): void {
     this.queueService.repeatMode = (this.repeatMode + 1) % 3;
+    this._repeatMode$.next(this.queueService.repeatMode);
   }
 
   public playPosition(position: number): void {
@@ -164,7 +171,6 @@ export class MusicControlService {
 
   private watchCurrentItemChanges(): void {
     this.queueService.currentItem$.subscribe((currentTrack: Track) => {
-      this._currentTrackAudio.pause();
       this._currentTrackAudio.src = this.currentTrack.src;
       if (this.isPlaying) {
         this.play();
