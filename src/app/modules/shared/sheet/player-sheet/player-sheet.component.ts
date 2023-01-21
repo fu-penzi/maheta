@@ -11,13 +11,14 @@ import { Swiper } from 'swiper/types';
 import { VirtualOptions } from 'swiper/types/modules/virtual';
 import { take, takeUntil } from 'rxjs';
 import { SwiperOptions } from 'swiper';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'maheta-player',
-  templateUrl: './player.component.html',
-  styleUrls: ['./player.component.scss'],
+  templateUrl: './player-sheet.component.html',
+  styleUrls: ['./player-sheet.component.scss'],
 })
-export class PlayerComponent extends BaseComponent implements OnInit {
+export class PlayerSheetComponent extends BaseComponent implements OnInit {
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
 
   public currentTrack: Track;
@@ -35,7 +36,10 @@ export class PlayerComponent extends BaseComponent implements OnInit {
     centeredSlides: true,
   };
 
-  constructor(private readonly musicControlService: MusicControlService) {
+  constructor(
+    private readonly musicControlService: MusicControlService,
+    private bottomSheetRef: MatBottomSheetRef<PlayerSheetComponent>
+  ) {
     super();
   }
 
@@ -90,5 +94,9 @@ export class PlayerComponent extends BaseComponent implements OnInit {
 
   public updateSliderPosition(): void {
     return this.swiper?.swiperRef.slideTo(this.queuePosition);
+  }
+
+  public close(): void {
+    this.bottomSheetRef.dismiss();
   }
 }

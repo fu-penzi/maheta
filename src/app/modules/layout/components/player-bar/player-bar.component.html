@@ -5,7 +5,7 @@
     mode="determinate"
   ></mat-progress-bar>
 
-  <a class="player-bar" [routerLink]="currentTrack ? playerRouterLink : undefined">
+  <div class="player-bar" (click)="openPlayerSheet()">
     <div class="track">
       <object
         class="track-thumb"
@@ -20,7 +20,7 @@
         <span class="track-info__author">{{ currentTrack?.author || defaultTrack.author }}</span>
       </div>
     </div>
-  </a>
+  </div>
 
   <div class="controls">
     <button

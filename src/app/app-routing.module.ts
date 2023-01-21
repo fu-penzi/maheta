@@ -17,10 +17,6 @@ const routes: Routes = [
           import('./maheta/settings/settings.module').then((m) => m.SettingsModule),
       },
       {
-        path: UrlEnum.PLAYER,
-        loadChildren: () => import('./maheta/player/player.module').then((m) => m.PlayerModule),
-      },
-      {
         path: UrlEnum.SONGS,
         loadChildren: () => import('./maheta/songs/songs.module').then((m) => m.SongsModule),
       },

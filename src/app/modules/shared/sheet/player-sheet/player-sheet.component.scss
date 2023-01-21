@@ -1,9 +1,12 @@
 @use 'variables' as *;
+@use '@angular/material' as mat;
+@include sheet;
 
 :host {
   display: block;
   position: relative;
-  min-height: calc(100vh - 125px);
+  min-height: calc(100vh - 56px);
+  margin-top: 56px;
 }
 
 .swiper-carousel-wrapper {

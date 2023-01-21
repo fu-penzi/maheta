@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { App } from '@capacitor/app';
 
 import { UrlEnum } from '@src/app/model/url.enum';
+import { MahetaService } from '@src/app/services/maheta.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class NavigationService {
   public bottomNavTabUrl: UrlEnum = UrlEnum.ALBUMS;
 
   private _history: string[] = [];
-  constructor(private router: Router, private zone: NgZone) {
+  constructor(private router: Router, private zone: NgZone, private mahetaService: MahetaService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this._history.push(event.urlAfterRedirects);
@@ -27,12 +28,20 @@ export class NavigationService {
 
     App.addListener('backButton', () => {
       this.zone.run(() => {
+        if (this.mahetaService.playerSheetOpen) {
+          this.mahetaService.closePlayerSheet();
+          return;
+        }
         this.back();
       });
     });
   }
 
   public back(): void {
+    if (this.mahetaService.playerSheetOpen) {
+      this.mahetaService.closePlayerSheet();
+      return;
+    }
     const current: string | undefined = this._history.pop();
     const prev: string | undefined = this._history[this._history.length - 1];
     if (prev === current) {
