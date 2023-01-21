@@ -1,20 +1,22 @@
-<cdk-virtual-scroll-viewport itemSize="64" maxBufferPx="1000" minBufferPx="=64">
-  <ul class="album-list">
-    <li class="album" *cdkVirtualFor="let album of albums">
-      <a [routerLink]="album.title">
-        <object class="album__thumb" [data]="album.thumbUrl | safe" type="image/jpeg">
-          <img class="album__thumb" [alt]="album.title" [src]="'' | safe" />
-        </object>
+<ul class="album-list">
+  <ng-container #itemsContainer></ng-container>
+</ul>
 
-        <div class="album-info">
-          <p class="album-info__title">{{ album.title }}</p>
-          <div class="album-info__text">
-            <span>{{ album.author }}</span>
-            <span *ngIf="album?.year">{{ album.year }}</span>
-            <span class="transparent-text" *ngIf="!album?.year"> ? </span>
-          </div>
+<ng-template #item let-album>
+  <li class="album">
+    <a [routerLink]="album.title">
+      <object class="album__thumb" [data]="album.thumbUrl | safe" type="image/jpeg">
+        <img class="album__thumb" [alt]="album.title" [src]="'' | safe" />
+      </object>
+
+      <div class="album-info">
+        <p class="album-info__title">{{ album.title }}</p>
+        <div class="album-info__text">
+          <span>{{ album.author }}</span>
+          <span *ngIf="album?.year">{{ album.year }}</span>
+          <span class="transparent-text" *ngIf="!album?.year"> ? </span>
         </div>
-      </a>
-    </li>
-  </ul>
-</cdk-virtual-scroll-viewport>
+      </div>
+    </a>
+  </li>
+</ng-template>
