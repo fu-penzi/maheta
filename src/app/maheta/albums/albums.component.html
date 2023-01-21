@@ -1,8 +1,11 @@
 <ul class="album-list">
+  <ng-container *ngFor="let album of firstChunk">
+    <ng-container *ngTemplateOutlet="item; context: { $implicit: album }"></ng-container>
+  </ng-container>
   <ng-container #itemsContainer></ng-container>
 </ul>
 
-<ng-template #item let-album>
+<ng-template #item let-album let-i="i">
   <li class="album">
     <a [routerLink]="album.title">
       <object class="album__thumb" [data]="album.thumbUrl | safe" type="image/jpeg">
