@@ -1,51 +1,49 @@
-<cdk-virtual-scroll-viewport itemSize="64" maxBufferPx="1000" minBufferPx="=64">
-  <ul>
-    <li
-      class="scroll-element"
-      *cdkVirtualFor="let track of tracks; index as i; trackBy: trackByIndex"
-    >
-      <div class="content" (click)="playPosition(i)" mat-ripple>
-        <object class="thumb" [data]="track.thumbUrl | safe" type="image/jpeg">
-          <img class="thumb" [alt]="track?.title" [src]="'' | safe" />
-        </object>
+<cdk-virtual-scroll-viewport itemSize="64" appendOnly>
+  <div
+    class="scroll-element"
+    *cdkVirtualFor="let track of tracks; index as i; trackBy: trackByIndex"
+  >
+    <div class="content" (click)="playPosition(i)" mat-ripple>
+      <object class="thumb" [data]="track.thumbUrl | safe" type="image/jpeg">
+        <img class="thumb" [alt]="track?.title" [src]="'' | safe" />
+      </object>
 
-        <div class="info" [class.active]="isCurrentTrack(track)">
-          <span class="info__title">{{ track.title }}</span>
-          <span class="info__author">{{ track.author }}</span>
-        </div>
+      <div class="info" [class.active]="isCurrentTrack(track)">
+        <span class="info__title">{{ track.title }}</span>
+        <span class="info__author">{{ track.author }}</span>
       </div>
+    </div>
 
-      <div class="menu">
-        <span class="menu__duration">{{ track.duration | mahetaDuration }}</span>
-        <button
-          [matMenuTriggerFor]="menu"
-          aria-label="Example icon button with a bookmark icon"
-          mat-icon-button
-        >
-          <mat-icon>more_vert</mat-icon>
+    <div class="menu">
+      <span class="menu__duration">{{ track.duration | mahetaDuration }}</span>
+      <button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon button with a bookmark icon"
+        mat-icon-button
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <button (click)="openEditLyricsDialog(track)" mat-menu-item>
+          <mat-icon>music_note</mat-icon>
+          <ng-container>{{ 'global.editLyrics' | translate }}</ng-container>
         </button>
 
-        <mat-menu #menu="matMenu">
-          <button (click)="openEditLyricsDialog(track)" mat-menu-item>
-            <mat-icon>music_note</mat-icon>
-            <ng-container>{{ 'global.editLyrics' | translate }}</ng-container>
+        <ng-container *ngIf="playlist">
+          <button (click)="deleteFromPlaylist(track)" mat-menu-item>
+            <mat-icon>delete_forever</mat-icon>
+            <ng-container>{{ 'TRACK_MENU.deleteFromPlaylist' | translate }}</ng-container>
           </button>
+        </ng-container>
 
-          <ng-container *ngIf="playlist">
-            <button (click)="deleteFromPlaylist(track)" mat-menu-item>
-              <mat-icon>delete_forever</mat-icon>
-              <ng-container>{{ 'TRACK_MENU.deleteFromPlaylist' | translate }}</ng-container>
-            </button>
-          </ng-container>
-
-          <ng-container *ngIf="!playlist">
-            <button (click)="openAddToPlaylistDialog(track)" mat-menu-item>
-              <mat-icon>playlist_add</mat-icon>
-              <ng-container>{{ 'TRACK_MENU.addToPlaylist' | translate }}</ng-container>
-            </button>
-          </ng-container>
-        </mat-menu>
-      </div>
-    </li>
-  </ul>
+        <ng-container *ngIf="!playlist">
+          <button (click)="openAddToPlaylistDialog(track)" mat-menu-item>
+            <mat-icon>playlist_add</mat-icon>
+            <ng-container>{{ 'TRACK_MENU.addToPlaylist' | translate }}</ng-container>
+          </button>
+        </ng-container>
+      </mat-menu>
+    </div>
+  </div>
 </cdk-virtual-scroll-viewport>
