@@ -1,6 +1,6 @@
 @use 'variables' as *;
 
-@include scroll-view;
+@include scroll-view-cdk;
 @include track-list;
 
 :host {

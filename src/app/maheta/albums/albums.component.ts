@@ -1,10 +1,12 @@
-import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 
 import { Album } from '@src/app/db/domain/album';
+import { UrlEnum } from '@src/app/model/url.enum';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
 import { MusicLibraryAlbumsService } from '@src/app/services/music-library/music-library-albums.service';
 
-import { interval, takeUntil } from 'rxjs';
+import { filter, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'maheta-albums',
@@ -12,44 +14,31 @@ import { interval, takeUntil } from 'rxjs';
   styleUrls: ['./albums.component.scss'],
 })
 export class AlbumsComponent extends BaseComponent implements OnInit {
-  @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
-  @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
+  public albums: Album[] = [];
+  public displayAlbumTracks: boolean = false;
 
-  public firstChunk: Album[] = [];
-
-  private _albums: Album[] = [];
-
-  private readonly _firstChunkSize: number = 9;
-
-  constructor(private musicLibraryAlbumsService: MusicLibraryAlbumsService) {
+  constructor(
+    private musicLibraryAlbumsService: MusicLibraryAlbumsService,
+    private router: Router
+  ) {
     super();
   }
 
   public ngOnInit(): void {
+    this.router.events
+      .pipe(
+        takeUntil(this.onDestroy$),
+        filter((event) => event instanceof NavigationStart)
+      )
+      .subscribe((event) => {
+        if (event instanceof NavigationStart) {
+          this.displayAlbumTracks = event.url.includes(UrlEnum.ALBUMS + '/');
+        }
+      });
     this.musicLibraryAlbumsService.albums$
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((albums: Album[]) => {
-        this._albums = albums;
-        this.firstChunk = albums.slice(0, this._firstChunkSize);
-        this.buildData(this._firstChunkSize, albums.length);
+        this.albums = albums;
       });
-  }
-
-  private buildData(startIndex: number, length: number): void {
-    const ITEMS_RENDERED_AT_ONCE = 3;
-
-    let currentIndex = startIndex;
-    interval(10).subscribe(() => {
-      for (let i = currentIndex; i < currentIndex + ITEMS_RENDERED_AT_ONCE; i++) {
-        if (i >= length) {
-          break;
-        }
-        const context = {
-          $implicit: this._albums[i],
-        };
-        this.container.createEmbeddedView(this.template, context);
-      }
-      currentIndex += ITEMS_RENDERED_AT_ONCE;
-    });
   }
 }

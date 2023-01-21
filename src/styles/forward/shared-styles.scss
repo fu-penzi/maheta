@@ -2,19 +2,38 @@
 @use 'utility' as *;
 
 @mixin scroll-view() {
+  height: calc(100vh - 200px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  li:last-child {
+    margin-bottom: spacing(2);
+  }
+
+  li:first-child {
+    margin-top: spacing(2);
+  }
+}
+
+@mixin scroll-view-cdk() {
   cdk-virtual-scroll-viewport {
     height: calc(100vh - 200px);
     overflow-x: hidden;
+
+    li:last-child {
+      margin-bottom: spacing(2);
+    }
+
+    li:first-child {
+      margin-top: spacing(2);
+    }
   }
 }
 
 @mixin track-list() {
   .scroll-element {
+    height: 64px;
     position: relative;
-  }
-
-  .scroll-element:last-child {
-    margin-bottom: spacing(3);
   }
 
   .content {
@@ -24,7 +43,6 @@
     height: size(xl);
     padding-left: spacing(4);
     padding-right: spacing(2);
-    margin-top: spacing(1);
 
     .thumb {
       object-fit: cover;

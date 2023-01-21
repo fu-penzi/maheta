@@ -1,12 +1,5 @@
-<ul class="album-list">
-  <ng-container *ngFor="let album of firstChunk">
-    <ng-container *ngTemplateOutlet="item; context: { $implicit: album }"></ng-container>
-  </ng-container>
-  <ng-container #itemsContainer></ng-container>
-</ul>
-
-<ng-template #item let-album let-i="i">
-  <li class="album">
+<ul class="album-list" [style.display]="displayAlbumTracks ? 'none' : 'grid'">
+  <li class="album" *ngFor="let album of albums">
     <a [routerLink]="album.title">
       <object class="album__thumb" [data]="album.thumbUrl | safe" type="image/jpeg">
         <img class="album__thumb" [alt]="album.title" [src]="'' | safe" />
@@ -22,4 +15,6 @@
       </div>
     </a>
   </li>
-</ng-template>
+</ul>
+
+<router-outlet *ngIf="displayAlbumTracks"></router-outlet>
