@@ -35,6 +35,7 @@ export class AlbumsComponent extends BaseComponent implements OnInit {
           this.displayAlbumTracks = event.url.includes(UrlEnum.ALBUMS + '/');
         }
       });
+
     this.musicLibraryAlbumsService.albums$
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((albums: Album[]) => {

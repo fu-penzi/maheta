@@ -1,16 +1,15 @@
 @use 'variables' as *;
 @use '@angular/material' as mat;
 
-
 :host {
   display: block;
   font-size: 1rem;
-  @include scroll-view;
 }
 
 .album-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  @include scroll-view;
 }
 
 .album {

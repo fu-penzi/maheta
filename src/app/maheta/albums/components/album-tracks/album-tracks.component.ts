@@ -23,10 +23,6 @@ export class AlbumTracksComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     super();
-    window.scrollTo({
-      top: 0,
-      left: 0,
-    });
   }
 
   public get albumTracks(): Track[] {
