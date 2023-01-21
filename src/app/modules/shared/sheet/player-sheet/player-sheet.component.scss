@@ -7,6 +7,7 @@
   position: relative;
   min-height: calc(100vh - 56px);
   margin-top: 56px;
+  overflow: hidden;
 }
 
 .swiper-carousel-wrapper {
@@ -20,15 +21,15 @@
   }
 
   .slide {
-    min-height: calc(100vh - 125px);
-    padding-top: spacing(8);
+    min-height: calc(100vh - 56px);
+    padding-top: spacing(14);
   }
 }
 
 .player-bottom {
   position: absolute;
   width: 100%;
-  bottom: 40px;
+  bottom: 70px;
   padding: 0 spacing(8);
 }
 
@@ -38,6 +39,7 @@
   margin-right: auto;
   object-fit: cover;
   width: 100%;
+
   //width: 250px;
   //height: 250px;
   //min-width: 250px;
@@ -47,12 +49,11 @@
 .track-info {
   display: flex;
   margin: 0 auto;
-  padding-top: 325px;
-  padding-bottom: spacing(5);
+  padding: 375px spacing(8) spacing(5) spacing(8);
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  width: calc(80%);
+  width: calc(100%);
   text-align: center;
   @include text-ellipsis;
 
