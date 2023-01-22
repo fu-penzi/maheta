@@ -1,7 +1,14 @@
 <!--<div [ngClass]="['mat-typography', themeClass]">-->
 <maheta-app-bar></maheta-app-bar>
 
-<div class="page-content">
+<div
+  class="page-content animate__animated animate__faster"
+  (animationend)="resetPlayerAnimation()"
+  [ngClass]="{
+    animate__fadeOutUp: playerOpenAnimations.open,
+    animate__fadeInDown: playerOpenAnimations.close
+  }"
+>
   <router-outlet></router-outlet>
 </div>
 

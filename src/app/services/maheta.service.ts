@@ -4,6 +4,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-dialog/loading-dialog.component';
 import { PlayerSheetComponent } from '@src/app/modules/shared/sheet/player-sheet/player-sheet.component';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Observable, Subject } from 'rxjs';
 
 export interface ProgressBarConfig {
   isShown: boolean;
@@ -27,8 +28,13 @@ export class MahetaService {
 
   private _dialogRef: MatDialogRef<LoadingDialogComponent>;
   private _playerSheetRef: MatBottomSheetRef<PlayerSheetComponent>;
+  private _playerSheetOpen$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private matDialogService: MatDialog, private bottomSheet: MatBottomSheet) {}
+
+  public get playerSheetOpen$(): Observable<boolean> {
+    return this._playerSheetOpen$.asObservable();
+  }
 
   public openLoadingDialog(): void {
     this._dialogRef = this.matDialogService.open(LoadingDialogComponent, dialogConf);
@@ -40,12 +46,17 @@ export class MahetaService {
 
   public openPlayerSheet(): void {
     this.playerSheetOpen = true;
+    this._playerSheetOpen$.next(true);
     this._playerSheetRef = this.bottomSheet.open(PlayerSheetComponent);
-    this._playerSheetRef.afterDismissed().subscribe(() => (this.playerSheetOpen = false));
+    this._playerSheetRef.afterDismissed().subscribe(() => {
+      this.playerSheetOpen = false;
+      this._playerSheetOpen$.next(false);
+    });
   }
 
   public closePlayerSheet(): void {
     this._playerSheetRef.dismiss();
+    this._playerSheetOpen$.next(false);
   }
 
   public showProgressBar(): void {

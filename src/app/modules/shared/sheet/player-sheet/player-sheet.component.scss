@@ -6,30 +6,28 @@
   display: block;
   position: relative;
   min-height: calc(100vh - 56px);
-  margin-top: 56px;
-  overflow: hidden;
+  padding-top: 56px;
 }
 
 .swiper-carousel-wrapper {
   position: absolute;
   top: 0;
+  height: 100%;
   width: 100%;
   z-index: 0;
 
   .swiper {
-    padding-bottom: spacing(8);
+    height: 100%;
   }
 
   .slide {
-    min-height: calc(100vh - 56px);
+    height: 100%;
     padding-top: spacing(14);
   }
 }
 
 .player-bottom {
-  position: absolute;
   width: 100%;
-  bottom: 70px;
   padding: 0 spacing(8);
 }
 
@@ -49,7 +47,7 @@
 .track-info {
   display: flex;
   margin: 0 auto;
-  padding: 375px spacing(8) spacing(5) spacing(8);
+  padding: 310px spacing(8) spacing(10) spacing(8);
   flex-direction: column;
   align-items: center;
   overflow: hidden;

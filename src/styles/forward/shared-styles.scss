@@ -2,7 +2,7 @@
 @use 'utility' as *;
 
 @mixin scroll-view() {
-  height: calc(100vh - 200px);
+  max-height: calc(100vh - 200px);
   overflow-y: scroll;
   overflow-x: hidden;
 

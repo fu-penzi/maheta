@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import { UrlEnum } from '@src/app/model/url.enum';
@@ -11,7 +12,6 @@ import { Swiper } from 'swiper/types';
 import { VirtualOptions } from 'swiper/types/modules/virtual';
 import { take, takeUntil } from 'rxjs';
 import { SwiperOptions } from 'swiper';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'maheta-player',

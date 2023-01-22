@@ -5,6 +5,7 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { PlatformEnum } from '@src/app/model/platform.enum';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
+import { MahetaService } from '@src/app/services/maheta.service';
 import { NavigationService } from '@src/app/services/navigation.service';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -25,11 +26,16 @@ export class LayoutComponent implements OnInit {
   @HostBinding('class.mobile') isMobile: boolean = false;
 
   public bottomNavTabs: BottomNavTab[];
+  public playerOpenAnimations = {
+    open: false,
+    close: false,
+  };
 
   constructor(
     private themeService: ThemeService,
     private navigation: NavigationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private mahetaService: MahetaService
   ) {}
 
   public get themeClass(): ThemeClassEnum {
@@ -48,6 +54,16 @@ export class LayoutComponent implements OnInit {
 
     this.setupBottomNav();
     SplashScreen.hide();
+
+    this.mahetaService.playerSheetOpen$.subscribe((isOpen: boolean) => {
+      this.playerOpenAnimations.open = isOpen;
+      this.playerOpenAnimations.close = !isOpen;
+    });
+  }
+
+  public resetPlayerAnimation(): void {
+    this.playerOpenAnimations.open = false;
+    this.playerOpenAnimations.close = false;
   }
 
   public selectTab(tab: BottomNavTab): void {
