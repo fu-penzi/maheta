@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
 import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-dialog/loading-dialog.component';
 import { PlayerSheetComponent } from '@src/app/modules/shared/sheet/player-sheet/player-sheet.component';
-import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+
 import { Observable, Subject } from 'rxjs';
 
 export interface ProgressBarConfig {

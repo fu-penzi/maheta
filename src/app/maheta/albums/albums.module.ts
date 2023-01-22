@@ -4,11 +4,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
+import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { SharedModule } from '@src/app/modules/shared/shared.module';
 
 import { AlbumsComponent } from '@maheta/albums/albums.component';
 import { AlbumTracksComponent } from '@maheta/albums/components/album-tracks/album-tracks.component';
-import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 
 @NgModule({
   declarations: [AlbumsComponent, AlbumTracksComponent],
