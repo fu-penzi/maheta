@@ -15,7 +15,17 @@
     "openapi-generate": "rimraf src/app/api & openapi-generator-cli generate -i openapi/openapi.json -g typescript-angular -o src/app/api/ --additional-properties=modelSuffix=Dto,modelFileSuffix=Dto & npm run openapi-lint",
     "openapi-lint": "npx prettier --write src/app/api",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{ts,js,scss,html,json}": [
+      "prettier --write"
+    ],
+    "*.{ts,js,html}": [
+      "eslint --fix"
+    ]
   },
   "private": true,
   "dependencies": {
@@ -81,12 +91,14 @@
     "electron": "^19.0.8",
     "eslint": "^8.18.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "husky": "^8.0.0",
     "jasmine-core": "~4.1.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "lint-staged": "^13.1.0",
     "node-mock-server": "^0.25.4",
     "prettier": "^2.7.1",
     "stylelint": "^14.9.1",
