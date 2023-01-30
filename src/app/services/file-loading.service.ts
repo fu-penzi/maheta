@@ -30,6 +30,9 @@ export interface TrackChanges {
   deleteTracks: Track[];
 }
 
+const getFileReadingError = (err: any, path: string): string =>
+  `Error: ${err} occurred when loading file: ${path}`;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -44,7 +47,6 @@ export class FileLoadingService {
   public async getTrackChanges(existingTracks: Track[]): Promise<TrackChanges> {
     this._onReload$.next();
     const tracksWithoutMetadata: Track[] = await this.getTracksWithoutMetadata();
-
     const existingTrackPaths: string[] = existingTracks.map((track: Track) => track.uri);
     const deleteTracks: Track[] = existingTracks.filter(
       (track: Track) => !this._trackPathsSet.has(track.uri)
@@ -144,18 +146,26 @@ export class FileLoadingService {
   }
 
   private readDirRecursive = async (path: string): Promise<unknown> => {
-    const filePaths: string[] = await Filesystem.readdir({ path: path }).then(
-      (files: ReaddirResult) => files.files.map((file: string) => `${path}/${file}`)
-    );
+    if (path.includes('#')) {
+      return '';
+    }
+    const filePaths: string[] = await Filesystem.readdir({ path: path })
+      .then((files: ReaddirResult) =>
+        files.files
+          .filter((file: string) => !file.includes('#'))
+          .map((file: string) => `${path}/${file}`)
+      )
+      .catch((err) => {
+        getFileReadingError(err, path);
+        return [];
+      });
+
     if (!filePaths.length || !(await this.isValidDir(path))) {
       return '';
     }
-
     const promises: Promise<unknown>[] = filePaths.map(async (filePath: string) => {
       if (await this.isValidDir(filePath)) {
-        return this.readDirRecursive(filePath).catch((err) =>
-          console.error(`Error: ${err} occurred when loading tracks from directory:${filePath}`)
-        );
+        return this.readDirRecursive(filePath);
       }
       return (await this.isValidMusicFile(filePath)) ? filePath : '';
     });
@@ -173,7 +183,11 @@ export class FileLoadingService {
           !!path &&
           !restrictedDirs.some((restrictedFile: string) => path.endsWith(restrictedFile)) &&
           fileType === FileTypeEnum.DIR
-      );
+      )
+      .catch((err) => {
+        console.error(getFileReadingError(err, path));
+        return false;
+      });
   }
 
   private isValidMusicFile(path: string): Promise<boolean> {
@@ -188,6 +202,10 @@ export class FileLoadingService {
           !restrictedDirs.some((restrictedFile: string) => path.endsWith(restrictedFile)) &&
           validFileExtensions.some((validFileExtension) => path.endsWith(validFileExtension)) &&
           fileType === FileTypeEnum.FILE
-      );
+      )
+      .catch((err) => {
+        console.error(getFileReadingError(err, path));
+        return false;
+      });
   }
 }
