@@ -31,6 +31,12 @@ export class TrackCollectionService extends CollectionService<Track> {
     this.loadTracksMetadata();
   }
 
+  public async resetCollectionData(): Promise<void> {
+    const { addTracks } = await this.fileLoadingService.getTrackChanges([]);
+    await this.collection.bulkUpsert(addTracks);
+    this.loadTracksMetadata();
+  }
+
   private loadTracksMetadata(): void {
     let trackNumber: number;
     let progress: number = 0;

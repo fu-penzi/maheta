@@ -13,7 +13,7 @@ import { tracksMock } from '@src/mock/tracks';
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { isArray } from 'lodash';
 import * as musicMetadata from 'music-metadata-browser';
-import { concatMap, from, Observable, of, ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
+import { concatMap, from, Observable, of, Subject, takeUntil } from 'rxjs';
 
 enum FileTypeEnum {
   FILE = 'file',
@@ -37,8 +37,6 @@ const getFileReadingError = (err: any, path: string): string =>
   providedIn: 'root',
 })
 export class FileLoadingService {
-  public trackUpdate$: ReplaySubject<Track> = new ReplaySubject<Track>();
-
   private _trackPathsSet: Set<string> = new Set<string>();
   private _onReload$: Subject<void> = new Subject<void>();
 
@@ -67,13 +65,11 @@ export class FileLoadingService {
 
     return of(...tracks).pipe(
       concatMap((track: Track) => from(this.getTrackWithMetadata(track))),
-      tap((track: Track) => this.trackUpdate$.next(track)),
       takeUntil(this._onReload$)
     );
   }
 
   private async getTracksWithoutMetadata(): Promise<Track[]> {
-    this._onReload$.next();
     if (Capacitor.getPlatform() !== PlatformEnum.ANDROID) {
       return tracksMock;
     }
@@ -84,6 +80,7 @@ export class FileLoadingService {
       const trackPaths = await this.readTrackPaths(readOptions);
       trackPaths.forEach((trackPath: string) => this._trackPathsSet.add(trackPath));
     }
+    // console.error(348);
     return [...this._trackPathsSet].map((trackPath) =>
       getDefaultTrackObject(trackPath, Capacitor.convertFileSrc(trackPath))
     );

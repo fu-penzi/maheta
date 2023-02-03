@@ -17,7 +17,6 @@ export class AlbumsComponent extends BaseComponent implements OnInit {
   public albums: Album[] = [];
   public displayAlbumTracks: boolean = false;
 
-  public initAnimations: boolean = false;
   constructor(
     private musicLibraryAlbumsService: MusicLibraryAlbumsService,
     private router: Router
@@ -33,7 +32,6 @@ export class AlbumsComponent extends BaseComponent implements OnInit {
       )
       .subscribe((event) => {
         if (event instanceof NavigationStart) {
-          this.initAnimations = true;
           this.displayAlbumTracks = event.url.includes(UrlEnum.ALBUMS + '/');
         }
       });

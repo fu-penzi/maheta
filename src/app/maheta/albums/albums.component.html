@@ -1,12 +1,7 @@
 <ul class="album-list" [style.display]="displayAlbumTracks ? 'none' : 'grid'">
   <li class="album" *ngFor="let album of albums">
     <a [routerLink]="album.title">
-      <object
-        class="album__thumb"
-        [ngClass]="{ 'animate__animated animate__fadeIn': !initAnimations }"
-        [data]="album.thumbUrl | safe"
-        type="image/jpeg"
-      >
+      <object class="album__thumb" [data]="album.thumbUrl | safe" type="image/jpeg">
         <img class="album__thumb" [alt]="album.title" [src]="'' | safe" />
       </object>
 

@@ -38,9 +38,7 @@ export class DatabaseService {
     }
   }
 
-  public async dropTracksCollection(backup?: Track[]): Promise<void> {
-    const tracksBackup: Track[] =
-      backup || (await firstValueFrom(this.trackCollectionService.getAll$()));
+  public async dropTracksCollection(): Promise<void> {
     await this.trackCollectionService.collection.remove();
     await this._trackDB
       .addCollections({
@@ -52,7 +50,7 @@ export class DatabaseService {
         this.trackCollectionService.collection = res[DatabaseCollectionEnum.TRACKS];
       });
 
-    await this.trackCollectionService.reloadCollectionData(tracksBackup);
+    await this.trackCollectionService.resetCollectionData();
   }
 
   public async reloadTracksCollection(): Promise<void> {
@@ -63,10 +61,9 @@ export class DatabaseService {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   private async dropDatabaseData(): Promise<void> {
-    const tracksBackup: Track[] = await firstValueFrom(this.trackCollectionService.getAll$());
     await this._trackDB?.remove();
     await this.setupDatabase();
-    await this.dropTracksCollection(tracksBackup);
+    await this.dropTracksCollection();
   }
 
   private async setupDatabase(): Promise<void> {
