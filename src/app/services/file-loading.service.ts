@@ -13,7 +13,7 @@ import { tracksMock } from '@src/mock/tracks';
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { isArray } from 'lodash';
 import * as musicMetadata from 'music-metadata-browser';
-import { concatMap, from, Observable, of, Subject, takeUntil } from 'rxjs';
+import { from, mergeMap, Observable, of } from 'rxjs';
 
 enum FileTypeEnum {
   FILE = 'file',
@@ -38,12 +38,10 @@ const getFileReadingError = (err: any, path: string): string =>
 })
 export class FileLoadingService {
   private _trackPathsSet: Set<string> = new Set<string>();
-  private _onReload$: Subject<void> = new Subject<void>();
 
   constructor(private diagnostic: Diagnostic) {}
 
   public async getTrackChanges(existingTracks: Track[]): Promise<TrackChanges> {
-    this._onReload$.next();
     const tracksWithoutMetadata: Track[] = await this.getTracksWithoutMetadata();
     const existingTrackPaths: string[] = existingTracks.map((track: Track) => track.uri);
     const deleteTracks: Track[] = existingTracks.filter(
@@ -64,8 +62,7 @@ export class FileLoadingService {
     }
 
     return of(...tracks).pipe(
-      concatMap((track: Track) => from(this.getTrackWithMetadata(track))),
-      takeUntil(this._onReload$)
+      mergeMap((track: Track) => from(this.getTrackWithMetadata(track)), 10)
     );
   }
 
