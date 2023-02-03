@@ -8,6 +8,7 @@ const config: CapacitorConfig = {
   appName: 'Maheta',
   webDir: 'dist/maheta',
   bundledWebRuntime: false,
+  loggingBehavior: 'none',
   // server: {
   //   url: `http://${hostIp}:8100`,
   //   cleartext: true,

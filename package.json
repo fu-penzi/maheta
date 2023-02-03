@@ -16,16 +16,7 @@
     "openapi-lint": "npx prettier --write src/app/api",
     "test": "ng test",
     "lint": "ng lint",
-    "prepare": "husky install",
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{ts,js,scss,html,json}": [
-      "prettier --write"
-    ],
-    "*.{ts,js,html}": [
-      "eslint --fix"
-    ]
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {

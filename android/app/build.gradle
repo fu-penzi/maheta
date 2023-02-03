@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
-  compileSdk targetSdkVersion
+
+    namespace 'com.fupenzi.maheta'
+    compileSdk targetSdkVersion
   defaultConfig {
         applicationId "com.fupenzi.maheta"
         minSdkVersion rootProject.ext.minSdkVersion
