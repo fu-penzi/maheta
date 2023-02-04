@@ -42,8 +42,8 @@ export abstract class CollectionService<CollectionDocument> {
     );
   }
 
-  public isCollectionEmpty(): Observable<boolean> {
-    return this.getAll$().pipe(map((items: CollectionDocument[]) => !items?.length));
+  public async isCollectionEmpty(): Promise<boolean> {
+    return !(await this.collection.findOne().exec());
   }
 
   public getDocument$(documentItem: CollectionDocument): Observable<RxDocument> {

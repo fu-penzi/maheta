@@ -6,7 +6,7 @@ import { DatabaseService } from '@src/app/db/database.service';
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { Track } from '@src/app/db/domain/track.schema';
 
-import { concatMap, Observable, ReplaySubject, startWith, zip } from 'rxjs';
+import { Observable, ReplaySubject, startWith, switchMap, zip } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +31,7 @@ export class MusicLibraryService {
     this.databaseService.databaseChanges$
       .pipe(
         startWith({}),
-        concatMap(() =>
+        switchMap(() =>
           zip(this.trackCollectionService.getAll$(), this.playlistCollectionService.getAll$())
         )
       )

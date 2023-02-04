@@ -77,7 +77,7 @@ export class FileLoadingService {
       const trackPaths = await this.readTrackPaths(readOptions);
       trackPaths.forEach((trackPath: string) => this._trackPathsSet.add(trackPath));
     }
-    // console.error(348);
+
     return [...this._trackPathsSet].map((trackPath) =>
       getDefaultTrackObject(trackPath, Capacitor.convertFileSrc(trackPath))
     );
@@ -140,7 +140,7 @@ export class FileLoadingService {
   }
 
   private readDirRecursive = async (path: string): Promise<unknown> => {
-    if (path.includes('#')) {
+    if (path.includes('#') || !(await this.isValidDir(path))) {
       return '';
     }
     const filePaths: string[] = await Filesystem.readdir({ path: path })
@@ -154,7 +154,7 @@ export class FileLoadingService {
         return [];
       });
 
-    if (!filePaths.length || !(await this.isValidDir(path))) {
+    if (!filePaths.length) {
       return '';
     }
     const promises: Promise<unknown>[] = filePaths.map(async (filePath: string) => {

@@ -5,7 +5,7 @@ import { Track } from '@src/app/db/domain/track.schema';
 import { FileLoadingService } from '@src/app/services/file-loading.service';
 import { MahetaService } from '@src/app/services/maheta.service';
 
-import { finalize, map, switchMap, takeWhile, tap } from 'rxjs';
+import { bufferTime, finalize, map, switchMap, takeWhile, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,6 @@ export class TrackCollectionService extends CollectionService<Track> {
 
   public async reloadCollectionData(tracksBackup: Track[]): Promise<void> {
     const { addTracks, deleteTracks } = await this.fileLoadingService.getTrackChanges(tracksBackup);
-
     deleteTracks.map((track: Track) => this.delete$(track).subscribe());
 
     const tracksLoadingResult: Track[] = addTracks.map((track: Track) => ({
@@ -50,9 +49,10 @@ export class TrackCollectionService extends CollectionService<Track> {
           trackNumber = tracks.length;
         }),
         switchMap((tracks: Track[]) => this.fileLoadingService.getTracksWithMetadata$(tracks)),
-        map((track: Track) => {
-          progress++;
-          this.collection.upsert(track);
+        bufferTime(1500),
+        map((track: Track[]) => {
+          progress = progress + track.length;
+          this.collection.bulkUpsert(track);
           const barProgress = (progress / trackNumber) * 100;
           this.mahetaService.updateProgressBar(parseInt(barProgress.toFixed(0)));
         }),

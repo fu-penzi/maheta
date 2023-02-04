@@ -30,10 +30,7 @@ export class DatabaseService {
 
   public async initDatabase(): Promise<void> {
     await this.setupDatabase();
-    const isDatabaseEmpty: boolean = await firstValueFrom(
-      this.trackCollectionService.isCollectionEmpty()
-    );
-    if (isDatabaseEmpty) {
+    if (await this.trackCollectionService.isCollectionEmpty()) {
       await this.reloadTracksCollection();
     }
   }
