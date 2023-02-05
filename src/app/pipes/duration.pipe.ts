@@ -4,9 +4,9 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'mahetaDuration',
 })
 export class DurationPipe implements PipeTransform {
-  transform(totalSeconds: number | undefined | null): string {
+  transform(totalSeconds: number | undefined | null, noFallback?: boolean): string {
     if (!totalSeconds) {
-      return '0:00';
+      return noFallback ? '' : '0:00';
     }
 
     const seconds: number = totalSeconds % 60;

@@ -15,7 +15,7 @@
     </div>
 
     <div class="menu">
-      <span class="menu__duration">{{ track.duration | mahetaDuration }}</span>
+      <span class="menu__duration">{{ track.duration | mahetaDuration: true }}</span>
       <button
         [matMenuTriggerFor]="menu"
         aria-label="Example icon button with a bookmark icon"
