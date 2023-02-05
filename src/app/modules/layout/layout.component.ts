@@ -56,11 +56,6 @@ export class LayoutComponent implements OnInit {
     });
   }
 
-  public resetPlayerAnimation(): void {
-    this.playerOpenAnimations.open = false;
-    this.playerOpenAnimations.close = false;
-  }
-
   public selectTab(tab: BottomNavTab): void {
     this.navigation.bottomNavTabUrl = tab.url;
   }
