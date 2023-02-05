@@ -1,4 +1,4 @@
-<div class="swiper-carousel-wrapper">
+<div class="player">
   <swiper
     class="swiper"
     (slideChange)="handleSlideChange($event)"
@@ -14,15 +14,15 @@
         </object>
       </div>
     </ng-template>
+
+    <div slot="container-end">
+      <a class="track-info" [routerLink]="albumUrl">
+        <strong class="track-info__title">{{ this.currentTrack?.title }}</strong>
+        <span class="track-info__author">{{ this.currentTrack?.author }}</span>
+      </a>
+    </div>
   </swiper>
+  <maheta-player-controls class="player-bottom" [track]="currentTrack"></maheta-player-controls>
 </div>
 
-<a class="track-info" [routerLink]="albumUrl">
-  <strong class="track-info__title">{{ this.currentTrack?.title }}</strong>
-  <span class="track-info__author">{{ this.currentTrack?.author }}</span>
-</a>
-
-<div class="player-bottom">
-  <maheta-player-controls [track]="currentTrack"></maheta-player-controls>
-  <maheta-player-lyrics [track]="currentTrack"></maheta-player-lyrics>
-</div>
+<maheta-player-lyrics class="player-bottom" [track]="currentTrack"></maheta-player-lyrics>

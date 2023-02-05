@@ -1,5 +1,9 @@
 {
-  "src/**/*.scss": ["prettier --config ./.prettierrc.json --write", "stylelint", "git add"],
-  "src/**/*.component.html": ["prettier --config ./.prettierrc.json --write", "eslint --fix", "git add"],
+  "src/**/*.scss": ["prettier --config ./.prettierrc.json --write", "git add"],
+  "src/**/*.component.html": [
+    "prettier --config ./.prettierrc.json --write",
+    "eslint --fix",
+    "git add"
+  ],
   "src/**/*.ts": ["prettier --config ./.prettierrc.json --write", "eslint --fix", "git add"]
 }

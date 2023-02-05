@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -86,6 +87,7 @@ const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponen
     FormsModule,
     MatDividerModule,
     SwiperModule,
+    MatCardModule,
   ],
   exports: [...exportedModules, ...exportedComponents, SafePipe, TranslateModule],
 })

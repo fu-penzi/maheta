@@ -102,3 +102,15 @@ mat-dialog-container {
 mat-panel-title .mat-icon {
   margin-right: 10px;
 }
+
+/*
+* Mat card
+*/
+mat-card {
+  background-color: $primary-light !important;
+  color: $text !important;
+
+  .mat-card-header-text {
+    margin: 0;
+  }
+}

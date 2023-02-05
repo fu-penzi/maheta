@@ -3,32 +3,34 @@
 @include sheet;
 
 :host {
-  display: block;
-  position: relative;
-  min-height: calc(100vh - 56px);
-  padding-top: 56px;
-}
-
-.swiper-carousel-wrapper {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 0;
+  overflow-y: scroll;
 
   .swiper {
-    height: 100%;
-  }
+    width: 100%;
+    padding-top: 56px;
 
-  .slide {
-    height: 100%;
-    padding-top: spacing(14);
+    .slide {
+      height: 100%;
+      padding-top: spacing(6);
+    }
+
+    ::ng-deep .swiper-wrapper {
+      height: auto;
+    }
   }
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100vh - 42px);
 }
 
 .player-bottom {
   width: 100%;
-  padding: 0 spacing(8);
+  padding-left: spacing(8);
+  padding-right: spacing(8);
 }
 
 .track-thumb {
@@ -47,7 +49,7 @@
 .track-info {
   display: flex;
   margin: 0 auto;
-  padding: 310px spacing(8) spacing(10) spacing(8);
+  padding: spacing(10) spacing(8);
   flex-direction: column;
   align-items: center;
   overflow: hidden;

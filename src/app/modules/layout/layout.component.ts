@@ -22,8 +22,13 @@ interface BottomNavTab {
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
-  @HostBinding('class.web') isWeb: boolean = false;
-  @HostBinding('class.mobile') isMobile: boolean = false;
+  @HostBinding('class.web') isWeb: boolean = ![PlatformEnum.ANDROID, PlatformEnum.IOS].includes(
+    Capacitor.getPlatform() as PlatformEnum
+  );
+  @HostBinding('class.mobile') isMobile: boolean = [
+    PlatformEnum.ANDROID,
+    PlatformEnum.IOS,
+  ].includes(Capacitor.getPlatform() as PlatformEnum);
 
   public bottomNavTabs: BottomNavTab[];
   public playerOpenAnimations = {
@@ -43,18 +48,8 @@ export class LayoutComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    //TODO fix this
-    if (
-      [PlatformEnum.ANDROID, PlatformEnum.IOS].includes(Capacitor.getPlatform() as PlatformEnum)
-    ) {
-      this.isMobile = true;
-    } else {
-      this.isWeb = true;
-    }
-
-    this.setupBottomNav();
     SplashScreen.hide();
-
+    this.setupBottomNav();
     this.mahetaService.playerSheetOpen$.subscribe((isOpen: boolean) => {
       this.playerOpenAnimations.open = isOpen;
       this.playerOpenAnimations.close = !isOpen;

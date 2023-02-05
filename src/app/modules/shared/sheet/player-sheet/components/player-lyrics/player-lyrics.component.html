@@ -1,10 +1,12 @@
-<div class="track-lyrics" *ngIf="lyricSentences?.length">
-  <h1 class="track-lyrics__header">
-    <mat-icon>music_note</mat-icon>
-    <ng-container>{{ 'global.lyrics' | translate }}</ng-container>
-  </h1>
+<mat-card *ngIf="lyricSentences?.length">
+  <mat-card-header>
+    <mat-card-title class="lyrics-header">
+      <mat-icon>music_note</mat-icon>
+      <ng-container>{{ 'global.lyrics' | translate }}</ng-container>
+    </mat-card-title>
+  </mat-card-header>
 
-  <div class="track-lyrics__lyrics">
+  <mat-card-content class="lyrics-content">
     <div *ngFor="let sentence of lyricSentences">
       <span
         *ngFor="let word of sentence.words"
@@ -14,5 +16,5 @@
         {{ word }}
       </span>
     </div>
-  </div>
-</div>
+  </mat-card-content>
+</mat-card>

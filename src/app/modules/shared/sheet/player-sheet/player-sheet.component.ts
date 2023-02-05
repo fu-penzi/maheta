@@ -34,6 +34,7 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit {
     slidesPerView: 1.4,
     spaceBetween: 25,
     centeredSlides: true,
+    touchEventsTarget: 'container',
   };
 
   constructor(
