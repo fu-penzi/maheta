@@ -7,6 +7,7 @@ import { BaseComponent } from '@src/app/modules/shared/base.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { RepeatModeEnum } from '@src/app/services/queue.service';
 
+import { Platform } from '@ionic/angular';
 import { SwiperComponent } from 'swiper/angular';
 import { Swiper } from 'swiper/types';
 import { VirtualOptions } from 'swiper/types/modules/virtual';
@@ -31,15 +32,35 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit {
     addSlidesAfter: 2,
   };
   public swiperOptions: SwiperOptions = {
-    slidesPerView: 1.4,
+    slidesPerView: this.platform.height() < 675 ? 1.7 : 1.35,
     spaceBetween: 25,
     centeredSlides: true,
     touchEventsTarget: 'container',
+    /* eslint-disable @typescript-eslint/naming-convention */
+    breakpoints: {
+      601: {
+        slidesPerView: 1.6,
+        spaceBetween: 40,
+      },
+      981: {
+        slidesPerView: 1.8,
+        spaceBetween: 150,
+      },
+      1201: {
+        slidesPerView: 2,
+        spaceBetween: 150,
+      },
+      1536: {
+        slidesPerView: 3,
+        spaceBetween: 150,
+      },
+    },
   };
 
   constructor(
     private readonly musicControlService: MusicControlService,
-    private bottomSheetRef: MatBottomSheetRef<PlayerSheetComponent>
+    private bottomSheetRef: MatBottomSheetRef<PlayerSheetComponent>,
+    private platform: Platform
   ) {
     super();
   }

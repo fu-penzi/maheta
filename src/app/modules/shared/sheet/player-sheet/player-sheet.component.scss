@@ -6,6 +6,10 @@
   overflow-y: scroll;
 
   .swiper {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     width: 100%;
     padding-top: 56px;
 
