@@ -1,4 +1,11 @@
 <div class="player">
+  <div class="header">
+    <p class="counter mat-body">
+      {{ queuePosition + 1 }} {{ 'global.of' | translate }} {{ queueSize }}
+    </p>
+    <p class="mat-body-strong">{{ currentTrack?.album }}</p>
+  </div>
+
   <swiper
     class="swiper"
     (slideChange)="handleSlideChange($event)"
@@ -22,7 +29,7 @@
       </a>
     </div>
   </swiper>
-  <maheta-player-controls class="player-bottom" [track]="currentTrack"></maheta-player-controls>
+  <maheta-player-controls class="width-wrapper" [track]="currentTrack"></maheta-player-controls>
 </div>
 
-<maheta-player-lyrics class="player-bottom" [track]="currentTrack"></maheta-player-lyrics>
+<maheta-player-lyrics class="width-wrapper" [track]="currentTrack"></maheta-player-lyrics>

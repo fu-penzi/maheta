@@ -69,8 +69,12 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit {
     return '/' + UrlEnum.ALBUMS + '/' + this.currentTrack?.album;
   }
 
-  private get queuePosition(): number {
+  public get queuePosition(): number {
     return this.musicControlService.queuePosition;
+  }
+
+  public get queueSize(): number {
+    return this.musicControlService.queueSize;
   }
 
   public ngOnInit(): void {

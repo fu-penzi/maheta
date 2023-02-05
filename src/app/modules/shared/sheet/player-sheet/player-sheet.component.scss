@@ -1,8 +1,8 @@
 @use 'variables' as *;
 @use '@angular/material' as mat;
-@include sheet;
 
 :host {
+  display: block;
   overflow-y: scroll;
 
   .swiper {
@@ -11,7 +11,6 @@
     flex-direction: column;
     justify-content: space-evenly;
     width: 100%;
-    padding-top: 56px;
 
     .slide {
       height: 100%;
@@ -25,13 +24,28 @@
 }
 
 .player {
+  background: $gradient-background;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: calc(100vh - 42px);
 }
 
-.player-bottom {
+maheta-player-lyrics {
+  background-color: $background;
+}
+
+.header {
+  padding: spacing(2) 0;
+  font-size: 0.7rem;
+  text-align: center;
+
+  .counter {
+    color: $text-secondary;
+  }
+}
+
+.width-wrapper {
   width: 100%;
   padding-left: spacing(8);
   padding-right: spacing(8);
@@ -43,11 +57,6 @@
   margin-right: auto;
   object-fit: cover;
   width: 100%;
-
-  //width: 250px;
-  //height: 250px;
-  //min-width: 250px;
-  //min-height: 250px;
 }
 
 .track-info {

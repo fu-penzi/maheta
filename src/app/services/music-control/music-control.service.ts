@@ -64,6 +64,10 @@ export class MusicControlService {
     return this.queueService.queuePosition;
   }
 
+  public get queueSize(): number {
+    return this._currentQueue$.value?.length;
+  }
+
   public get currentTrack(): Track {
     return this.queueService.currentItem;
   }

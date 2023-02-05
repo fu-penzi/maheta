@@ -5,7 +5,8 @@
     "close": "Close",
     "save": "Save",
     "translation": "Translation",
-    "editLyrics": "Edit lyrics"
+    "editLyrics": "Edit lyrics",
+    "of": "of"
   },
   "languages": {
     "en": "English",
