@@ -3,13 +3,14 @@
 
 :host {
   display: block;
+  height: 100%;
   font-size: 1rem;
 }
 
 .album-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  @include scroll-view;
+  @include scroll-list;
 }
 
 .album {

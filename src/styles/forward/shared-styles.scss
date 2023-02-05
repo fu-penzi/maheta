@@ -1,8 +1,8 @@
 @use 'variables' as *;
 @use 'utility' as *;
 
-@mixin scroll-view() {
-  max-height: calc(100vh - 200px);
+@mixin scroll-list() {
+  max-height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
 
@@ -17,7 +17,7 @@
 
 @mixin scroll-view-cdk() {
   cdk-virtual-scroll-viewport {
-    height: calc(100vh - 200px);
+    height: 100%;
     overflow-x: hidden;
 
     li:last-child {
@@ -58,6 +58,22 @@
       width: calc(50%);
       padding-left: spacing(4);
 
+      &__title {
+        margin-bottom: spacing(1);
+      }
+
+      &__author {
+        color: $text-secondary;
+      }
+
+      &.active {
+        color: $accent;
+      }
+
+      &.active &__author {
+        color: $accent-dark;
+      }
+
       @include text-ellipsis;
     }
   }
@@ -69,6 +85,11 @@
     bottom: 0;
     display: flex;
     align-items: center;
+
+    &__duration {
+      padding: 0 spacing(3);
+      color: $text-secondary;
+    }
   }
 
   :host(.web) {

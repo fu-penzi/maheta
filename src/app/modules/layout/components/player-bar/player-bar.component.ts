@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { getDefaultTrackObject, Track } from '@src/app/db/domain/track.schema';
-import { UrlEnum } from '@src/app/model/url.enum';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
 import { MahetaService } from '@src/app/services/maheta.service';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
-import { NavigationService } from '@src/app/services/navigation.service';
 
 import { filter, map, Observable, takeUntil } from 'rxjs';
 
@@ -19,7 +17,6 @@ export class PlayerBarComponent extends BaseComponent implements OnInit {
 
   constructor(
     private musicControlService: MusicControlService,
-    private navigation: NavigationService,
     private mahetaService: MahetaService
   ) {
     super();
@@ -31,14 +28,6 @@ export class PlayerBarComponent extends BaseComponent implements OnInit {
 
   public get defaultTrack(): Track {
     return getDefaultTrackObject();
-  }
-
-  public get isTabPlayer(): boolean {
-    return this.navigation.bottomNavTabUrl === UrlEnum.PLAYER;
-  }
-
-  public get playerRouterLink(): string {
-    return UrlEnum.PLAYER;
   }
 
   public ngOnInit(): void {
