@@ -20,7 +20,6 @@ mat-progress-bar {
   height: 2px;
 }
 
-//noinspection Stylelint
 ::ng-deep {
   .light-theme .mat-progress-bar.mat-accent .mat-progress-bar-buffer {
     background-color: $primary-light;

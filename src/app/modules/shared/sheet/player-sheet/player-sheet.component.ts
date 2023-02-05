@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Router } from '@angular/router';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import { UrlEnum } from '@src/app/model/url.enum';
@@ -60,7 +61,8 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit {
   constructor(
     private readonly musicControlService: MusicControlService,
     private bottomSheetRef: MatBottomSheetRef<PlayerSheetComponent>,
-    private platform: Platform
+    private platform: Platform,
+    private router: Router
   ) {
     super();
   }
@@ -97,6 +99,11 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit {
         this.rewind = repeatModeEnum === RepeatModeEnum.REPEAT_QUEUE;
       }
     });
+  }
+
+  public navigateToAlbum(): void {
+    this.close();
+    this.router.navigate([this.albumUrl]);
   }
 
   public handleSlideChange([swiper]: [swiper: Swiper]): void {

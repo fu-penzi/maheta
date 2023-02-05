@@ -32,6 +32,8 @@
 }
 
 .header {
+  display: flex;
+  justify-content: space-between;
   padding: spacing(2) 0;
   font-size: 0.7rem;
   text-align: center;
@@ -83,7 +85,7 @@ maheta-player-lyrics::after {
   @include text-ellipsis;
 
   &__title {
-    width: calc(100%);
+    max-width: calc(100%);
     margin-bottom: spacing(1);
     line-height: 2.3rem;
     font-size: 1.5rem;
@@ -92,7 +94,7 @@ maheta-player-lyrics::after {
   }
 
   &__author {
-    width: calc(100%);
+    max-width: calc(100%);
     color: $text-secondary;
     font-size: 1.25rem;
     @include text-ellipsis;

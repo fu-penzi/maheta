@@ -1,9 +1,19 @@
 <div class="player">
   <div class="header">
-    <p class="counter mat-body">
-      {{ queuePosition + 1 }} {{ 'global.of' | translate }} {{ queueSize }}
-    </p>
-    <p class="mat-body-strong">{{ currentTrack?.album }}</p>
+    <button (click)="close()" mat-icon-button>
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+
+    <div class="header__info" (click)="navigateToAlbum()">
+      <p class="counter mat-body">
+        {{ queuePosition + 1 }} {{ 'global.of' | translate }} {{ queueSize }}
+      </p>
+      <p class="mat-body-strong">{{ currentTrack?.album }}</p>
+    </div>
+
+    <button mat-icon-button>
+      <mat-icon>more_vert</mat-icon>
+    </button>
   </div>
 
   <swiper
@@ -23,10 +33,14 @@
     </ng-template>
 
     <div slot="container-end">
-      <a class="track-info" [routerLink]="albumUrl">
-        <strong class="track-info__title">{{ this.currentTrack?.title }}</strong>
-        <span class="track-info__author">{{ this.currentTrack?.author }}</span>
-      </a>
+      <div class="track-info">
+        <strong class="track-info__title" (click)="navigateToAlbum()">
+          {{ this.currentTrack?.title }}
+        </strong>
+        <span class="track-info__author" (click)="navigateToAlbum()"
+          >{{ this.currentTrack?.author }}
+        </span>
+      </div>
     </div>
   </swiper>
   <maheta-player-controls class="width-wrapper" [track]="currentTrack"></maheta-player-controls>
