@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 
@@ -20,8 +20,9 @@ import { SwiperOptions } from 'swiper';
   templateUrl: './player-sheet.component.html',
   styleUrls: ['./player-sheet.component.scss'],
 })
-export class PlayerSheetComponent extends BaseComponent implements OnInit {
+export class PlayerSheetComponent extends BaseComponent implements OnInit, AfterViewInit {
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  @HostBinding('class.transition') transition: boolean = false;
 
   public currentTrack: Track;
   public currentQueue: Track[];
@@ -34,7 +35,7 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit {
   };
   public swiperOptions: SwiperOptions = {
     slidesPerView: this.platform.height() < 675 ? 1.7 : 1.35,
-    spaceBetween: 25,
+    spaceBetween: 15,
     centeredSlides: true,
     touchEventsTarget: 'container',
     /* eslint-disable @typescript-eslint/naming-convention */
@@ -131,5 +132,9 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit {
 
   public close(): void {
     this.bottomSheetRef.dismiss();
+  }
+
+  public ngAfterViewInit(): void {
+    this.transition = true;
   }
 }
