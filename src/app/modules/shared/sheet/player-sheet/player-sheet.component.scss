@@ -17,6 +17,8 @@
       height: 100%;
       border-radius: spacing(2);
       overflow: hidden;
+      background-image: url('/assets/note.jpg');
+      background-size: cover;
       @include mat.elevation(2);
     }
 

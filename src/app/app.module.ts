@@ -39,7 +39,7 @@ export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         useClass: TranslateMessageFormatCompiler,
       },
     }),
-    IonicModule.forRoot({}),
+    IonicModule.forRoot({ mode: 'md' }),
   ],
   providers: [Diagnostic],
   bootstrap: [AppComponent],

@@ -27,9 +27,29 @@
   }
 
   &__thumb {
+    position: relative;
+    display: block;
     flex: 1;
     object-fit: cover;
     width: 100%;
+    aspect-ratio: 1 / 1;
+    text-indent: -10000px;
+    background-image: url('/assets/note.jpg');
+    background-size: cover;
+
+    @supports not (aspect-ratio: 1 / 1) {
+      &::before {
+        float: left;
+        padding-top: 100%;
+        content: '';
+      }
+
+      &::after {
+        display: block;
+        content: '';
+        clear: both;
+      }
+    }
   }
 
   @include mat.elevation(4);

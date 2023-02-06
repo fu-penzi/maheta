@@ -26,9 +26,12 @@
   >
     <ng-template *ngFor="let track of currentQueue" swiperSlide>
       <div class="slide">
-        <object class="track-thumb" [data]="track.thumbUrl | safe" type="image/jpeg">
-          <img class="track-thumb" [src]="'' | safe" [alt]="currentTrack?.title" />
-        </object>
+        <img
+          class="track-thumb"
+          [src]="track.thumbUrl"
+          [alt]="currentTrack?.title"
+          loading="lazy"
+        />
       </div>
     </ng-template>
 
