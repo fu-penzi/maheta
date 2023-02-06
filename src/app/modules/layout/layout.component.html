@@ -1,27 +1,34 @@
 <!--<div [ngClass]="['mat-typography', themeClass]">-->
-<maheta-app-bar></maheta-app-bar>
+<mat-sidenav-container class="sidenav-wrapper">
+  <mat-sidenav-content class="sidenav-content">
+    <maheta-app-bar (showSidenav)="drawer.toggle()"></maheta-app-bar>
 
-<div
-  class="page-content animate__animated animate__faster"
-  [ngClass]="{
-    animate__fadeOutUp: playerOpenAnimations.open,
-    animate__fadeInDown: playerOpenAnimations.close
-  }"
->
-  <router-outlet></router-outlet>
-</div>
+    <div
+      class="page-content animate__animated animate__faster"
+      [ngClass]="{
+        animate__fadeOutUp: playerOpenAnimations.open,
+        animate__fadeInDown: playerOpenAnimations.close
+      }"
+    >
+      <router-outlet></router-outlet>
+    </div>
 
-<maheta-player-bar></maheta-player-bar>
-<mat-toolbar class="bottom-nav" color="primary">
-  <a
-    class="bottom-nav__tab"
-    *ngFor="let tab of bottomNavTabs"
-    (click)="selectTab(tab)"
-    [class.active]="isTabActive(tab)"
-    [routerLink]="tab.url"
-    aria-label="Example icon button with a bookmark icon"
-  >
-    <mat-icon>{{ tab.icon }}</mat-icon>
-    <span class="bottom-nav__tab-name">{{ tab.name }}</span>
-  </a>
-</mat-toolbar>
+    <maheta-player-bar></maheta-player-bar>
+  </mat-sidenav-content>
+
+  <mat-sidenav class="sidenav" #drawer mode="over">
+    <div class="tabs">
+      <a
+        class="tabs__tab"
+        *ngFor="let tab of bottomNavTabs"
+        (click)="selectTab(tab)"
+        [class.active]="isTabActive(tab)"
+        [routerLink]="tab.url"
+        mat-ripple
+      >
+        <mat-icon>{{ tab.icon }}</mat-icon>
+        <p class="tabs__tab-name">{{ tab.name }}</p>
+      </a>
+    </div>
+  </mat-sidenav>
+</mat-sidenav-container>

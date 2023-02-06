@@ -1,25 +1,22 @@
 <mat-toolbar class="app-bar" color="primary">
-  <button (click)="back()" aria-label="Example icon button" mat-icon-button>
-    <mat-icon>arrow_back</mat-icon>
+  <button *ngIf="isRootScreen(); else backButton" (click)="showSidenav.emit()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
   </button>
+
+  <ng-template #backButton>
+    <button *ngIf="!isRootScreen()" (click)="back()" mat-icon-button>
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </ng-template>
 
   <span>Maheta</span>
 
   <div class="menu">
-    <button
-      *ngIf="isCurrentTabPlaylists()"
-      (click)="openCreatePlaylistDialog()"
-      aria-label="Example icon button"
-      mat-icon-button
-    >
+    <button *ngIf="isCurrentTabPlaylists()" (click)="openCreatePlaylistDialog()" mat-icon-button>
       <mat-icon>playlist_add</mat-icon>
     </button>
 
-    <button
-      [matMenuTriggerFor]="menu"
-      aria-label="Example icon button with a bookmark icon"
-      mat-icon-button
-    >
+    <button [matMenuTriggerFor]="menu" mat-icon-button>
       <mat-icon>more_vert</mat-icon>
     </button>
 

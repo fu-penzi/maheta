@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { UrlEnum } from '@src/app/model/url.enum';
@@ -15,6 +15,8 @@ import { NavigationService } from '@src/app/services/navigation.service';
   styleUrls: ['./app-bar.component.scss'],
 })
 export class AppBarComponent {
+  @Output() showSidenav: EventEmitter<void> = new EventEmitter<void>();
+
   public readonly urlEnum: typeof UrlEnum = UrlEnum;
 
   constructor(
@@ -31,6 +33,10 @@ export class AppBarComponent {
 
   public get progressBarConfig(): ProgressBarConfig {
     return this.mahetaService.progressBarConfig;
+  }
+
+  public isRootScreen(): boolean {
+    return this.navigation.isRootScreen();
   }
 
   public back(): void {

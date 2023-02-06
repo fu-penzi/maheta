@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 
@@ -22,6 +24,8 @@ import { SharedModule } from '@src/app/modules/shared/shared.module';
     MatIconModule,
     MatProgressBarModule,
     MatMenuModule,
+    MatSidenavModule,
+    MatRippleModule,
   ],
   providers: [ThemeService],
 })

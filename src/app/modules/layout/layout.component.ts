@@ -1,4 +1,5 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 import { Capacitor } from '@capacitor/core';
 import { SplashScreen } from '@capacitor/splash-screen';
 
@@ -22,6 +23,7 @@ interface BottomNavTab {
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
+  @ViewChild('drawer') drawer: MatDrawer;
   @HostBinding('class.web') isWeb: boolean = ![PlatformEnum.ANDROID, PlatformEnum.IOS].includes(
     Capacitor.getPlatform() as PlatformEnum
   );
@@ -58,6 +60,7 @@ export class LayoutComponent implements OnInit {
 
   public selectTab(tab: BottomNavTab): void {
     this.navigation.bottomNavTabUrl = tab.url;
+    this.drawer?.toggle();
   }
 
   public isTabActive(tab: BottomNavTab): boolean {

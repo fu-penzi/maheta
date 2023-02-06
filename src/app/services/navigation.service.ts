@@ -54,4 +54,8 @@ export class NavigationService {
       this.router.navigateByUrl(UrlEnum.ALBUMS);
     }
   }
+
+  public isRootScreen(): boolean {
+    return this.router.url.split('/').length === 2;
+  }
 }
