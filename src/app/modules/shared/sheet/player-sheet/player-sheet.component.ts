@@ -16,13 +16,14 @@ import { take, takeUntil } from 'rxjs';
 import { SwiperOptions } from 'swiper';
 
 @Component({
-  selector: 'maheta-player',
+  selector: 'maheta-player-sheet',
   templateUrl: './player-sheet.component.html',
   styleUrls: ['./player-sheet.component.scss'],
 })
 export class PlayerSheetComponent extends BaseComponent implements OnInit, AfterViewInit {
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
-  @HostBinding('class.transition') transition: boolean = false;
+
+  @HostBinding('class.transition') viewInitComplete: boolean = false;
 
   public currentTrack: Track;
   public currentQueue: Track[];
@@ -102,6 +103,10 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit, After
     });
   }
 
+  public ngAfterViewInit(): void {
+    this.viewInitComplete = true;
+  }
+
   public navigateToAlbum(): void {
     this.close();
     this.router.navigate([this.albumUrl]);
@@ -132,9 +137,5 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit, After
 
   public close(): void {
     this.bottomSheetRef.dismiss();
-  }
-
-  public ngAfterViewInit(): void {
-    this.transition = true;
   }
 }

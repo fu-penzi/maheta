@@ -23,45 +23,23 @@
   </div>
 
   <div class="controls">
-    <button
-      (click)="prev()"
-      [disabled]="!currentTrack"
-      aria-label="Example icon button with a bookmark icon"
-      mat-icon-button
-    >
+    <button (click)="prev()" [disabled]="!currentTrack" mat-icon-button>
       <mat-icon>skip_previous</mat-icon>
     </button>
 
     <ng-container *ngIf="!isPlaying()">
-      <button
-        (click)="play()"
-        [disabled]="!currentTrack"
-        color="accent"
-        aria-label="Example icon button with a bookmark icon"
-        mat-fab
-      >
+      <button (click)="play()" [disabled]="!currentTrack" color="accent" mat-fab>
         <mat-icon>play_arrow</mat-icon>
       </button>
     </ng-container>
 
     <ng-container *ngIf="isPlaying()">
-      <button
-        (click)="pause()"
-        [disabled]="!currentTrack"
-        color="accent"
-        aria-label="Example icon button with a bookmark icon"
-        mat-fab
-      >
+      <button (click)="pause()" [disabled]="!currentTrack" color="accent" mat-fab>
         <mat-icon>pause</mat-icon>
       </button>
     </ng-container>
 
-    <button
-      (click)="next()"
-      [disabled]="!currentTrack"
-      aria-label="Example icon button with a bookmark icon"
-      mat-icon-button
-    >
+    <button (click)="next()" [disabled]="!currentTrack" mat-icon-button>
       <mat-icon>skip_next</mat-icon>
     </button>
   </div>
