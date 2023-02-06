@@ -1,34 +1,38 @@
 <!--<div [ngClass]="['mat-typography', themeClass]">-->
-<mat-sidenav-container class="sidenav-wrapper">
-  <mat-sidenav-content class="sidenav-content">
-    <maheta-app-bar (showSidenav)="drawer.toggle()"></maheta-app-bar>
 
-    <div
-      class="page-content animate__animated animate__faster"
-      [ngClass]="{
-        animate__fadeOutUp: playerOpenAnimations.open,
-        animate__fadeInDown: playerOpenAnimations.close
-      }"
-    >
-      <router-outlet></router-outlet>
+<ion-menu contentId="main-content" type="push" max-edge-start="300">
+  <div class="sidenav">
+    <div class="tab-section">
+      <ng-container *ngFor="let tab of navTabs">
+        <a
+          class="tab"
+          (click)="selectTab(tab)"
+          [class.active]="isTabActive(tab)"
+          [routerLink]="tab.url"
+          mat-ripple
+        >
+          <mat-icon>{{ tab.icon }}</mat-icon>
+          <p class="tab-name">{{ tab.name }}</p>
+        </a>
+
+        <mat-divider *ngIf="tab.dividerBelow"></mat-divider>
+      </ng-container>
     </div>
+  </div>
+</ion-menu>
 
-    <maheta-player-bar></maheta-player-bar>
-  </mat-sidenav-content>
+<div class="main-content" id="main-content">
+  <maheta-app-bar (showSidenav)="drawer.toggle()"></maheta-app-bar>
 
-  <mat-sidenav class="sidenav" #drawer mode="over">
-    <div class="tabs">
-      <a
-        class="tabs__tab"
-        *ngFor="let tab of bottomNavTabs"
-        (click)="selectTab(tab)"
-        [class.active]="isTabActive(tab)"
-        [routerLink]="tab.url"
-        mat-ripple
-      >
-        <mat-icon>{{ tab.icon }}</mat-icon>
-        <p class="tabs__tab-name">{{ tab.name }}</p>
-      </a>
-    </div>
-  </mat-sidenav>
-</mat-sidenav-container>
+  <div
+    class="page-content animate__animated animate__faster"
+    [ngClass]="{
+      animate__fadeOutUp: playerOpenAnimations.open,
+      animate__fadeInDown: playerOpenAnimations.close
+    }"
+  >
+    <router-outlet></router-outlet>
+  </div>
+
+  <maheta-player-bar></maheta-player-bar>
+</div>

@@ -10,6 +10,7 @@ import { SharedModule } from '@src/app/modules/shared/shared.module';
 import { MusicControlModule } from '@src/app/services/music-control/music-control.module';
 
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
+import { IonicModule } from '@ionic/angular';
 import { TranslateCompiler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler';
@@ -38,6 +39,7 @@ export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         useClass: TranslateMessageFormatCompiler,
       },
     }),
+    IonicModule.forRoot({}),
   ],
   providers: [Diagnostic],
   bootstrap: [AppComponent],

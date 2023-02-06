@@ -11,10 +11,11 @@ import { NavigationService } from '@src/app/services/navigation.service';
 
 import { TranslateService } from '@ngx-translate/core';
 
-interface BottomNavTab {
+interface NavTab {
   icon: string;
   name: string;
   url: UrlEnum;
+  dividerBelow?: boolean;
 }
 
 @Component({
@@ -32,7 +33,7 @@ export class LayoutComponent implements OnInit {
     PlatformEnum.IOS,
   ].includes(Capacitor.getPlatform() as PlatformEnum);
 
-  public bottomNavTabs: BottomNavTab[];
+  public navTabs: NavTab[];
   public playerOpenAnimations = {
     open: false,
     close: false,
@@ -58,17 +59,17 @@ export class LayoutComponent implements OnInit {
     });
   }
 
-  public selectTab(tab: BottomNavTab): void {
+  public selectTab(tab: NavTab): void {
     this.navigation.bottomNavTabUrl = tab.url;
     this.drawer?.toggle();
   }
 
-  public isTabActive(tab: BottomNavTab): boolean {
+  public isTabActive(tab: NavTab): boolean {
     return this.navigation.bottomNavTabUrl === tab.url;
   }
 
   private setupBottomNav(): void {
-    this.bottomNavTabs = [
+    this.navTabs = [
       {
         icon: 'library_music',
         name: this.translate.instant('TABS.songs'),
@@ -83,6 +84,12 @@ export class LayoutComponent implements OnInit {
         icon: 'playlist_play',
         name: this.translate.instant('TABS.playlists'),
         url: UrlEnum.PLAYLISTS,
+        dividerBelow: true,
+      },
+      {
+        icon: 'settings',
+        name: this.translate.instant('APP_BAR.settings'),
+        url: UrlEnum.SETTINGS,
       },
     ];
   }

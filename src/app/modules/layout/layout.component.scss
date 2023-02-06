@@ -3,31 +3,29 @@
 
 :host {
   display: block;
-  width: 100%;
 }
 
 :host,
-.sidenav-wrapper,
+.main-content,
 .sidenav-content,
 .sidenav {
   height: 100%;
   color: $text;
 }
 
-.sidenav-wrapper {
+.main-content {
   background-color: $background;
-}
-
-.sidenav-content {
   display: flex;
   flex-direction: column;
 }
 
 .sidenav {
   background-color: $background;
-  width: 70%;
-  max-width: 300px;
   color: $text;
+}
+
+ion-menu {
+  --max-width: 240px;
 }
 
 .page-content {
@@ -36,30 +34,28 @@
   flex: 1;
 }
 
-.tabs {
-  margin: spacing(20) auto;
+.tab-section {
+  margin: spacing(20) auto auto;
   flex: 0 0 64px;
-  width: 90%;
 
-  &__tab {
+  .tab {
     display: flex;
     align-items: center;
     padding: spacing(3) spacing(4);
-    border-radius: spacing(1);
   }
 
-  &__tab-name {
+  .tab-name {
     margin-left: spacing(3);
     font-size: 1rem;
   }
 
-  &__tab.active {
+  .tab.active {
     background-color: $primary-light;
     @include mat.elevation(2);
   }
 
-  &__tab.active &__tab-name,
-  &__tab.active {
+  .tab.active .tab-name,
+  .tab.active {
     color: $accent;
   }
 }
