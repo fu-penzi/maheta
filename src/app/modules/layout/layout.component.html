@@ -1,6 +1,12 @@
 <!--<div [ngClass]="['mat-typography', themeClass]">-->
 
-<ion-menu contentId="main-content" type="push" max-edge-start="300">
+<ion-menu
+  [disabled]="playerSheetOpen"
+  contentId="main-content"
+  type="push"
+  max-edge-start="300"
+  #ionMenu
+>
   <div class="sidenav">
     <div class="tab-section">
       <ng-container *ngFor="let tab of navTabs">
@@ -22,14 +28,11 @@
 </ion-menu>
 
 <div class="main-content" id="main-content">
-  <maheta-app-bar (showSidenav)="drawer.toggle()"></maheta-app-bar>
+  <maheta-app-bar (showSidenav)="ionMenu.open()"></maheta-app-bar>
 
   <div
     class="page-content animate__animated animate__faster"
-    [ngClass]="{
-      animate__fadeOutUp: playerOpenAnimations.open,
-      animate__fadeInDown: playerOpenAnimations.close
-    }"
+    [ngClass]="{ animate__fadeOutUp: playerSheetOpen, animate__fadeInDown: !playerSheetOpen }"
   >
     <router-outlet></router-outlet>
   </div>
