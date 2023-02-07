@@ -32,7 +32,10 @@
 
   <div
     class="page-content animate__animated animate__faster"
-    [ngClass]="{ animate__fadeOutUp: playerSheetOpen, animate__fadeInDown: !playerSheetOpen }"
+    [ngClass]="{
+      animate__fadeOutUp: playerSheetOpen,
+      animate__fadeInDown: !playerSheetOpen
+    }"
   >
     <router-outlet></router-outlet>
   </div>

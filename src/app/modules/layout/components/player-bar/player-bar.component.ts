@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { getDefaultTrackObject, Track } from '@src/app/db/domain/track.schema';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
-import { MahetaService } from '@src/app/services/maheta.service';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
+import { PlayerSheetService } from '@src/app/services/player-sheet.service';
 
 import { filter, map, Observable, takeUntil } from 'rxjs';
 
@@ -17,7 +17,7 @@ export class PlayerBarComponent extends BaseComponent implements OnInit {
 
   constructor(
     private musicControlService: MusicControlService,
-    private mahetaService: MahetaService
+    private playerSheetService: PlayerSheetService
   ) {
     super();
   }
@@ -45,7 +45,7 @@ export class PlayerBarComponent extends BaseComponent implements OnInit {
     if (!this.currentTrack) {
       return;
     }
-    this.mahetaService.openPlayerSheet();
+    this.playerSheetService.open();
   }
 
   public play(): void {

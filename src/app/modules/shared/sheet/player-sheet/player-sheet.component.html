@@ -24,7 +24,7 @@
     [rewind]="rewind"
     #swiper
   >
-    <ng-template *ngFor="let track of currentQueue" swiperSlide>
+    <ng-template *ngFor="let track of currentQueue; index as i; trackBy: trackByIndex" swiperSlide>
       <div class="slide">
         <img
           class="track-thumb"

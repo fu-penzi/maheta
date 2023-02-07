@@ -40,10 +40,6 @@ export class TrackScrollViewComponent implements OnInit {
     this.musicControlService.playPosition(position);
   }
 
-  public trackByIndex(index: number): number {
-    return index;
-  }
-
   public isCurrentTrack(track: Track): boolean {
     if (!this.currentTrack) {
       return false;
@@ -67,5 +63,9 @@ export class TrackScrollViewComponent implements OnInit {
       track,
     };
     this.matDialogService.open(EditLyricsDialogComponent, { data, width: '100%' });
+  }
+
+  public trackByIndex(index: number): number {
+    return index;
   }
 }

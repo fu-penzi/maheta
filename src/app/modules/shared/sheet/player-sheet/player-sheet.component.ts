@@ -1,19 +1,49 @@
 import { AfterViewInit, Component, HostBinding, OnInit, ViewChild } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
+import { PlayerSheetService } from '@src/app/services/player-sheet.service';
 import { RepeatModeEnum } from '@src/app/services/queue.service';
 
 import { Platform } from '@ionic/angular';
 import { SwiperComponent } from 'swiper/angular';
 import { Swiper } from 'swiper/types';
 import { VirtualOptions } from 'swiper/types/modules/virtual';
-import { take, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import { SwiperOptions } from 'swiper';
+
+const initSwiperOptions: SwiperOptions = {
+  spaceBetween: 15,
+  centeredSlides: true,
+  touchEventsTarget: 'container',
+  /* eslint-disable @typescript-eslint/naming-convention */
+  breakpoints: {
+    601: {
+      slidesPerView: 1.6,
+      spaceBetween: 40,
+    },
+    981: {
+      slidesPerView: 1.8,
+      spaceBetween: 150,
+    },
+    1201: {
+      slidesPerView: 2,
+      spaceBetween: 150,
+    },
+    1536: {
+      slidesPerView: 3,
+      spaceBetween: 150,
+    },
+  },
+};
+const initVirtualOptions: VirtualOptions = {
+  enabled: true,
+  addSlidesBefore: 2,
+  addSlidesAfter: 2,
+};
 
 @Component({
   selector: 'maheta-player-sheet',
@@ -29,42 +59,14 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit, After
   public currentQueue: Track[];
   public rewind: boolean = false;
 
-  public swiperVirtualOptions: VirtualOptions = {
-    enabled: true,
-    addSlidesBefore: 2,
-    addSlidesAfter: 2,
-  };
-  public swiperOptions: SwiperOptions = {
-    slidesPerView: this.platform.height() < 675 ? 1.7 : 1.35,
-    spaceBetween: 15,
-    centeredSlides: true,
-    touchEventsTarget: 'container',
-    /* eslint-disable @typescript-eslint/naming-convention */
-    breakpoints: {
-      601: {
-        slidesPerView: 1.6,
-        spaceBetween: 40,
-      },
-      981: {
-        slidesPerView: 1.8,
-        spaceBetween: 150,
-      },
-      1201: {
-        slidesPerView: 2,
-        spaceBetween: 150,
-      },
-      1536: {
-        slidesPerView: 3,
-        spaceBetween: 150,
-      },
-    },
-  };
+  public swiperVirtualOptions: VirtualOptions = { ...initVirtualOptions };
+  public swiperOptions: SwiperOptions = { slidesPerView: this.slidesPerView, ...initSwiperOptions };
 
   constructor(
-    private readonly musicControlService: MusicControlService,
-    private bottomSheetRef: MatBottomSheetRef<PlayerSheetComponent>,
+    private musicControlService: MusicControlService,
     private platform: Platform,
-    private router: Router
+    private router: Router,
+    private playerSheetService: PlayerSheetService
   ) {
     super();
   }
@@ -81,6 +83,10 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit, After
     return this.musicControlService.queueSize;
   }
 
+  private get slidesPerView(): number {
+    return this.platform.height() < 675 ? 1.7 : 1.35;
+  }
+
   public ngOnInit(): void {
     this.musicControlService.currentTrack$
       .pipe(takeUntil(this.onDestroy$))
@@ -91,10 +97,13 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit, After
         }
       });
 
-    this.musicControlService.currentQueue$.pipe(take(1)).subscribe((currentQueue: Track[]) => {
-      this.currentQueue = currentQueue;
-      this.swiperOptions.initialSlide = this.queuePosition;
-    });
+    this.musicControlService.currentQueue$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((currentQueue: Track[]) => {
+        this.currentQueue = currentQueue;
+        this.swiperOptions.initialSlide = this.queuePosition;
+        this.swiper?.swiperRef.virtual.update(true);
+      });
 
     this.musicControlService.repeatMode$.subscribe((repeatModeEnum: RepeatModeEnum) => {
       if (this.swiper) {
@@ -135,7 +144,11 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit, After
     return this.swiper?.swiperRef.slideTo(this.queuePosition);
   }
 
+  public trackByIndex(index: number): number {
+    return index;
+  }
+
   public close(): void {
-    this.bottomSheetRef.dismiss();
+    this.playerSheetService.close();
   }
 }

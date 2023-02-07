@@ -52,6 +52,11 @@ li {
   margin: 0;
 }
 
+.hidden-overlay {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 //::-webkit-scrollbar,
 //*::-webkit-scrollbar {
 //  width: 8px;

@@ -3,7 +3,6 @@ import { SplashScreen } from '@capacitor/splash-screen';
 
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
-import { MahetaService } from '@src/app/services/maheta.service';
 import { NavigationService } from '@src/app/services/navigation.service';
 
 import { IonMenu } from '@ionic/angular';
@@ -23,6 +22,7 @@ interface NavTab {
 })
 export class LayoutComponent implements OnInit {
   @ViewChild('ionMenu') ionMenu: IonMenu;
+
   public navTabs: NavTab[];
   public playerSheetOpen: boolean = false;
 
@@ -30,7 +30,7 @@ export class LayoutComponent implements OnInit {
     private themeService: ThemeService,
     private navigation: NavigationService,
     private translate: TranslateService,
-    private mahetaService: MahetaService
+    private navigationService: NavigationService
   ) {}
 
   public get themeClass(): ThemeClassEnum {
@@ -40,7 +40,7 @@ export class LayoutComponent implements OnInit {
   public ngOnInit(): void {
     SplashScreen.hide();
     this.setupBottomNav();
-    this.mahetaService.playerSheetOpen$.subscribe((isOpen: boolean) => {
+    this.navigationService.overlayOpen$.subscribe((isOpen: boolean) => {
       this.playerSheetOpen = isOpen;
     });
   }
