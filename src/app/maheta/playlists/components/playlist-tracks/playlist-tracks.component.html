@@ -1,5 +1,6 @@
 <ng-container *ngIf="playlist && playlist.trackPopulation">
   <maheta-track-scroll-view
+    [currentTrack]="currentTrack"
     [tracks]="playlist.trackPopulation"
     [playlist]="playlist"
   ></maheta-track-scroll-view>

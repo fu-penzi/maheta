@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Playlist } from '@src/app/db/domain/playlist.schema';
@@ -18,12 +18,12 @@ import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/mu
   selector: 'maheta-track-scroll-view',
   templateUrl: './track-scroll-view.component.html',
   styleUrls: ['./track-scroll-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackScrollViewComponent implements OnInit {
   @Input() public tracks: Track[];
   @Input() public playlist: Playlist;
-
-  public currentTrack: Track;
+  @Input() public currentTrack: Track;
 
   constructor(
     private readonly musicControlService: MusicControlService,
@@ -33,7 +33,6 @@ export class TrackScrollViewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.musicControlService.nextQueue = this.tracks;
-    this.musicControlService.currentTrack$.subscribe((track: Track) => (this.currentTrack = track));
   }
 
   public playPosition(position: number): void {

@@ -13,3 +13,12 @@ export enum AlbumDefaultsEnum {
   AUTHOR = 'Unknown',
   THUMBURL = 'assets/note.jpg',
 }
+
+export function getDefaultAlbum(): Album {
+  return {
+    title: AlbumDefaultsEnum.TITLE,
+    tracks: [],
+    thumbUrl: AlbumDefaultsEnum.THUMBURL,
+    author: AlbumDefaultsEnum.AUTHOR,
+  };
+}

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Playlist } from '@src/app/db/domain/playlist.schema';
+import { Track } from '@src/app/db/domain/track.schema';
 import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
+import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
 
 import { takeUntil } from 'rxjs';
@@ -15,8 +17,10 @@ import { takeUntil } from 'rxjs';
 })
 export class PlaylistTracksComponent extends BaseComponent implements OnInit {
   public playlist: Playlist;
+  public currentTrack: Track;
 
   constructor(
+    private musicControlService: MusicControlService,
     private musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
     private route: ActivatedRoute
   ) {
@@ -25,6 +29,7 @@ export class PlaylistTracksComponent extends BaseComponent implements OnInit {
 
   public ngOnInit(): void {
     const playlistId: string = this.route.snapshot.paramMap.get(UrlParamsEnum.playlistId) ?? '';
+    this.musicControlService.currentTrack$.subscribe((track: Track) => (this.currentTrack = track));
     this.musicLibraryPlaylistsService
       .getPlaylist$(playlistId)
       .pipe(takeUntil(this.onDestroy$))
