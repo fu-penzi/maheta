@@ -14,6 +14,8 @@ interface SliderSettings {
   step: number;
 }
 
+export const sliderStartThreshold: number = 0.04;
+
 @Component({
   selector: 'maheta-player-controls',
   templateUrl: './player-controls.component.html',
@@ -64,17 +66,15 @@ export class PlayerControlsComponent extends BaseComponent implements OnInit {
     if (!sliderChange?.value) {
       return;
     }
-    const time: number = (sliderChange.value * this.duration) / this.sliderSettings.max;
     this._isSliderHeld = true;
-    this.currentTrackTime = time < 10 ? 0 : time;
+    this.currentTrackTime = this.getSliderStartTime(sliderChange.value);
   }
 
   public sliderRelease(value: number | null): void {
     if (!value) {
       return;
     }
-    const time: number = (value * this.duration) / this.sliderSettings.max;
-    this.musicControlService.seekTo(time < 10 ? 0 : time);
+    this.musicControlService.seekTo(this.getSliderStartTime(value));
     this._isSliderHeld = false;
   }
 
@@ -107,6 +107,11 @@ export class PlayerControlsComponent extends BaseComponent implements OnInit {
 
   public nextRepeatMode(): void {
     this.musicControlService.nextRepeatMode();
+  }
+
+  private getSliderStartTime(sliderValue: number): number {
+    const time: number = (sliderValue * this.duration) / this.sliderSettings.max;
+    return time < this.duration * sliderStartThreshold ? 0 : time;
   }
 
   private setupSlider(): void {
