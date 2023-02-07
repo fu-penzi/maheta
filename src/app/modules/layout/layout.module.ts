@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppBarComponent } from '@src/app/modules/layout/components/app-bar/app-bar.component';
 import { PlayerBarComponent } from '@src/app/modules/layout/components/player-bar/player-bar.component';
+import { SidenavComponent } from '@src/app/modules/layout/components/sidenav/sidenav.component';
 import { LayoutComponent } from '@src/app/modules/layout/layout.component';
 import { ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { SharedModule } from '@src/app/modules/shared/shared.module';
@@ -17,7 +18,7 @@ import { SharedModule } from '@src/app/modules/shared/shared.module';
 import { IonicModule } from '@ionic/angular';
 
 @NgModule({
-  declarations: [LayoutComponent, PlayerBarComponent, AppBarComponent],
+  declarations: [LayoutComponent, PlayerBarComponent, AppBarComponent, SidenavComponent],
   imports: [
     SharedModule,
     RouterModule,

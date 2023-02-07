@@ -1,0 +1,26 @@
+<ion-menu
+  [disabled]="playerSheetOpen"
+  contentId="main-content"
+  type="push"
+  max-edge-start="400"
+  #ionMenu
+>
+  <div class="sidenav">
+    <div class="tab-section">
+      <ng-container *ngFor="let tab of navTabs">
+        <a
+          class="tab"
+          (click)="selectTab(tab)"
+          [class.active]="isTabActive(tab)"
+          [routerLink]="tab.url"
+          mat-ripple
+        >
+          <mat-icon>{{ tab.icon }}</mat-icon>
+          <p class="tab-name">{{ tab.name }}</p>
+        </a>
+
+        <mat-divider *ngIf="tab.dividerBelow"></mat-divider>
+      </ng-container>
+    </div>
+  </div>
+</ion-menu>

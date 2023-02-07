@@ -1,0 +1,46 @@
+@use 'variables.scss' as *;
+@use '@angular/material' as mat;
+
+:host,
+.sidenav-content,
+.sidenav {
+  height: 100%;
+  color: $text;
+}
+
+ion-menu {
+  background-color: $background;
+  color: $text;
+  --max-width: 240px;
+}
+
+.sidenav {
+  background-color: $background;
+  color: $text;
+}
+
+.tab-section {
+  margin: spacing(20) auto auto;
+  flex: 0 0 64px;
+
+  .tab {
+    display: flex;
+    align-items: center;
+    padding: spacing(3) spacing(4);
+  }
+
+  .tab-name {
+    margin-left: spacing(3);
+    font-size: 1rem;
+  }
+
+  .tab.active {
+    background-color: $primary-light;
+    @include mat.elevation(2);
+  }
+
+  .tab.active .tab-name,
+  .tab.active {
+    color: $accent;
+  }
+}
