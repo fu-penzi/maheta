@@ -42,4 +42,8 @@ export class AlbumsComponent extends BaseComponent implements OnInit {
         this.albums = albums;
       });
   }
+
+  public trackByIndex(index: number): number {
+    return index;
+  }
 }
