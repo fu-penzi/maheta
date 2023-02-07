@@ -14,6 +14,13 @@ interface SliderSettings {
   step: number;
 }
 
+const initSliderSettings: SliderSettings = {
+  value: 0,
+  min: 0,
+  max: 1000,
+  step: 1,
+};
+
 export const sliderStartThreshold: number = 0.04;
 
 @Component({
@@ -25,12 +32,7 @@ export class PlayerControlsComponent extends BaseComponent implements OnInit {
   @Input() track: Track;
 
   public currentTrackTime: number = 0;
-  public sliderSettings: SliderSettings = {
-    value: 0,
-    min: 0,
-    max: 1000,
-    step: 1,
-  };
+  public sliderSettings: SliderSettings = { ...initSliderSettings };
 
   private _isSliderHeld: boolean = false;
 

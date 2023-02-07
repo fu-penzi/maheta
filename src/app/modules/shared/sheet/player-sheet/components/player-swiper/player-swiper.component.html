@@ -1,0 +1,19 @@
+<swiper
+  class="swiper"
+  (slideChange)="handleSlideChange($event)"
+  [virtual]="swiperVirtualOptions"
+  [config]="swiperOptions"
+  [rewind]="rewind"
+  mahetaSetClassAfterViewInit="transition"
+  #swiper
+>
+  <ng-template *ngFor="let track of queue; index as i; trackBy: trackByIndex" swiperSlide>
+    <div class="slide">
+      <img class="track-thumb" [src]="track.thumbUrl" [alt]="currentTrack?.title" loading="lazy" />
+    </div>
+  </ng-template>
+
+  <div slot="container-end">
+    <ng-content></ng-content>
+  </div>
+</swiper>

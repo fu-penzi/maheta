@@ -16,37 +16,16 @@
     </button>
   </div>
 
-  <swiper
-    class="swiper"
-    (slideChange)="handleSlideChange($event)"
-    [virtual]="swiperVirtualOptions"
-    [config]="swiperOptions"
-    [rewind]="rewind"
-    mahetaSetClassAfterViewInit="transition"
-    #swiper
-  >
-    <ng-template *ngFor="let track of currentQueue; index as i; trackBy: trackByIndex" swiperSlide>
-      <div class="slide">
-        <img
-          class="track-thumb"
-          [src]="track.thumbUrl"
-          [alt]="currentTrack?.title"
-          loading="lazy"
-        />
-      </div>
-    </ng-template>
-
-    <div slot="container-end">
-      <div class="track-info">
-        <strong class="track-info__title" (click)="navigateToAlbum()">
-          {{ this.currentTrack?.title }}
-        </strong>
-        <span class="track-info__author" (click)="navigateToAlbum()"
-          >{{ this.currentTrack?.author }}
-        </span>
-      </div>
+  <maheta-player-swiper [currentTrack]="currentTrack" [queue]="queue">
+    <div class="track-info">
+      <strong class="track-info__title" (click)="navigateToAlbum()">
+        {{ this.currentTrack?.title }}
+      </strong>
+      <span class="track-info__author" (click)="navigateToAlbum()"
+        >{{ this.currentTrack?.author }}
+      </span>
     </div>
-  </swiper>
+  </maheta-player-swiper>
 
   <maheta-player-controls class="width-wrapper" [track]="currentTrack"></maheta-player-controls>
 </div>

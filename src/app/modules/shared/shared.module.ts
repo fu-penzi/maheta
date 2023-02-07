@@ -29,6 +29,7 @@ import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-d
 import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-scroll-view/playlist-scroll-view.component';
 import { PlayerControlsComponent } from '@src/app/modules/shared/sheet/player-sheet/components/player-controls/player-controls.component';
 import { PlayerLyricsComponent } from '@src/app/modules/shared/sheet/player-sheet/components/player-lyrics/player-lyrics.component';
+import { PlayerSwiperComponent } from '@src/app/modules/shared/sheet/player-sheet/components/player-swiper/player-swiper.component';
 import { PlayerSheetComponent } from '@src/app/modules/shared/sheet/player-sheet/player-sheet.component';
 import { WordOverviewSheetComponent } from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview-sheet.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
@@ -62,6 +63,7 @@ const exportedComponents = [
     LoadingDialogComponent,
     EditStorageSettingsDialogComponent,
     DialogFooterButtonsComponent,
+    PlayerSwiperComponent,
   ],
   imports: [
     CommonModule,

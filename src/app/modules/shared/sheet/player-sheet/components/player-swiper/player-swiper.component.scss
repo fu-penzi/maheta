@@ -1,0 +1,49 @@
+@use 'variables' as *;
+@use '@angular/material' as mat;
+
+:host {
+  display: block;
+
+  .swiper {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    padding-top: spacing(6);
+  }
+
+  .slide {
+    height: 100%;
+    border-radius: spacing(2);
+    overflow: hidden;
+    background-image: url('/assets/note.jpg');
+    background-size: cover;
+    @include mat.elevation(2);
+  }
+
+  ::ng-deep .swiper-wrapper {
+    height: auto;
+  }
+
+  ::ng-deep .swiper.transition .swiper-slide {
+    transition: transform 0.5s;
+  }
+
+  ::ng-deep .swiper-slide {
+    transform: scale(0.9);
+  }
+
+  ::ng-deep .swiper-slide.swiper-slide-active {
+    transform: scale(1);
+  }
+}
+
+.track-thumb {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
