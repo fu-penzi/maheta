@@ -18,6 +18,8 @@ enum MediaSessionPlaybackStateEnum {
   PLAYING = 'playing',
 }
 
+export const swipeThreshold: number = 2;
+
 @Injectable()
 export class MusicControlService {
   public isPlaying: boolean = false;
@@ -149,8 +151,8 @@ export class MusicControlService {
     this.queueService.moveToNext();
   }
 
-  public prev(): void {
-    if (this._currentTrackAudio.currentTime > 2) {
+  public prev(force?: boolean): void {
+    if (!force && this._currentTrackAudio.currentTime > swipeThreshold) {
       this.seekTo(0);
       return;
     }

@@ -135,7 +135,7 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit, After
       return;
     }
     if (this.queuePosition > swiper.activeIndex) {
-      this.musicControlService.prev();
+      this.musicControlService.prev(true);
       return;
     }
   }
