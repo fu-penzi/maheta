@@ -19,6 +19,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 
+import { SetClassAfterViewInitDirective } from '@src/app/directives/set-class-after-view-init.directive';
 import { AddToPlaylistDialogComponent } from '@src/app/modules/shared/dialog/add-to-playlist-dialog/add-to-playlist-dialog.component';
 import { DialogFooterButtonsComponent } from '@src/app/modules/shared/dialog/components/dialog-footer-buttons/dialog-footer-buttons.component';
 import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/dialog/create-playlist-dialog/create-playlist-dialog.component';
@@ -40,24 +41,21 @@ import SwiperCore, { Virtual } from 'swiper';
 
 SwiperCore.use([Virtual]);
 
-const exportedModules = [
-  CommonModule,
+const exportedComponents = [
   TrackScrollViewComponent,
   PlaylistScrollViewComponent,
   DurationPipe,
+  SafePipe,
+  SetClassAfterViewInitDirective,
 ];
-const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponent, DurationPipe];
 
 @NgModule({
   declarations: [
+    ...exportedComponents,
     PlayerControlsComponent,
     PlayerLyricsComponent,
     PlayerSheetComponent,
     WordOverviewSheetComponent,
-    TrackScrollViewComponent,
-    PlaylistScrollViewComponent,
-    DurationPipe,
-    SafePipe,
     AddToPlaylistDialogComponent,
     CreatePlaylistDialogComponent,
     EditLyricsDialogComponent,
@@ -89,6 +87,6 @@ const exportedComponents = [TrackScrollViewComponent, PlaylistScrollViewComponen
     SwiperModule,
     MatCardModule,
   ],
-  exports: [...exportedModules, ...exportedComponents, SafePipe, TranslateModule],
+  exports: [...exportedComponents, CommonModule, TranslateModule],
 })
 export class SharedModule {}

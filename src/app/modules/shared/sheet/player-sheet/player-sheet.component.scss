@@ -34,10 +34,8 @@
       height: auto;
     }
   }
-}
 
-:host.transition {
-  .swiper ::ng-deep .swiper-slide {
+  .swiper.transition ::ng-deep .swiper-slide {
     transition: transform 0.5s;
   }
 }

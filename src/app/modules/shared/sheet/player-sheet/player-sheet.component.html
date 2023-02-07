@@ -22,6 +22,7 @@
     [virtual]="swiperVirtualOptions"
     [config]="swiperOptions"
     [rewind]="rewind"
+    mahetaSetClassAfterViewInit="transition"
     #swiper
   >
     <ng-template *ngFor="let track of currentQueue; index as i; trackBy: trackByIndex" swiperSlide>
@@ -46,6 +47,7 @@
       </div>
     </div>
   </swiper>
+
   <maheta-player-controls class="width-wrapper" [track]="currentTrack"></maheta-player-controls>
 </div>
 

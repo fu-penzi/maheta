@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Track } from '@src/app/db/domain/track.schema';
@@ -50,10 +50,8 @@ const initVirtualOptions: VirtualOptions = {
   templateUrl: './player-sheet.component.html',
   styleUrls: ['./player-sheet.component.scss'],
 })
-export class PlayerSheetComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class PlayerSheetComponent extends BaseComponent implements OnInit {
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
-
-  @HostBinding('class.transition') viewInitComplete: boolean = false;
 
   public currentTrack: Track;
   public currentQueue: Track[];
@@ -102,7 +100,6 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit, After
       .subscribe((currentQueue: Track[]) => {
         this.currentQueue = currentQueue;
         this.swiperOptions.initialSlide = this.queuePosition;
-        this.swiper?.swiperRef.virtual.update(true);
       });
 
     this.musicControlService.repeatMode$.subscribe((repeatModeEnum: RepeatModeEnum) => {
@@ -110,10 +107,6 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit, After
         this.rewind = repeatModeEnum === RepeatModeEnum.REPEAT_QUEUE;
       }
     });
-  }
-
-  public ngAfterViewInit(): void {
-    this.viewInitComplete = true;
   }
 
   public navigateToAlbum(): void {
