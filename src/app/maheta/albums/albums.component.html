@@ -3,9 +3,9 @@
     <a (click)="navigateToAlbumTracks(album.title)">
       <img class="album__thumb" [src]="album.thumbUrl" alt="" loading="lazy" />
 
-      <div class="album-info">
+      <div class="album-info text-ellipsis">
         <p class="album-info__title">{{ album.title }}</p>
-        <div class="album-info__text">
+        <div class="album-info__text text-ellipsis">
           <span>{{ album.author }}</span>
           <span *ngIf="album?.year">{{ album.year }}</span>
           <span class="transparent-text" *ngIf="!album?.year"> ? </span>

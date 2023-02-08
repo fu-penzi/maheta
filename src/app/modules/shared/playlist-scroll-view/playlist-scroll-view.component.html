@@ -9,7 +9,7 @@
           <img class="thumb" [src]="'' | safe" [alt]="playlist.name" />
         </object>
 
-        <div class="info" [class.active]="false">
+        <div class="info text-ellipsis" [class.active]="false">
           <span class="info__title">{{ playlist.name }}</span>
           <span class="info__author">
             {{ 'PLAYLIST.songPlural' | translate: { playlistLength: getPlaylistLength(playlist) } }}

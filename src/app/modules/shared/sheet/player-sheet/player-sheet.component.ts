@@ -21,8 +21,8 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit {
 
   constructor(
     private musicControlService: MusicControlService,
-    private router: Router,
-    private playerSheetService: PlayerSheetService
+    private playerSheetService: PlayerSheetService,
+    private router: Router
   ) {
     super();
   }

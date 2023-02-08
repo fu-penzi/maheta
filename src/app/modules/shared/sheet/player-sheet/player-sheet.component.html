@@ -4,7 +4,7 @@
       <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
 
-    <div class="header__info" (click)="navigateToAlbum()">
+    <div class="text-ellipsis" (click)="navigateToAlbum()">
       <p class="counter mat-body">
         {{ queuePosition + 1 }} {{ 'global.of' | translate }} {{ queueSize }}
       </p>
@@ -17,7 +17,7 @@
   </div>
 
   <maheta-player-swiper [currentTrack]="currentTrack" [queue]="queue">
-    <div class="track-info">
+    <div class="track-info text-ellipsis">
       <strong class="track-info__title" (click)="navigateToAlbum()">
         {{ this.currentTrack?.title }}
       </strong>

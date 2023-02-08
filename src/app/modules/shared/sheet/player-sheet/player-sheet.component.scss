@@ -57,7 +57,6 @@ maheta-player-lyrics::after {
   overflow: hidden;
   width: calc(100%);
   text-align: center;
-  @include text-ellipsis;
 
   &__title {
     max-width: calc(100%);
@@ -65,13 +64,11 @@ maheta-player-lyrics::after {
     line-height: 2.3rem;
     font-size: 1.5rem;
     font-weight: 500;
-    @include text-ellipsis;
   }
 
   &__author {
     max-width: calc(100%);
     color: $text-secondary;
     font-size: 1.25rem;
-    @include text-ellipsis;
   }
 }

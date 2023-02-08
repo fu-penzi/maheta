@@ -65,8 +65,6 @@
 .album-info {
   padding: spacing(1) spacing(2);
 
-  @include text-ellipsis;
-
   &__title {
     margin-bottom: spacing(1);
   }
@@ -82,8 +80,6 @@
     color: $text-secondary;
     max-width: 100%;
     font-size: 0.8rem;
-
-    @include text-ellipsis;
   }
 
   .album-menu {

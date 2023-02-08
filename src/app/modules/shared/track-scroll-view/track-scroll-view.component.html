@@ -10,7 +10,7 @@
         <img class="thumb" [alt]="track?.title" [src]="'' | safe" />
       </object>
 
-      <div class="info" [class.active]="isCurrentTrack(track)">
+      <div class="info text-ellipsis" [class.active]="isCurrentTrack(track)">
         <span class="info__title">{{ track.title }}</span>
         <span class="info__author">{{ track.author }}</span>
       </div>

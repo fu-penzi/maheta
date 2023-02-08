@@ -47,7 +47,10 @@ $-size-smaller-map: (
   }
 }
 
-@mixin text-ellipsis() {
+.text-ellipsis {
+  overflow: hidden;
+  max-width: calc(100%);
+
   & > * {
     overflow: hidden;
     text-overflow: ellipsis;

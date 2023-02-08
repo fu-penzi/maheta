@@ -53,8 +53,6 @@ mat-progress-bar {
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  @include text-ellipsis;
-
   &__title {
     margin-bottom: spacing(1);
   }
