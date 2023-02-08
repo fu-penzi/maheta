@@ -3,6 +3,7 @@
 	"appName": "Maheta",
 	"webDir": "dist/maheta",
 	"bundledWebRuntime": false,
+	"loggingBehavior": "none",
 	"plugins": {
 		"SplashScreen": {
 			"launchAutoHide": false,
