@@ -30,6 +30,11 @@
   }
 }
 
+@mixin track-list-padding-x() {
+  padding-left: spacing(4);
+  padding-right: spacing(2);
+}
+
 @mixin track-list() {
   .scroll-element {
     height: 64px;
@@ -41,8 +46,7 @@
     width: calc(100vw);
     align-items: center;
     height: size(xl);
-    padding-left: spacing(4);
-    padding-right: spacing(2);
+    @include track-list-padding-x;
 
     .thumb {
       object-fit: cover;
@@ -73,8 +77,66 @@
       &.active &__author {
         color: $accent-dark;
       }
+    }
+  }
 
-      @include text-ellipsis;
+  .waveform-animation {
+    position: relative;
+    height: 0;
+    width: 40px;
+    transform: scale(0.7);
+
+    span {
+      display: block;
+      left: 0;
+      bottom: 0;
+      width: 5px;
+      height: 3px;
+      background-color: $accent-dark;
+      position: absolute;
+      animation: audio-wave 1.5s infinite ease-in-out;
+    }
+
+    span:nth-child(2) {
+      left: 7px;
+      animation-delay: 0.2s;
+    }
+
+    span:nth-child(3) {
+      left: 14px;
+      animation-delay: 0.4s;
+    }
+
+    span:nth-child(4) {
+      left: 21px;
+      animation-delay: 0.6s;
+    }
+
+    span:nth-child(5) {
+      left: 28px;
+      animation-delay: 0.8s;
+    }
+
+    @keyframes audio-wave {
+      0% {
+        transform: scaleY(1);
+        background-color: $accent-dark;
+      }
+
+      25% {
+        transform: scaleY(6.67);
+        background-color: $accent-dark;
+      }
+
+      50% {
+        transform: scaleY(1);
+        background-color: $accent;
+      }
+
+      100% {
+        transform: scaleY(1);
+        background-color: $accent;
+      }
     }
   }
 
