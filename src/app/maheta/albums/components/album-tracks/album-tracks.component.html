@@ -4,14 +4,14 @@
       <img [src]="album?.thumbUrl" [alt]="album?.title" />
     </div>
 
-    <div class="album-info-section text-ellipsis">
-      <div class="primary">
+    <div class="album-info-section">
+      <div class="primary text-ellipsis">
         <p class="title mat-body-strong">{{ album.title }}</p>
         <p class="author">{{ album.author }}</p>
         <p class="year">{{ album.year }}</p>
       </div>
 
-      <p class="secondary">
+      <p class="secondary text-ellipsis">
         {{ 'PLAYLIST.songPlural' | translate: { length: album.tracks.length } }}
         <ng-container *ngIf="totalAlbumTime">
           - {{ totalAlbumTime | mahetaDuration: { noFallback: true, hourMinuteFormat: true } }}
