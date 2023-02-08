@@ -1,4 +1,22 @@
-<maheta-track-scroll-view
-  [currentTrack]="currentTrack"
-  [tracks]="album.tracks"
-></maheta-track-scroll-view>
+<maheta-track-scroll-view [currentTrack]="currentTrack" [tracks]="album.tracks">
+  <div class="album-header">
+    <div class="album-thumb">
+      <img [src]="album?.thumbUrl" [alt]="album?.title" />
+    </div>
+
+    <div class="album-info-section text-ellipsis">
+      <div class="primary">
+        <p class="title mat-body-strong">{{ album.title }}</p>
+        <p class="author">{{ album.author }}</p>
+        <p class="year">{{ album.year }}</p>
+      </div>
+
+      <p class="secondary">
+        {{ 'PLAYLIST.songPlural' | translate: { length: album.tracks.length } }}
+        <ng-container *ngIf="totalAlbumTime">
+          - {{ totalAlbumTime | mahetaDuration: { noFallback: true, hourMinuteFormat: true } }}
+        </ng-container>
+      </p>
+    </div>
+  </div>
+</maheta-track-scroll-view>

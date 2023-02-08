@@ -21,7 +21,9 @@
         <span *ngFor="let _ of [].constructor(5)"></span>
       </div>
 
-      <span class="menu__duration">{{ track.duration | mahetaDuration: true }}</span>
+      <span class="menu__duration">{{
+        track.duration | mahetaDuration: { noFallback: true }
+      }}</span>
       <button [matMenuTriggerFor]="menu" mat-icon-button>
         <mat-icon>more_vert</mat-icon>
       </button>

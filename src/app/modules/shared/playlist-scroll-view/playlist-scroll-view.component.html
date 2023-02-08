@@ -12,7 +12,7 @@
         <div class="info text-ellipsis" [class.active]="false">
           <span class="info__title">{{ playlist.name }}</span>
           <span class="info__author">
-            {{ 'PLAYLIST.songPlural' | translate: { playlistLength: getPlaylistLength(playlist) } }}
+            {{ 'PLAYLIST.songPlural' | translate: { length: getPlaylistLength(playlist) } }}
           </span>
         </div>
       </div>

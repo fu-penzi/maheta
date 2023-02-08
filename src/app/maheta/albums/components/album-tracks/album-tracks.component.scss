@@ -1,4 +1,58 @@
+@use 'variables' as *;
+@use '@angular/material' as mat;
+
 :host {
   display: block;
   height: 100%;
+}
+
+.album-header {
+  display: flex;
+  margin-bottom: spacing(3);
+  padding-top: spacing(4);
+  padding-bottom: spacing(6);
+  background-color: $primary-light;
+  width: 100vw;
+
+  @include track-list-padding-x;
+}
+
+.album-info-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: spacing(4) 0;
+  margin-left: spacing(4);
+  width: calc(100% - 150px);
+
+  .title {
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin-bottom: spacing(2);
+  }
+
+  .author,
+  .year {
+    font-size: 1rem;
+    margin-bottom: spacing(1.5);
+  }
+
+  .secondary {
+    color: $text-secondary;
+  }
+}
+
+.album-thumb {
+  width: 150px;
+  overflow: hidden;
+  border-radius: spacing(1);
+
+  img {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+  }
+
+  @include mat.elevation(4);
 }

@@ -14,7 +14,7 @@
   },
   "PLAYLIST": {
     "deletePlaylist": "Delete playlist",
-    "songPlural": "{playlistLength, plural, =1 {1 song} other {{playlistLength} songs}}"
+    "songPlural": "{length, plural, =1 {1 track} other {{length} tracks}}"
   },
   "TRACK_MENU": {
     "deleteFromPlaylist": "Delete from playlist",
