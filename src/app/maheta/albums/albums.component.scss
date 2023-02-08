@@ -5,6 +5,13 @@
   display: block;
   height: 100%;
   font-size: 1rem;
+  position: relative;
+}
+
+.hidden {
+  position: absolute;
+  top: 0;
+  visibility: hidden;
 }
 
 .album-list {
