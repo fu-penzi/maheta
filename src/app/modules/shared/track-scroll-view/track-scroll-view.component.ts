@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Playlist } from '@src/app/db/domain/playlist.schema';
@@ -20,10 +20,10 @@ import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/mu
   styleUrls: ['./track-scroll-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TrackScrollViewComponent implements OnInit {
+export class TrackScrollViewComponent implements OnChanges {
   @Input() public tracks: Track[];
   @Input() public playlist: Playlist;
-  @Input() public currentTrack: Track;
+  @Input() public currentTrack: Track | null;
 
   constructor(
     private readonly musicControlService: MusicControlService,
@@ -31,8 +31,10 @@ export class TrackScrollViewComponent implements OnInit {
     public matDialogService: MatDialog
   ) {}
 
-  public ngOnInit(): void {
-    this.musicControlService.nextQueue = this.tracks;
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['tracks']) {
+      this.musicControlService.nextQueue = this.tracks;
+    }
   }
 
   public playPosition(position: number): void {

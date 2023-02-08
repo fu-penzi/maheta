@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Album } from '@src/app/db/domain/album';
-import { UrlEnum } from '@src/app/model/url.enum';
+import { Track } from '@src/app/db/domain/track.schema';
+import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
+import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryAlbumsService } from '@src/app/services/music-library/music-library-albums.service';
+import { StackingContextService } from '@src/app/services/stacking-context.service';
 
-import { filter, takeUntil } from 'rxjs';
+import { Observable, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'maheta-albums',
@@ -15,32 +18,37 @@ import { filter, takeUntil } from 'rxjs';
 })
 export class AlbumsComponent extends BaseComponent implements OnInit {
   public albums: Album[] = [];
-  public displayAlbumTracks: boolean = false;
+  public currentAlbum: Album;
+  public currentTrack: Track;
 
   constructor(
     private musicLibraryAlbumsService: MusicLibraryAlbumsService,
+    private stackingContextService: StackingContextService,
+    private musicControlService: MusicControlService,
     private router: Router
   ) {
     super();
   }
 
-  public ngOnInit(): void {
-    this.router.events
-      .pipe(
-        takeUntil(this.onDestroy$),
-        filter((event) => event instanceof NavigationStart)
-      )
-      .subscribe((event) => {
-        if (event instanceof NavigationStart) {
-          this.displayAlbumTracks = event.url.includes(UrlEnum.ALBUMS + '/');
-        }
-      });
+  public get showStackingContext(): boolean {
+    return this.stackingContextService.showStackingContext;
+  }
 
+  public get currentTrack$(): Observable<Track> {
+    return this.musicControlService.currentTrack$;
+  }
+
+  public ngOnInit(): void {
+    this.stackingContextService.currentAlbum$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((currentAlbum: Album) => (this.currentAlbum = currentAlbum));
     this.musicLibraryAlbumsService.albums$
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe((albums: Album[]) => {
-        this.albums = albums;
-      });
+      .subscribe((albums: Album[]) => (this.albums = albums));
+  }
+
+  public navigateToAlbumTracks(albumTitle: string): void {
+    this.router.navigate([''], { queryParams: { [UrlParamsEnum.albumTitle]: albumTitle } });
   }
 
   public trackByIndex(index: number): number {

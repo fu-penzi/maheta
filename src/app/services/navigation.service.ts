@@ -55,6 +55,9 @@ export class NavigationService {
   }
 
   public isRootScreen(): boolean {
-    return this.router.url.split('/').length === 2;
+    return (
+      this.router.url.split('/').length === 2 &&
+      !Object.keys(this.router.parseUrl(this.router.url).queryParams).length
+    );
   }
 }

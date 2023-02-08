@@ -1,4 +1,6 @@
 <cdk-virtual-scroll-viewport itemSize="64" appendOnly>
+  <ng-content></ng-content>
+
   <div
     class="scroll-element"
     *cdkVirtualFor="let track of tracks; index as i; trackBy: trackByIndex"

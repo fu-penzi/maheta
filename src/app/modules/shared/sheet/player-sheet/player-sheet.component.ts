@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import { UrlEnum } from '@src/app/model/url.enum';
+import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { PlayerSheetService } from '@src/app/services/player-sheet.service';
@@ -24,10 +25,6 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit {
     private playerSheetService: PlayerSheetService
   ) {
     super();
-  }
-
-  public get albumUrl(): string {
-    return '/' + UrlEnum.ALBUMS + '/' + this.currentTrack?.album;
   }
 
   public get queuePosition(): number {
@@ -54,7 +51,9 @@ export class PlayerSheetComponent extends BaseComponent implements OnInit {
 
   public navigateToAlbum(): void {
     this.close();
-    this.router.navigate([this.albumUrl]);
+    this.router.navigate(['/' + UrlEnum.ALBUMS], {
+      queryParams: { [UrlParamsEnum.albumTitle]: this.currentTrack?.album },
+    });
   }
 
   public close(): void {
