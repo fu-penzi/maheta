@@ -32,25 +32,21 @@ Main functionality:
 REST API service was created using Flask microframework and it uses Azure Translator service for translations (it's no longer UP, because my student Azure subscription ended).
 
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `update-android` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+Run `run-android` to run the project in Android Studio.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+APK in `releases` section are generated with Android Studio.
 
-## Running end-to-end tests
+For browser debugging configure IP settings in <a href='https://github.com/fu-penzi/maheta/blob/master/capacitor.config.ts'>capacitor.config.ts</a>.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# Contributors
+
+<a href="https://github.com/fu-penzi/maheta/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=fu-penzi/maheta" />
+</a>
 
 ## Further help
 
