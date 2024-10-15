@@ -1,4 +1,14 @@
-# Maheta
+<h1 align="center">
+  <br>
+<img src="https://github.com/user-attachments/assets/3ab6b358-475d-4427-bd4e-1c27280cc95b" width="250">
+  <br>
+  <b>Maheta</b>
+  <br>
+</h1>
+
+
+<h1 align="center">
+</h1>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/13a5546b-d68b-4e88-81d6-01cd48f5a923" width="220">
