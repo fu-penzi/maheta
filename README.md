@@ -1,8 +1,26 @@
 # Maheta
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/13a5546b-d68b-4e88-81d6-01cd48f5a923" width="220">
+  <img src="https://github.com/user-attachments/assets/4bae5b4a-edc9-4246-b911-f6c0246e1fa8" width="220">
+  <img src="https://github.com/user-attachments/assets/a1199e2a-291c-4177-8f35-12fea8a377b1" width="220">
+  <img src="https://github.com/user-attachments/assets/6f8cfa5a-33b1-4b54-a1c0-d1e97522e469" width="220">
+</p>
+
 Figma project: https://www.figma.com/file/0Pzn4AXPqLykVoBipj7dID/Maheta?node-id=2%3A4
-
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.5.
+
+## General information
+Maheta is a mobile app for language learners. It let's you play songs, display lyrics and translate words on the fly.
+
+Main functionality:
+- play songs stored in phone memory
+- create songs playlists
+- add lyrics to song
+- lookup translation of words
+
+REST API service was created using Flask microframework and it uses Azure Translator service for translations (it's no longer UP, because my student Azure subscription ended).
+
 
 ## Development server
 
