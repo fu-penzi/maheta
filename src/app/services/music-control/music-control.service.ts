@@ -33,8 +33,6 @@ export class MusicControlService {
   private _currentQueue$: BehaviorSubject<Track[]> = new BehaviorSubject<Track[]>([]);
   private _currentTrackAudioTime$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
-  private readonly _seekOffset: number = 30;
-
   constructor(private queueService: QueueService<Track>) {
     this._repeatMode$.next(this.queueService.repeatMode);
     this._currentTrackAudio = new Audio();
@@ -50,12 +48,6 @@ export class MusicControlService {
     MediaSession.setActionHandler(
       { action: 'seekto' },
       (details) => details.seekTime && this.seekTo(details.seekTime)
-    );
-    MediaSession.setActionHandler({ action: 'seekforward' }, () =>
-      this.seekTo(this.currentTrackAudioTime, this._seekOffset)
-    );
-    MediaSession.setActionHandler({ action: 'seekbackward' }, () =>
-      this.seekTo(this.currentTrackAudioTime, -this._seekOffset)
     );
     this.updatePlaybackState();
     this.watchCurrentItemChanges();
@@ -165,6 +157,7 @@ export class MusicControlService {
     } else {
       this._currentTrackAudio.currentTime = time + offset;
     }
+    this.updateNativeMusicControlsPositionState();
   }
 
   private onTrackEnded(): void {
@@ -196,7 +189,10 @@ export class MusicControlService {
   private setupCureentTrackAudioTimeSubject(): void {
     interval(50)
       .pipe(map(() => this.currentTrackAudioTime))
-      .subscribe((currentTime: number) => this._currentTrackAudioTime$.next(currentTime));
+      .subscribe((currentTime: number) => {
+        this._currentTrackAudioTime$.next(currentTime);
+        this.updateNativeMusicControlsPositionState();
+      });
   }
 
   private updatePlaybackState(): void {
@@ -204,7 +200,17 @@ export class MusicControlService {
       playbackState: this._currentTrackAudio.paused
         ? MediaSessionPlaybackStateEnum.PAUSED
         : MediaSessionPlaybackStateEnum.PLAYING,
-    });
+    }).then(() => this.updateNativeMusicControlsPositionState());
+  }
+
+  private updateNativeMusicControlsPositionState(): void {
+    if (this.currentTrackDuration && this._currentTrackAudio?.currentTime) {
+      MediaSession.setPositionState({
+        duration: this.currentTrackDuration,
+        position: this._currentTrackAudio.currentTime,
+        playbackRate: 1,
+      });
+    }
   }
 
   private async updateNativeMusicControls(currentTrack: Track): Promise<void> {
