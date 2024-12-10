@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
-import { Directory, Filesystem, ReaddirResult, StatResult } from '@capacitor/filesystem';
+import { Directory, FileInfo, Filesystem, ReaddirResult, StatResult } from '@capacitor/filesystem';
 
 import { getDefaultTrackObject, getTrackObject, Track } from '@src/app/db/domain/track.schema';
 import { LocalStorageEnum } from '@src/app/model/localStorage.enum';
@@ -146,8 +146,8 @@ export class FileLoadingService {
     const filePaths: string[] = await Filesystem.readdir({ path: path })
       .then((files: ReaddirResult) =>
         files.files
-          .filter((file: string) => !file.includes('#'))
-          .map((file: string) => `${path}/${file}`)
+          .filter((file: FileInfo) => !file?.name.includes('#'))
+          .map((file: FileInfo) => `${path}/${file.name}`)
       )
       .catch((err) => {
         getFileReadingError(err, path);
