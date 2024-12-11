@@ -39,6 +39,7 @@
   .scroll-element {
     height: 64px;
     position: relative;
+    margin-bottom: spacing(1);
   }
 
   .content {
@@ -59,14 +60,16 @@
     .info {
       display: flex;
       flex-direction: column;
-      width: calc(50%);
-      padding-left: spacing(4);
+      width: calc(67%);
+      padding-left: spacing(3);
 
       &__title {
-        margin-bottom: spacing(1);
+        font-size: 1.1rem;
+        margin-bottom: 2px;
       }
 
       &__author {
+        font-size: 0.8rem;
         color: $text-secondary;
       }
 
@@ -80,66 +83,6 @@
     }
   }
 
-  //.waveform-animation {
-  //  position: relative;
-  //  height: 0;
-  //  width: 40px;
-  //  transform: scale(0.7);
-  //
-  //  span {
-  //    display: block;
-  //    left: 0;
-  //    bottom: 0;
-  //    width: 5px;
-  //    height: 3px;
-  //    background-color: $accent-dark;
-  //    position: absolute;
-  //    animation: audio-wave 1.5s infinite ease-in-out;
-  //  }
-  //
-  //  span:nth-child(2) {
-  //    left: 7px;
-  //    animation-delay: 0.2s;
-  //  }
-  //
-  //  span:nth-child(3) {
-  //    left: 14px;
-  //    animation-delay: 0.4s;
-  //  }
-  //
-  //  span:nth-child(4) {
-  //    left: 21px;
-  //    animation-delay: 0.6s;
-  //  }
-  //
-  //  span:nth-child(5) {
-  //    left: 28px;
-  //    animation-delay: 0.8s;
-  //  }
-  //
-  //  @keyframes audio-wave {
-  //    0% {
-  //      transform: scaleY(1);
-  //      background-color: $accent-dark;
-  //    }
-  //
-  //    25% {
-  //      transform: scaleY(6.67);
-  //      background-color: $accent-dark;
-  //    }
-  //
-  //    50% {
-  //      transform: scaleY(1);
-  //      background-color: $accent;
-  //    }
-  //
-  //    100% {
-  //      transform: scaleY(1);
-  //      background-color: $accent;
-  //    }
-  //  }
-  //}
-
   .menu {
     height: size(xl);
     position: absolute;
@@ -147,9 +90,11 @@
     bottom: 0;
     display: flex;
     align-items: center;
+    color: $text-secondary;
 
     &__duration {
-      padding: 0 spacing(3);
+      font-size: 0.8rem;
+      padding-left: spacing(3);
       color: $text-secondary;
     }
   }

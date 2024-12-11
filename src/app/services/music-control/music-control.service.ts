@@ -218,7 +218,7 @@ export class MusicControlService {
       .pipe(map(() => this.currentTrackAudioTime))
       .subscribe((currentTime: number) => {
         this._currentTrackAudioTime$.next(currentTime);
-        this.updateNativeMusicControlsPositionState();
+        // this.updateNativeMusicControlsPositionState();
       });
   }
 
