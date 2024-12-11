@@ -19,9 +19,11 @@ export class LayoutComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    SplashScreen.hide();
-    this.navigationService.overlayOpen$.subscribe((isOpen: boolean) => {
-      this.playerSheetOpen = isOpen;
+    this.navigationService.restoreRouterHistory().then(() => {
+      SplashScreen.hide();
+      this.navigationService.overlayOpen$.subscribe((isOpen: boolean) => {
+        this.playerSheetOpen = isOpen;
+      });
     });
   }
 }

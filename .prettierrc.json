@@ -4,17 +4,5 @@
   "useTabs": false,
   "tabWidth": 2,
   "semi": true,
-  "bracketSpacing": true,
-  "attributeGroups": [
-    "^class$",
-    "^(id|name)$",
-    "$ANGULAR_STRUCTURAL_DIRECTIVE",
-    "$ANGULAR_OUTPUT",
-    "$ANGULAR_INPUT",
-    "$ANGULAR_TWO_WAY_BINDING",
-    "$DEFAULT",
-    "^aria-",
-    "^mat-",
-    "^i18n"
-  ]
+  "bracketSpacing": true
 }

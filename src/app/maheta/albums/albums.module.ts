@@ -9,6 +9,8 @@ import { SharedModule } from '@src/app/modules/shared/shared.module';
 import { AlbumsComponent } from '@maheta/albums/albums.component';
 import { AlbumTracksComponent } from '@maheta/albums/components/album-tracks/album-tracks.component';
 
+import { IonicModule } from '@ionic/angular';
+
 @NgModule({
   declarations: [AlbumsComponent, AlbumTracksComponent],
   imports: [
@@ -17,6 +19,7 @@ import { AlbumTracksComponent } from '@maheta/albums/components/album-tracks/alb
     MatButtonModule,
     MatIconModule,
     ScrollingModule,
+    IonicModule,
   ],
 })
 export class AlbumsModule {}

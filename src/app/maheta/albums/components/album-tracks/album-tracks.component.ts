@@ -15,6 +15,7 @@ export class AlbumTracksComponent implements OnChanges {
   @Input() public album: Album;
   @Input() public currentTrack: Track | null;
 
+  public showSkeleton: boolean = true;
   public totalAlbumTime: number = 0;
   constructor() {}
 

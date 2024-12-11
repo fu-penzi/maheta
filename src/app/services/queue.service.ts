@@ -86,6 +86,7 @@ export class QueueService<T> {
 
   public moveTo(index: number): void {
     if (index >= this._queue.length) {
+      this._queuePosition = 0;
       return;
     }
 

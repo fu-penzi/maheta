@@ -6,13 +6,18 @@ import { UrlEnum } from '@src/app/model/url.enum';
 import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { MusicLibraryAlbumsService } from '@src/app/services/music-library/music-library-albums.service';
 
-import { BehaviorSubject, filter, takeUntil } from 'rxjs';
+import { BehaviorSubject, filter, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StackingContextService {
-  public currentAlbum$: BehaviorSubject<Album> = new BehaviorSubject<Album>(getDefaultAlbum());
+  public currentAlbum$: BehaviorSubject<Album> = new BehaviorSubject<Album>({
+    ...getDefaultAlbum(),
+    thumbUrl: '',
+    title: '',
+    author: '',
+  } as unknown as Album);
   public showStackingContext: boolean = false;
 
   constructor(
@@ -37,7 +42,7 @@ export class StackingContextService {
     if (albumTitle) {
       this.musicLibraryAlbumsService
         .getAlbum(albumTitle)
-        .pipe(takeUntil(this.router.events))
+        .pipe(take(1))
         .subscribe((album) => this.currentAlbum$.next(album || getDefaultAlbum()));
     }
   }

@@ -1,10 +1,40 @@
 <maheta-track-scroll-view [currentTrack]="currentTrack" [tracks]="album.tracks">
   <div class="album-header">
-    <div class="album-thumb">
-      <img [src]="album?.thumbUrl" [alt]="album?.title" />
-    </div>
+    <ng-container *ngIf="showSkeleton">
+      <div class="album-thumb">
+        <ion-thumbnail><ion-skeleton-text [animated]="true"></ion-skeleton-text></ion-thumbnail>
+      </div>
+      <div class="album-info-section">
+        <div class="primary text-ellipsis">
+          <p>
+            <ion-skeleton-text
+              class="title"
+              [animated]="true"
+              style="width: 80%"
+            ></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text
+              class="author"
+              [animated]="true"
+              style="width: 60%"
+            ></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text
+              class="year"
+              [animated]="true"
+              style="width: 30%"
+            ></ion-skeleton-text>
+          </p>
+        </div>
+      </div>
+    </ng-container>
 
-    <div class="album-info-section">
+    <div [hidden]="showSkeleton" class="album-thumb">
+      <img [src]="album?.thumbUrl" (load)="showSkeleton = false" />
+    </div>
+    <div class="album-info-section" *ngIf="!showSkeleton">
       <div class="primary text-ellipsis">
         <p class="title mat-body-strong">{{ album.title }}</p>
         <p class="author">{{ album.author }}</p>

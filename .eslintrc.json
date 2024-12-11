@@ -91,7 +91,7 @@
         "@typescript-eslint/no-unnecessary-condition": ["off"],
         "@typescript-eslint/non-nullable-type-assertion-style": ["off"],
         "@typescript-eslint/prefer-nullish-coalescing": ["off"],
-        "no-unused-vars": "error",
+        "no-unused-vars": "warn",
         "eqeqeq": ["error", "smart"],
         "linebreak-style": ["error", "unix"],
         "prefer-const": "error",

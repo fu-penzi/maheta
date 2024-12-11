@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { AppStateCacheService } from '@src/app/services/app-state-cache.service';
 import { LocalizationService } from '@src/app/services/localization.service';
 
 @Component({
@@ -9,7 +10,11 @@ import { LocalizationService } from '@src/app/services/localization.service';
 })
 export class AppComponent {
   title = 'Maheta';
-  constructor(private localizationService: LocalizationService) {
+  constructor(
+    private localizationService: LocalizationService,
+    private appStateCacheService: AppStateCacheService
+  ) {
     this.localizationService.init();
+    this.appStateCacheService.init();
   }
 }

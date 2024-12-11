@@ -54,7 +54,6 @@
     "natural": "^5.2.3",
     "ngx-translate-messageformat-compiler": "^6.2.0",
     "os-browserify": "^0.3.0",
-    "prettier-plugin-organize-attributes": "^0.0.5",
     "process": "^0.11.10",
     "rxdb": "^12.7.8",
     "rxjs": "~7.5.0",

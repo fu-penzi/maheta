@@ -55,8 +55,6 @@ export class DatabaseService {
     await this.trackCollectionService.reloadCollectionData(tracksBackup);
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
   private async dropDatabaseData(): Promise<void> {
     await this._trackDB?.remove();
     await this.setupDatabase();
