@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
+import { Device, DeviceInfo } from '@capacitor/device';
 import { Directory, FileInfo, Filesystem, ReaddirResult, StatResult } from '@capacitor/filesystem';
 
 import { getDefaultTrackObject, getTrackObject, Track } from '@src/app/db/domain/track.schema';
@@ -84,15 +85,24 @@ export class FileLoadingService {
   }
 
   private async getReadOptions(): Promise<ReadOptionsLocalStorage[]> {
+    const deviceInfo: DeviceInfo = await Device.getInfo();
     const sdCardReadOptions: ReadOptionsLocalStorage[] = await this.diagnostic
       .isExternalStorageAuthorized()
-      .then((isAuthorized: boolean) =>
-        isAuthorized ? [] : this.diagnostic.requestExternalStorageAuthorization()
-      )
-      .then(() => this.diagnostic.isExternalStorageAuthorized())
-      .then((isAuthorized: boolean) =>
-        isAuthorized ? this.diagnostic.getExternalSdCardDetails() : []
-      )
+      .then((isAuthorized: boolean) => {
+        if (isAuthorized) {
+          return [];
+        }
+
+        if (deviceInfo.androidSDKVersion && deviceInfo.androidSDKVersion > 33) {
+          return this.diagnostic.requestRuntimePermissions([
+            this.diagnostic.permission.READ_MEDIA_AUDIO,
+            this.diagnostic.permission.READ_MEDIA_IMAGES,
+          ]);
+        }
+
+        return this.diagnostic.requestExternalStorageAuthorization();
+      })
+      .then(() => this.diagnostic.getExternalSdCardDetails())
       .then((sdCardDetails: any) =>
         sdCardDetails
           ?.filter((sdCardDetail: any) => sdCardDetail?.path)
@@ -198,7 +208,7 @@ export class FileLoadingService {
           fileType === FileTypeEnum.FILE
       )
       .catch((err) => {
-        console.error(getFileReadingError(err, path));
+        // console.error(getFileReadingError(err, path));
         return false;
       });
   }

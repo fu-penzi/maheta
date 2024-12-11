@@ -7,7 +7,7 @@ android {
   defaultConfig {
         applicationId "com.fupenzi.maheta"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdk 31
+        targetSdk 33
         versionCode 10
         versionName "1.0.10"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
