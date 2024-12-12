@@ -123,3 +123,10 @@ mat-divider.mat-divider {
   margin: spacing(4) 0;
   border-top-color: rgb(255 255 255 / 12%) !important;
 }
+
+.page-content.animate__faster {
+  -webkit-animation-duration: calc(1s / 3.5);
+  animation-duration: calc(1s / 3.5);
+  -webkit-animation-duration: calc(var(--animate-duration) / 3.5);
+  animation-duration: calc(var(--animate-duration) / 3.5);
+}

@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
+import { AnimationDurations } from '@angular/material/core';
 
 import { AppStateCacheService } from '@src/app/services/app-state-cache.service';
 import { LocalizationService } from '@src/app/services/localization.service';
+
+AnimationDurations.COMPLEX = AnimationDurations.EXITING;
 
 @Component({
   selector: 'maheta-root',
