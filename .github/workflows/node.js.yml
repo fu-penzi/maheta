@@ -43,10 +43,13 @@ jobs:
         chmod +x ./android/gradlew
         echo "$RELEASE_KEYSTORE" | base64 --decode > ${{ github.workspace }}/keystore-decoded.jks
         
-    - name: Build APK
+    - name: Build app
       run: |
         npm ci
         npm run update-android:prod
+
+    - name: Build APK
+      run: |
         npx cap build android --keystorepath "${{ github.workspace }}/keystore-decoded.jks" --keystorepass "$KEYSTOREPASS" --keystorealias "$KEYSTORE_ALIAS" --keystorealiaspass "$KEYSTORE_ALIAS_PASS" --androidreleasetype APK
         mv "${{ env.APK_PATH }}/app-release-signed.apk" "${{ env.APK_PATH }}/Maheta_v${{ env.VERSION }}_${{ env.SHORT_SHA }}.apk"
 
