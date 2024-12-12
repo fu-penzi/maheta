@@ -17,7 +17,7 @@ import { Observable, takeUntil } from 'rxjs';
   styleUrls: ['./albums.component.scss'],
 })
 export class AlbumsComponent extends BaseComponent implements OnInit {
-  public albums: Album[] = [];
+  public albums: Album[];
   public currentAlbum: Album;
   public currentTrack: Track;
 

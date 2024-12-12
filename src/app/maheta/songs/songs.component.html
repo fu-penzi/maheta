@@ -1,6 +1,9 @@
-<maheta-info-text *ngIf="!tracks?.length" text="You have no songs :("></maheta-info-text>
+<maheta-info-text
+  *ngIf="tracks && tracks.length === 0"
+  text="You have no songs :("
+></maheta-info-text>
 
 <maheta-track-scroll-view
   [currentTrack]="currentTrack"
-  [tracks]="tracks"
+  [tracks]="tracks || []"
 ></maheta-track-scroll-view>

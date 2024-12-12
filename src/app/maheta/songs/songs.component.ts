@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs';
   styleUrls: ['./songs.component.scss'],
 })
 export class SongsComponent extends BaseComponent implements OnInit {
-  public tracks: Track[] = [];
+  public tracks: Track[];
   public currentTrack: Track;
 
   constructor(

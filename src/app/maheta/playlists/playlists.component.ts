@@ -14,7 +14,7 @@ import { takeUntil } from 'rxjs';
   styleUrls: ['./playlists.component.scss'],
 })
 export class PlaylistsComponent extends BaseComponent implements OnInit {
-  public playlists: Playlist[] = [];
+  public playlists: Playlist[];
 
   constructor(
     private readonly musicLibraryPlaylistsService: MusicLibraryPlaylistsService,

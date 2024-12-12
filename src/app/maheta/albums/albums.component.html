@@ -1,4 +1,7 @@
-<maheta-info-text *ngIf="!albums?.length" text="You have no albums :("></maheta-info-text>
+<maheta-info-text
+  *ngIf="albums && albums.length === 0"
+  text="You have no albums :("
+></maheta-info-text>
 
 <ul class="album-list" [class.hidden]="showStackingContext">
   <li class="album" *ngFor="let album of albums; index as i; trackBy: trackByIndex">
