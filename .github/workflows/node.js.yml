@@ -36,29 +36,26 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Setup Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: 17
-
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v2.0.10
-    - run: sudo apt -y install android-sdk-build-tools
-    - run: echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-7`" >> $GITHUB_ENV
+        
+    - name: Setup Android Build Tools
+      run: sudo apt -y install android-sdk-build-tools
+      
     - name: Prepare
       run: |
         chmod +x ./android/gradlew
         echo "$RELEASE_KEYSTORE" | base64 --decode > ${{ github.workspace }}/keystore-decoded.jks
-
+        echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-7`" >> $GITHUB_ENV
+        
     - name: Build app
       run: |
         npm ci
         npm run update-android:prod
 
-    - run: npx cap build android --keystorepath "${{ github.workspace }}/keystore-decoded.jks" --keystorepass "$KEYSTOREPASS" --keystorealias "$KEYSTORE_ALIAS" --keystorealiaspass "$KEYSTORE_ALIAS_PASS" --androidreleasetype APK
-    - run: mv "${{ env.APK_PATH }}/app-release-signed.apk" "${{ env.APK_PATH }}/Maheta_v${{ env.VERSION }}_${{ env.SHORT_SHA }}.apk"
-
+    - name: Build APK
+      run: |
+        npx cap build android --keystorepath "${{ github.workspace }}/keystore-decoded.jks" --keystorepass "$KEYSTOREPASS" --keystorealias "$KEYSTORE_ALIAS" --keystorealiaspass "$KEYSTORE_ALIAS_PASS" --androidreleasetype APK
+        mv "${{ env.APK_PATH }}/app-release-signed.apk" "${{ env.APK_PATH }}/Maheta_v${{ env.VERSION }}_${{ env.SHORT_SHA }}.apk"
+   
     - name: Delete Release
       uses: larryjoelane/delete-release-action@v1.0.24
       with:
