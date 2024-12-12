@@ -9,14 +9,24 @@ on:
   pull_request:
     branches: [ "master" ]
 
+permissions:
+  contents: write
+  
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+        RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
+        KEYSTOREPASS: ${{ secrets.KEYSTOREPASS }}
+        KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+        KEYSTORE_ALIAS_PASS: ${{ secrets.KEYSTORE_ALIAS_PASS }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        APK_PATH: ${{ github.workspace }}/android/app/build/outputs/apk/release
+        VERSION: 1.0.10
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: [20.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -26,7 +36,29 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: chmod +x ./android/gradlew
-    - run: npm install
-    - run: npm run update-android:prod --if-present
-    - run: npx cap build android
+    - run: echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-7`" >> $GITHUB_ENV
+    
+    - name: Prepare
+      run: |
+        chmod +x ./android/gradlew
+        echo "$RELEASE_KEYSTORE" | base64 --decode > ${{ github.workspace }}/keystore-decoded.jks
+        
+    - name: Build APK
+      run: |
+        npm ci
+        npm run update-android:prod
+        npx cap build android --keystorepath "${{ github.workspace }}/keystore-decoded.jks" --keystorepass "$KEYSTOREPASS" --keystorealias "$KEYSTORE_ALIAS" --keystorealiaspass "$KEYSTORE_ALIAS_PASS" --androidreleasetype APK
+        mv "${{ env.APK_PATH }}/app-release-signed.apk" "${{ env.APK_PATH }}/Maheta_v${{ env.VERSION }}_${{ env.SHORT_SHA }}.apk"
+
+    - name: Delete Release
+      uses: larryjoelane/delete-release-action@v1.0.24
+      with:
+        release-name: Latest
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Release with Notes
+      uses: softprops/action-gh-release@v2
+      with:
+          files: ${{ env.APK_PATH }}/Maheta_v${{ env.VERSION }}_${{ env.SHORT_SHA }}.apk
+          make_latest: true
+          tag_name: Latest
