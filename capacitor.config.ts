@@ -9,8 +9,13 @@ const config: CapacitorConfig = {
   appId: 'com.fupenzi.maheta',
   appName: 'Maheta',
   webDir: 'dist/maheta',
+  android: {
+    buildOptions: {
+      signingType: 'apksigner',
+    },
+  },
   ...(process.env['NODE_ENV']?.toString().startsWith('production')
-    ? {}
+    ? { loggingBehavior: 'production' }
     : {
         server: {
           url: `http://${hostIp}:8100`,
