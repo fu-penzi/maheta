@@ -26,6 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: chmod +x ./android/gradlew
     - run: npm install
     - run: npm run update-android:prod --if-present
     - run: npx cap build android
