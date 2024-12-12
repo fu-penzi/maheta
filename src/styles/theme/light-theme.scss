@@ -74,7 +74,7 @@ $-light-warn: mat.define-palette(mat.$red-palette);
 //  $font-family: 'Poppins',
 //);
 
-$light-theme: mat.define-light-theme(
+$light-theme: mat.define-dark-theme(
   (
     color: (
       primary: $-light-primary,

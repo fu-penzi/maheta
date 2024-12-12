@@ -9,7 +9,6 @@
 /*
 * Slider
 */
-
 .mat-slider.mat-slider-horizontal {
   display: block;
   padding: 0;
@@ -36,68 +35,14 @@
 /*
 * Sheet
 */
-
 .cdk-overlay-container mat-bottom-sheet-container {
-  color: $text !important;
   padding: 0 !important;
   max-height: 100vh;
 }
 
 /*
-* Dialog
-*/
-
-mat-dialog-container {
-  background-color: $background !important;
-  color: $text !important;
-
-  .mat-form-field-flex {
-    background-color: $primary-light !important;
-  }
-
-  .mat-form-field-label {
-    color: $text !important;
-  }
-
-  .mat-focused .mat-form-field-ripple {
-    background-color: $accent !important;
-  }
-
-  .mat-focused .mat-form-field-label {
-    color: $accent !important;
-  }
-
-  input {
-    caret-color: $text !important;
-  }
-
-  ::placeholder {
-    color: $text !important;
-    opacity: 0.5;
-  }
-}
-
-/*
-* Menu
-*/
-
-.mat-menu-content {
-  color: $text;
-  background-color: $primary-light;
-
-  .mat-menu-item {
-    color: $text;
-  }
-
-  .mat-icon-no-color {
-    color: $text !important;
-  }
-}
-
-/*
 * Accordion
 */
-
 mat-panel-title .mat-icon {
   margin-right: 10px;
 }
@@ -105,11 +50,7 @@ mat-panel-title .mat-icon {
 /*
 * Mat card
 */
-
 mat-card {
-  background-color: $primary-light !important;
-  color: $text !important;
-
   .mat-card-header-text {
     margin: 0;
   }
@@ -129,12 +70,4 @@ mat-divider.mat-divider {
   animation-duration: calc(1s / 3.5);
   -webkit-animation-duration: calc(var(--animate-duration) / 3.5);
   animation-duration: calc(var(--animate-duration) / 3.5);
-}
-
-/*
-* Mat button
-*/
-
-.mat-stroked-button[color='accent'] {
-  border-color: $accent !important;
 }

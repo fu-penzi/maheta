@@ -9,7 +9,7 @@
 
     <mat-divider></mat-divider>
     <p class="form-name">{{ 'SETTINGS.language' | translate }}</p>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" color="accent">
       <mat-label>{{ 'SETTINGS.language' | translate }}</mat-label>
       <mat-select formControlName="language">
         <mat-option *ngFor="let languageCode of languageCodes" [value]="languageCode">

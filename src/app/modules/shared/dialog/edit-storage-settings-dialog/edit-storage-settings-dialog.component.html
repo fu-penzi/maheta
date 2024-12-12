@@ -6,6 +6,7 @@
       class="example-full-width"
       *ngFor="let readOptions of readOptionsPaths; index as i"
       appearance="fill"
+      color="accent"
     >
       <mat-label>#{{ i }}</mat-label>
       <input [formControlName]="i" matInput placeholder="/storage/15F2-1213/Music" />
