@@ -26,6 +26,7 @@ import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/dialog/cr
 import { EditLyricsDialogComponent } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { EditStorageSettingsDialogComponent } from '@src/app/modules/shared/dialog/edit-storage-settings-dialog/edit-storage-settings-dialog.component';
 import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-dialog/loading-dialog.component';
+import { InfoTextComponent } from '@src/app/modules/shared/info-text/info-text.component';
 import { PlaylistScrollViewComponent } from '@src/app/modules/shared/playlist-scroll-view/playlist-scroll-view.component';
 import { PlayerControlsComponent } from '@src/app/modules/shared/sheet/player-sheet/components/player-controls/player-controls.component';
 import { PlayerLyricsComponent } from '@src/app/modules/shared/sheet/player-sheet/components/player-lyrics/player-lyrics.component';
@@ -48,6 +49,7 @@ const exportedComponents = [
   DurationPipe,
   SafePipe,
   SetClassAfterViewInitDirective,
+  InfoTextComponent,
 ];
 
 @NgModule({

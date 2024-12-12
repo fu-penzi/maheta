@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
 import { UrlParamsEnum } from '@src/app/model/url-params.enum';
@@ -21,6 +23,8 @@ import { PlaylistsComponent } from '@maheta/playlists/playlists.component';
       },
     ]),
     SharedModule,
+    MatButtonModule,
+    MatIconModule,
   ],
 })
 export class PlaylistsModule {}

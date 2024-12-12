@@ -1,1 +1,9 @@
+<div *ngIf="!playlists?.length">
+  <maheta-info-text text="You have no playlists :("></maheta-info-text>
+  <button class="add-button" (click)="openCreatePlaylistDialog()" color="accent" mat-stroked-button>
+    <span>CREATE PLAYLIST</span>
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
 <maheta-playlist-scroll-view [playlists]="playlists"></maheta-playlist-scroll-view>

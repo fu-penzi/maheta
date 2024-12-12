@@ -1,3 +1,5 @@
+<maheta-info-text *ngIf="!albums?.length" text="You have no albums :("></maheta-info-text>
+
 <ul class="album-list" [class.hidden]="showStackingContext">
   <li class="album" *ngFor="let album of albums; index as i; trackBy: trackByIndex">
     <a (click)="navigateToAlbumTracks(album.title)">
@@ -16,6 +18,8 @@
 </ul>
 
 <maheta-album-tracks
+  class="animate__animated animate__faster"
+  [ngClass]="{ animate__fadeIn: showStackingContext }"
   [class.hidden]="!showStackingContext"
   [album]="currentAlbum"
   [currentTrack]="currentTrack$ | async"

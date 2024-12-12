@@ -1,0 +1,7 @@
+@use 'variables' as *;
+
+.add-button {
+  display: block;
+  margin: spacing(15) auto;
+  transform: scale(1.3);
+}

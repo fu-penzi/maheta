@@ -130,3 +130,11 @@ mat-divider.mat-divider {
   -webkit-animation-duration: calc(var(--animate-duration) / 3.5);
   animation-duration: calc(var(--animate-duration) / 3.5);
 }
+
+/*
+* Mat button
+*/
+
+.mat-stroked-button[color='accent'] {
+  border-color: $accent !important;
+}
