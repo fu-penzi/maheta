@@ -8,7 +8,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "start-mock-server": "node mock",
-    "run-andoid": "npm run open-android && ng serve --host=0.0.0.0 --port=8100",
+    "run-andoid": "npm run sync:local && npm run open-android && ng serve --host=0.0.0.0 --port=8100",
     "update-android": "ng build && npx cap sync",
     "update-android:local": "ng build && sync-local",
     "sync": "npx cap sync",
