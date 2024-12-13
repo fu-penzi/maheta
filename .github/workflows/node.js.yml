@@ -39,7 +39,7 @@ jobs:
         
     - name: Setup Android Build Tools
    #   run: sudo apt -y install android-sdk-build-tools
-      run: sudo apt -y update && apt -y install android-sdk
+      run: sudo apt -y update && sudo apt -y install android-sdk
     - run: export PATH=${PATH}:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/build-tools/34.0.0
  #   - name: Setup Android SDK
 #      uses: android-actions/setup-android@v3
