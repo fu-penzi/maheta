@@ -61,7 +61,21 @@ jobs:
       run: |
         npx cap build android --keystorepath "${{ github.workspace }}/keystore-decoded.jks" --keystorepass "$KEYSTOREPASS" --keystorealias "$KEYSTORE_ALIAS" --keystorealiaspass "$KEYSTORE_ALIAS_PASS" --androidreleasetype APK
         mv "${{ env.APK_PATH }}/app-release-signed.apk" "${{ env.APK_PATH }}/Maheta_v${{ env.VERSION }}_${{ env.SHORT_SHA }}.apk"
-   
+    
+    - uses: r0adkll/sign-android-release@v1
+      name: Sign app APK
+    # ID used to access action output
+      id: sign_app
+      with:
+       releaseDirectory: ${{ env.APK_PATH }}
+       signingKeyBase64: ${{ secrets.RELEASE_KEYSTORE }}
+       alias: ${{ secrets.KEYSTORE_ALIAS }}
+       keyStorePassword: ${{ secrets.KEYSTOREPASS }}
+       keyPassword: ${{ secrets.KEYSTORE_ALIAS_PASS }}
+      env:
+      # override default build-tools version (33.0.0) -- optional
+       BUILD_TOOLS_VERSION: "34.0.0"
+      
     - name: Delete Release
       uses: larryjoelane/delete-release-action@v1.0.24
       with:
@@ -71,6 +85,6 @@ jobs:
     - name: Release with Notes
       uses: softprops/action-gh-release@v2
       with:
-          files: ${{ env.APK_PATH }}/Maheta_v${{ env.VERSION }}_${{ env.SHORT_SHA }}.apk
+          files: ${{ env.APK_PATH }}/Maheta_v${{ env.VERSION }}_${{ env.SHORT_SHA }}.apk ${{steps.sign_app.outputs.signedReleaseFile}}
           make_latest: true
           tag_name: Latest
