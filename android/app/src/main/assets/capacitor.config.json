@@ -7,12 +7,6 @@
 		"url": "http://192.168.0.107:8100",
 		"cleartext": true
 	},
-	"plugins": {
-		"SplashScreen": {
-			"launchAutoHide": false,
-			"showSpinner": true,
-			"androidSpinnerStyle": "horizontal",
-			"spinnerColor": "#501E68"
-		}
-	}
+	"plugins": {},
+	"backgroundColor": "#FF0000FF"
 }

@@ -33,4 +33,9 @@ const config: CapacitorConfig = {
   },
 };
 
+if (process.env['NODE_ENV']?.toString().startsWith('local')) {
+  config.backgroundColor = '#FF0000FF';
+  config.plugins = {};
+}
+
 export default config;

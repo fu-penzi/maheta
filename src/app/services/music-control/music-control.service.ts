@@ -218,8 +218,8 @@ export class MusicControlService {
       .pipe(map(() => this.currentTrackAudioTime))
       .subscribe((currentTime: number) => {
         this._currentTrackAudioTime$.next(currentTime);
-        // this.updateNativeMusicControlsPositionState();
       });
+    interval(1500).subscribe(() => this.updateNativeMusicControlsPositionState());
   }
 
   private updatePlaybackState(): void {
