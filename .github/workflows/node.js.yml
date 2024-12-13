@@ -39,7 +39,7 @@ jobs:
         
     - name: Setup Android Build Tools
       run: sudo apt -y install android-sdk-build-tools
-    - rum: android update sdk --no-ui --all
+    - run: android update sdk --no-ui --all
       
     - name: Prepare
       run: |
