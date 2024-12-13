@@ -37,12 +37,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         
-  #  - name: Setup Android Build Tools
+    - name: Setup Android Build Tools
    #   run: sudo apt -y install android-sdk-build-tools
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-    - run: sdkmanager --install "build-tools;34.0.0"
-    - run: sdkmanager --update
+      run: sudo apt -y update && sudo apt -y install android-sdk
+ #   - name: Setup Android SDK
+#      uses: android-actions/setup-android@v3
+#    - run: sdkmanager --install "build-tools;34.0.0"
+#    - run: sdkmanager --update
     - name: Prepare
       run: |
         chmod +x ./android/gradlew
