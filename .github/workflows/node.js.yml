@@ -36,32 +36,27 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        
-    - name: Setup Android Build Tools
-      run: sudo apt -y install android-sdk-build-tools
-    - rum: android update sdk --no-ui --all
-      
+
     - name: Prepare
       run: |
         chmod +x ./android/gradlew
         echo "$RELEASE_KEYSTORE" | base64 --decode > ${{ github.workspace }}/keystore-decoded.jks
         echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-7`" >> $GITHUB_ENV
-        
-    - name: Build app
-      run: |
-        npm ci
-        npm run update-android:prod
 
     - name: Build APK
       run: |
+        export PATH="/usr/local/lib/android/sdk/build-tools/34.0.0:$PATH"
+        npm install
+        npm run update-android
         npx cap build android --keystorepath "${{ github.workspace }}/keystore-decoded.jks" --keystorepass "$KEYSTOREPASS" --keystorealias "$KEYSTORE_ALIAS" --keystorealiaspass "$KEYSTORE_ALIAS_PASS" --androidreleasetype APK
         mv "${{ env.APK_PATH }}/app-release-signed.apk" "${{ env.APK_PATH }}/Maheta_v${{ env.VERSION }}_${{ env.SHORT_SHA }}.apk"
-   
-    - name: Delete Release
-      uses: larryjoelane/delete-release-action@v1.0.24
-      with:
-        release-name: Latest
-        token: ${{ secrets.GITHUB_TOKEN }}
+
+
+    # - name: Delete Release
+    #   uses: larryjoelane/delete-release-action@v1.0.24
+    #   with:
+    #     release-name: Latest
+    #     token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Release with Notes
       uses: softprops/action-gh-release@v2

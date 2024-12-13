@@ -14,14 +14,14 @@ const config: CapacitorConfig = {
       signingType: 'apksigner',
     },
   },
-  ...(process.env['NODE_ENV']?.toString().startsWith('production')
-    ? { loggingBehavior: 'production' }
-    : {
+  ...(process.env['NODE_ENV']?.toString().startsWith('local')
+    ? {
         server: {
           url: `http://${hostIp}:8100`,
           cleartext: true,
         },
-      }),
+      }
+    : { loggingBehavior: 'production' }),
   plugins: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     SplashScreen: {
