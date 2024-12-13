@@ -41,7 +41,7 @@ jobs:
    #   run: sudo apt -y install android-sdk-build-tools
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
-    - run:  sdkmanager build-tools
+    - run:  sdkmanager --list
     - name: Prepare
       run: |
         chmod +x ./android/gradlew
