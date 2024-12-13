@@ -37,8 +37,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         
-    - name: Setup Android Build Tools
-      run: sudo apt -y install android-sdk-build-tools
+  #  - name: Setup Android Build Tools
+   #   run: sudo apt -y install android-sdk-build-tools
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
     - run: android update sdk --no-ui --all
       
     - name: Prepare
