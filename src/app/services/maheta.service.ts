@@ -6,6 +6,7 @@ import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-d
 export interface ProgressBarConfig {
   isShown: boolean;
   progress: number;
+  mode: 'determinate' | 'query' | 'buffer';
 }
 
 const dialogConf: MatDialogConfig<LoadingDialogComponent> = {
@@ -17,7 +18,11 @@ const dialogConf: MatDialogConfig<LoadingDialogComponent> = {
   providedIn: 'root',
 })
 export class MahetaService {
-  public progressBarConfig: ProgressBarConfig = { isShown: false, progress: 0 };
+  public progressBarConfig: ProgressBarConfig = {
+    isShown: false,
+    progress: 0,
+    mode: 'buffer',
+  };
 
   private _dialogRef: MatDialogRef<LoadingDialogComponent>;
 
@@ -32,14 +37,20 @@ export class MahetaService {
   }
 
   public showProgressBar(): void {
+    this.progressBarConfig.mode = 'query';
     this.progressBarConfig.isShown = true;
   }
 
   public hideProgressBar(): void {
+    this.progressBarConfig.mode = 'determinate';
+    this.progressBarConfig.progress = 100;
     this.progressBarConfig.isShown = false;
   }
 
   public updateProgressBar(progress: number): void {
+    if (progress > 0) {
+      this.progressBarConfig.mode = 'determinate';
+    }
     this.progressBarConfig.progress = progress;
   }
 }

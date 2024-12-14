@@ -44,14 +44,15 @@ export class AppBarComponent {
   }
 
   public reloadDatabaseTrackData(): void {
-    this.mahetaService.openLoadingDialog();
+    this.mahetaService.showProgressBar();
     this.musicLibraryTracksService
       .reloadTracksLibrary()
-      .then(() => this.mahetaService.closeLoadingDialog())
-      .catch(() => this.mahetaService.closeLoadingDialog());
+      .then(() => this.mahetaService.hideProgressBar())
+      .catch(() => this.mahetaService.hideProgressBar());
   }
 
   public dropDatabaseTrackData(): void {
+    this.navigation.back();
     this.mahetaService.openLoadingDialog();
     this.musicLibraryTracksService
       .dropTracksLibrary()
