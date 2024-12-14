@@ -11,6 +11,8 @@ interface NavigationState {
   history: string[];
 }
 
+export const ROOT_SCREEN_URLS: UrlEnum[] = [UrlEnum.ALBUMS, UrlEnum.PLAYLISTS, UrlEnum.SONGS];
+
 @Injectable({
   providedIn: 'root',
 })
@@ -66,6 +68,10 @@ export class NavigationService {
       return;
     }
 
+    if (this.isRootScreen()) {
+      return;
+    }
+
     const current: string | undefined = this._history.pop();
     const prev: string | undefined = this._history[this._history.length - 1];
     if (prev === current) {
@@ -80,6 +86,7 @@ export class NavigationService {
 
   public isRootScreen(): boolean {
     return (
+      ROOT_SCREEN_URLS.some((url: string) => this.router.url.startsWith('/' + url)) &&
       this.router.url.split('/').length === 2 &&
       !Object.keys(this.router.parseUrl(this.router.url).queryParams).length
     );
