@@ -81,22 +81,10 @@ export class FileLoadingService {
     this._tracksMap.clear();
     const readOptionsArray: ReadOptionsLocalStorage[] = await this.getReadOptions();
     for (const readOptions of readOptionsArray) {
-      const trackPaths = await this.readTrackPaths(readOptions);
+      const trackWithoutMetadata: TrackWithoutMetadata[] = await this.readTrackPaths(readOptions);
 
-      for (const path of trackPaths) {
-        const track: TrackWithoutMetadata = await Filesystem.stat({ path: path })
-          .then((stats: StatResult) => ({
-            uri: path,
-            src: Capacitor.convertFileSrc(path),
-            modificationTime: stats.mtime,
-          }))
-          .catch(() => ({
-            uri: path,
-            src: Capacitor.convertFileSrc(path),
-            modificationTime: 0,
-          }));
-
-        this._tracksMap.set(path, track);
+      for (const track of trackWithoutMetadata) {
+        this._tracksMap.set(track.uri, track);
       }
     }
 
@@ -163,11 +151,20 @@ export class FileLoadingService {
     return getTrackObject(track, fileModified, track.lyrics, metadata ?? undefined);
   }
 
-  private readTrackPaths(readOptions: ReadOptionsLocalStorage): Promise<string[]> {
+  private readTrackPaths(readOptions: ReadOptionsLocalStorage): Promise<TrackWithoutMetadata[]> {
     return Filesystem.stat(readOptions)
       .then((uriResult) => this.readDirRecursive(uriResult.uri))
-      .then((res) => [res].flat(Infinity).filter((t: unknown) => typeof t == 'string' && !!t))
-      .then((res) => res as string[])
+      .then((res) =>
+        [res]
+          .flat(Infinity)
+          .filter(
+            (t: unknown) =>
+              !!t &&
+              !!(t as TrackWithoutMetadata)?.uri &&
+              typeof (t as TrackWithoutMetadata)?.uri == 'string'
+          )
+      )
+      .then((res) => res as TrackWithoutMetadata[])
       .catch((err) => {
         console.error(
           `Error: ${err} occurred when loading tracks from directory:${readOptions.path}`
@@ -178,7 +175,7 @@ export class FileLoadingService {
 
   private readDirRecursive = async (path: string): Promise<unknown> => {
     if (path.includes('#') || !(await this.isValidDir(path))) {
-      return '';
+      return null;
     }
     const filePaths: string[] = await Filesystem.readdir({ path: path })
       .then((files: ReaddirResult) =>
@@ -192,13 +189,15 @@ export class FileLoadingService {
       });
 
     if (!filePaths.length) {
-      return '';
+      return null;
     }
     const promises: Promise<unknown>[] = filePaths.map(async (filePath: string) => {
       if (await this.isValidDir(filePath)) {
         return this.readDirRecursive(filePath);
       }
-      return (await this.isValidMusicFile(filePath)) ? filePath : '';
+      const musicFile: TrackWithoutMetadata | null = await this.isValidMusicFile(filePath);
+
+      return musicFile ? musicFile : null;
     });
 
     return Promise.all(promises);
@@ -221,22 +220,29 @@ export class FileLoadingService {
       });
   }
 
-  private isValidMusicFile(path: string): Promise<boolean> {
+  private isValidMusicFile(path: string): Promise<TrackWithoutMetadata | null> {
     const validFileExtensions = Object.values(MusicFileExtensionEnum);
     const restrictedDirs = Object.values(RestrictedDirectoriesEnum);
 
     return Filesystem.stat({ path: path })
-      .then((stats: StatResult) => stats.type)
-      .then(
-        (fileType: string) =>
+      .then((stats: StatResult) => {
+        const isValidMusicFile =
           !!path &&
           !restrictedDirs.some((restrictedFile: string) => path.endsWith(restrictedFile)) &&
           validFileExtensions.some((validFileExtension) => path.endsWith(validFileExtension)) &&
-          fileType === FileTypeEnum.FILE
-      )
+          stats.type === FileTypeEnum.FILE;
+
+        return isValidMusicFile
+          ? {
+              uri: path,
+              modificationTime: stats.mtime,
+              src: Capacitor.convertFileSrc(path),
+            }
+          : null;
+      })
       .catch((err) => {
         // console.error(getFileReadingError(err, path));
-        return false;
+        return null;
       });
   }
 }

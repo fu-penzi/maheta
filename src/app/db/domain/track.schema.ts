@@ -52,30 +52,31 @@ export async function getTrackObject(
   lyrics?: string,
   metadata?: IAudioMetadata | undefined
 ): Promise<Track> {
-  let thumbUrl: string | null = '';
+  let thumbSrc: string | null = '';
   const picture: IPicture | undefined = metadata?.common.picture?.shift();
   if (picture) {
     const albumName: string = metadata?.common.album || `${Math.random() * 2342412342352}`;
 
     /* Overwrite existing picture if music file modified */
-    thumbUrl = await Filesystem.stat({
+    const thumbDetails: StatResult | null = await Filesystem.stat({
       path: albumName,
       directory: Directory.Library,
-    })
-      .then((res) => Capacitor.convertFileSrc(res.uri))
-      .catch(() => null);
+    }).catch(() => null);
 
-    if (thumbUrl && fileModified) {
-      thumbUrl = await Filesystem.deleteFile({
-        path: albumName,
-        directory: Directory.Library,
-      })
-        .then(() => compressAndSavePicture(picture, albumName))
-        .catch(() => null);
+    thumbSrc = thumbDetails ? Capacitor.convertFileSrc(thumbDetails.uri) : null;
+
+    if (fileModified && thumbSrc && thumbDetails?.mtime) {
+      const secondsSinceLastModification: number = (Date.now() - thumbDetails.mtime) / 1000;
+      thumbSrc =
+        secondsSinceLastModification > 5
+          ? await Filesystem.deleteFile({ path: albumName, directory: Directory.Library })
+              .then(() => compressAndSavePicture(picture, albumName))
+              .catch(() => null)
+          : thumbSrc;
     }
 
-    if (!thumbUrl) {
-      thumbUrl = await compressAndSavePicture(picture, albumName).catch(() => null);
+    if (!thumbSrc) {
+      thumbSrc = await compressAndSavePicture(picture, albumName).catch(() => null);
     }
   }
 
@@ -89,7 +90,7 @@ export async function getTrackObject(
     author: metadata?.common.artist?.trim() ?? TrackDefaultsEnum.AUTHOR,
     album: metadata?.common.album?.trim() ?? TrackDefaultsEnum.ALBUM,
     year: metadata?.common.year,
-    thumbUrl: thumbUrl || TrackDefaultsEnum.THUMBURL,
+    thumbUrl: thumbSrc || TrackDefaultsEnum.THUMBURL,
     duration: metadata?.format.duration ?? 0,
     lyrics: lyrics || '',
     metadataLoaded: true,
