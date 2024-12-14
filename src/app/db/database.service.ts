@@ -65,6 +65,7 @@ export class DatabaseService {
     this._trackDB = await createRxDatabase({
       name: 'trackdb',
       storage: getRxStorageDexie(),
+      eventReduce: true,
     });
     await this._trackDB
       .addCollections({
