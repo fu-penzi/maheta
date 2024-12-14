@@ -4,7 +4,7 @@
 ></maheta-info-text>
 
 <ul class="album-list" [class.hidden]="showStackingContext">
-  <li class="album" *ngFor="let album of albums; index as i; trackBy: trackByIndex">
+  <li class="album" *ngFor="let album of albums; index as i; trackBy: trackByAlbum">
     <a (click)="navigateToAlbumTracks(album.title)">
       <img
         #imageElement

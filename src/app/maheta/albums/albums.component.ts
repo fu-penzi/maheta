@@ -51,7 +51,7 @@ export class AlbumsComponent extends BaseComponent implements OnInit {
     this.router.navigate([''], { queryParams: { [UrlParamsEnum.albumTitle]: albumTitle } });
   }
 
-  public trackByIndex(index: number): number {
-    return index;
+  public trackByAlbum(index: number, item: Album): string {
+    return item.title;
   }
 }
