@@ -34,24 +34,30 @@ export interface TrackChanges {
 const getFileReadingError = (err: any, path: string): string =>
   `Error: ${err} occurred when loading file: ${path}`;
 
+export type TrackWithoutMetadata = Pick<Track, 'uri' | 'modificationTime' | 'src'>;
+
 @Injectable({
   providedIn: 'root',
 })
 export class FileLoadingService {
-  private _trackPathsSet: Set<string> = new Set<string>();
+  private _tracksMap: Map<string, TrackWithoutMetadata> = new Map();
 
   constructor(private diagnostic: Diagnostic) {}
 
   public async getTrackChanges(existingTracks: Track[]): Promise<TrackChanges> {
     const tracksWithoutMetadata: Track[] = await this.getTracksWithoutMetadata();
-    const existingTrackPaths: string[] = existingTracks.map((track: Track) => track.uri);
     const deleteTracks: Track[] = existingTracks.filter(
-      (track: Track) => !this._trackPathsSet.has(track.uri)
+      (track: Track) => !this._tracksMap.has(track.uri)
     );
 
     return {
       addTracks: tracksWithoutMetadata.filter(
-        (track: Track) => !existingTrackPaths.includes(track.uri)
+        (track: Track) =>
+          !existingTracks.some(
+            (existingTrack: Track) =>
+              track.uri === existingTrack.uri &&
+              track.modificationTime === existingTrack.modificationTime
+          )
       ),
       deleteTracks,
     };
@@ -72,15 +78,30 @@ export class FileLoadingService {
       return tracksMock;
     }
 
-    this._trackPathsSet.clear();
+    this._tracksMap.clear();
     const readOptionsArray: ReadOptionsLocalStorage[] = await this.getReadOptions();
     for (const readOptions of readOptionsArray) {
       const trackPaths = await this.readTrackPaths(readOptions);
-      trackPaths.forEach((trackPath: string) => this._trackPathsSet.add(trackPath));
+
+      for (const path of trackPaths) {
+        const track: TrackWithoutMetadata = await Filesystem.stat({ path: path })
+          .then((stats: StatResult) => ({
+            uri: path,
+            src: Capacitor.convertFileSrc(path),
+            modificationTime: stats.mtime,
+          }))
+          .catch(() => ({
+            uri: path,
+            src: Capacitor.convertFileSrc(path),
+            modificationTime: 0,
+          }));
+
+        this._tracksMap.set(path, track);
+      }
     }
 
-    return [...this._trackPathsSet].map((trackPath) =>
-      getDefaultTrackObject(trackPath, Capacitor.convertFileSrc(trackPath))
+    return [...this._tracksMap.values()].map((track: TrackWithoutMetadata) =>
+      getDefaultTrackObject(track.uri, track.src, track.modificationTime)
     );
   }
 
@@ -129,11 +150,17 @@ export class FileLoadingService {
   }
 
   private async getTrackWithMetadata(track: Track): Promise<Track> {
+    const mtime: number = await Filesystem.stat({ path: track.uri }).then(
+      (stats: StatResult) => stats.mtime
+    );
     const metadata = await musicMetadata
       .fetchFromUrl(track.src)
       .catch((err) => console.error(`Failed to get ${track.src} metadata: ${err}`));
 
-    return getTrackObject(track.uri, track.src, track.lyrics, metadata ?? undefined);
+    const fileModified: boolean = track.modificationTime === mtime;
+    track.modificationTime = mtime;
+
+    return getTrackObject(track, fileModified, track.lyrics, metadata ?? undefined);
   }
 
   private readTrackPaths(readOptions: ReadOptionsLocalStorage): Promise<string[]> {

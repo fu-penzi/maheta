@@ -1,6 +1,8 @@
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem, WriteFileResult } from '@capacitor/filesystem';
 
+import { TrackWithoutMetadata } from '@src/app/services/file-loading.service';
+
 import { IAudioMetadata, IPicture } from 'music-metadata-browser';
 import { RxJsonSchema } from 'rxdb';
 
@@ -15,6 +17,7 @@ export interface Track {
   year?: number;
   metadataLoaded?: boolean;
   lyrics?: string;
+  modificationTime?: number;
 }
 
 export enum TrackDefaultsEnum {
@@ -24,7 +27,11 @@ export enum TrackDefaultsEnum {
   THUMBURL = 'assets/note.jpg',
 }
 
-export function getDefaultTrackObject(trackPath?: string, capacitorPath?: string): Track {
+export function getDefaultTrackObject(
+  trackPath?: string,
+  capacitorPath?: string,
+  modificationTime?: number
+): Track {
   return {
     uri: trackPath || '',
     src: capacitorPath || '',
@@ -35,12 +42,13 @@ export function getDefaultTrackObject(trackPath?: string, capacitorPath?: string
     duration: 0,
     lyrics: '',
     metadataLoaded: false,
+    modificationTime,
   };
 }
 
 export async function getTrackObject(
-  trackPath: string,
-  capacitorPath: string,
+  trackWithoutMetadata: TrackWithoutMetadata,
+  fileModified: boolean,
   lyrics?: string,
   metadata?: IAudioMetadata | undefined
 ): Promise<Track> {
@@ -48,17 +56,22 @@ export async function getTrackObject(
   const picture: IPicture | undefined = metadata?.common.picture?.shift();
   if (picture) {
     const albumName: string = metadata?.common.album || `${Math.random() * 2342412342352}`;
-    thumbUrl = await Filesystem.stat({
-      path: albumName,
-      directory: Directory.Library,
-    })
-      .then((res) => Capacitor.convertFileSrc(res.uri))
-      .catch(() => compressAndSavePicture(picture, albumName));
+
+    /* Overwrite existing picture if music file modified */
+    thumbUrl = fileModified
+      ? await compressAndSavePicture(picture, albumName)
+      : await Filesystem.stat({ path: albumName, directory: Directory.Library })
+          .then((res) => Capacitor.convertFileSrc(res.uri))
+          .catch(() => compressAndSavePicture(picture, albumName));
   }
+
   return {
-    uri: trackPath,
-    src: capacitorPath,
-    title: metadata?.common.title ?? trackPath.split('/').pop() ?? TrackDefaultsEnum.TITLE,
+    uri: trackWithoutMetadata.uri,
+    src: trackWithoutMetadata.src,
+    title:
+      metadata?.common.title ??
+      trackWithoutMetadata.uri.split('/').pop() ??
+      TrackDefaultsEnum.TITLE,
     author: metadata?.common.artist?.trim() ?? TrackDefaultsEnum.AUTHOR,
     album: metadata?.common.album?.trim() ?? TrackDefaultsEnum.ALBUM,
     year: metadata?.common.year,
@@ -66,6 +79,7 @@ export async function getTrackObject(
     duration: metadata?.format.duration ?? 0,
     lyrics: lyrics || '',
     metadataLoaded: true,
+    modificationTime: trackWithoutMetadata.modificationTime,
   };
 }
 
@@ -138,6 +152,9 @@ export const trackSchema: RxJsonSchema<Track> = {
     },
     lyrics: {
       type: 'string',
+    },
+    modificationTime: {
+      type: 'number',
     },
   },
   required: ['uri', 'src', 'title', 'author', 'duration', 'album', 'thumbUrl'],
