@@ -1,5 +1,5 @@
 import { Capacitor } from '@capacitor/core';
-import { Directory, Filesystem, WriteFileResult } from '@capacitor/filesystem';
+import { Directory, Filesystem, StatResult, WriteFileResult } from '@capacitor/filesystem';
 
 import { TrackWithoutMetadata } from '@src/app/services/file-loading.service';
 
@@ -58,11 +58,25 @@ export async function getTrackObject(
     const albumName: string = metadata?.common.album || `${Math.random() * 2342412342352}`;
 
     /* Overwrite existing picture if music file modified */
-    thumbUrl = fileModified
-      ? await compressAndSavePicture(picture, albumName)
-      : await Filesystem.stat({ path: albumName, directory: Directory.Library })
-          .then((res) => Capacitor.convertFileSrc(res.uri))
-          .catch(() => compressAndSavePicture(picture, albumName));
+    thumbUrl = await Filesystem.stat({
+      path: albumName,
+      directory: Directory.Library,
+    })
+      .then((res) => Capacitor.convertFileSrc(res.uri))
+      .catch(() => null);
+
+    if (thumbUrl && fileModified) {
+      thumbUrl = await Filesystem.deleteFile({
+        path: albumName,
+        directory: Directory.Library,
+      })
+        .then(() => compressAndSavePicture(picture, albumName))
+        .catch(() => null);
+    }
+
+    if (!thumbUrl) {
+      thumbUrl = await compressAndSavePicture(picture, albumName).catch(() => null);
+    }
   }
 
   return {
