@@ -1,4 +1,6 @@
+@use '@angular/material' as mat;
 @use 'variables' as *;
+@use 'src/styles/theme/light-theme';
 
 @include scroll-view-cdk;
 @include track-list;

@@ -74,7 +74,18 @@ $-light-warn: mat.define-palette(mat.$red-palette);
 //  $font-family: 'Poppins',
 //);
 
-$light-theme: mat.define-dark-theme(
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $-light-primary,
+      accent: $-light-accent,
+      warn: $-light-warn,
+    ),
+    //typography: $-light-typography,
+  )
+);
+
+$light-theme: mat.define-light-theme(
   (
     color: (
       primary: $-light-primary,

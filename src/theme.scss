@@ -4,7 +4,7 @@
 @use 'sass:map';
 
 @use 'styles/theme/light-theme';
-@use 'styles/theme/dark-theme';
+//@use 'styles/theme/dark-theme';
 
 @include mat.core;
 
@@ -39,11 +39,15 @@
 }
 
 .light-theme {
-  @include mat.all-component-themes(light-theme.$light-theme);
+  @include mat.all-component-themes(light-theme.$dark-theme);
   @include theme-colors(light-theme.$light-theme);
+
+  .scroll-element {
+    @include mat.ripple-theme(light-theme.$light-theme);
+  }
 }
 
-.dark-theme {
-  @include mat.all-component-themes(dark-theme.$dark-theme);
-  @include theme-colors(dark-theme.$dark-theme);
-}
+//.dark-theme {
+//@include mat.all-component-themes(dark-theme.$dark-theme);
+//@include theme-colors(dark-theme.$dark-theme);
+//}
