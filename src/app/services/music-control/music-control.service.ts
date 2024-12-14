@@ -256,7 +256,7 @@ export class MusicControlService {
         {
           src: `data:image/jpeg;base64,${base64Image}`,
           type: 'image/jpeg',
-          sizes: '512x512',
+          sizes: '500x500',
         },
       ],
     }).then(() => this.updatePlaybackState());

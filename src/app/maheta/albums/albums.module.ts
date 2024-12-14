@@ -1,4 +1,5 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,6 +21,7 @@ import { IonicModule } from '@ionic/angular';
     MatIconModule,
     ScrollingModule,
     IonicModule,
+    NgOptimizedImage,
   ],
 })
 export class AlbumsModule {}

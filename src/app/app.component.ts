@@ -4,6 +4,7 @@ import { AnimationDurations } from '@angular/material/core';
 import { AppStateCacheService } from '@src/app/services/app-state-cache.service';
 import { LocalizationService } from '@src/app/services/localization.service';
 
+/* Override mat-bottom-sheet slow close animation */
 AnimationDurations.COMPLEX = AnimationDurations.EXITING;
 
 @Component({

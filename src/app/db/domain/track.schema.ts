@@ -44,7 +44,7 @@ export async function getTrackObject(
   lyrics?: string,
   metadata?: IAudioMetadata | undefined
 ): Promise<Track> {
-  let thumbUrl: string | undefined = '';
+  let thumbUrl: string | null = '';
   const picture: IPicture | undefined = metadata?.common.picture?.shift();
   if (picture) {
     const albumName: string = metadata?.common.album || `${Math.random() * 2342412342352}`;
@@ -53,7 +53,7 @@ export async function getTrackObject(
       directory: Directory.Library,
     })
       .then((res) => Capacitor.convertFileSrc(res.uri))
-      .catch(() => createPicture(picture, albumName));
+      .catch(() => compressAndSavePicture(picture, albumName));
   }
   return {
     uri: trackPath,
@@ -69,12 +69,36 @@ export async function getTrackObject(
   };
 }
 
-function createPicture(picture: IPicture, albumName: string): Promise<string> {
-  return Filesystem.writeFile({
-    path: albumName,
-    data: `data:${picture.format};base64,${picture.data.toString('base64')}`,
-    directory: Directory.Library,
-  }).then((res: WriteFileResult) => Capacitor.convertFileSrc(res.uri));
+function compressAndSavePicture(picture: IPicture, albumName: string): Promise<string | null> {
+  return new Promise((resolve) => {
+    const img = new Image();
+
+    img.src = `data:${picture.format};base64,${picture.data.toString('base64')}`;
+
+    img.onload = async (e: any) => {
+      const canvas: HTMLCanvasElement = document.createElement('canvas');
+      const ratio: number = 500 / e.target.width;
+
+      canvas.width = 500;
+      canvas.height = e.target.height * ratio;
+
+      const context = canvas.getContext('2d') as CanvasRenderingContext2D;
+      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      const quality: number = 70;
+      const thumbPath = await Filesystem.writeFile({
+        path: albumName,
+        data: context.canvas.toDataURL('image/jpeg', quality),
+        directory: Directory.Library,
+      }).then((res: WriteFileResult) => Capacitor.convertFileSrc(res.uri));
+
+      resolve(thumbPath);
+    };
+
+    img.onerror = () => {
+      resolve(null);
+    };
+  });
 }
 
 export const trackSchema: RxJsonSchema<Track> = {

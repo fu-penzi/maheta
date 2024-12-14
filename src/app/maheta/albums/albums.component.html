@@ -6,7 +6,16 @@
 <ul class="album-list" [class.hidden]="showStackingContext">
   <li class="album" *ngFor="let album of albums; index as i; trackBy: trackByIndex">
     <a (click)="navigateToAlbumTracks(album.title)">
-      <img class="album__thumb" [src]="album.thumbUrl" alt="" loading="lazy" />
+      <img
+        #imageElement
+        class="album__thumb animate__animated"
+        alt=""
+        [ngSrc]="album.thumbUrl"
+        width="500"
+        height="500"
+        (load)="imageElement.classList.add('animate__fadeIn')"
+        priority
+      />
 
       <div class="album-info text-ellipsis">
         <p class="album-info__title">{{ album.title }}</p>

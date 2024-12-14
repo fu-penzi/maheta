@@ -1,5 +1,5 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -90,6 +90,7 @@ const exportedComponents = [
     MatDividerModule,
     SwiperModule,
     MatCardModule,
+    NgOptimizedImage,
   ],
   exports: [...exportedComponents, CommonModule, TranslateModule],
 })

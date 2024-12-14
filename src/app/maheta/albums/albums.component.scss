@@ -41,7 +41,8 @@
     width: 100%;
     aspect-ratio: 1 / 1;
     text-indent: -10000px;
-    background-image: url('/assets/note.jpg');
+    opacity: 0;
+    //background-image: url('/assets/note.jpg');
     background-size: cover;
 
     @supports not (aspect-ratio: 1 / 1) {
