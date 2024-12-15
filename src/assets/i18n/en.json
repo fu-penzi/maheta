@@ -24,7 +24,7 @@
     "updateTracks": "Update tracks",
     "customizeFolderPaths": "Customize folder paths",
     "settings": "Settings",
-    "hardReset": "Hard reset"
+    "hardReset": "Factory reset"
   },
   "EDIT_LYRICS": {
     "lyricsPlaceholder": "Track lyrics..."
@@ -49,6 +49,7 @@
   },
   "SETTINGS": {
     "display": "Display",
+    "library": "Library",
     "language": "Language"
   }
 }

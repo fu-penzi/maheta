@@ -21,21 +21,35 @@ export class NavigationService {
   public overlayOpen$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   private _history: string[] = [];
+  private _currentTabName: string = UrlEnum.ALBUMS;
 
   constructor(private router: Router, private zone: NgZone) {
     this.router.events.subscribe((event) => {
       if (!(event instanceof NavigationEnd)) {
         return;
       }
-      this._history.push(event.urlAfterRedirects);
+
+      if (this._history[this._history.length - 1] !== event.urlAfterRedirects) {
+        this._history.push(event.urlAfterRedirects);
+      }
+
       Object.values(UrlEnum).forEach((url: UrlEnum) => {
         if (this._history[this._history.length - 1].includes(url)) {
           this.bottomNavTabUrl = url;
+          this.currentTabName = String(url[0]).toUpperCase() + String(url).slice(1);
         }
       });
     });
 
     App.addListener('backButton', () => this.zone.run(() => this.back()));
+  }
+
+  public get currentTabName(): string {
+    return this._currentTabName;
+  }
+
+  public set currentTabName(tabName: string) {
+    this._currentTabName = tabName || this._currentTabName;
   }
 
   private get overlayOpen(): boolean {

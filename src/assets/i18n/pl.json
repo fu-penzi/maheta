@@ -49,6 +49,7 @@
   },
   "SETTINGS": {
     "display": "Wygląd",
+    "library": "Biblioteka",
     "language": "Język"
   }
 }

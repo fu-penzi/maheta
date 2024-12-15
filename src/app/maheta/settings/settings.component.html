@@ -1,21 +1,52 @@
-<mat-accordion>
-  <mat-expansion-panel [formGroup]="displayForm">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <mat-icon>view_compact</mat-icon>
-        <ng-container>{{ 'SETTINGS.display' | translate }}</ng-container>
-      </mat-panel-title>
+<mat-accordion multi displayMode="flat">
+  <mat-expansion-panel [formGroup]="displayForm" [expanded]="true" [hideToggle]="true">
+    <mat-expansion-panel-header collapsedHeight="0" expandedHeight="0">
+      <!--            <mat-panel-title>-->
+      <!--              <mat-icon>view_compact</mat-icon>-->
+      <!--              <ng-container>{{ 'SETTINGS.display' | translate }}</ng-container>-->
+      <!--            </mat-panel-title>-->
     </mat-expansion-panel-header>
 
-    <mat-divider></mat-divider>
-    <p class="form-name">{{ 'SETTINGS.language' | translate }}</p>
-    <mat-form-field appearance="fill" color="accent">
-      <mat-label>{{ 'SETTINGS.language' | translate }}</mat-label>
-      <mat-select formControlName="language">
-        <mat-option *ngFor="let languageCode of languageCodes" [value]="languageCode">
-          {{ languageCode }} - {{ 'languages.' + languageCode | translate }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <!--    <section class="section">-->
+    <!--      <p class="section-name">{{ 'SETTINGS.language' | translate }}</p>-->
+    <!--      <mat-form-field appearance="fill" color="accent">-->
+    <!--        <mat-label>{{ 'SETTINGS.language' | translate }}</mat-label>-->
+    <!--        <mat-select formControlName="language">-->
+    <!--          <mat-option *ngFor="let languageCode of languageCodes" [value]="languageCode">-->
+    <!--            {{ languageCode }} - {{ 'languages.' + languageCode | translate }}-->
+    <!--          </mat-option>-->
+    <!--        </mat-select>-->
+    <!--      </mat-form-field>-->
+    <!--    </section>-->
+    <!--    <mat-divider></mat-divider>-->
+
+    <section class="section">
+      <mat-list>
+        <p class="section-name">{{ 'SETTINGS.library' | translate }}</p>
+
+        <mat-list-item mat-ripple (click)="reloadDatabaseTrackData()" [disabled]="isProcessing">
+          <mat-icon mat-list-icon>update</mat-icon>
+          <div mat-line>{{ 'APP_BAR.updateTracks' | translate }}</div>
+          <div mat-line class="text-secondary">Load new track info from device</div>
+        </mat-list-item>
+
+        <mat-list-item mat-ripple (click)="openEditStorageSettingsDialog()">
+          <mat-icon mat-list-icon>sd_storage</mat-icon>
+          <div mat-line>{{ 'APP_BAR.customizeFolderPaths' | translate }}</div>
+          <div mat-line class="text-secondary">Set custom music directory paths</div>
+        </mat-list-item>
+
+        <mat-list-item
+          class="text-warn"
+          mat-ripple
+          (click)="dropDatabaseTrackData()"
+          [disabled]="isProcessing"
+        >
+          <mat-icon class="text-warn" mat-list-icon>restore</mat-icon>
+          <div mat-line class="text-warn">{{ 'APP_BAR.hardReset' | translate }}</div>
+          <div mat-line class="text-secondary">Reset all music file data</div>
+        </mat-list-item>
+      </mat-list>
+    </section>
   </mat-expansion-panel>
 </mat-accordion>

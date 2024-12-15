@@ -7,6 +7,7 @@ import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
+import { NavigationService } from '@src/app/services/navigation.service';
 
 import { takeUntil } from 'rxjs';
 
@@ -22,7 +23,8 @@ export class PlaylistTracksComponent extends BaseComponent implements OnInit {
   constructor(
     private musicControlService: MusicControlService,
     private musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private navigationService: NavigationService
   ) {
     super();
   }
@@ -33,6 +35,9 @@ export class PlaylistTracksComponent extends BaseComponent implements OnInit {
     this.musicLibraryPlaylistsService
       .getPlaylist$(playlistId)
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe((playlist: Playlist) => (this.playlist = playlist));
+      .subscribe((playlist: Playlist) => {
+        this.playlist = playlist;
+        this.navigationService.currentTabName = playlist.name;
+      });
   }
 }

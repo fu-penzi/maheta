@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 
 import { AppLanguageCodeEnum, LocalizationService } from '@src/app/services/localization.service';
+import { OptionsService } from '@src/app/services/options.service';
 
 @Component({
   selector: 'maheta-settings',
@@ -12,7 +13,15 @@ export class SettingsComponent implements OnInit {
   public form: FormGroup;
   public readonly languageCodes: AppLanguageCodeEnum[] = Object.values(AppLanguageCodeEnum);
 
-  constructor(private localizationService: LocalizationService, private fb: FormBuilder) {}
+  constructor(
+    private optionService: OptionsService,
+    private localizationService: LocalizationService,
+    private fb: FormBuilder
+  ) {}
+
+  public get isProcessing(): boolean {
+    return this.optionService.isProcessing;
+  }
 
   public get displayForm(): FormGroup {
     return this.form?.get('display') as FormGroup;
@@ -27,6 +36,18 @@ export class SettingsComponent implements OnInit {
     this.languageControl?.valueChanges.subscribe((languageCode: AppLanguageCodeEnum) =>
       this.localizationService.setLanguage(languageCode)
     );
+  }
+
+  public reloadDatabaseTrackData(): void {
+    this.optionService.reloadDatabaseTrackData();
+  }
+
+  public dropDatabaseTrackData(): void {
+    this.optionService.dropDatabaseTrackData();
+  }
+
+  public openEditStorageSettingsDialog(): void {
+    this.optionService.openEditStorageSettingsDialog();
   }
 
   private buildForm(): void {

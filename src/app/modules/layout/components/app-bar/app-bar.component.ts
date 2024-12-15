@@ -1,13 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
-import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/dialog/create-playlist-dialog/create-playlist-dialog.component';
-import { EditStorageSettingsDialogComponent } from '@src/app/modules/shared/dialog/edit-storage-settings-dialog/edit-storage-settings-dialog.component';
 import { MahetaService, ProgressBarConfig } from '@src/app/services/maheta.service';
-import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 import { NavigationService } from '@src/app/services/navigation.service';
+import { OptionsService } from '@src/app/services/options.service';
 
 @Component({
   selector: 'maheta-app-bar',
@@ -21,11 +18,18 @@ export class AppBarComponent {
 
   constructor(
     private mahetaService: MahetaService,
+    private optionsService: OptionsService,
     private themeService: ThemeService,
-    private navigation: NavigationService,
-    private musicLibraryTracksService: MusicLibraryTracksService,
-    private matDialogService: MatDialog
+    private navigation: NavigationService
   ) {}
+
+  public get currentName(): string {
+    return this.navigation.currentTabName;
+  }
+
+  public get isProcessing(): boolean {
+    return this.optionsService.isProcessing;
+  }
 
   public get themeClass(): ThemeClassEnum {
     return this.themeService.theme;
@@ -44,28 +48,11 @@ export class AppBarComponent {
   }
 
   public reloadDatabaseTrackData(): void {
-    this.mahetaService.showProgressBar();
-    this.musicLibraryTracksService
-      .reloadTracksLibrary()
-      .then(() => this.mahetaService.hideProgressBar())
-      .catch(() => this.mahetaService.hideProgressBar());
-  }
-
-  public dropDatabaseTrackData(): void {
-    this.navigation.back();
-    this.mahetaService.openLoadingDialog();
-    this.musicLibraryTracksService
-      .dropTracksLibrary()
-      .then(() => this.mahetaService.closeLoadingDialog())
-      .catch(() => this.mahetaService.closeLoadingDialog());
+    this.optionsService.reloadDatabaseTrackData();
   }
 
   public openCreatePlaylistDialog(): void {
-    this.matDialogService.open(CreatePlaylistDialogComponent);
-  }
-
-  public openEditStorageSettingsDialog(): void {
-    this.matDialogService.open(EditStorageSettingsDialogComponent, { width: '100%' });
+    this.optionsService.openCreatePlaylistDialog();
   }
 
   public switchTheme(): void {
