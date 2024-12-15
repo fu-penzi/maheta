@@ -8,10 +8,6 @@
   z-index: 1000;
 }
 
-span {
-  margin-left: spacing(2);
-}
-
 .app-bar {
   display: flex;
   align-content: center;
@@ -26,6 +22,7 @@ span {
 }
 
 .current-tab-name {
+  margin-left: spacing(2);
   display: block;
   width: calc(70%);
 }
