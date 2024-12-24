@@ -9,7 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "start-mock-server": "node mock",
     "app": "npm run sync:local && ng serve --host=0.0.0.0 --port=8100",
-    "app:android-studio": "npm run open-android && npm run app:angular",
+    "app:android-studio": "npm run open-android && npm run sync && ng serve --host=0.0.0.0 --port=8100",
     "emulator": "emulator -avd Pixel_6a_API_34",
     "update-android": "ng build && npx cap sync",
     "update-android:local": "ng build && sync-local",
