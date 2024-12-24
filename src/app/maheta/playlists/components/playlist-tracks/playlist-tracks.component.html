@@ -1,7 +1,11 @@
-<ng-container *ngIf="playlist && playlist.trackPopulation">
-  <maheta-track-scroll-view
-    [currentTrack]="currentTrack"
-    [tracks]="playlist.trackPopulation"
-    [playlist]="playlist"
-  ></maheta-track-scroll-view>
-</ng-container>
+<maheta-track-scroll-view
+  *ngIf="playlist?.trackPopulation?.length"
+  [currentTrack]="currentTrack"
+  [tracks]="playlist.trackPopulation"
+  [playlist]="playlist"
+></maheta-track-scroll-view>
+
+<maheta-info-text
+  *ngIf="playlist?.trackPopulation?.length === 0"
+  text="Playlist empty!"
+></maheta-info-text>
