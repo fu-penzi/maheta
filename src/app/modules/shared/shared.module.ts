@@ -37,6 +37,7 @@ import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-v
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
 import { SafePipe } from '@src/app/pipes/safe-pipe.pipe';
 
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { SwiperModule } from 'swiper/angular';
 import SwiperCore, { Virtual } from 'swiper';
@@ -91,6 +92,7 @@ const exportedComponents = [
     SwiperModule,
     MatCardModule,
     NgOptimizedImage,
+    IonicModule,
   ],
   exports: [...exportedComponents, CommonModule, TranslateModule],
 })

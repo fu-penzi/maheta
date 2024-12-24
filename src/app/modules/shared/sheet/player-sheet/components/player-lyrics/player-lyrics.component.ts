@@ -75,7 +75,6 @@ export class PlayerLyricsComponent implements OnChanges {
       data: wordOverviewSheetData,
       enterAnimationDuration: '0ms',
       exitAnimationDuration: '0ms',
-      closeOnNavigation: true,
       position: { left: '0', bottom: '0' },
     };
 

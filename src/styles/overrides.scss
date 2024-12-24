@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use '@angular/material' as mat;
 
 /* TODO remove this */
 .mat-slider-thumb-container,
@@ -74,12 +75,13 @@ mat-divider.mat-divider {
 }
 
 .word-overview-sheet-panel {
-  max-width: 70vw !important;
-  width: 70vw;
+  max-width: 75vw !important;
+  width: 75vw;
   border-radius: 0;
 }
 
-.word-overview-sheet-panel mat-dialog-container {
+.word-overview-sheet-panel .mat-dialog-container {
   padding: 0;
   border-radius: 0 !important;
+  @include mat.elevation(5);
 }

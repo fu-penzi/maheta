@@ -5,9 +5,20 @@
   display: block;
   height: 70vh;
   background-color: transparent;
+  position: relative;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: scale(2) translate(-50%, -50%);
+  z-index: 1;
 }
 
 iframe {
+  position: absolute;
+  z-index: 2;
   display: block;
   height: 100%;
   overflow: scroll;
