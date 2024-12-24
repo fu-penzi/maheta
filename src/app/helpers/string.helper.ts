@@ -28,6 +28,10 @@ export function getTokenizer(language: LanguageEnum): any {
   return tokenizer;
 }
 
+export function isSupportedLanguage(lang: LanguageEnum): boolean {
+  return lang === LanguageEnum.JAPANESE;
+}
+
 export function detectLanguage(str: string): LanguageEnum {
   const containsJapaneseMatch: RegExpMatchArray[] = [
     ...str.substring(0, 20).matchAll(containsJapaneseRegExp),
@@ -41,9 +45,4 @@ export function detectLanguage(str: string): LanguageEnum {
 
 export function getWords(str: string, tokenizer: any): string[] {
   return tokenizer.tokenize(str);
-}
-
-const punctuationMarks: string[] = ['.', ',', ':', '!', '?', '。', `'`, `"`];
-export function isPunctuationMark(str: string): boolean {
-  return punctuationMarks.includes(str);
 }

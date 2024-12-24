@@ -1,0 +1,16 @@
+@use '@angular/material' as mat;
+@use 'variables' as *;
+
+:host {
+  display: block;
+  height: 70vh;
+  background-color: transparent;
+}
+
+iframe {
+  display: block;
+  height: 100%;
+  overflow: scroll;
+  border-style: none;
+  width: 100%;
+}

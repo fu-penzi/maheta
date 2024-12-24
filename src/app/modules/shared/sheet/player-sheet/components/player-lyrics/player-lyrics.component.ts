@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import {
@@ -7,11 +7,13 @@ import {
   getSentences,
   getTokenizer,
   getWords,
+  isSupportedLanguage,
 } from '@src/app/helpers/string.helper';
+import { LanguageEnum } from '@src/app/model/language.enum';
 import {
-  WordOverviewSheetComponent,
+  WordOverviewComponent,
   WordOverviewSheetData,
-} from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview-sheet.component';
+} from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
@@ -30,10 +32,12 @@ export class PlayerLyricsComponent implements OnChanges {
   public lyricSentences: LyricSentence[] = [];
   public highlightedWord: string = '';
 
+  private _language: LanguageEnum;
+
   constructor(
     private musicControlService: MusicControlService,
     private musicLibraryTracksService: MusicLibraryTracksService,
-    private bottomSheet: MatBottomSheet
+    private matDialogService: MatDialog
   ) {}
 
   private get lyrics(): string | undefined {
@@ -49,11 +53,15 @@ export class PlayerLyricsComponent implements OnChanges {
   }
 
   public wordSelect(word: string | undefined): void {
-    if (!word) {
+    if (!word || !isSupportedLanguage(this._language)) {
       return;
     }
     this.highlightedWord = word;
     this.openWordOverviewSheet(word.trim());
+  }
+
+  public wordUnselect(): void {
+    this.highlightedWord = '';
   }
 
   public isWordHighlighted(word: string | undefined): boolean {
@@ -62,9 +70,21 @@ export class PlayerLyricsComponent implements OnChanges {
 
   private openWordOverviewSheet(word: string): void {
     const wordOverviewSheetData: WordOverviewSheetData = { word };
-    this.bottomSheet.open(WordOverviewSheetComponent, {
+    const dialogOptions = {
+      panelClass: 'word-overview-sheet-panel',
       data: wordOverviewSheetData,
-    });
+      enterAnimationDuration: '0ms',
+      exitAnimationDuration: '0ms',
+      closeOnNavigation: true,
+      position: { left: '0', bottom: '0' },
+    };
+
+    this.matDialogService
+      .open(WordOverviewComponent, dialogOptions)
+      .afterClosed()
+      .subscribe(() => {
+        this.wordUnselect();
+      });
   }
 
   private setupLyrics(): void {
@@ -73,7 +93,9 @@ export class PlayerLyricsComponent implements OnChanges {
       return;
     }
 
-    const tokenizer = getTokenizer(detectLanguage(this.lyrics));
+    this._language = detectLanguage(this.lyrics);
+
+    const tokenizer = getTokenizer(this._language);
     this.lyricSentences = getSentences(this.lyrics).map((sentence: string) => ({
       words: getWords(sentence, tokenizer),
     }));

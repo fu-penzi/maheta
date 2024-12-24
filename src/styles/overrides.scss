@@ -72,3 +72,14 @@ mat-divider.mat-divider {
   -webkit-animation-duration: calc(var(--animate-duration) / 3.5);
   animation-duration: calc(var(--animate-duration) / 3.5);
 }
+
+.word-overview-sheet-panel {
+  max-width: 70vw !important;
+  width: 70vw;
+  border-radius: 0;
+}
+
+.word-overview-sheet-panel mat-dialog-container {
+  padding: 0;
+  border-radius: 0 !important;
+}

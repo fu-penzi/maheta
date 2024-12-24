@@ -32,7 +32,7 @@ import { PlayerControlsComponent } from '@src/app/modules/shared/sheet/player-sh
 import { PlayerLyricsComponent } from '@src/app/modules/shared/sheet/player-sheet/components/player-lyrics/player-lyrics.component';
 import { PlayerSwiperComponent } from '@src/app/modules/shared/sheet/player-sheet/components/player-swiper/player-swiper.component';
 import { PlayerSheetComponent } from '@src/app/modules/shared/sheet/player-sheet/player-sheet.component';
-import { WordOverviewSheetComponent } from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview-sheet.component';
+import { WordOverviewComponent } from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview.component';
 import { TrackScrollViewComponent } from '@src/app/modules/shared/track-scroll-view/track-scroll-view.component';
 import { DurationPipe } from '@src/app/pipes/duration.pipe';
 import { SafePipe } from '@src/app/pipes/safe-pipe.pipe';
@@ -58,7 +58,7 @@ const exportedComponents = [
     PlayerControlsComponent,
     PlayerLyricsComponent,
     PlayerSheetComponent,
-    WordOverviewSheetComponent,
+    WordOverviewComponent,
     AddToPlaylistDialogComponent,
     CreatePlaylistDialogComponent,
     EditLyricsDialogComponent,

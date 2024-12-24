@@ -110,7 +110,7 @@
         "no-restricted-imports": [
           "error",
           {
-            "patterns": ["./*", "../*", "*devUtils*"]
+            "patterns": ["./*", "../*"]
           }
         ],
         "no-console": "warn"
