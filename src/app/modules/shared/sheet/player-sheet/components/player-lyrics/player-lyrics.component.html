@@ -6,15 +6,17 @@
     </mat-card-title>
   </mat-card-header>
 
-  <mat-card-content class="lyrics-content">
-    <div *ngFor="let sentence of lyricSentences">
-      <span
-        *ngFor="let word of sentence.words"
-        (click)="wordSelect(word)"
-        [class.active]="isWordHighlighted(word)"
-      >
-        {{ word }}
-      </span>
-    </div>
-  </mat-card-content>
+  <div class="lyrics-content-wrapper">
+    <mat-card-content class="lyrics-content">
+      <div class="sentence" *ngFor="let sentence of lyricSentences">
+        <span
+          *ngFor="let word of sentence.words"
+          (click)="wordSelect(word)"
+          [class.active]="isWordHighlighted(word)"
+          [innerText]="word"
+        >
+        </span>
+      </div>
+    </mat-card-content>
+  </div>
 </mat-card>

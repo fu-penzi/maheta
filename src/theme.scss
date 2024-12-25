@@ -28,6 +28,7 @@
   --primary-dark: #{mat.get-color-from-palette($-primary, darker)};
   --primary: #{mat.get-color-from-palette($-primary)};
   --primary-light: #{mat.get-color-from-palette($-primary, lighter)};
+  --card: #424242;
 
   //  accent
   --accent-dark: #{mat.get-color-from-palette($-accent, darker)};
