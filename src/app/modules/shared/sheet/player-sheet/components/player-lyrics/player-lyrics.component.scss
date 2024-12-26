@@ -3,15 +3,24 @@
 
 :host {
   display: block;
-  min-height: 60px;
+  min-height: 70px;
   padding: 0;
 
   mat-card {
     border-radius: 0;
     background-color: $primary-light;
+    @include mat.elevation(5);
   }
 
-  @include mat.elevation(5);
+  mat-card.placeholder {
+    background-color: transparent;
+    padding-bottom: 0;
+    box-shadow: none;
+
+    .lyrics-header-text {
+      color: $text-disabled;
+    }
+  }
 }
 
 .align-center {

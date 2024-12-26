@@ -7,6 +7,10 @@ import {
   EditLyricsDialogData,
 } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-dialog/loading-dialog.component';
+import {
+  WordOverviewComponent,
+  WordOverviewSheetData,
+} from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview.component';
 
 export interface ProgressBarConfig {
   isShown: boolean;
@@ -59,8 +63,8 @@ export class MahetaService {
     this.progressBarConfig.progress = progress;
   }
 
-  public openEditLyricsDialog(data: EditLyricsDialogData): void {
-    this.matDialogService.open(EditLyricsDialogComponent, {
+  public openEditLyricsDialog(data: EditLyricsDialogData): MatDialogRef<EditLyricsDialogComponent> {
+    return this.matDialogService.open(EditLyricsDialogComponent, {
       data,
       width: '100%',
       position: { top: '10%' },
@@ -69,5 +73,17 @@ export class MahetaService {
 
   public openCreatePlaylistDialog(): void {
     this.matDialogService.open(CreatePlaylistDialogComponent, { position: { top: '10%' } });
+  }
+
+  public openWordOverviewSheet(data: WordOverviewSheetData): MatDialogRef<WordOverviewComponent> {
+    const dialogOptions = {
+      panelClass: 'word-overview-sheet-panel',
+      data: data,
+      enterAnimationDuration: '0ms',
+      exitAnimationDuration: '0ms',
+      position: { left: '0', bottom: '0' },
+    };
+
+    return this.matDialogService.open(WordOverviewComponent, dialogOptions);
   }
 }

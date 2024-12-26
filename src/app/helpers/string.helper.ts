@@ -40,9 +40,7 @@ export function detectLanguage(str: string): LanguageEnum {
 }
 
 export function isWordEnglish(str: string): boolean {
-  const containsEnglishMatch: RegExpMatchArray[] = [...str.matchAll(containsEnglishRegExp)];
-
-  return !!containsEnglishMatch.length;
+  return !!str.match(containsEnglishRegExp)?.length;
 }
 
 export function getWords(str: string, tokenizer: any): string[] {

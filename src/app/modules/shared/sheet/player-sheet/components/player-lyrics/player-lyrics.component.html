@@ -32,3 +32,24 @@
     </mat-card-content>
   </div>
 </mat-card>
+
+<mat-card class="placeholder" *ngIf="!lyricSentences?.length">
+  <mat-card-header>
+    <div class="lyrics-header align-center">
+      <div class="lyrics-header-text align-center">
+        <mat-icon>music_note</mat-icon>
+        <span>{{ 'global.lyrics' | translate }}</span>
+      </div>
+
+      <div>
+        <button (click)="openEditLyricsDialog()" mat-icon-button>
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button (click)="openLyricsBrowser()" mat-icon-button>
+          <mat-icon>open_in_browser</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-header>
+</mat-card>

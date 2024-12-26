@@ -5,6 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
+import { Subject } from 'rxjs';
+
 export interface EditLyricsDialogData {
   track: Track;
 }
@@ -16,6 +18,8 @@ export interface EditLyricsDialogData {
 })
 export class EditLyricsDialogComponent implements OnInit {
   public form: FormGroup;
+  public save$: Subject<Track> = new Subject();
+  public close$: Subject<void> = new Subject();
 
   constructor(
     private fb: FormBuilder,
@@ -42,10 +46,14 @@ export class EditLyricsDialogComponent implements OnInit {
 
   public save(): void {
     this.musicLibraryTracksService.addLyricsToTrack$(this.track, this.lyrics?.value);
+    this.save$.next({ ...this.track, lyrics: this.lyrics?.value });
+    this.save$.complete();
     this.close();
   }
 
   public close(): void {
+    this.close$.next();
+    this.close$.complete();
     this.dialogRef.close();
   }
 

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Browser } from '@capacitor/browser';
 
 import { Track } from '@src/app/db/domain/track.schema';
@@ -11,13 +11,12 @@ import {
   isWordEnglish,
 } from '@src/app/helpers/string.helper';
 import { LanguageEnum } from '@src/app/model/language.enum';
-import {
-  WordOverviewComponent,
-  WordOverviewSheetData,
-} from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview.component';
+import { EditLyricsDialogComponent } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { MahetaService } from '@src/app/services/maheta.service';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
+
+import { take, takeUntil } from 'rxjs';
 
 interface LyricSentence {
   words: Word[];
@@ -44,12 +43,9 @@ export class PlayerLyricsComponent implements OnChanges, OnDestroy {
   constructor(
     private musicControlService: MusicControlService,
     private musicLibraryTracksService: MusicLibraryTracksService,
-    private mahetaService: MahetaService,
-    private matDialogService: MatDialog
+    private mahetaService: MahetaService
   ) {
-    Browser.addListener('browserFinished', () => {
-      this.openEditLyricsDialog();
-    });
+    Browser.addListener('browserFinished', () => this.openEditLyricsDialog());
   }
 
   private get lyrics(): string | undefined {
@@ -101,25 +97,22 @@ export class PlayerLyricsComponent implements OnChanges, OnDestroy {
   }
 
   public openEditLyricsDialog(): void {
-    this.mahetaService.openEditLyricsDialog({ track: this.track });
+    const dialogRef: MatDialogRef<EditLyricsDialogComponent> =
+      this.mahetaService.openEditLyricsDialog({ track: this.track });
+
+    dialogRef.componentInstance.save$
+      .pipe(take(1), takeUntil(dialogRef.componentInstance.close$))
+      .subscribe((track: Track) => {
+        this.track.lyrics = track.lyrics;
+        this.setupLyrics();
+      });
   }
 
   private openWordOverviewSheet(word: string): void {
-    const wordOverviewSheetData: WordOverviewSheetData = { word };
-    const dialogOptions = {
-      panelClass: 'word-overview-sheet-panel',
-      data: wordOverviewSheetData,
-      enterAnimationDuration: '0ms',
-      exitAnimationDuration: '0ms',
-      position: { left: '0', bottom: '0' },
-    };
-
-    this.matDialogService
-      .open(WordOverviewComponent, dialogOptions)
+    this.mahetaService
+      .openWordOverviewSheet({ word })
       .afterClosed()
-      .subscribe(() => {
-        this.wordUnselect();
-      });
+      .subscribe(() => this.wordUnselect());
   }
 
   private setupLyrics(): void {
