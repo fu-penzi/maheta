@@ -22,10 +22,10 @@
     <mat-card-content class="lyrics-content">
       <div class="sentence" *ngFor="let sentence of lyricSentences">
         <span
-          *ngFor="let word of sentence.words"
-          (click)="wordSelect(word)"
-          [class.active]="isWordHighlighted(word)"
-          [innerText]="word"
+          *ngFor="let word of sentence.words; let first = first"
+          (click)="wordSelect(word.text)"
+          [class.active]="isWordHighlighted(word.text)"
+          [innerText]="padWord(word, first)"
         >
         </span>
       </div>

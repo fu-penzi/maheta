@@ -8,6 +8,7 @@ import {
   getSentences,
   getTokenizer,
   getWords,
+  isWordEnglish,
 } from '@src/app/helpers/string.helper';
 import { LanguageEnum } from '@src/app/model/language.enum';
 import {
@@ -19,7 +20,12 @@ import { MusicControlService } from '@src/app/services/music-control/music-contr
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
 interface LyricSentence {
-  words: string[];
+  words: Word[];
+}
+
+interface Word {
+  text: string;
+  showWhitespace: boolean;
 }
 
 @Component({
@@ -31,7 +37,7 @@ export class PlayerLyricsComponent implements OnChanges, OnDestroy {
   @Input() track: Track;
 
   public lyricSentences: LyricSentence[] = [];
-  public highlightedWord: string = '';
+  public highlightedWordText: string = '';
 
   private _language: LanguageEnum;
 
@@ -62,20 +68,27 @@ export class PlayerLyricsComponent implements OnChanges, OnDestroy {
     Browser.removeAllListeners();
   }
 
-  public wordSelect(word: string | undefined): void {
-    if (!word) {
+  public wordSelect(wordText: string | undefined): void {
+    if (!wordText) {
       return;
     }
-    this.highlightedWord = word;
-    this.openWordOverviewSheet(word.trim());
+    this.highlightedWordText = wordText;
+    this.openWordOverviewSheet(wordText.trim());
   }
 
   public wordUnselect(): void {
-    this.highlightedWord = '';
+    this.highlightedWordText = '';
   }
 
   public isWordHighlighted(word: string | undefined): boolean {
-    return !!word && word === this.highlightedWord;
+    return !!word && word === this.highlightedWordText;
+  }
+
+  public padWord(word: Word, firstInSentence: boolean): string {
+    if (!word.showWhitespace) {
+      return word.text;
+    }
+    return firstInSentence ? `${word.text} ` : ` ${word.text} `;
   }
 
   public openLyricsBrowser(): void {
@@ -119,7 +132,10 @@ export class PlayerLyricsComponent implements OnChanges, OnDestroy {
 
     const tokenizer = getTokenizer(this._language);
     this.lyricSentences = getSentences(this.lyrics).map((sentence: string) => ({
-      words: getWords(sentence, tokenizer),
+      words: getWords(sentence, tokenizer)?.map((word: string) => ({
+        text: word,
+        showWhitespace: isWordEnglish(word),
+      })),
     }));
   }
 }

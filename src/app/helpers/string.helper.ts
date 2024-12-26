@@ -1,4 +1,4 @@
-import { containsJapaneseRegExp } from '@src/app/helpers/regex';
+import { containsEnglishRegExp, containsJapaneseRegExp } from '@src/app/helpers/regex';
 import { LanguageEnum } from '@src/app/model/language.enum';
 
 import * as natural from 'natural';
@@ -28,10 +28,6 @@ export function getTokenizer(language: LanguageEnum): any {
   return tokenizer;
 }
 
-export function isSupportedLanguage(lang: LanguageEnum): boolean {
-  return lang === LanguageEnum.JAPANESE;
-}
-
 export function detectLanguage(str: string): LanguageEnum {
   const containsJapaneseMatch: RegExpMatchArray[] = [
     ...str.substring(0, 20).matchAll(containsJapaneseRegExp),
@@ -41,6 +37,12 @@ export function detectLanguage(str: string): LanguageEnum {
   }
 
   return LanguageEnum.ENGLISH;
+}
+
+export function isWordEnglish(str: string): boolean {
+  const containsEnglishMatch: RegExpMatchArray[] = [...str.matchAll(containsEnglishRegExp)];
+
+  return !!containsEnglishMatch.length;
 }
 
 export function getWords(str: string, tokenizer: any): string[] {
