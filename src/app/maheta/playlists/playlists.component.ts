@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 
 import { Playlist } from '@src/app/db/domain/playlist.schema';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
-import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/dialog/create-playlist-dialog/create-playlist-dialog.component';
+import { MahetaService } from '@src/app/services/maheta.service';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
 
 import { takeUntil } from 'rxjs';
@@ -18,13 +17,13 @@ export class PlaylistsComponent extends BaseComponent implements OnInit {
 
   constructor(
     private readonly musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
-    private matDialogService: MatDialog
+    private readonly mahetaService: MahetaService
   ) {
     super();
   }
 
   public openCreatePlaylistDialog(): void {
-    this.matDialogService.open(CreatePlaylistDialogComponent);
+    this.mahetaService.openCreatePlaylistDialog();
   }
 
   public ngOnInit(): void {

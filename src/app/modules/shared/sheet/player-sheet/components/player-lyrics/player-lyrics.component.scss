@@ -14,21 +14,34 @@
   @include mat.elevation(5);
 }
 
-.lyrics-header {
+.align-center {
   display: flex;
   align-items: center;
-  font-size: 1rem;
-  margin-bottom: spacing(1) !important;
+}
+
+.lyrics-header {
   position: relative;
+  width: 100%;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  margin-bottom: spacing(1) !important;
   z-index: 100;
+
+  span {
+    margin-left: spacing(1);
+  }
+
+  button {
+    margin-left: spacing(5);
+  }
 }
 
 .lyrics-content {
   height: 45vh;
   overflow-y: scroll;
   white-space: pre-wrap;
-  line-height: 2.4rem;
-  font-size: 1.8rem;
+  line-height: 2rem;
+  font-size: 1.7rem;
   padding-top: spacing(3);
 
   .sentence {

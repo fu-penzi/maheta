@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
+import { CreatePlaylistDialogComponent } from '@src/app/modules/shared/dialog/create-playlist-dialog/create-playlist-dialog.component';
+import {
+  EditLyricsDialogComponent,
+  EditLyricsDialogData,
+} from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { LoadingDialogComponent } from '@src/app/modules/shared/dialog/loading-dialog/loading-dialog.component';
 
 export interface ProgressBarConfig {
@@ -52,5 +57,17 @@ export class MahetaService {
       this.progressBarConfig.mode = 'determinate';
     }
     this.progressBarConfig.progress = progress;
+  }
+
+  public openEditLyricsDialog(data: EditLyricsDialogData): void {
+    this.matDialogService.open(EditLyricsDialogComponent, {
+      data,
+      width: '100%',
+      position: { top: '10%' },
+    });
+  }
+
+  public openCreatePlaylistDialog(): void {
+    this.matDialogService.open(CreatePlaylistDialogComponent, { position: { top: '10%' } });
   }
 }

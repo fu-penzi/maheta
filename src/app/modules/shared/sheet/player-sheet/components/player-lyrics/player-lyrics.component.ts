@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Browser } from '@capacitor/browser';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import {
@@ -7,13 +8,13 @@ import {
   getSentences,
   getTokenizer,
   getWords,
-  isSupportedLanguage,
 } from '@src/app/helpers/string.helper';
 import { LanguageEnum } from '@src/app/model/language.enum';
 import {
   WordOverviewComponent,
   WordOverviewSheetData,
 } from '@src/app/modules/shared/sheet/word-overwiew-sheet/word-overview.component';
+import { MahetaService } from '@src/app/services/maheta.service';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
@@ -26,7 +27,7 @@ interface LyricSentence {
   templateUrl: './player-lyrics.component.html',
   styleUrls: ['./player-lyrics.component.scss'],
 })
-export class PlayerLyricsComponent implements OnChanges {
+export class PlayerLyricsComponent implements OnChanges, OnDestroy {
   @Input() track: Track;
 
   public lyricSentences: LyricSentence[] = [];
@@ -37,8 +38,13 @@ export class PlayerLyricsComponent implements OnChanges {
   constructor(
     private musicControlService: MusicControlService,
     private musicLibraryTracksService: MusicLibraryTracksService,
+    private mahetaService: MahetaService,
     private matDialogService: MatDialog
-  ) {}
+  ) {
+    Browser.addListener('browserFinished', () => {
+      this.openEditLyricsDialog();
+    });
+  }
 
   private get lyrics(): string | undefined {
     return (
@@ -52,8 +58,12 @@ export class PlayerLyricsComponent implements OnChanges {
     this.setupLyrics();
   }
 
+  public ngOnDestroy(): void {
+    Browser.removeAllListeners();
+  }
+
   public wordSelect(word: string | undefined): void {
-    if (!word || !isSupportedLanguage(this._language)) {
+    if (!word) {
       return;
     }
     this.highlightedWord = word;
@@ -66,6 +76,19 @@ export class PlayerLyricsComponent implements OnChanges {
 
   public isWordHighlighted(word: string | undefined): boolean {
     return !!word && word === this.highlightedWord;
+  }
+
+  public openLyricsBrowser(): void {
+    const author: string = this.track?.author || '';
+    const title: string = this.track?.title || '';
+
+    Browser.open({
+      url: `https://www.lyricsify.com/search?q=${author}+${title}`.replace(/\s+/g, '+'),
+    });
+  }
+
+  public openEditLyricsDialog(): void {
+    this.mahetaService.openEditLyricsDialog({ track: this.track });
   }
 
   private openWordOverviewSheet(word: string): void {

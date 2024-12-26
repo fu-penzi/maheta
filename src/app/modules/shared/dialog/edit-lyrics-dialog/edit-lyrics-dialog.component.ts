@@ -36,6 +36,10 @@ export class EditLyricsDialogComponent implements OnInit {
     this.buildForm();
   }
 
+  public clearInput(): void {
+    this.form.get('lyrics')?.setValue('');
+  }
+
   public save(): void {
     this.musicLibraryTracksService.addLyricsToTrack$(this.track, this.lyrics?.value);
     this.close();

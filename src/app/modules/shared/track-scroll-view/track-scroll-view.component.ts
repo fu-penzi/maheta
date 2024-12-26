@@ -7,10 +7,7 @@ import {
   AddToPlaylistDialogComponent,
   AddToPlaylistDialogData,
 } from '@src/app/modules/shared/dialog/add-to-playlist-dialog/add-to-playlist-dialog.component';
-import {
-  EditLyricsDialogComponent,
-  EditLyricsDialogData,
-} from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
+import { MahetaService } from '@src/app/services/maheta.service';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
 
@@ -28,7 +25,8 @@ export class TrackScrollViewComponent implements OnChanges {
   constructor(
     private readonly musicControlService: MusicControlService,
     private readonly musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
-    public matDialogService: MatDialog
+    private readonly mahetaService: MahetaService,
+    private readonly matDialogService: MatDialog
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -53,17 +51,12 @@ export class TrackScrollViewComponent implements OnChanges {
   }
 
   public openAddToPlaylistDialog(track: Track): void {
-    const data: AddToPlaylistDialogData = {
-      track,
-    };
+    const data: AddToPlaylistDialogData = { track };
     this.matDialogService.open(AddToPlaylistDialogComponent, { data, width: '100%' });
   }
 
   public openEditLyricsDialog(track: Track): void {
-    const data: EditLyricsDialogData = {
-      track,
-    };
-    this.matDialogService.open(EditLyricsDialogComponent, { data, width: '100%' });
+    this.mahetaService.openEditLyricsDialog({ track: track });
   }
 
   public trackByIndex(index: number): number {
