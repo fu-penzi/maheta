@@ -3,8 +3,11 @@ import { LanguageEnum } from '@src/app/model/language.enum';
 
 import * as natural from 'natural';
 
-export function getSentences(str: string): string[] {
-  return str.split(/\r?\n/).filter((sentence: string) => sentence);
+export function splitToLines(text: string): string[] {
+  return text
+    .split(/\r?\n/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
 }
 
 export function getTokenizer(language: LanguageEnum): any {

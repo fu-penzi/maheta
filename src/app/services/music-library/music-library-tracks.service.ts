@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { TrackCollectionService } from '@src/app/db/collections/track-collection.service';
 import { DatabaseService } from '@src/app/db/database.service';
+import { Lyrics } from '@src/app/db/domain/lyrics';
 import { Track } from '@src/app/db/domain/track.schema';
 import { MusicLibraryService } from '@src/app/services/music-library/music-library.service';
 
@@ -33,11 +34,8 @@ export class MusicLibraryTracksService {
     });
   }
 
-  public addLyricsToTrack$(track: Track, lyrics: string): Observable<unknown> {
-    const trackUpdate: Track = {
-      ...track,
-      lyrics,
-    };
+  public addLyricsToTrack$(track: Track, lyrics: Lyrics): Observable<unknown> {
+    const trackUpdate: Track = { ...track, lyrics };
     return this.trackCollectionService.upsert$(trackUpdate);
   }
 

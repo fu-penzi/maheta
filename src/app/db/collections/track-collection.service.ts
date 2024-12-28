@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CollectionService } from '@src/app/db/collections/collection.service';
+import { Lyrics } from '@src/app/db/domain/lyrics';
 import { Track } from '@src/app/db/domain/track.schema';
 import { FileLoadingService } from '@src/app/services/file-loading.service';
 import { MahetaService } from '@src/app/services/maheta.service';
@@ -61,7 +62,7 @@ export class TrackCollectionService extends CollectionService<Track> {
       .subscribe();
   }
 
-  private getLyricsFromBackup(track: Track, trackBackupArray: Track[]): string | undefined {
+  private getLyricsFromBackup(track: Track, trackBackupArray: Track[]): Lyrics | undefined {
     const backupTrack: Track | undefined = trackBackupArray.find(
       (backupTrack: Track) => track.uri === backupTrack.uri
     );

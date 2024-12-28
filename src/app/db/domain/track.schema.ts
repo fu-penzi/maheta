@@ -1,6 +1,8 @@
 import { Capacitor } from '@capacitor/core';
-import { Directory, Filesystem, StatResult, WriteFileResult } from '@capacitor/filesystem';
+import { Directory, Filesystem, StatResult } from '@capacitor/filesystem';
 
+import { Lyrics } from '@src/app/db/domain/lyrics';
+import { compressAndSavePicture } from '@src/app/helpers/file.helper';
 import { TrackWithoutMetadata } from '@src/app/services/file-loading.service';
 
 import { IAudioMetadata, IPicture } from 'music-metadata-browser';
@@ -16,7 +18,7 @@ export interface Track {
   duration: number;
   year?: number;
   metadataLoaded?: boolean;
-  lyrics?: string;
+  lyrics?: Lyrics;
   modificationTime?: number;
 }
 
@@ -26,6 +28,88 @@ export enum TrackDefaultsEnum {
   ALBUM = 'Unknown',
   THUMBURL = 'assets/note.jpg',
 }
+
+export const trackSchema: RxJsonSchema<Track> = {
+  title: 'track schema',
+  version: 0,
+  primaryKey: 'uri',
+  type: 'object',
+  properties: {
+    uri: {
+      type: 'string',
+      maxLength: 10000, // <- the primary key must have set maxLength
+    },
+    src: {
+      type: 'string',
+    },
+    title: {
+      type: 'string',
+    },
+    author: {
+      type: 'string',
+    },
+    thumbUrl: {
+      type: 'string',
+    },
+    album: {
+      type: 'string',
+    },
+    metadataLoaded: {
+      type: 'boolean',
+    },
+    year: {
+      type: 'number',
+    },
+    duration: {
+      description: 'track duration',
+      type: 'number',
+    },
+    lyrics: {
+      type: 'object',
+      properties: {
+        isLrcFormat: {
+          type: 'boolean',
+        },
+        text: {
+          type: 'string',
+        },
+        lines: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              text: {
+                type: 'string',
+              },
+              word: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    text: {
+                      type: 'string',
+                    },
+                    showWhitespace: {
+                      type: 'boolean',
+                    },
+                  },
+                },
+              },
+              time: {
+                type: 'number',
+              },
+            },
+          },
+        },
+      },
+    },
+    modificationTime: {
+      type: 'number',
+    },
+  },
+  required: ['uri', 'src', 'title', 'author', 'duration', 'album', 'thumbUrl'],
+  // indexes: ['duration'],
+};
 
 export function getDefaultTrackObject(
   trackPath?: string,
@@ -40,7 +124,7 @@ export function getDefaultTrackObject(
     album: TrackDefaultsEnum.ALBUM,
     thumbUrl: TrackDefaultsEnum.THUMBURL,
     duration: 0,
-    lyrics: '',
+    lyrics: { isLrcFormat: false, text: '', lines: [] },
     metadataLoaded: false,
     modificationTime,
   };
@@ -49,7 +133,7 @@ export function getDefaultTrackObject(
 export async function getTrackObject(
   trackWithoutMetadata: TrackWithoutMetadata,
   fileModified: boolean,
-  lyrics?: string,
+  lyrics?: Lyrics,
   metadata?: IAudioMetadata | undefined
 ): Promise<Track> {
   let thumbSrc: string | null = '';
@@ -92,86 +176,8 @@ export async function getTrackObject(
     year: metadata?.common.year,
     thumbUrl: thumbSrc || TrackDefaultsEnum.THUMBURL,
     duration: metadata?.format.duration ?? 0,
-    lyrics: lyrics || '',
+    lyrics: lyrics || { isLrcFormat: false, text: '', lines: [] },
     metadataLoaded: true,
     modificationTime: trackWithoutMetadata.modificationTime,
   };
 }
-
-function compressAndSavePicture(picture: IPicture, albumName: string): Promise<string | null> {
-  return new Promise((resolve) => {
-    const img = new Image();
-
-    img.src = `data:${picture.format};base64,${picture.data.toString('base64')}`;
-
-    img.onload = async (e: any) => {
-      const canvas: HTMLCanvasElement = document.createElement('canvas');
-      const ratio: number = 500 / e.target.width;
-
-      canvas.width = 500;
-      canvas.height = e.target.height * ratio;
-
-      const context = canvas.getContext('2d') as CanvasRenderingContext2D;
-      context.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-      const quality: number = 70;
-      const thumbPath = await Filesystem.writeFile({
-        path: albumName,
-        data: context.canvas.toDataURL('image/jpeg', quality),
-        directory: Directory.Library,
-      }).then((res: WriteFileResult) => Capacitor.convertFileSrc(res.uri));
-
-      resolve(thumbPath);
-    };
-
-    img.onerror = () => {
-      resolve(null);
-    };
-  });
-}
-
-export const trackSchema: RxJsonSchema<Track> = {
-  title: 'track schema',
-  version: 0,
-  primaryKey: 'uri',
-  type: 'object',
-  properties: {
-    uri: {
-      type: 'string',
-      maxLength: 10000, // <- the primary key must have set maxLength
-    },
-    src: {
-      type: 'string',
-    },
-    title: {
-      type: 'string',
-    },
-    author: {
-      type: 'string',
-    },
-    thumbUrl: {
-      type: 'string',
-    },
-    album: {
-      type: 'string',
-    },
-    metadataLoaded: {
-      type: 'boolean',
-    },
-    year: {
-      type: 'number',
-    },
-    duration: {
-      description: 'track duration',
-      type: 'number',
-    },
-    lyrics: {
-      type: 'string',
-    },
-    modificationTime: {
-      type: 'number',
-    },
-  },
-  required: ['uri', 'src', 'title', 'author', 'duration', 'album', 'thumbUrl'],
-  // indexes: ['duration'],
-};
