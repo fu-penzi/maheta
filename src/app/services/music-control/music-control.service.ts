@@ -242,7 +242,7 @@ export class MusicControlService {
 
   private async updateNativeMusicControls(currentTrack: Track): Promise<void> {
     const base64Image: string | Blob = await Filesystem.readFile({
-      path: currentTrack.album,
+      path: currentTrack.thumbUrl,
       directory: Directory.Library,
     })
       .then((read: ReadFileResult) => read.data)
