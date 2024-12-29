@@ -2,9 +2,11 @@ import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem, StatResult } from '@capacitor/filesystem';
 
 import { Lyrics } from '@src/app/db/domain/lyrics';
-import { compressAndSavePicture } from '@src/app/helpers/file.helper';
+import { compressAndSavePicture, randomFileName } from '@src/app/helpers/file.helper';
+import { parseLyrics } from '@src/app/helpers/string.helper';
 import { TrackWithoutMetadata } from '@src/app/services/file-loading.service';
 
+import { ITag } from 'music-metadata/lib/type';
 import { IAudioMetadata, IPicture } from 'music-metadata-browser';
 import { RxJsonSchema } from 'rxdb';
 
@@ -138,12 +140,18 @@ export async function getTrackObject(
 ): Promise<Track> {
   let thumbSrc: string | null = '';
   const picture: IPicture | undefined = metadata?.common.picture?.shift();
+  const trackName: string | undefined =
+    metadata?.common.title ?? trackWithoutMetadata.uri.split('/').pop();
+
   if (picture) {
-    const albumName: string = metadata?.common.album || `${Math.random() * 2342412342352}`;
+    const pictureFileName: string = (metadata?.common.album || trackName || randomFileName())
+      .trim()
+      .replace(/#/g, '')
+      .replace(/\s+/g, '_');
 
     /* Overwrite existing picture if music file modified */
     const thumbDetails: StatResult | null = await Filesystem.stat({
-      path: albumName,
+      path: pictureFileName,
       directory: Directory.Library,
     }).catch(() => null);
 
@@ -153,30 +161,32 @@ export async function getTrackObject(
       const secondsSinceLastModification: number = (Date.now() - thumbDetails.mtime) / 1000;
       thumbSrc =
         secondsSinceLastModification > 5
-          ? await Filesystem.deleteFile({ path: albumName, directory: Directory.Library })
-              .then(() => compressAndSavePicture(picture, albumName))
+          ? await Filesystem.deleteFile({ path: pictureFileName, directory: Directory.Library })
+              .then(() => compressAndSavePicture(picture, pictureFileName))
               .catch(() => null)
           : thumbSrc;
     }
 
     if (!thumbSrc) {
-      thumbSrc = await compressAndSavePicture(picture, albumName).catch(() => null);
+      thumbSrc = await compressAndSavePicture(picture, pictureFileName).catch(() => null);
     }
   }
+
+  const lyricsMetadata: string | undefined =
+    metadata?.common?.lyrics?.[0] ||
+    metadata?.native['ID3v2.4']?.find((el: ITag) => el.id === 'USLT' || el.id === 'SYLT')?.value
+      ?.text;
 
   return {
     uri: trackWithoutMetadata.uri,
     src: trackWithoutMetadata.src,
-    title:
-      metadata?.common.title ??
-      trackWithoutMetadata.uri.split('/').pop() ??
-      TrackDefaultsEnum.TITLE,
+    title: trackName ?? TrackDefaultsEnum.TITLE,
     author: metadata?.common.artist?.trim() ?? TrackDefaultsEnum.AUTHOR,
     album: metadata?.common.album?.trim() ?? TrackDefaultsEnum.ALBUM,
     year: metadata?.common.year,
     thumbUrl: thumbSrc || TrackDefaultsEnum.THUMBURL,
     duration: metadata?.format.duration ?? 0,
-    lyrics: lyrics || { isLrcFormat: false, text: '', lines: [] },
+    lyrics: lyricsMetadata ? parseLyrics(lyricsMetadata) : lyrics,
     metadataLoaded: true,
     modificationTime: trackWithoutMetadata.modificationTime,
   };

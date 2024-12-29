@@ -3,6 +3,10 @@ import { Directory, Filesystem, WriteFileResult } from '@capacitor/filesystem';
 
 import { IPicture } from 'music-metadata-browser';
 
+export function randomFileName(): string {
+  return Math.random().toString(36).substring(2);
+}
+
 export function compressAndSavePicture(
   picture: IPicture,
   albumName: string

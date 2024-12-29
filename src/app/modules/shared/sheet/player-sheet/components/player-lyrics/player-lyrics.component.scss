@@ -51,14 +51,15 @@
   white-space: pre-wrap;
   line-height: 2rem;
   font-size: 1.7rem;
-  padding-top: spacing(3);
+  padding-top: spacing(8);
 
   .sentence {
     margin-bottom: spacing(6);
+    color: $text-disabled;
   }
 
-  .sentence__past span {
-    color: $text-disabled;
+  .sentence__active span {
+    color: $text;
   }
 
   span {

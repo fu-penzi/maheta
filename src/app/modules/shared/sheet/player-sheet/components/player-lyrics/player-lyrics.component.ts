@@ -56,11 +56,14 @@ export class PlayerLyricsComponent implements OnInit, OnChanges, OnDestroy {
           return;
         }
 
-        const indexOfNext: number =
-          this.lines.findIndex(
-            (lyricLine: LyricLine) => (lyricLine.time || 0) > this.currentTrackTime
-          ) ?? this.lines.length;
-        this.activeLineIndex = indexOfNext === 0 ? indexOfNext : indexOfNext - 1;
+        const indexOfNext: number = this.lines.findIndex(
+          (lyricLine: LyricLine) => (lyricLine.time || 0) > this.currentTrackTime
+        );
+        if (indexOfNext === -1) {
+          this.activeLineIndex = this.lines.length - 1;
+        } else {
+          this.activeLineIndex = indexOfNext === 0 ? indexOfNext : indexOfNext - 1;
+        }
 
         const offsetY: number =
           document.getElementById(`sentence_${this.activeLineIndex}`)?.offsetTop || 0;
@@ -70,7 +73,7 @@ export class PlayerLyricsComponent implements OnInit, OnChanges, OnDestroy {
             offsetY - (this.lyricsViewport?.nativeElement?.scrollTop || 0)
           );
           this.lyricsViewport?.nativeElement?.scrollTo({
-            top: offsetY - 100,
+            top: offsetY - 140,
             left: 0,
             behavior: offsetDiff < 500 ? 'smooth' : 'auto',
           });
