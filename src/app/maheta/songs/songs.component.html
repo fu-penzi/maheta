@@ -5,5 +5,5 @@
 
 <maheta-track-scroll-view
   [currentTrack]="currentTrack"
-  [tracks]="tracks || []"
+  [tracks]="(isSortingOrderAscending ? tracks : tracks?.slice()?.reverse()) || []"
 ></maheta-track-scroll-view>

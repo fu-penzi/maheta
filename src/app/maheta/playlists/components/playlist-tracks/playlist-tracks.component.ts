@@ -29,6 +29,10 @@ export class PlaylistTracksComponent extends BaseComponent implements OnInit {
     super();
   }
 
+  public get isSortingOrderAscending(): boolean {
+    return this.musicControlService.isSortingOrderAscending;
+  }
+
   public ngOnInit(): void {
     const playlistId: string = this.route.snapshot.paramMap.get(UrlParamsEnum.playlistId) ?? '';
     this.musicControlService.currentTrack$.subscribe((track: Track) => (this.currentTrack = track));

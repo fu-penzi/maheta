@@ -23,6 +23,10 @@ export class SongsComponent extends BaseComponent implements OnInit {
     super();
   }
 
+  public get isSortingOrderAscending(): boolean {
+    return this.musicControlService.isSortingOrderAscending;
+  }
+
   public ngOnInit(): void {
     this.musicControlService.currentTrack$.subscribe(
       (track: Track) => (this.currentTrack = { ...track })

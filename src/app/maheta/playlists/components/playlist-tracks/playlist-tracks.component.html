@@ -1,7 +1,11 @@
 <maheta-track-scroll-view
   *ngIf="playlist?.trackPopulation?.length"
   [currentTrack]="currentTrack"
-  [tracks]="playlist.trackPopulation"
+  [tracks]="
+    isSortingOrderAscending
+      ? playlist.trackPopulation
+      : playlist.trackPopulation?.slice()?.reverse()
+  "
   [playlist]="playlist"
 ></maheta-track-scroll-view>
 

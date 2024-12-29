@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/c
 
 import { Album } from '@src/app/db/domain/album';
 import { Track } from '@src/app/db/domain/track.schema';
+import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 
 import { sum } from 'lodash';
 
@@ -9,7 +10,6 @@ import { sum } from 'lodash';
   selector: 'maheta-album-tracks',
   templateUrl: './album-tracks.component.html',
   styleUrls: ['./album-tracks.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlbumTracksComponent implements OnChanges {
   @Input() public album: Album;
@@ -17,7 +17,11 @@ export class AlbumTracksComponent implements OnChanges {
 
   public showSkeleton: boolean = true;
   public totalAlbumTime: number = 0;
-  constructor() {}
+  constructor(private musicControlService: MusicControlService) {}
+
+  public get isSortingOrderAscending(): boolean {
+    return this.musicControlService.isSortingOrderAscending;
+  }
 
   public ngOnChanges(): void {
     this.totalAlbumTime = sum(this.album.tracks.map((track: Track) => track.duration));

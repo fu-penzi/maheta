@@ -23,6 +23,26 @@
     </button>
 
     <mat-menu #menu="matMenu">
+      <button
+        *ngIf="sortingOrder === sortingOrderEnum.DESCENDING; else descending"
+        (click)="setSortingOrder(sortingOrderEnum.ASCENDING)"
+        mat-menu-item
+        [disabled]="isProcessing"
+      >
+        <mat-icon>arrow_upward</mat-icon>
+        <ng-container>Sort ascending</ng-container>
+      </button>
+      <ng-template #descending>
+        <button
+          (click)="setSortingOrder(sortingOrderEnum.DESCENDING)"
+          mat-menu-item
+          [disabled]="isProcessing"
+        >
+          <mat-icon>arrow_downward</mat-icon>
+          <ng-container>Sort descending</ng-container>
+        </button>
+      </ng-template>
+
       <button (click)="reloadDatabaseTrackData()" mat-menu-item [disabled]="isProcessing">
         <mat-icon>update</mat-icon>
         <ng-container>{{ 'APP_BAR.updateTracks' | translate }}</ng-container>

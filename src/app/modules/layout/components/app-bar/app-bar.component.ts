@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
+import { SortingOrderEnum } from '@src/app/model/sorting-order.enum';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
 import { MahetaService, ProgressBarConfig } from '@src/app/services/maheta.service';
+import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { NavigationService } from '@src/app/services/navigation.service';
 import { OptionsService } from '@src/app/services/options.service';
 
@@ -15,13 +17,19 @@ export class AppBarComponent {
   @Output() showSidenav: EventEmitter<void> = new EventEmitter<void>();
 
   public readonly urlEnum: typeof UrlEnum = UrlEnum;
+  public readonly sortingOrderEnum: typeof SortingOrderEnum = SortingOrderEnum;
 
   constructor(
     private mahetaService: MahetaService,
     private optionsService: OptionsService,
     private themeService: ThemeService,
-    private navigation: NavigationService
+    private navigation: NavigationService,
+    private musicControlService: MusicControlService
   ) {}
+
+  public get sortingOrder(): string {
+    return this.musicControlService.sortingOrder;
+  }
 
   public get currentName(): string {
     return this.navigation.currentTabName;
@@ -45,6 +53,10 @@ export class AppBarComponent {
 
   public back(): void {
     this.navigation.back();
+  }
+
+  public setSortingOrder(sortingOrder: SortingOrderEnum): void {
+    this.musicControlService.sortingOrder = sortingOrder;
   }
 
   public reloadDatabaseTrackData(): void {

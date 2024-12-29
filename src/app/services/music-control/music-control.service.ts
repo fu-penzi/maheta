@@ -5,6 +5,7 @@ import { Directory, Filesystem, ReadFileResult } from '@capacitor/filesystem';
 
 import { Track } from '@src/app/db/domain/track.schema';
 import { LocalStorageEnum } from '@src/app/model/localStorage.enum';
+import { SortingOrderEnum } from '@src/app/model/sorting-order.enum';
 import { QueueService, RepeatModeEnum } from '@src/app/services/queue.service';
 
 import { MediaSession } from '@jofr/capacitor-media-session';
@@ -31,6 +32,7 @@ interface MusicControlState {
 export class MusicControlService {
   public isPlaying: boolean = false;
   public currentTrackDuration: number = 0;
+  public sortingOrder: SortingOrderEnum = SortingOrderEnum.ASCENDING;
 
   private _nextQueue: Track[] | null = null;
   private _currentTrackAudio: HTMLAudioElement;
@@ -61,6 +63,10 @@ export class MusicControlService {
     this.watchCurrentItemChanges();
     this.setupCureentTrackAudioTimeSubject();
     this.onRestoreMusicControlState();
+  }
+
+  public get isSortingOrderAscending(): boolean {
+    return this.sortingOrder === SortingOrderEnum.ASCENDING;
   }
 
   public get queuePosition(): number {
