@@ -58,7 +58,7 @@ export class PlayerLyricsComponent implements OnInit, OnChanges, OnDestroy {
 
         const indexOfNext: number =
           this.lines.findIndex(
-            (lyricLine: LyricLine) => (lyricLine.time || 0) > Math.floor(this.currentTrackTime)
+            (lyricLine: LyricLine) => (lyricLine.time || 0) > this.currentTrackTime
           ) ?? this.lines.length;
         this.activeLineIndex = indexOfNext === 0 ? indexOfNext : indexOfNext - 1;
 
