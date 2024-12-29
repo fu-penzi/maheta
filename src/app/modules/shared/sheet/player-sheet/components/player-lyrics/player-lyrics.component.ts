@@ -73,7 +73,7 @@ export class PlayerLyricsComponent implements OnInit, OnChanges, OnDestroy {
             offsetY - (this.lyricsViewport?.nativeElement?.scrollTop || 0)
           );
           this.lyricsViewport?.nativeElement?.scrollTo({
-            top: offsetY - 140,
+            top: offsetY - 90,
             left: 0,
             behavior: offsetDiff < 500 ? 'smooth' : 'auto',
           });

@@ -55,11 +55,11 @@
 
   .sentence {
     margin-bottom: spacing(6);
-    color: $text-disabled;
+    color: $text;
   }
 
-  .sentence__active span {
-    color: $text;
+  .sentence__inactive span {
+    color: $text-disabled;
   }
 
   span {

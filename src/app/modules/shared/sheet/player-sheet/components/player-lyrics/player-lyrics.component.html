@@ -24,7 +24,7 @@
         *ngFor="let line of track.lyrics?.lines; let idx = index"
         class="sentence"
         [id]="'sentence_' + idx"
-        [class.sentence__active]="track.lyrics?.isLrcFormat && idx === activeLineIndex"
+        [class.sentence__inactive]="track.lyrics?.isLrcFormat && idx > activeLineIndex"
       >
         <span
           *ngFor="let word of line.words; let first = first"
