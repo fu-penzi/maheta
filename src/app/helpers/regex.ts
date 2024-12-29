@@ -3,4 +3,4 @@ export const containsJapaneseRegExp: RegExp =
 
 export const containsEnglishRegExp: RegExp = /\w+/;
 
-export const lrcFormatLineRegExp: RegExp = /^\[[\w.\s]+:[\w.:\s]+]/;
+export const lrcFormatLineRegExp: RegExp = /^\[[\s\S]*:[\s\S]*]/;

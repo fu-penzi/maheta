@@ -54,7 +54,11 @@
   padding-top: spacing(3);
 
   .sentence {
-    margin-bottom: spacing(5);
+    margin-bottom: spacing(6);
+  }
+
+  .sentence__past span {
+    color: $text-disabled;
   }
 
   span {

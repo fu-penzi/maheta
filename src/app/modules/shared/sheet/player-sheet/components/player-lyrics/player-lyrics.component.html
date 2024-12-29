@@ -1,4 +1,4 @@
-<mat-card *ngIf="track.lyrics?.lines?.length">
+<mat-card *ngIf="lines?.length">
   <mat-card-header>
     <div class="lyrics-header align-center">
       <div class="align-center">
@@ -19,10 +19,15 @@
   </mat-card-header>
 
   <div class="lyrics-content-wrapper">
-    <mat-card-content class="lyrics-content">
-      <div class="sentence" *ngFor="let sentence of track.lyrics?.lines">
+    <mat-card-content #lyricsViewport class="lyrics-content">
+      <div
+        *ngFor="let line of track.lyrics?.lines; let idx = index"
+        class="sentence"
+        [id]="'sentence_' + idx"
+        [class.sentence__past]="track.lyrics?.isLrcFormat && idx < activeLineIndex"
+      >
         <span
-          *ngFor="let word of sentence.words; let first = first"
+          *ngFor="let word of line.words; let first = first"
           (click)="wordSelect(word.text)"
           [class.active]="isWordHighlighted(word.text)"
           [innerText]="padWord(word, first)"
@@ -33,7 +38,7 @@
   </div>
 </mat-card>
 
-<mat-card class="placeholder" *ngIf="!track.lyrics?.lines?.length">
+<mat-card class="placeholder" *ngIf="!lines?.length">
   <mat-card-header>
     <div class="lyrics-header align-center">
       <div class="lyrics-header-text align-center">

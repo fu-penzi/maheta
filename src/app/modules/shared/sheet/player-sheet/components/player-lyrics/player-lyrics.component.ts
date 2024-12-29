@@ -1,25 +1,38 @@
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Browser } from '@capacitor/browser';
 
-import { Lyrics, Word } from '@src/app/db/domain/lyrics';
+import { LyricLine, Lyrics, Word } from '@src/app/db/domain/lyrics';
 import { Track } from '@src/app/db/domain/track.schema';
 import { EditLyricsDialogComponent } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { MahetaService } from '@src/app/services/maheta.service';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
-import { take, takeUntil } from 'rxjs';
+import { take, takeUntil, throttleTime } from 'rxjs';
 
 @Component({
   selector: 'maheta-player-lyrics',
   templateUrl: './player-lyrics.component.html',
   styleUrls: ['./player-lyrics.component.scss'],
 })
-export class PlayerLyricsComponent implements OnChanges, OnDestroy {
+export class PlayerLyricsComponent implements OnInit, OnChanges, OnDestroy {
+  @ViewChild('lyricsViewport') lyricsViewport: ElementRef;
   @Input() track: Track;
 
   public highlightedWordText: string = '';
+  public currentTrackTime: number = 0;
+  public activeLineIndex: number = 0;
+
+  private _currentScrolledToIdx: number = 0;
 
   constructor(
     private musicControlService: MusicControlService,
@@ -27,6 +40,43 @@ export class PlayerLyricsComponent implements OnChanges, OnDestroy {
     private mahetaService: MahetaService
   ) {
     Browser.addListener('browserFinished', () => this.openEditLyricsDialog());
+  }
+
+  public get lines(): LyricLine[] {
+    return this.track?.lyrics?.lines || [];
+  }
+
+  public ngOnInit(): void {
+    this.musicControlService.currentTrackAudioTime$
+      .pipe(throttleTime(300))
+      .subscribe((currentTrackTime: number) => {
+        this.currentTrackTime = currentTrackTime;
+        if (!this.track.lyrics?.isLrcFormat) {
+          this.activeLineIndex = -1;
+          return;
+        }
+
+        const indexOfNext: number =
+          this.lines.findIndex(
+            (lyricLine: LyricLine) => (lyricLine.time || 0) > Math.floor(this.currentTrackTime)
+          ) ?? this.lines.length;
+        this.activeLineIndex = indexOfNext === 0 ? indexOfNext : indexOfNext - 1;
+
+        const offsetY: number =
+          document.getElementById(`sentence_${this.activeLineIndex}`)?.offsetTop || 0;
+
+        if (offsetY > 0 && this._currentScrolledToIdx !== this.activeLineIndex) {
+          const offsetDiff = Math.abs(
+            offsetY - (this.lyricsViewport?.nativeElement?.scrollTop || 0)
+          );
+          this.lyricsViewport?.nativeElement?.scrollTo({
+            top: offsetY - 100,
+            left: 0,
+            behavior: offsetDiff < 500 ? 'smooth' : 'auto',
+          });
+          this._currentScrolledToIdx = this.activeLineIndex;
+        }
+      });
   }
 
   public ngOnChanges(): void {
