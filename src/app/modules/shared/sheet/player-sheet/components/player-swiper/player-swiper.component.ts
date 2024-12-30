@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
 import {
   initSwiperOptions,

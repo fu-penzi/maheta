@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { BaseComponent } from '@src/app/modules/shared/base.component';

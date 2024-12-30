@@ -14,7 +14,7 @@ import { BehaviorSubject, filter, takeUntil } from 'rxjs';
 export class StackingContextService {
   public currentAlbum$: BehaviorSubject<Album> = new BehaviorSubject<Album>({
     ...getDefaultAlbum(),
-    thumbUrl: '',
+    thumbSrc: '',
     title: '',
     author: '',
   } as unknown as Album);

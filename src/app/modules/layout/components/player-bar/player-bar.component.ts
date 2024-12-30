@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { getDefaultTrackObject, Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
+import { getDefaultTrackObject } from '@src/app/helpers/track.helper';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { PlayerSheetService } from '@src/app/services/player-sheet.service';

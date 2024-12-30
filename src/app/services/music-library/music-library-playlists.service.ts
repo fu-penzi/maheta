@@ -6,7 +6,7 @@ import {
   Playlist,
   PlaylistPopulationEnum,
 } from '@src/app/db/domain/playlist.schema';
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 import { MusicLibraryService } from '@src/app/services/music-library/music-library.service';
 
 import {
@@ -83,9 +83,9 @@ export class MusicLibraryPlaylistsService {
       concatMap((playlistUpdate: Playlist) => {
         return this.playlistUpdate$({
           ...playlistUpdate,
-          thumbUrl:
-            (playlistUpdate?.trackPopulation && playlistUpdate?.trackPopulation[0]?.thumbUrl) ||
-            playlistUpdate.thumbUrl,
+          thumbSrc:
+            (playlistUpdate?.trackPopulation && playlistUpdate?.trackPopulation[0]?.thumbSrc) ||
+            playlistUpdate.thumbSrc,
           tracks: [...playlistUpdate.tracks, track.uri],
         });
       })

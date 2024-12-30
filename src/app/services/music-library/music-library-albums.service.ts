@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Album, AlbumDefaultsEnum } from '@src/app/db/domain/album';
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 import { MusicLibraryService } from '@src/app/services/music-library/music-library.service';
 
 import { groupBy, sortBy } from 'lodash';
@@ -44,7 +44,7 @@ export class MusicLibraryAlbumsService {
     this.albums = Object.keys(tracksByAlbum).map((albumTitle: string) => ({
       title: albumTitle ?? AlbumDefaultsEnum.TITLE,
       author: tracksByAlbum[albumTitle][0]?.author ?? AlbumDefaultsEnum.AUTHOR,
-      thumbUrl: tracksByAlbum[albumTitle][0]?.thumbUrl ?? AlbumDefaultsEnum.THUMBURL,
+      thumbSrc: tracksByAlbum[albumTitle][0]?.thumbSrc ?? AlbumDefaultsEnum.THUMBSRC,
       year: tracksByAlbum[albumTitle][0]?.year,
       tracks: tracksByAlbum[albumTitle],
     }));

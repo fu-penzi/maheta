@@ -35,7 +35,7 @@
     </ng-container>
 
     <div [hidden]="showSkeleton" class="album-thumb">
-      <img [src]="album?.thumbUrl" (load)="showSkeleton = false" />
+      <img [src]="album?.thumbSrc" (load)="showSkeleton = false" />
     </div>
     <div class="album-info-section" *ngIf="!showSkeleton">
       <div class="primary text-ellipsis">

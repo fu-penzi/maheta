@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 

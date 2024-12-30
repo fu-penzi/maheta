@@ -3,7 +3,8 @@ import { Capacitor } from '@capacitor/core';
 import { Device, DeviceInfo } from '@capacitor/device';
 import { Directory, FileInfo, Filesystem, ReaddirResult, StatResult } from '@capacitor/filesystem';
 
-import { getDefaultTrackObject, getTrackObject, Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
+import { getDefaultTrackObject, getTrackObject } from '@src/app/helpers/track.helper';
 import { LocalStorageEnum } from '@src/app/model/localStorage.enum';
 import { MusicFileExtensionEnum } from '@src/app/model/music-file-extension.enum';
 import { PlatformEnum } from '@src/app/model/platform.enum';

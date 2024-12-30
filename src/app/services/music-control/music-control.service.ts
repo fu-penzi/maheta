@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { Directory, Filesystem, ReadFileResult } from '@capacitor/filesystem';
 
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track, TrackDefaultsEnum } from '@src/app/db/domain/track';
 import { LocalStorageEnum } from '@src/app/model/localStorage.enum';
 import { SortingOrderEnum } from '@src/app/model/sorting-order.enum';
 import { QueueService, RepeatModeEnum } from '@src/app/services/queue.service';
@@ -248,7 +248,7 @@ export class MusicControlService {
 
   private async updateNativeMusicControls(currentTrack: Track): Promise<void> {
     const base64Image: string | Blob = await Filesystem.readFile({
-      path: currentTrack.thumbUrl,
+      path: currentTrack.thumbFileName,
       directory: Directory.Library,
     })
       .then((read: ReadFileResult) => read.data)

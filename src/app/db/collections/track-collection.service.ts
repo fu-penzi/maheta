@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CollectionService } from '@src/app/db/collections/collection.service';
 import { Lyrics } from '@src/app/db/domain/lyrics';
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 import { FileLoadingService } from '@src/app/services/file-loading.service';
 import { MahetaService } from '@src/app/services/maheta.service';
 

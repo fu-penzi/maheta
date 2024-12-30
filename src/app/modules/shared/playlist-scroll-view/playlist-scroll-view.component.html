@@ -5,7 +5,7 @@
       *cdkVirtualFor="let playlist of playlists; index as i; trackBy: playlistByIndex"
     >
       <div class="content" [routerLink]="playlist.id" mat-ripple>
-        <object class="thumb" [data]="playlist.thumbUrl | safe" type="image/jpeg">
+        <object class="thumb" [data]="playlist.thumbSrc | safe" type="image/jpeg">
           <img class="thumb" [src]="'' | safe" [alt]="playlist.name" />
         </object>
 

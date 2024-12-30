@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 import { QueueService } from '@src/app/services/queue.service';
 
 describe('QueueService', () => {

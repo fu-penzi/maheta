@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 
 import { Album } from '@src/app/db/domain/album';
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 
 import { sum } from 'lodash';

@@ -11,7 +11,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Browser } from '@capacitor/browser';
 
 import { LyricLine, Lyrics, Word } from '@src/app/db/domain/lyrics';
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 import { EditLyricsDialogComponent } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
 import { MahetaService } from '@src/app/services/maheta.service';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';

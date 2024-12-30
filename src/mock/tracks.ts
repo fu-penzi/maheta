@@ -1,6 +1,7 @@
 import { Capacitor } from '@capacitor/core';
 
-import { getTrackObject, Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
+import { getTrackObject } from '@src/app/helpers/track.helper';
 const tracks: Track[] = [];
 Array(500)
   .fill(1)

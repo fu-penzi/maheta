@@ -6,7 +6,7 @@
     *cdkVirtualFor="let track of tracks; index as i; trackBy: trackByIndex"
   >
     <div class="content" (click)="playPosition(i)" mat-ripple>
-      <object class="thumb" [data]="track.thumbUrl | safe" type="image/jpeg">
+      <object class="thumb" [data]="track.thumbSrc | safe" type="image/jpeg">
         <img class="thumb" [alt]="track?.title" [src]="'' | safe" />
       </object>
 

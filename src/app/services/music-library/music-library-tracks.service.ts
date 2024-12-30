@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { TrackCollectionService } from '@src/app/db/collections/track-collection.service';
 import { DatabaseService } from '@src/app/db/database.service';
 import { Lyrics } from '@src/app/db/domain/lyrics';
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 import { MusicLibraryService } from '@src/app/services/music-library/music-library.service';
 
 import { Observable, ReplaySubject } from 'rxjs';

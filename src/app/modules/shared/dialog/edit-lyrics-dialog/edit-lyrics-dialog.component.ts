@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { LyricLine, Lyrics, mapLyricLinesWords } from '@src/app/db/domain/lyrics';
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 import { lrcFormatLineRegExp } from '@src/app/helpers/regex';
 import { parseLyrics, splitToLines } from '@src/app/helpers/string.helper';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';

@@ -1,9 +1,9 @@
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 
 export interface Album {
   title: string;
   author: string;
-  thumbUrl: string;
+  thumbSrc: string;
   tracks: Track[];
   year?: number;
 }
@@ -11,14 +11,14 @@ export interface Album {
 export enum AlbumDefaultsEnum {
   TITLE = 'Unknown',
   AUTHOR = 'Unknown',
-  THUMBURL = 'assets/note.jpg',
+  THUMBSRC = 'assets/note.jpg',
 }
 
 export function getDefaultAlbum(): Album {
   return {
     title: AlbumDefaultsEnum.TITLE,
     tracks: [],
-    thumbUrl: AlbumDefaultsEnum.THUMBURL,
+    thumbSrc: AlbumDefaultsEnum.THUMBSRC,
     author: AlbumDefaultsEnum.AUTHOR,
   };
 }

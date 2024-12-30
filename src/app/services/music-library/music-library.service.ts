@@ -4,7 +4,7 @@ import { PlaylistCollectionService } from '@src/app/db/collections/playlist-coll
 import { TrackCollectionService } from '@src/app/db/collections/track-collection.service';
 import { DatabaseService } from '@src/app/db/database.service';
 import { Playlist } from '@src/app/db/domain/playlist.schema';
-import { Track } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
 
 import { Observable, ReplaySubject, startWith, switchMap, zip } from 'rxjs';
 

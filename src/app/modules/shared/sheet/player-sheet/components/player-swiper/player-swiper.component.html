@@ -9,7 +9,7 @@
 >
   <ng-template *ngFor="let track of queue; index as i; trackBy: trackByIndex" swiperSlide>
     <div class="slide">
-      <img class="track-thumb" [src]="track.thumbUrl" [alt]="currentTrack?.title" loading="lazy" />
+      <img class="track-thumb" [src]="track.thumbSrc" [alt]="currentTrack?.title" loading="lazy" />
     </div>
   </ng-template>
 

@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { PlaylistCollectionService } from '@src/app/db/collections/playlist-collection.service';
 import { TrackCollectionService } from '@src/app/db/collections/track-collection.service';
 import { playlistSchema } from '@src/app/db/domain/playlist.schema';
-import { Track, trackSchema } from '@src/app/db/domain/track.schema';
+import { Track } from '@src/app/db/domain/track';
+import { trackSchema } from '@src/app/db/domain/track.schema';
 import { DatabaseCollectionEnum } from '@src/app/model/database-collection.enum';
 
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
