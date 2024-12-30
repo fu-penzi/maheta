@@ -10,7 +10,6 @@ import { MusicFileExtensionEnum } from '@src/app/model/music-file-extension.enum
 import { PlatformEnum } from '@src/app/model/platform.enum';
 import { ReadOptionsLocalStorage } from '@src/app/model/read-options-local.storage';
 import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories.enum';
-import { tracksMock } from '@src/mock/tracks';
 
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { isArray } from 'lodash';
@@ -66,7 +65,7 @@ export class FileLoadingService {
 
   public getTracksWithMetadata$(tracks: Track[]): Observable<Track> {
     if (Capacitor.getPlatform() !== PlatformEnum.ANDROID) {
-      return of(...tracksMock);
+      return of(getDefaultTrackObject('', '', 0));
     }
 
     return of(...tracks).pipe(
@@ -76,7 +75,7 @@ export class FileLoadingService {
 
   private async getTracksWithoutMetadata(): Promise<Track[]> {
     if (Capacitor.getPlatform() !== PlatformEnum.ANDROID) {
-      return tracksMock;
+      return [];
     }
 
     this._tracksMap.clear();
