@@ -4,7 +4,7 @@ import { CollectionService } from '@src/app/db/collections/collection.service';
 import { Lyrics } from '@src/app/db/domain/lyrics';
 import { Track } from '@src/app/db/domain/track';
 import { FileLoadingService } from '@src/app/services/file-loading.service';
-import { MahetaService } from '@src/app/services/maheta.service';
+import { MahetaDialogService } from '@src/app/services/maheta-dialog.service';
 
 import { bufferTime, finalize, map, switchMap, takeWhile, tap } from 'rxjs';
 
@@ -14,7 +14,7 @@ import { bufferTime, finalize, map, switchMap, takeWhile, tap } from 'rxjs';
 export class TrackCollectionService extends CollectionService<Track> {
   constructor(
     private fileLoadingService: FileLoadingService,
-    private mahetaService: MahetaService
+    private mahetaDialogService: MahetaDialogService
   ) {
     super();
   }
@@ -45,7 +45,7 @@ export class TrackCollectionService extends CollectionService<Track> {
         map((tracks: Track[]) => tracks.filter((track: Track) => !track.metadataLoaded)),
         takeWhile((tracks: Track[]) => !!tracks.length),
         tap((tracks: Track[]) => {
-          this.mahetaService.showProgressBar();
+          this.mahetaDialogService.showProgressBar();
           progress = 0;
           trackNumber = tracks.length;
         }),
@@ -55,9 +55,9 @@ export class TrackCollectionService extends CollectionService<Track> {
           progress = progress + track.length;
           this.collection.bulkUpsert(track);
           const barProgress = (progress / trackNumber) * 100;
-          this.mahetaService.updateProgressBar(parseInt(barProgress.toFixed(0)));
+          this.mahetaDialogService.updateProgressBar(parseInt(barProgress.toFixed(0)));
         }),
-        finalize(() => this.mahetaService.hideProgressBar())
+        finalize(() => this.mahetaDialogService.hideProgressBar())
       )
       .subscribe();
   }

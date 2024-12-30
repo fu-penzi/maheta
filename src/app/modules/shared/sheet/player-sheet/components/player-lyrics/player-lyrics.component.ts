@@ -13,7 +13,7 @@ import { Browser } from '@capacitor/browser';
 import { LyricLine, Lyrics, Word } from '@src/app/db/domain/lyrics';
 import { Track } from '@src/app/db/domain/track';
 import { EditLyricsDialogComponent } from '@src/app/modules/shared/dialog/edit-lyrics-dialog/edit-lyrics-dialog.component';
-import { MahetaService } from '@src/app/services/maheta.service';
+import { MahetaDialogService } from '@src/app/services/maheta-dialog.service';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
@@ -37,7 +37,7 @@ export class PlayerLyricsComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private musicControlService: MusicControlService,
     private musicLibraryTracksService: MusicLibraryTracksService,
-    private mahetaService: MahetaService
+    private mahetaDialogService: MahetaDialogService
   ) {
     Browser.addListener('browserFinished', () => this.openEditLyricsDialog());
   }
@@ -124,7 +124,7 @@ export class PlayerLyricsComponent implements OnInit, OnChanges, OnDestroy {
 
   public openEditLyricsDialog(): void {
     const dialogRef: MatDialogRef<EditLyricsDialogComponent> =
-      this.mahetaService.openEditLyricsDialog({ track: this.track });
+      this.mahetaDialogService.openEditLyricsDialog({ track: this.track });
 
     dialogRef.componentInstance.save$
       .pipe(take(1), takeUntil(dialogRef.componentInstance.close$))
@@ -134,7 +134,7 @@ export class PlayerLyricsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private openWordOverviewSheet(word: string): void {
-    this.mahetaService
+    this.mahetaDialogService
       .openWordOverviewSheet({ word })
       .afterClosed()
       .subscribe(() => this.wordUnselect());

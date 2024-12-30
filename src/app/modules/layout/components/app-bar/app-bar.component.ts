@@ -3,7 +3,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { SortingOrderEnum } from '@src/app/model/sorting-order.enum';
 import { UrlEnum } from '@src/app/model/url.enum';
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
-import { MahetaService, ProgressBarConfig } from '@src/app/services/maheta.service';
+import { MahetaDialogService, ProgressBarConfig } from '@src/app/services/maheta-dialog.service';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { NavigationService } from '@src/app/services/navigation.service';
 import { OptionsService } from '@src/app/services/options.service';
@@ -20,7 +20,7 @@ export class AppBarComponent {
   public readonly sortingOrderEnum: typeof SortingOrderEnum = SortingOrderEnum;
 
   constructor(
-    private mahetaService: MahetaService,
+    private mahetaDialogService: MahetaDialogService,
     private optionsService: OptionsService,
     private themeService: ThemeService,
     private navigation: NavigationService,
@@ -44,7 +44,7 @@ export class AppBarComponent {
   }
 
   public get progressBarConfig(): ProgressBarConfig {
-    return this.mahetaService.progressBarConfig;
+    return this.mahetaDialogService.progressBarConfig;
   }
 
   public isRootScreen(): boolean {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 import { ThemeClassEnum, ThemeService } from '@src/app/modules/layout/services/theme.service';
-import { MahetaService } from '@src/app/services/maheta.service';
+import { MahetaDialogService } from '@src/app/services/maheta-dialog.service';
 import { NavigationService } from '@src/app/services/navigation.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class LayoutComponent implements OnInit {
   constructor(
     private themeService: ThemeService,
     private navigationService: NavigationService,
-    private mahetaService: MahetaService
+    private mahetaDialogService: MahetaDialogService
   ) {}
 
   public get themeClass(): ThemeClassEnum {
@@ -25,7 +25,7 @@ export class LayoutComponent implements OnInit {
 
   public ngOnInit(): void {
     this.navigationService.restoreRouterHistory().then(() => {
-      this.mahetaService.closeLoadingDialog();
+      this.mahetaDialogService.closeLoadingDialog();
       SplashScreen.hide();
       this.navigationService.overlayOpen$.subscribe((isOpen: boolean) => {
         this.playerSheetOpen = isOpen;

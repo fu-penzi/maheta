@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 
 import { LocalStorageEnum } from '@src/app/model/localStorage.enum';
 import { ReadOptionsLocalStorage } from '@src/app/model/read-options-local.storage';
-import { MahetaService } from '@src/app/services/maheta.service';
+import { MahetaDialogService } from '@src/app/services/maheta-dialog.service';
 import { MusicLibraryTracksService } from '@src/app/services/music-library/music-library-tracks.service';
 
 import { isArray } from 'lodash';
@@ -18,7 +18,7 @@ export class EditStorageSettingsDialogComponent implements OnInit {
   public form: FormGroup;
 
   constructor(
-    private mahetaService: MahetaService,
+    private mahetaDialogService: MahetaDialogService,
     private dialogRef: MatDialogRef<EditStorageSettingsDialogComponent>,
     private musicLibraryTracksService: MusicLibraryTracksService,
     private fb: FormBuilder
@@ -40,11 +40,11 @@ export class EditStorageSettingsDialogComponent implements OnInit {
       }));
     localStorage.setItem(LocalStorageEnum.userTrackReadOptions, JSON.stringify(readOptionsArray));
 
-    this.mahetaService.openLoadingDialog();
+    this.mahetaDialogService.openLoadingDialog();
     this.musicLibraryTracksService
       .reloadTracksLibrary()
-      .then(() => this.mahetaService.closeLoadingDialog())
-      .catch(() => this.mahetaService.closeLoadingDialog());
+      .then(() => this.mahetaDialogService.closeLoadingDialog())
+      .catch(() => this.mahetaDialogService.closeLoadingDialog());
     this.dialogRef.close();
   }
 

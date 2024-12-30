@@ -26,7 +26,7 @@ const dialogConf: MatDialogConfig<LoadingDialogComponent> = {
 @Injectable({
   providedIn: 'root',
 })
-export class MahetaService {
+export class MahetaDialogService {
   public progressBarConfig: ProgressBarConfig = {
     isShown: false,
     progress: 0,

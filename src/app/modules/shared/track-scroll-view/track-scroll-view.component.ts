@@ -8,7 +8,7 @@ import {
   AddToPlaylistDialogComponent,
   AddToPlaylistDialogData,
 } from '@src/app/modules/shared/dialog/add-to-playlist-dialog/add-to-playlist-dialog.component';
-import { MahetaService } from '@src/app/services/maheta.service';
+import { MahetaDialogService } from '@src/app/services/maheta-dialog.service';
 import { MusicControlService } from '@src/app/services/music-control/music-control.service';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
 
@@ -26,7 +26,7 @@ export class TrackScrollViewComponent implements OnChanges {
   constructor(
     private readonly musicControlService: MusicControlService,
     private readonly musicLibraryPlaylistsService: MusicLibraryPlaylistsService,
-    private readonly mahetaService: MahetaService,
+    private readonly mahetaDialogService: MahetaDialogService,
     private readonly matDialogService: MatDialog
   ) {}
 
@@ -57,7 +57,7 @@ export class TrackScrollViewComponent implements OnChanges {
   }
 
   public openEditLyricsDialog(track: Track): void {
-    this.mahetaService.openEditLyricsDialog({ track: track });
+    this.mahetaDialogService.openEditLyricsDialog({ track: track });
   }
 
   public trackByIndex(index: number): number {
