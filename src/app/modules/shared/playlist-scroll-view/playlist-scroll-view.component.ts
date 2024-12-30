@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Playlist } from '@src/app/db/domain/playlist.schema';
+import { Playlist } from '@src/app/db/domain/playlist';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';
 
 @Component({

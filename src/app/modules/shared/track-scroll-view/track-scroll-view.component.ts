@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Playlist } from '@src/app/db/domain/playlist.schema';
+import { Playlist } from '@src/app/db/domain/playlist';
 import { Track } from '@src/app/db/domain/track';
 import { SortingOrderEnum } from '@src/app/model/sorting-order.enum';
 import {

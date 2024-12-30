@@ -14,6 +14,7 @@ import { RestrictedDirectoriesEnum } from '@src/app/model/restricted-directories
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { isArray } from 'lodash';
 import * as musicMetadata from 'music-metadata-browser';
+import { IAudioMetadata } from 'music-metadata-browser';
 import { from, mergeMap, Observable, of } from 'rxjs';
 
 enum FileTypeEnum {
@@ -34,7 +35,7 @@ export interface TrackChanges {
 const getFileReadingError = (err: any, path: string): string =>
   `Error: ${err} occurred when loading file: ${path}`;
 
-export type TrackWithoutMetadata = Pick<Track, 'uri' | 'modificationTime' | 'src'>;
+export type TrackWithoutMetadata = Pick<Track, 'uri' | 'modificationTime' | 'src' | 'lyrics'>;
 
 @Injectable({
   providedIn: 'root',
@@ -141,14 +142,17 @@ export class FileLoadingService {
     const mtime: number = await Filesystem.stat({ path: track.uri }).then(
       (stats: StatResult) => stats.mtime
     );
-    const metadata = await musicMetadata
+    const metadata: IAudioMetadata | null = await musicMetadata
       .fetchFromUrl(track.src)
-      .catch((err) => console.error(`Failed to get ${track.src} metadata: ${err}`));
+      .catch((err) => {
+        console.error(`Failed to get ${track.src} metadata: ${err}`);
+        return null;
+      });
 
     const fileModified: boolean = track.modificationTime === mtime;
     track.modificationTime = mtime;
 
-    return getTrackObject(track, fileModified, track.lyrics, metadata ?? undefined);
+    return getTrackObject(track, metadata, fileModified);
   }
 
   private readTrackPaths(readOptions: ReadOptionsLocalStorage): Promise<TrackWithoutMetadata[]> {
@@ -241,7 +245,7 @@ export class FileLoadingService {
           : null;
       })
       .catch((err) => {
-        // console.error(getFileReadingError(err, path));
+        console.error(getFileReadingError(err, path));
         return null;
       });
   }

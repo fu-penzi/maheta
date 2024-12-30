@@ -35,9 +35,8 @@ export function getDefaultTrackObject(
 
 export async function getTrackObject(
   trackWithoutMetadata: TrackWithoutMetadata,
-  fileModified: boolean,
-  lyrics?: Lyrics,
-  metadata?: IAudioMetadata | undefined
+  metadata: IAudioMetadata | null,
+  fileModified: boolean
 ): Promise<Track> {
   let thumbSrc: string | null = '';
   const thumbPicture: IPicture | undefined = metadata?.common.picture?.shift();
@@ -65,7 +64,7 @@ export async function getTrackObject(
     thumbSrc: thumbSrc || TrackDefaultsEnum.THUMBSRC,
     thumbFileName: thumbPicture ? thumbFileName : TrackDefaultsEnum.THUMBFILENAME,
     duration: metadata?.format.duration ?? 0,
-    lyrics: lyricsMetadata ? parseLyrics(lyricsMetadata) : lyrics,
+    lyrics: lyricsMetadata ? parseLyrics(lyricsMetadata) : trackWithoutMetadata.lyrics,
     metadataLoaded: true,
     modificationTime: trackWithoutMetadata.modificationTime,
   };

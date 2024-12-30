@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { PlaylistCollectionService } from '@src/app/db/collections/playlist-collection.service';
 import { TrackCollectionService } from '@src/app/db/collections/track-collection.service';
 import { DatabaseService } from '@src/app/db/database.service';
-import { Playlist } from '@src/app/db/domain/playlist.schema';
+import { Playlist } from '@src/app/db/domain/playlist';
 import { Track } from '@src/app/db/domain/track';
 
 import { Observable, ReplaySubject, startWith, switchMap, zip } from 'rxjs';

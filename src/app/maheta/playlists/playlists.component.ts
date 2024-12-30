@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Playlist } from '@src/app/db/domain/playlist.schema';
+import { Playlist } from '@src/app/db/domain/playlist';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
 import { MahetaService } from '@src/app/services/maheta.service';
 import { MusicLibraryPlaylistsService } from '@src/app/services/music-library/music-library-playlists.service';

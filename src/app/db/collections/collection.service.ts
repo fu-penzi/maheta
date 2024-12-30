@@ -2,6 +2,8 @@ import {
   CollectionPopulationEnum,
   DocumentSelector,
 } from '@src/app/db/collections/collection.model';
+import { Playlist } from '@src/app/db/domain/playlist';
+import { Track } from '@src/app/db/domain/track';
 
 import { RxCollection, RxDocument } from 'rxdb';
 import { concatMap, from, map, Observable, of, switchMap, take } from 'rxjs';
@@ -58,10 +60,10 @@ export abstract class CollectionService<CollectionDocument> {
   private getDocumentSelector(documentItem: CollectionDocument): DocumentSelector {
     return 'uri' in documentItem
       ? {
-          uri: (documentItem as any).uri,
+          uri: (documentItem as unknown as Track).uri,
         }
       : {
-          id: (documentItem as any).id,
+          id: (documentItem as unknown as Playlist).id,
         };
   }
 }

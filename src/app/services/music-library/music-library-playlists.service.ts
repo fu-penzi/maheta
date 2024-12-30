@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { PlaylistCollectionService } from '@src/app/db/collections/playlist-collection.service';
-import {
-  getPlaylistObject,
-  Playlist,
-  PlaylistPopulationEnum,
-} from '@src/app/db/domain/playlist.schema';
+import { getPlaylistObject, Playlist, PlaylistPopulationEnum } from '@src/app/db/domain/playlist';
 import { Track } from '@src/app/db/domain/track';
 import { MusicLibraryService } from '@src/app/services/music-library/music-library.service';
 

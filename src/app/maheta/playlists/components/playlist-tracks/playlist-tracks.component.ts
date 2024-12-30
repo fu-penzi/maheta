@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Playlist } from '@src/app/db/domain/playlist.schema';
+import { Playlist } from '@src/app/db/domain/playlist';
 import { Track } from '@src/app/db/domain/track';
 import { UrlParamsEnum } from '@src/app/model/url-params.enum';
 import { BaseComponent } from '@src/app/modules/shared/base.component';
