@@ -11,7 +11,7 @@
     "app:android-studio": "npm run open-android && npm run sync:local && ng serve --host=0.0.0.0 --port=8100",
     "emulator": "emulator -avd Pixel_6a_API_34",
     "update-android": "ng build && npx cap sync",
-    "update-android:local": "ng build && sync-local",
+    "update-android:local": "ng build && npm run sync:local",
     "sync": "npx cap sync",
     "sync:local": "cross-env NODE_ENV=local npx cap sync",
     "open-android": "npx cap open android",

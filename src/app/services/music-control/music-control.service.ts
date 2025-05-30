@@ -26,6 +26,7 @@ export const swipeBackThreshold: number = 2;
 interface MusicControlState {
   queuePosition: number;
   currentTrackAudioTime: number;
+  sortingOrder: SortingOrderEnum;
 }
 
 @Injectable()
@@ -137,6 +138,7 @@ export class MusicControlService {
     const musicControlState: MusicControlState = {
       queuePosition: this.queuePosition,
       currentTrackAudioTime: this._currentTrackAudio.currentTime,
+      sortingOrder: this.sortingOrder,
     };
     localStorage.setItem(LocalStorageEnum.musicControlState, JSON.stringify(musicControlState));
   }
@@ -277,6 +279,10 @@ export class MusicControlService {
         return;
       }
       const musicControlState: MusicControlState = JSON.parse(musicControlStateStorage);
+      if (musicControlState?.sortingOrder) {
+        this.sortingOrder = musicControlState?.sortingOrder;
+      }
+
       if (!isNil(musicControlState.queuePosition)) {
         this.pause();
         this.updateQueue();
