@@ -27,6 +27,7 @@ export function getDefaultTrackObject(
     thumbSrc: TrackDefaultsEnum.THUMBSRC,
     thumbFileName: TrackDefaultsEnum.THUMBFILENAME,
     duration: 0,
+    number: null,
     lyrics: { isLrcFormat: false, text: '', lines: [] },
     metadataLoaded: false,
     modificationTime,
@@ -66,6 +67,7 @@ export async function getTrackObject(
     duration: metadata?.format.duration ?? 0,
     lyrics: lyricsMetadata ? parseLyrics(lyricsMetadata) : trackWithoutMetadata.lyrics,
     metadataLoaded: true,
+    number: metadata?.common?.track?.no,
     modificationTime: trackWithoutMetadata.modificationTime,
   };
 }

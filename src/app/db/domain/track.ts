@@ -12,6 +12,7 @@ export interface Track {
   year?: number;
   metadataLoaded?: boolean;
   lyrics?: Lyrics;
+  number?: number | null;
   modificationTime?: number;
 }
 

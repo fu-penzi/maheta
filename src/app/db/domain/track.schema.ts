@@ -36,6 +36,9 @@ export const trackSchema: RxJsonSchema<Track> = {
     year: {
       type: 'number',
     },
+    number: {
+      type: 'number',
+    },
     duration: {
       description: 'track duration',
       type: 'number',
